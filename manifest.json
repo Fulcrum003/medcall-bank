@@ -25,6 +25,14 @@
       "version": 1,
       "url": "dermatology.json",
       "questionCount": 3
+    },
+    {
+      "packId": "surgical-special-senses",
+      "title": "Surgical Special Senses",
+      "color": "#b58fce",
+      "version": 1,
+      "url": "surgical-special-senses.json",
+      "questionCount": 622
     }
   ]
 }
