@@ -1,0 +1,308 @@
+{
+  "packId": "psychiatry",
+  "title": "Psychiatry",
+  "color": "#7e9fd1",
+  "version": 1,
+  "updated": "2026-06-08",
+  "questionCount": 4,
+  "questions": [
+    {
+      "id": "psy1",
+      "type": "mcq",
+      "subject": "Psychiatry",
+      "topic": "Delusional syndromes",
+      "source": {
+        "paper": "End Block",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A 58-year-old man with severe depression insists that <b>his bowels have rotted away</b> and that <b>he is already dead</b>. He has stopped eating. Which delusion is this?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Capgras delusion",
+          "correct": false,
+          "explanation": "Capgras = belief a familiar person has been replaced by an identical impostor."
+        },
+        {
+          "label": "B",
+          "text": "Cotard delusion",
+          "correct": true,
+          "explanation": "<b>Cotard</b> = nihilistic delusion of being dead, not existing, or having rotting/absent organs. Classically seen in severe (psychotic) depression."
+        },
+        {
+          "label": "C",
+          "text": "Fregoli delusion",
+          "correct": false,
+          "explanation": "Fregoli = belief that different people are in fact one persecutor in disguise."
+        },
+        {
+          "label": "D",
+          "text": "Othello syndrome",
+          "correct": false,
+          "explanation": "Othello = delusional jealousy (belief partner is unfaithful)."
+        },
+        {
+          "label": "E",
+          "text": "Ekbom syndrome",
+          "correct": false,
+          "explanation": "Ekbom = delusional infestation (belief of being infested with parasites)."
+        }
+      ],
+      "keyPoint": "Cotard = 'I am dead / my organs have rotted.' A nihilistic delusion, red flag for severe psychotic depression and high suicide risk.",
+      "keyDifferentiator": "<b>Cotard</b> (I am dead) vs <b>Capgras</b> (impostor) vs <b>Fregoli</b> (one disguised persecutor).",
+      "summaryTable": {
+        "headers": [
+          "Syndrome",
+          "Core belief"
+        ],
+        "rows": [
+          [
+            "Cotard",
+            "I am dead / not existing"
+          ],
+          [
+            "Capgras",
+            "Loved one replaced by impostor"
+          ],
+          [
+            "Fregoli",
+            "Strangers are one persecutor in disguise"
+          ],
+          [
+            "Othello",
+            "Partner is unfaithful"
+          ],
+          [
+            "Ekbom",
+            "Infested with parasites"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "Oxford Handbook of Psychiatry"
+    },
+    {
+      "id": "psy2",
+      "type": "mcq",
+      "subject": "Psychiatry",
+      "topic": "Drug side-effects",
+      "source": {
+        "paper": "Formative IV",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "Hours after his first dose of <b>haloperidol</b>, a young man develops a <b>sustained upward gaze and a twisted, rigid neck</b>. He is distressed but alert. What is the immediate treatment?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "IM procyclidine",
+          "correct": true,
+          "explanation": "This is <b>acute dystonia</b> (oculogyric crisis + torticollis). An <b>anticholinergic</b> (procyclidine/benztropine) reverses it rapidly."
+        },
+        {
+          "label": "B",
+          "text": "Oral propranolol",
+          "correct": false,
+          "explanation": "Propranolol treats akathisia, not acute dystonia."
+        },
+        {
+          "label": "C",
+          "text": "IV dantrolene",
+          "correct": false,
+          "explanation": "Dantrolene is for neuroleptic malignant syndrome (hyperthermia + lead-pipe rigidity), not isolated dystonia."
+        },
+        {
+          "label": "D",
+          "text": "Stop the drug and observe",
+          "correct": false,
+          "explanation": "Stopping helps eventually, but the patient is distressed — give an anticholinergic now."
+        },
+        {
+          "label": "E",
+          "text": "Increase the haloperidol dose",
+          "correct": false,
+          "explanation": "Dangerous — would worsen the extrapyramidal reaction."
+        }
+      ],
+      "keyPoint": "Acute dystonia (early, dramatic, oculogyric crisis/torticollis) → IM anticholinergic (procyclidine) for rapid relief.",
+      "keyDifferentiator": "<b>Dystonia</b> (hours, anticholinergic) vs <b>akathisia</b> (propranolol) vs <b>NMS</b> (dantrolene, emergency).",
+      "summaryTable": {
+        "headers": [
+          "EPSE",
+          "Timing",
+          "Treatment"
+        ],
+        "rows": [
+          [
+            "Acute dystonia",
+            "Hours",
+            "Anticholinergic"
+          ],
+          [
+            "Akathisia",
+            "Days–weeks",
+            "Propranolol"
+          ],
+          [
+            "Parkinsonism",
+            "Weeks",
+            "Reduce dose / anticholinergic"
+          ],
+          [
+            "Tardive dyskinesia",
+            "Months–years",
+            "Review antipsychotic"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "Maudsley Prescribing Guidelines"
+    },
+    {
+      "id": "psy3",
+      "type": "mcq",
+      "subject": "Psychiatry",
+      "topic": "Emergencies",
+      "source": {
+        "paper": "End Block 2",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A patient on an SSRI is also taking tramadol. He becomes agitated and febrile with <b>hyperreflexia, clonus and tremor</b>. Which is the diagnosis?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Serotonin syndrome",
+          "correct": true,
+          "explanation": "Serotonergic drug combination + the triad of <b>neuromuscular excitation (clonus, hyperreflexia)</b>, autonomic instability and altered mental state = serotonin syndrome. Onset is rapid (hours)."
+        },
+        {
+          "label": "B",
+          "text": "Neuroleptic malignant syndrome",
+          "correct": false,
+          "explanation": "NMS follows dopamine blockers and is <b>hypokinetic</b> — lead-pipe rigidity, hyporeflexia, bradykinesia — evolving over days."
+        },
+        {
+          "label": "C",
+          "text": "Anticholinergic toxicity",
+          "correct": false,
+          "explanation": "Gives dry skin, urinary retention and absent bowel sounds — not clonus/hyperreflexia."
+        },
+        {
+          "label": "D",
+          "text": "Malignant hyperthermia",
+          "correct": false,
+          "explanation": "Triggered by volatile anaesthetics/suxamethonium, not SSRIs."
+        },
+        {
+          "label": "E",
+          "text": "Lithium toxicity",
+          "correct": false,
+          "explanation": "Coarse tremor, ataxia and confusion — not the hyper-reflexic clonus picture, and no lithium here."
+        }
+      ],
+      "keyPoint": "Serotonin syndrome is HYPERkinetic (clonus, hyperreflexia, rapid onset). NMS is HYPOkinetic (rigidity, hyporeflexia, slow onset).",
+      "keyDifferentiator": "<b>Clonus + hyperreflexia</b> → serotonin syndrome. <b>Lead-pipe rigidity + hyporeflexia</b> → NMS.",
+      "summaryTable": {
+        "headers": [
+          "Feature",
+          "Serotonin syndrome",
+          "NMS"
+        ],
+        "rows": [
+          [
+            "Trigger",
+            "Serotonergics",
+            "Dopamine blockers"
+          ],
+          [
+            "Onset",
+            "Hours",
+            "Days"
+          ],
+          [
+            "Tone",
+            "Clonus, hyperreflexia",
+            "Lead-pipe rigidity"
+          ],
+          [
+            "Reflexes",
+            "Increased",
+            "Decreased"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "UpToDate"
+    },
+    {
+      "id": "psy4",
+      "type": "mcq",
+      "subject": "Psychiatry",
+      "topic": "Risk assessment",
+      "source": {
+        "paper": "Formative gp1",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "Which factor most strongly increases the risk of <b>completed suicide</b> following an act of deliberate self-harm?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Detailed planning with precautions against discovery",
+          "correct": true,
+          "explanation": "High suicidal <b>intent</b> — planning, a final act (e.g. a note/will), and steps to avoid being found — is the strongest predictor of a completed suicide."
+        },
+        {
+          "label": "B",
+          "text": "Frequent superficial cutting",
+          "correct": false,
+          "explanation": "Repeated low-lethality self-harm signals distress but is not the strongest predictor of completion."
+        },
+        {
+          "label": "C",
+          "text": "Impulsive act after an argument",
+          "correct": false,
+          "explanation": "Impulsivity carries risk, but planned, concealed attempts with high intent carry more."
+        },
+        {
+          "label": "D",
+          "text": "Female sex",
+          "correct": false,
+          "explanation": "Women attempt more often; <b>men</b> have higher completion rates."
+        },
+        {
+          "label": "E",
+          "text": "Living with family",
+          "correct": false,
+          "explanation": "Social support is generally protective."
+        }
+      ],
+      "keyPoint": "It's the INTENT that predicts risk: planning, precautions against discovery, a final act, and ongoing wish to die.",
+      "keyDifferentiator": "Frequency of self-harm ≠ lethality. A single highly-planned, concealed attempt outweighs repeated superficial acts.",
+      "summaryTable": {
+        "headers": [
+          "Higher risk",
+          "Lower risk"
+        ],
+        "rows": [
+          [
+            "Planned, concealed attempt",
+            "Impulsive, witnessed"
+          ],
+          [
+            "Older male, isolated",
+            "Younger, supported"
+          ],
+          [
+            "Ongoing wish to die",
+            "Relief at survival"
+          ],
+          [
+            "Violent/lethal method",
+            "Low-lethality method"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "NICE CG133"
+    }
+  ]
+}

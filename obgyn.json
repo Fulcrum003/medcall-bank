@@ -1,0 +1,377 @@
+{
+  "packId": "obgyn",
+  "title": "Obstetrics & Gynaecology",
+  "color": "#3fb6a8",
+  "version": 1,
+  "updated": "2026-06-08",
+  "questionCount": 5,
+  "questions": [
+    {
+      "id": "obg1",
+      "type": "mcq",
+      "subject": "Obstetrics & Gynaecology",
+      "topic": "Post-op complications",
+      "source": {
+        "paper": "End Block 2",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A 34-year-old woman is <b>6 hours after a total abdominal hysterectomy</b>. She is restless, with <b>BP 80/50 mmHg</b>, <b>HR 124</b>, and a distended, tender abdomen. Urine output has fallen. What is the most likely cause?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Paralytic ileus",
+          "correct": false,
+          "explanation": "Ileus causes distension, vomiting and absent bowel sounds — but the patient stays <b>haemodynamically stable</b>. It does not produce hypotension and tachycardia this early."
+        },
+        {
+          "label": "B",
+          "text": "Intra-abdominal haemorrhage",
+          "correct": true,
+          "explanation": "Hypotension + tachycardia hours after major pelvic surgery signals <b>concealed bleeding</b> (often a slipped pedicle ligature). Resuscitate and return to theatre."
+        },
+        {
+          "label": "C",
+          "text": "Lower urinary tract infection",
+          "correct": false,
+          "explanation": "A UTI gives dysuria/fever days later, not hour-1 shock."
+        },
+        {
+          "label": "D",
+          "text": "Basal atelectasis",
+          "correct": false,
+          "explanation": "Atelectasis causes low-grade fever and hypoxia in the first 24–48h, not circulatory collapse."
+        },
+        {
+          "label": "E",
+          "text": "Pulmonary embolism",
+          "correct": false,
+          "explanation": "PE can cause collapse but typically days post-op, with pleuritic pain/hypoxia rather than an acutely distended abdomen."
+        }
+      ],
+      "keyPoint": "Post-op hypotension + tachycardia = haemorrhage until proven otherwise. Resuscitate first, image/return to theatre second.",
+      "keyDifferentiator": "<b>Haemorrhage</b> → unstable vitals (↓BP, ↑HR). <b>Ileus / AKI</b> → vitals normal, the problem is distension or oliguria.",
+      "summaryTable": {
+        "headers": [
+          "Feature",
+          "Haemorrhage",
+          "Ileus"
+        ],
+        "rows": [
+          [
+            "Onset",
+            "Hours",
+            "Days"
+          ],
+          [
+            "Vitals",
+            "Unstable",
+            "Stable"
+          ],
+          [
+            "Abdomen",
+            "Tense, distending",
+            "Distended, tympanic"
+          ],
+          [
+            "Action",
+            "Theatre",
+            "Conservative"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "Bailey & Love 27e"
+    },
+    {
+      "id": "obg2",
+      "type": "mcq",
+      "subject": "Obstetrics & Gynaecology",
+      "topic": "PPH",
+      "source": {
+        "paper": "Formative IV",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "Immediately after a vaginal delivery, a woman has <b>brisk bleeding</b>. The uterus is <b>soft and boggy</b> and rises above the umbilicus. What is the first-line management?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "IV oxytocin + uterine massage",
+          "correct": true,
+          "explanation": "Atony is the cause in ~70% of primary PPH. First-line is <b>uterotonics</b> (oxytocin) plus rubbing up a contraction."
+        },
+        {
+          "label": "B",
+          "text": "Emergency hysterectomy",
+          "correct": false,
+          "explanation": "A last resort only after medical + conservative surgical measures fail."
+        },
+        {
+          "label": "C",
+          "text": "Uterine artery embolisation",
+          "correct": false,
+          "explanation": "Useful in a stable patient when uterotonics fail and interventional radiology is available — not the first move."
+        },
+        {
+          "label": "D",
+          "text": "Tranexamic acid alone",
+          "correct": false,
+          "explanation": "TXA is a valuable adjunct and reduces death from bleeding, but does not replace uterotonics for atony."
+        },
+        {
+          "label": "E",
+          "text": "B-Lynch compression suture",
+          "correct": false,
+          "explanation": "A surgical step if medical management fails and you are already in theatre."
+        }
+      ],
+      "keyPoint": "Primary PPH: think the 4 Ts — Tone, Trauma, Tissue, Thrombin. Tone (atony) is commonest → uterotonics first.",
+      "keyDifferentiator": "<b>Atony</b> → soft boggy uterus. <b>Trauma</b> → well-contracted uterus but ongoing bleeding (look for a tear).",
+      "summaryTable": {
+        "headers": [
+          "The 4 Ts",
+          "Mechanism",
+          "First step"
+        ],
+        "rows": [
+          [
+            "Tone",
+            "Uterine atony",
+            "Oxytocin + massage"
+          ],
+          [
+            "Trauma",
+            "Tears/rupture",
+            "Repair"
+          ],
+          [
+            "Tissue",
+            "Retained products",
+            "Evacuate"
+          ],
+          [
+            "Thrombin",
+            "Coagulopathy",
+            "Correct clotting"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "RCOG Green-top 52"
+    },
+    {
+      "id": "obg3",
+      "type": "mcq",
+      "subject": "Obstetrics & Gynaecology",
+      "topic": "Hypertensive disease",
+      "source": {
+        "paper": "Block 1 Summative",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A 32-week pregnant woman has <b>BP 168/112</b>, 3+ proteinuria, a frontal headache and <b>brisk reflexes with clonus</b>. Which is most appropriate to <b>prevent eclamptic seizures</b>?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "IV magnesium sulfate",
+          "correct": true,
+          "explanation": "<b>MgSO₄</b> is the agent of choice for both prevention and treatment of eclamptic seizures (MAGPIE trial)."
+        },
+        {
+          "label": "B",
+          "text": "IV labetalol",
+          "correct": false,
+          "explanation": "Labetalol controls the blood pressure but does <b>not</b> prevent seizures — both are needed, but the question asks about seizure prophylaxis."
+        },
+        {
+          "label": "C",
+          "text": "IV diazepam",
+          "correct": false,
+          "explanation": "Benzodiazepines are inferior to magnesium for eclampsia and risk neonatal sedation."
+        },
+        {
+          "label": "D",
+          "text": "IV phenytoin",
+          "correct": false,
+          "explanation": "Less effective than magnesium for eclamptic seizures."
+        },
+        {
+          "label": "E",
+          "text": "Immediate caesarean section",
+          "correct": false,
+          "explanation": "Delivery is the definitive cure, but the mother must first be stabilised (BP control + MgSO₄)."
+        }
+      ],
+      "keyPoint": "Severe pre-eclampsia: control BP (labetalol/nifedipine) AND give MgSO₄ for seizure prophylaxis. Delivery is the cure.",
+      "keyDifferentiator": "<b>MgSO₄</b> = seizures. <b>Labetalol/nifedipine</b> = blood pressure. Don't confuse the two roles.",
+      "summaryTable": {
+        "headers": [
+          "Problem",
+          "Drug"
+        ],
+        "rows": [
+          [
+            "Seizure prevention/treatment",
+            "Magnesium sulfate"
+          ],
+          [
+            "Acute severe hypertension",
+            "Labetalol or nifedipine"
+          ],
+          [
+            "Definitive treatment",
+            "Delivery"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "NICE NG133; MAGPIE"
+    },
+    {
+      "id": "obg4",
+      "type": "mcq",
+      "subject": "Obstetrics & Gynaecology",
+      "topic": "Preterm labour",
+      "source": {
+        "paper": "Block 5 Summative",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A woman at <b>30 weeks</b> is in established preterm labour. The fetus is well and there are <b>no contraindications</b> to tocolysis. Which agent is recommended first-line?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Nifedipine",
+          "correct": true,
+          "explanation": "NICE recommends <b>nifedipine</b> first-line for tocolysis (effective, oral, cheap). Atosiban is the alternative if nifedipine is contraindicated."
+        },
+        {
+          "label": "B",
+          "text": "Atosiban",
+          "correct": false,
+          "explanation": "An oxytocin-receptor antagonist used when nifedipine is unsuitable — not the routine first choice in the NICE pathway."
+        },
+        {
+          "label": "C",
+          "text": "Ritodrine",
+          "correct": false,
+          "explanation": "A β-agonist, now largely abandoned because of maternal cardiovascular side-effects."
+        },
+        {
+          "label": "D",
+          "text": "Indomethacin",
+          "correct": false,
+          "explanation": "Effective but limited by fetal effects (ductal constriction, oligohydramnios), usually only <32 weeks short-term."
+        },
+        {
+          "label": "E",
+          "text": "Magnesium sulfate",
+          "correct": false,
+          "explanation": "Used for fetal neuroprotection <30 weeks, NOT as a tocolytic."
+        }
+      ],
+      "keyPoint": "Tocolysis buys ~48h for steroids/transfer. NICE first-line = nifedipine; atosiban if contraindicated.",
+      "keyDifferentiator": "Tocolytic = delay delivery (nifedipine). MgSO₄ here = fetal neuroprotection, a different purpose.",
+      "summaryTable": {
+        "headers": [
+          "Role",
+          "Agent"
+        ],
+        "rows": [
+          [
+            "1st-line tocolytic",
+            "Nifedipine"
+          ],
+          [
+            "Alternative tocolytic",
+            "Atosiban"
+          ],
+          [
+            "Neuroprotection <30/40",
+            "Magnesium sulfate"
+          ],
+          [
+            "Fetal lung maturity",
+            "Antenatal corticosteroids"
+          ]
+        ]
+      },
+      "flag": {
+        "severity": "HIGH",
+        "appAnswer": "B — Atosiban",
+        "correctAnswer": "A — Nifedipine",
+        "source": "NICE NG25",
+        "note": "This question is included to demonstrate the answer-discrepancy flag. Some Q-banks mark Atosiban; NICE NG25 (2015) specifies nifedipine as first-line tocolytic."
+      },
+      "references": "NICE NG25"
+    },
+    {
+      "id": "obg5",
+      "type": "mcq",
+      "subject": "Obstetrics & Gynaecology",
+      "topic": "Contraception",
+      "source": {
+        "paper": "Formative gp1",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A 26-year-old with a history of <b>migraine with aura</b> requests contraception. Which method is <b>contraindicated</b>?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Combined oral contraceptive pill",
+          "correct": true,
+          "explanation": "Migraine <b>with aura</b> is UKMEC category 4 for the COCP — the oestrogen raises ischaemic stroke risk. Absolutely avoid."
+        },
+        {
+          "label": "B",
+          "text": "Progestogen-only pill",
+          "correct": false,
+          "explanation": "POP is UKMEC 1 — safe, no oestrogen."
+        },
+        {
+          "label": "C",
+          "text": "Copper intrauterine device",
+          "correct": false,
+          "explanation": "Hormone-free, UKMEC 1 — entirely appropriate."
+        },
+        {
+          "label": "D",
+          "text": "Levonorgestrel IUS",
+          "correct": false,
+          "explanation": "Progestogen-only, locally acting — safe (UKMEC 1)."
+        },
+        {
+          "label": "E",
+          "text": "Progestogen implant",
+          "correct": false,
+          "explanation": "Oestrogen-free, safe in migraine with aura."
+        }
+      ],
+      "keyPoint": "Migraine WITH aura = no oestrogen. The COCP is UKMEC 4 (stroke risk). Progestogen-only and copper methods are fine.",
+      "keyDifferentiator": "It's the <b>aura</b> that matters. Migraine without aura is UKMEC 2 (broadly usable); with aura it's category 4.",
+      "summaryTable": {
+        "headers": [
+          "Method",
+          "Oestrogen?",
+          "Aura w/ migraine"
+        ],
+        "rows": [
+          [
+            "COCP",
+            "Yes",
+            "Avoid (UKMEC 4)"
+          ],
+          [
+            "POP / implant / IUS",
+            "No",
+            "Safe"
+          ],
+          [
+            "Cu-IUD",
+            "No",
+            "Safe"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "UKMEC 2016"
+    }
+  ]
+}

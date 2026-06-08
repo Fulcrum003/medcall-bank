@@ -1,0 +1,238 @@
+{
+  "packId": "dermatology",
+  "title": "Dermatology",
+  "color": "#d99a6c",
+  "version": 1,
+  "updated": "2026-06-08",
+  "questionCount": 3,
+  "questions": [
+    {
+      "id": "der1",
+      "type": "mcq",
+      "subject": "Dermatology",
+      "topic": "Papulosquamous",
+      "source": {
+        "paper": "End Block",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A 28-year-old has <b>well-demarcated erythematous plaques with silvery scale</b> on the <b>elbows and knees</b>, plus nail pitting. Scratching the scale leaves pinpoint bleeding. What is the diagnosis?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Psoriasis",
+          "correct": true,
+          "explanation": "Classic chronic plaque <b>psoriasis</b>: extensor distribution, silvery scale, nail pitting, and the <b>Auspitz sign</b> (pinpoint bleeding on scale removal)."
+        },
+        {
+          "label": "B",
+          "text": "Atopic eczema",
+          "correct": false,
+          "explanation": "Eczema favours <b>flexures</b>, is itchy and ill-defined, with weeping/lichenification rather than silvery scale."
+        },
+        {
+          "label": "C",
+          "text": "Lichen planus",
+          "correct": false,
+          "explanation": "LP = the 6 Ps (purple, polygonal, pruritic, planar papules) with Wickham's striae, typically on flexor wrists."
+        },
+        {
+          "label": "D",
+          "text": "Pityriasis rosea",
+          "correct": false,
+          "explanation": "Herald patch then a 'fir-tree' truncal eruption that self-resolves — no silvery extensor plaques."
+        },
+        {
+          "label": "E",
+          "text": "Tinea corporis",
+          "correct": false,
+          "explanation": "An annular plaque with central clearing and a scaly advancing edge; KOH shows hyphae."
+        }
+      ],
+      "keyPoint": "Psoriasis = extensor surfaces + silvery scale + nail changes + Auspitz sign. Eczema is the flexural, itchy mirror image.",
+      "keyDifferentiator": "<b>Psoriasis</b> → extensor, silvery, well-defined. <b>Eczema</b> → flexural, itchy, ill-defined.",
+      "summaryTable": {
+        "headers": [
+          "Feature",
+          "Psoriasis",
+          "Eczema"
+        ],
+        "rows": [
+          [
+            "Site",
+            "Extensor",
+            "Flexural"
+          ],
+          [
+            "Scale",
+            "Silvery",
+            "Crusted/weepy"
+          ],
+          [
+            "Border",
+            "Well-defined",
+            "Ill-defined"
+          ],
+          [
+            "Nails",
+            "Pitting",
+            "Usually normal"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "Davidson's Principles & Practice"
+    },
+    {
+      "id": "der2",
+      "type": "mcq",
+      "subject": "Dermatology",
+      "topic": "Blistering disease",
+      "source": {
+        "paper": "Formative IV",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A 50-year-old has <b>flaccid blisters</b> that rupture into painful erosions, with significant <b>oral mucosal involvement</b>. Lateral pressure on normal skin shears the epidermis (<b>Nikolsky positive</b>). Which is the diagnosis?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Pemphigus vulgaris",
+          "correct": true,
+          "explanation": "<b>Intra-epidermal</b> split (desmoglein antibodies) → flaccid blisters, prominent oral lesions, Nikolsky positive. Potentially fatal — needs systemic immunosuppression."
+        },
+        {
+          "label": "B",
+          "text": "Bullous pemphigoid",
+          "correct": false,
+          "explanation": "<b>Sub-epidermal</b> (at the DEJ) → TENSE blisters in the <b>elderly</b>, mucosa usually spared, Nikolsky NEGATIVE."
+        },
+        {
+          "label": "C",
+          "text": "Dermatitis herpetiformis",
+          "correct": false,
+          "explanation": "Intensely itchy grouped vesicles on extensors, linked to coeliac disease — not flaccid oral bullae."
+        },
+        {
+          "label": "D",
+          "text": "Stevens–Johnson syndrome",
+          "correct": false,
+          "explanation": "Drug-related, acute, with target lesions and mucosal sloughing over days — a distinct emergency."
+        },
+        {
+          "label": "E",
+          "text": "Epidermolysis bullosa",
+          "correct": false,
+          "explanation": "Inherited mechanobullous disorders presenting typically from birth/childhood."
+        }
+      ],
+      "keyPoint": "Pemphigus = intra-epidermal, flaccid, oral, Nikolsky POSITIVE, dangerous. Pemphigoid = sub-epidermal (DEJ), tense, elderly, Nikolsky NEGATIVE.",
+      "keyDifferentiator": "<b>'P-emphigus = P-ainful & oral, flaccid, Nikolsky +.'</b> Pemphigoid = tense bullae, mucosa spared, Nikolsky −.",
+      "summaryTable": {
+        "headers": [
+          "Feature",
+          "Pemphigus vulgaris",
+          "Bullous pemphigoid"
+        ],
+        "rows": [
+          [
+            "Split level",
+            "Intra-epidermal",
+            "Sub-epidermal (DEJ)"
+          ],
+          [
+            "Blister",
+            "Flaccid",
+            "Tense"
+          ],
+          [
+            "Mucosa",
+            "Often involved",
+            "Usually spared"
+          ],
+          [
+            "Nikolsky",
+            "Positive",
+            "Negative"
+          ],
+          [
+            "Age",
+            "Middle-aged",
+            "Elderly"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "Robbins; Davidson's"
+    },
+    {
+      "id": "der3",
+      "type": "mcq",
+      "subject": "Dermatology",
+      "topic": "Infections",
+      "source": {
+        "paper": "Block 6 Summative",
+        "institution": "Univ of Kufa"
+      },
+      "stem": "A child has an <b>annular, scaly plaque with central clearing</b> and a raised advancing edge on the trunk. <b>KOH microscopy shows branching hyphae.</b> What is the first-line treatment?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Topical terbinafine",
+          "correct": true,
+          "explanation": "Localised <b>tinea corporis</b> (a dermatophyte, confirmed by KOH hyphae) responds to a topical antifungal such as terbinafine."
+        },
+        {
+          "label": "B",
+          "text": "Topical hydrocortisone",
+          "correct": false,
+          "explanation": "A steroid alone worsens/masks dermatophytes ('tinea incognito') — avoid."
+        },
+        {
+          "label": "C",
+          "text": "Oral aciclovir",
+          "correct": false,
+          "explanation": "Antiviral — wrong organism (hyphae indicate a fungus, not a virus)."
+        },
+        {
+          "label": "D",
+          "text": "Topical mupirocin",
+          "correct": false,
+          "explanation": "An antibacterial for localised impetigo — not antifungal."
+        },
+        {
+          "label": "E",
+          "text": "Oral griseofulvin",
+          "correct": false,
+          "explanation": "Reserved for extensive disease or scalp/nail involvement, not a single localised body plaque."
+        }
+      ],
+      "keyPoint": "Annular plaque + central clearing + KOH hyphae = dermatophyte (tinea). Localised disease → topical terbinafine; never a steroid alone.",
+      "keyDifferentiator": "KOH <b>hyphae</b> → dermatophyte (antifungal). KOH 'spaghetti & meatballs' → pityriasis versicolor. Steroid alone = tinea incognito.",
+      "summaryTable": {
+        "headers": [
+          "Clue",
+          "Meaning"
+        ],
+        "rows": [
+          [
+            "Annular, central clearing",
+            "Tinea (dermatophyte)"
+          ],
+          [
+            "KOH hyphae",
+            "Confirms fungus"
+          ],
+          [
+            "Localised",
+            "Topical terbinafine"
+          ],
+          [
+            "Scalp/nail/extensive",
+            "Oral antifungal"
+          ]
+        ]
+      },
+      "flag": null,
+      "references": "NICE CKS; Davidson's"
+    }
+  ]
+}
