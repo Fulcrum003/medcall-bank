@@ -168,12 +168,14 @@ describe('dueCount', () => {
   });
 
   it('filters by packId', () => {
-    // TST pack has q1; add an empty OTHER pack too
-    BANK.push({ id: 'OTHER', title: 'Other', color: '#000', questions: [] });
-    buildIndex();
     DB.progress.questions['q1'] = { seen: 1, srs: { due: today() } };
     expect(dueCount('TST')).toBe(1);
-    expect(dueCount('OTHER')).toBe(0);
+  });
+
+  it('returns 0 for an unknown packId without crashing', () => {
+    DB.progress.questions['q1'] = { seen: 1, srs: { due: today() } };
+    expect(() => dueCount('NONEXISTENT')).not.toThrow();
+    expect(dueCount('NONEXISTENT')).toBe(0);
   });
 });
 
@@ -191,6 +193,11 @@ describe('seenCount', () => {
   it('does not double count', () => {
     DB.progress.questions['q1'] = { seen: 5 }; // seen multiple times counts as 1
     expect(seenCount('TST')).toBe(1);
+  });
+
+  it('returns 0 for an unknown packId without crashing', () => {
+    expect(() => seenCount('NONEXISTENT')).not.toThrow();
+    expect(seenCount('NONEXISTENT')).toBe(0);
   });
 });
 
@@ -214,5 +221,10 @@ describe('masteredCount', () => {
   it('interval 20 is not mastered', () => {
     DB.progress.questions['q1'] = { seen: 5, srs: { interval: 20 } };
     expect(masteredCount('TST')).toBe(0);
+  });
+
+  it('returns 0 for an unknown packId without crashing', () => {
+    expect(() => masteredCount('NONEXISTENT')).not.toThrow();
+    expect(masteredCount('NONEXISTENT')).toBe(0);
   });
 });

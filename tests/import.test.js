@@ -48,4 +48,21 @@ describe('importProgress', () => {
     expect(() => importProgress(JSON.stringify({ other: 'data' }))).not.toThrow();
     expect(DB.progress.questions).toEqual({});
   });
+
+  it('does not crash when imported progress omits required sub-keys', () => {
+    // Backup missing questions/streak/resume — should fill in defaults, not corrupt DB
+    const data = { progress: {} };
+    expect(() => importProgress(JSON.stringify(data))).not.toThrow();
+    expect(DB.progress.questions).toBeDefined();
+    expect(DB.progress.streak).toBeDefined();
+  });
+
+  it('preserves imported questions when progress has only that key', () => {
+    const data = { progress: { questions: { q1: { seen: 2 } } } };
+    importProgress(JSON.stringify(data));
+    expect(DB.progress.questions['q1'].seen).toBe(2);
+    // Default sub-keys filled in
+    expect(DB.progress.streak).toBeDefined();
+    expect(DB.progress.resume).toBeNull();
+  });
 });

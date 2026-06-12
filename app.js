@@ -371,7 +371,8 @@ export const stripBold = s => String(s).replace(/<\/?b>/g,""); // remove emphasi
 
 export function dueCount(packId){
   const t=today(); let n=0;
-  (packId?BANK.find(p=>p.id===packId).questions:Object.values(QMAP)).forEach(q=>{
+  const questions = packId ? (BANK.find(p=>p.id===packId)||{questions:[]}).questions : Object.values(QMAP);
+  questions.forEach(q=>{
     const p=DB.progress.questions[q.id];
     if(!p || !p.srs) return; // new cards counted separately
     if(p.srs.due && p.srs.due<=t) n++;
@@ -379,11 +380,11 @@ export function dueCount(packId){
   return n;
 }
 export function seenCount(packId){
-  const arr = BANK.find(p=>p.id===packId).questions;
+  const arr = (BANK.find(p=>p.id===packId)||{questions:[]}).questions;
   return arr.filter(q=>DB.progress.questions[q.id]).length;
 }
 export function masteredCount(packId){
-  const arr = BANK.find(p=>p.id===packId).questions;
+  const arr = (BANK.find(p=>p.id===packId)||{questions:[]}).questions;
   return arr.filter(q=>{const p=DB.progress.questions[q.id];return p&&p.srs&&p.srs.interval>=21;}).length;
 }
 
@@ -1543,7 +1544,10 @@ export function exportProgress(){
 export function importProgress(txt){
   try{
     const d=JSON.parse(txt);
-    if(d.progress) DB.progress=d.progress;
+    if(d.progress && typeof d.progress==="object"){
+      const defaults={questions:{},resume:null,streak:{current:0,lastStudied:null}};
+      DB.progress=Object.assign(defaults, d.progress);
+    }
     if(d.exams) DB.exams=d.exams;
     if(d.settings) DB.settings=Object.assign(DB.settings,d.settings);
     save.progress(); save.exams(); save.settings();
