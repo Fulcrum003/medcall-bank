@@ -307,9 +307,1770 @@
   <main id="app"></main>
 </div>
 
-<script type="module">
-import { boot } from './app.js';
-boot();
+<script>
+"use strict";
+
+/* ============================================================
+   STORAGE ADAPTER
+   Prototype uses the artifact storage API (window.storage) so your
+   progress actually persists across sessions.
+   ---- TO HOST THIS YOURSELF ----
+   Replace these three functions with localStorage:
+     wsGet(k)  -> JSON.parse(localStorage.getItem(k))
+     wsSet(k,v)-> localStorage.setItem(k, JSON.stringify(v))
+   In the real PWA this layer is IndexedDB (see design doc §8).
+   ============================================================ */
+/* ============================================================
+   STORAGE ADAPTER
+   Tries real browser storage first (persists when hosted on GitHub
+   Pages or opened normally), falls back to the artifact storage API
+   (for the in-chat preview), then to memory. No setup needed.
+   ============================================================ */
+const STORE = (function(){
+  try{
+    const k="__mr_test"; localStorage.setItem(k,"1"); localStorage.removeItem(k);
+    return { kind:"local",
+      async get(key){ const v=localStorage.getItem(key); return v?JSON.parse(v):null; },
+      async set(key,val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} } };
+  }catch(e){}
+  if(typeof window!=="undefined" && window.storage && typeof window.storage.get==="function"){
+    return { kind:"artifact",
+      async get(key){ try{ const r=await window.storage.get(key); return r&&r.value?JSON.parse(r.value):null; }catch(e){ return null; } },
+      async set(key,val){ try{ await window.storage.set(key, JSON.stringify(val)); }catch(e){} } };
+  }
+  const m={};
+  return { kind:"memory", async get(key){ return m[key]!==undefined?m[key]:null; }, async set(key,val){ m[key]=val; } };
+})();
+async function wsGet(k){ return STORE.get(k); }
+async function wsSet(k,v){ return STORE.set(k,v); }
+const SK = {progress:"medrecall:progress:v1", exams:"medrecall:exams:v1", settings:"medrecall:settings:v1", reports:"medrecall:reports:v1"};
+let DB = {
+  progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null} },
+  exams:[],
+  reports:[],
+  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:false }
+};
+async function loadDB(){
+  const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
+  const e = await wsGet(SK.exams);    if(e) DB.exams = e;
+  const r = await wsGet(SK.reports);  if(r) DB.reports = r;
+  const s = await wsGet(SK.settings); if(s) DB.settings = Object.assign(DB.settings, s);
+}
+const save = {
+  progress(){ wsSet(SK.progress, DB.progress); },
+  exams(){ wsSet(SK.exams, DB.exams); },
+  reports(){ wsSet(SK.reports, DB.reports); },
+  settings(){ wsSet(SK.settings, DB.settings); }
+};
+
+/* ============================================================
+   SM-2 SPACED REPETITION  (Anki-family; design doc §3)
+   ============================================================ */
+function schedule(srs, grade){
+  let s = srs ? {...srs} : {ease:2.5, interval:0, reps:0, lapses:0};
+  const q = {again:2, hard:3, good:4, easy:5}[grade];
+  if(grade==="again"){
+    s.reps=0; s.interval=1; s.lapses+=1; s.ease=Math.max(1.3, s.ease-0.2);
+  } else {
+    s.reps+=1;
+    if(s.reps===1) s.interval = grade==="easy"?2:1;
+    else if(s.reps===2) s.interval = grade==="hard"?4:6;
+    else s.interval = Math.max(1, Math.round(s.interval * s.ease * (grade==="hard"?0.8:1) * (grade==="easy"?1.3:1)));
+    s.ease = Math.max(1.3, s.ease + (0.1 - (5-q)*(0.08 + (5-q)*0.02)));
+  }
+  s.ease = +s.ease.toFixed(2);
+  s.due = addDays(today(), s.interval);
+  return s;
+}
+
+/* ============================================================
+   DATE HELPERS
+   ============================================================ */
+function today(){ const d=new Date(); return d.toISOString().slice(0,10); }
+function addDays(iso, n){ const d=new Date(iso+"T00:00:00"); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function yesterday(){ return addDays(today(),-1); }
+function fmtTime(sec){ sec=Math.max(0,Math.round(sec)); const m=Math.floor(sec/60), s=sec%60; return m+":"+String(s).padStart(2,"0"); }
+
+/* ============================================================
+   CONTENT BANK  (sample pack — the engine holds zero questions;
+   in production these load as JSON from the GitHub manifest, §2)
+   Clinical content checked against standard teaching.
+   ============================================================ */
+const BANK = [
+{ id:"OBGYN", title:"Obstetrics & Gynaecology", color:"#3fb6a8", questions:[
+  { id:"obg1", topic:"Post-op complications", source:"End Block 2 · Univ of Kufa",
+    stem:"A 34-year-old woman is <b>6 hours after a total abdominal hysterectomy</b>. She is restless, with <b>BP 80/50 mmHg</b>, <b>HR 124</b>, and a distended, tender abdomen. Urine output has fallen. What is the most likely cause?",
+    choices:[
+      {l:"A",t:"Paralytic ileus",correct:false,e:"Ileus causes distension, vomiting and absent bowel sounds — but the patient stays <b>haemodynamically stable</b>. It does not produce hypotension and tachycardia this early."},
+      {l:"B",t:"Intra-abdominal haemorrhage",correct:true,e:"Hypotension + tachycardia hours after major pelvic surgery signals <b>concealed bleeding</b> (often a slipped pedicle ligature). Resuscitate and return to theatre."},
+      {l:"C",t:"Lower urinary tract infection",correct:false,e:"A UTI gives dysuria/fever days later, not hour-1 shock."},
+      {l:"D",t:"Basal atelectasis",correct:false,e:"Atelectasis causes low-grade fever and hypoxia in the first 24–48h, not circulatory collapse."},
+      {l:"E",t:"Pulmonary embolism",correct:false,e:"PE can cause collapse but typically days post-op, with pleuritic pain/hypoxia rather than an acutely distended abdomen."}
+    ],
+    keyPoint:"Post-op hypotension + tachycardia = haemorrhage until proven otherwise. Resuscitate first, image/return to theatre second.",
+    keyDiff:"<b>Haemorrhage</b> → unstable vitals (↓BP, ↑HR). <b>Ileus / AKI</b> → vitals normal, the problem is distension or oliguria.",
+    sum:{headers:["Feature","Haemorrhage","Ileus"],rows:[["Onset","Hours","Days"],["Vitals","Unstable","Stable"],["Abdomen","Tense, distending","Distended, tympanic"],["Action","Theatre","Conservative"]]},
+    refs:"Bailey & Love 27e" },
+  { id:"obg2", topic:"PPH", source:"Formative IV · Univ of Kufa",
+    stem:"Immediately after a vaginal delivery, a woman has <b>brisk bleeding</b>. The uterus is <b>soft and boggy</b> and rises above the umbilicus. What is the first-line management?",
+    choices:[
+      {l:"A",t:"IV oxytocin + uterine massage",correct:true,e:"Atony is the cause in ~70% of primary PPH. First-line is <b>uterotonics</b> (oxytocin) plus rubbing up a contraction."},
+      {l:"B",t:"Emergency hysterectomy",correct:false,e:"A last resort only after medical + conservative surgical measures fail."},
+      {l:"C",t:"Uterine artery embolisation",correct:false,e:"Useful in a stable patient when uterotonics fail and interventional radiology is available — not the first move."},
+      {l:"D",t:"Tranexamic acid alone",correct:false,e:"TXA is a valuable adjunct and reduces death from bleeding, but does not replace uterotonics for atony."},
+      {l:"E",t:"B-Lynch compression suture",correct:false,e:"A surgical step if medical management fails and you are already in theatre."}
+    ],
+    keyPoint:"Primary PPH: think the 4 Ts — Tone, Trauma, Tissue, Thrombin. Tone (atony) is commonest → uterotonics first.",
+    keyDiff:"<b>Atony</b> → soft boggy uterus. <b>Trauma</b> → well-contracted uterus but ongoing bleeding (look for a tear).",
+    sum:{headers:["The 4 Ts","Mechanism","First step"],rows:[["Tone","Uterine atony","Oxytocin + massage"],["Trauma","Tears/rupture","Repair"],["Tissue","Retained products","Evacuate"],["Thrombin","Coagulopathy","Correct clotting"]]},
+    refs:"RCOG Green-top 52" },
+  { id:"obg3", topic:"Hypertensive disease", source:"Block 1 Summative · Univ of Kufa",
+    stem:"A 32-week pregnant woman has <b>BP 168/112</b>, 3+ proteinuria, a frontal headache and <b>brisk reflexes with clonus</b>. Which is most appropriate to <b>prevent eclamptic seizures</b>?",
+    choices:[
+      {l:"A",t:"IV magnesium sulfate",correct:true,e:"<b>MgSO₄</b> is the agent of choice for both prevention and treatment of eclamptic seizures (MAGPIE trial)."},
+      {l:"B",t:"IV labetalol",correct:false,e:"Labetalol controls the blood pressure but does <b>not</b> prevent seizures — both are needed, but the question asks about seizure prophylaxis."},
+      {l:"C",t:"IV diazepam",correct:false,e:"Benzodiazepines are inferior to magnesium for eclampsia and risk neonatal sedation."},
+      {l:"D",t:"IV phenytoin",correct:false,e:"Less effective than magnesium for eclamptic seizures."},
+      {l:"E",t:"Immediate caesarean section",correct:false,e:"Delivery is the definitive cure, but the mother must first be stabilised (BP control + MgSO₄)."}
+    ],
+    keyPoint:"Severe pre-eclampsia: control BP (labetalol/nifedipine) AND give MgSO₄ for seizure prophylaxis. Delivery is the cure.",
+    keyDiff:"<b>MgSO₄</b> = seizures. <b>Labetalol/nifedipine</b> = blood pressure. Don't confuse the two roles.",
+    sum:{headers:["Problem","Drug"],rows:[["Seizure prevention/treatment","Magnesium sulfate"],["Acute severe hypertension","Labetalol or nifedipine"],["Definitive treatment","Delivery"]]},
+    refs:"NICE NG133; MAGPIE" },
+  { id:"obg4", topic:"Preterm labour", source:"Block 5 Summative · Univ of Kufa",
+    stem:"A woman at <b>30 weeks</b> is in established preterm labour. The fetus is well and there are <b>no contraindications</b> to tocolysis. Which agent is recommended first-line?",
+    choices:[
+      {l:"A",t:"Nifedipine",correct:true,e:"NICE recommends <b>nifedipine</b> first-line for tocolysis (effective, oral, cheap). Atosiban is the alternative if nifedipine is contraindicated."},
+      {l:"B",t:"Atosiban",correct:false,e:"An oxytocin-receptor antagonist used when nifedipine is unsuitable — not the routine first choice in the NICE pathway."},
+      {l:"C",t:"Ritodrine",correct:false,e:"A β-agonist, now largely abandoned because of maternal cardiovascular side-effects."},
+      {l:"D",t:"Indomethacin",correct:false,e:"Effective but limited by fetal effects (ductal constriction, oligohydramnios), usually only <32 weeks short-term."},
+      {l:"E",t:"Magnesium sulfate",correct:false,e:"Used for fetal neuroprotection <30 weeks, NOT as a tocolytic."}
+    ],
+    keyPoint:"Tocolysis buys ~48h for steroids/transfer. NICE first-line = nifedipine; atosiban if contraindicated.",
+    keyDiff:"Tocolytic = delay delivery (nifedipine). MgSO₄ here = fetal neuroprotection, a different purpose.",
+    sum:{headers:["Role","Agent"],rows:[["1st-line tocolytic","Nifedipine"],["Alternative tocolytic","Atosiban"],["Neuroprotection <30/40","Magnesium sulfate"],["Fetal lung maturity","Antenatal corticosteroids"]]},
+    flag:{severity:"HIGH",app:"B — Atosiban",correct:"A — Nifedipine",source:"NICE NG25",note:"This question is included to demonstrate the answer-discrepancy flag. Some Q-banks mark Atosiban; NICE NG25 (2015) specifies nifedipine as first-line tocolytic."},
+    refs:"NICE NG25" },
+  { id:"obg5", topic:"Contraception", source:"Formative gp1 · Univ of Kufa",
+    stem:"A 26-year-old with a history of <b>migraine with aura</b> requests contraception. Which method is <b>contraindicated</b>?",
+    choices:[
+      {l:"A",t:"Combined oral contraceptive pill",correct:true,e:"Migraine <b>with aura</b> is UKMEC category 4 for the COCP — the oestrogen raises ischaemic stroke risk. Absolutely avoid."},
+      {l:"B",t:"Progestogen-only pill",correct:false,e:"POP is UKMEC 1 — safe, no oestrogen."},
+      {l:"C",t:"Copper intrauterine device",correct:false,e:"Hormone-free, UKMEC 1 — entirely appropriate."},
+      {l:"D",t:"Levonorgestrel IUS",correct:false,e:"Progestogen-only, locally acting — safe (UKMEC 1)."},
+      {l:"E",t:"Progestogen implant",correct:false,e:"Oestrogen-free, safe in migraine with aura."}
+    ],
+    keyPoint:"Migraine WITH aura = no oestrogen. The COCP is UKMEC 4 (stroke risk). Progestogen-only and copper methods are fine.",
+    keyDiff:"It's the <b>aura</b> that matters. Migraine without aura is UKMEC 2 (broadly usable); with aura it's category 4.",
+    sum:{headers:["Method","Oestrogen?","Aura w/ migraine"],rows:[["COCP","Yes","Avoid (UKMEC 4)"],["POP / implant / IUS","No","Safe"],["Cu-IUD","No","Safe"]]},
+    refs:"UKMEC 2016" }
+]},
+{ id:"PSYCH", title:"Psychiatry", color:"#7e9fd1", questions:[
+  { id:"psy1", topic:"Delusional syndromes", source:"End Block · Univ of Kufa",
+    stem:"A 58-year-old man with severe depression insists that <b>his bowels have rotted away</b> and that <b>he is already dead</b>. He has stopped eating. Which delusion is this?",
+    choices:[
+      {l:"A",t:"Capgras delusion",correct:false,e:"Capgras = belief a familiar person has been replaced by an identical impostor."},
+      {l:"B",t:"Cotard delusion",correct:true,e:"<b>Cotard</b> = nihilistic delusion of being dead, not existing, or having rotting/absent organs. Classically seen in severe (psychotic) depression."},
+      {l:"C",t:"Fregoli delusion",correct:false,e:"Fregoli = belief that different people are in fact one persecutor in disguise."},
+      {l:"D",t:"Othello syndrome",correct:false,e:"Othello = delusional jealousy (belief partner is unfaithful)."},
+      {l:"E",t:"Ekbom syndrome",correct:false,e:"Ekbom = delusional infestation (belief of being infested with parasites)."}
+    ],
+    keyPoint:"Cotard = 'I am dead / my organs have rotted.' A nihilistic delusion, red flag for severe psychotic depression and high suicide risk.",
+    keyDiff:"<b>Cotard</b> (I am dead) vs <b>Capgras</b> (impostor) vs <b>Fregoli</b> (one disguised persecutor).",
+    sum:{headers:["Syndrome","Core belief"],rows:[["Cotard","I am dead / not existing"],["Capgras","Loved one replaced by impostor"],["Fregoli","Strangers are one persecutor in disguise"],["Othello","Partner is unfaithful"],["Ekbom","Infested with parasites"]]},
+    refs:"Oxford Handbook of Psychiatry" },
+  { id:"psy2", topic:"Drug side-effects", source:"Formative IV · Univ of Kufa",
+    stem:"Hours after his first dose of <b>haloperidol</b>, a young man develops a <b>sustained upward gaze and a twisted, rigid neck</b>. He is distressed but alert. What is the immediate treatment?",
+    choices:[
+      {l:"A",t:"IM procyclidine",correct:true,e:"This is <b>acute dystonia</b> (oculogyric crisis + torticollis). An <b>anticholinergic</b> (procyclidine/benztropine) reverses it rapidly."},
+      {l:"B",t:"Oral propranolol",correct:false,e:"Propranolol treats akathisia, not acute dystonia."},
+      {l:"C",t:"IV dantrolene",correct:false,e:"Dantrolene is for neuroleptic malignant syndrome (hyperthermia + lead-pipe rigidity), not isolated dystonia."},
+      {l:"D",t:"Stop the drug and observe",correct:false,e:"Stopping helps eventually, but the patient is distressed — give an anticholinergic now."},
+      {l:"E",t:"Increase the haloperidol dose",correct:false,e:"Dangerous — would worsen the extrapyramidal reaction."}
+    ],
+    keyPoint:"Acute dystonia (early, dramatic, oculogyric crisis/torticollis) → IM anticholinergic (procyclidine) for rapid relief.",
+    keyDiff:"<b>Dystonia</b> (hours, anticholinergic) vs <b>akathisia</b> (propranolol) vs <b>NMS</b> (dantrolene, emergency).",
+    sum:{headers:["EPSE","Timing","Treatment"],rows:[["Acute dystonia","Hours","Anticholinergic"],["Akathisia","Days–weeks","Propranolol"],["Parkinsonism","Weeks","Reduce dose / anticholinergic"],["Tardive dyskinesia","Months–years","Review antipsychotic"]]},
+    refs:"Maudsley Prescribing Guidelines" },
+  { id:"psy3", topic:"Emergencies", source:"End Block 2 · Univ of Kufa",
+    stem:"A patient on an SSRI is also taking tramadol. He becomes agitated and febrile with <b>hyperreflexia, clonus and tremor</b>. Which is the diagnosis?",
+    choices:[
+      {l:"A",t:"Serotonin syndrome",correct:true,e:"Serotonergic drug combination + the triad of <b>neuromuscular excitation (clonus, hyperreflexia)</b>, autonomic instability and altered mental state = serotonin syndrome. Onset is rapid (hours)."},
+      {l:"B",t:"Neuroleptic malignant syndrome",correct:false,e:"NMS follows dopamine blockers and is <b>hypokinetic</b> — lead-pipe rigidity, hyporeflexia, bradykinesia — evolving over days."},
+      {l:"C",t:"Anticholinergic toxicity",correct:false,e:"Gives dry skin, urinary retention and absent bowel sounds — not clonus/hyperreflexia."},
+      {l:"D",t:"Malignant hyperthermia",correct:false,e:"Triggered by volatile anaesthetics/suxamethonium, not SSRIs."},
+      {l:"E",t:"Lithium toxicity",correct:false,e:"Coarse tremor, ataxia and confusion — not the hyper-reflexic clonus picture, and no lithium here."}
+    ],
+    keyPoint:"Serotonin syndrome is HYPERkinetic (clonus, hyperreflexia, rapid onset). NMS is HYPOkinetic (rigidity, hyporeflexia, slow onset).",
+    keyDiff:"<b>Clonus + hyperreflexia</b> → serotonin syndrome. <b>Lead-pipe rigidity + hyporeflexia</b> → NMS.",
+    sum:{headers:["Feature","Serotonin syndrome","NMS"],rows:[["Trigger","Serotonergics","Dopamine blockers"],["Onset","Hours","Days"],["Tone","Clonus, hyperreflexia","Lead-pipe rigidity"],["Reflexes","Increased","Decreased"]]},
+    refs:"UpToDate" },
+  { id:"psy4", topic:"Risk assessment", source:"Formative gp1 · Univ of Kufa",
+    stem:"Which factor most strongly increases the risk of <b>completed suicide</b> following an act of deliberate self-harm?",
+    choices:[
+      {l:"A",t:"Detailed planning with precautions against discovery",correct:true,e:"High suicidal <b>intent</b> — planning, a final act (e.g. a note/will), and steps to avoid being found — is the strongest predictor of a completed suicide."},
+      {l:"B",t:"Frequent superficial cutting",correct:false,e:"Repeated low-lethality self-harm signals distress but is not the strongest predictor of completion."},
+      {l:"C",t:"Impulsive act after an argument",correct:false,e:"Impulsivity carries risk, but planned, concealed attempts with high intent carry more."},
+      {l:"D",t:"Female sex",correct:false,e:"Women attempt more often; <b>men</b> have higher completion rates."},
+      {l:"E",t:"Living with family",correct:false,e:"Social support is generally protective."}
+    ],
+    keyPoint:"It's the INTENT that predicts risk: planning, precautions against discovery, a final act, and ongoing wish to die.",
+    keyDiff:"Frequency of self-harm ≠ lethality. A single highly-planned, concealed attempt outweighs repeated superficial acts.",
+    sum:{headers:["Higher risk","Lower risk"],rows:[["Planned, concealed attempt","Impulsive, witnessed"],["Older male, isolated","Younger, supported"],["Ongoing wish to die","Relief at survival"],["Violent/lethal method","Low-lethality method"]]},
+    refs:"NICE CG133" }
+]},
+{ id:"DERM", title:"Dermatology", color:"#d99a6c", questions:[
+  { id:"der1", topic:"Papulosquamous", source:"End Block · Univ of Kufa",
+    stem:"A 28-year-old has <b>well-demarcated erythematous plaques with silvery scale</b> on the <b>elbows and knees</b>, plus nail pitting. Scratching the scale leaves pinpoint bleeding. What is the diagnosis?",
+    choices:[
+      {l:"A",t:"Psoriasis",correct:true,e:"Classic chronic plaque <b>psoriasis</b>: extensor distribution, silvery scale, nail pitting, and the <b>Auspitz sign</b> (pinpoint bleeding on scale removal)."},
+      {l:"B",t:"Atopic eczema",correct:false,e:"Eczema favours <b>flexures</b>, is itchy and ill-defined, with weeping/lichenification rather than silvery scale."},
+      {l:"C",t:"Lichen planus",correct:false,e:"LP = the 6 Ps (purple, polygonal, pruritic, planar papules) with Wickham's striae, typically on flexor wrists."},
+      {l:"D",t:"Pityriasis rosea",correct:false,e:"Herald patch then a 'fir-tree' truncal eruption that self-resolves — no silvery extensor plaques."},
+      {l:"E",t:"Tinea corporis",correct:false,e:"An annular plaque with central clearing and a scaly advancing edge; KOH shows hyphae."}
+    ],
+    keyPoint:"Psoriasis = extensor surfaces + silvery scale + nail changes + Auspitz sign. Eczema is the flexural, itchy mirror image.",
+    keyDiff:"<b>Psoriasis</b> → extensor, silvery, well-defined. <b>Eczema</b> → flexural, itchy, ill-defined.",
+    sum:{headers:["Feature","Psoriasis","Eczema"],rows:[["Site","Extensor","Flexural"],["Scale","Silvery","Crusted/weepy"],["Border","Well-defined","Ill-defined"],["Nails","Pitting","Usually normal"]]},
+    refs:"Davidson's Principles & Practice" },
+  { id:"der2", topic:"Blistering disease", source:"Formative IV · Univ of Kufa",
+    stem:"A 50-year-old has <b>flaccid blisters</b> that rupture into painful erosions, with significant <b>oral mucosal involvement</b>. Lateral pressure on normal skin shears the epidermis (<b>Nikolsky positive</b>). Which is the diagnosis?",
+    choices:[
+      {l:"A",t:"Pemphigus vulgaris",correct:true,e:"<b>Intra-epidermal</b> split (desmoglein antibodies) → flaccid blisters, prominent oral lesions, Nikolsky positive. Potentially fatal — needs systemic immunosuppression."},
+      {l:"B",t:"Bullous pemphigoid",correct:false,e:"<b>Sub-epidermal</b> (at the DEJ) → TENSE blisters in the <b>elderly</b>, mucosa usually spared, Nikolsky NEGATIVE."},
+      {l:"C",t:"Dermatitis herpetiformis",correct:false,e:"Intensely itchy grouped vesicles on extensors, linked to coeliac disease — not flaccid oral bullae."},
+      {l:"D",t:"Stevens–Johnson syndrome",correct:false,e:"Drug-related, acute, with target lesions and mucosal sloughing over days — a distinct emergency."},
+      {l:"E",t:"Epidermolysis bullosa",correct:false,e:"Inherited mechanobullous disorders presenting typically from birth/childhood."}
+    ],
+    keyPoint:"Pemphigus = intra-epidermal, flaccid, oral, Nikolsky POSITIVE, dangerous. Pemphigoid = sub-epidermal (DEJ), tense, elderly, Nikolsky NEGATIVE.",
+    keyDiff:"<b>'P-emphigus = P-ainful & oral, flaccid, Nikolsky +.'</b> Pemphigoid = tense bullae, mucosa spared, Nikolsky −.",
+    sum:{headers:["Feature","Pemphigus vulgaris","Bullous pemphigoid"],rows:[["Split level","Intra-epidermal","Sub-epidermal (DEJ)"],["Blister","Flaccid","Tense"],["Mucosa","Often involved","Usually spared"],["Nikolsky","Positive","Negative"],["Age","Middle-aged","Elderly"]]},
+    refs:"Robbins; Davidson's" },
+  { id:"der3", topic:"Infections", source:"Block 6 Summative · Univ of Kufa",
+    stem:"A child has an <b>annular, scaly plaque with central clearing</b> and a raised advancing edge on the trunk. <b>KOH microscopy shows branching hyphae.</b> What is the first-line treatment?",
+    choices:[
+      {l:"A",t:"Topical terbinafine",correct:true,e:"Localised <b>tinea corporis</b> (a dermatophyte, confirmed by KOH hyphae) responds to a topical antifungal such as terbinafine."},
+      {l:"B",t:"Topical hydrocortisone",correct:false,e:"A steroid alone worsens/masks dermatophytes ('tinea incognito') — avoid."},
+      {l:"C",t:"Oral aciclovir",correct:false,e:"Antiviral — wrong organism (hyphae indicate a fungus, not a virus)."},
+      {l:"D",t:"Topical mupirocin",correct:false,e:"An antibacterial for localised impetigo — not antifungal."},
+      {l:"E",t:"Oral griseofulvin",correct:false,e:"Reserved for extensive disease or scalp/nail involvement, not a single localised body plaque."}
+    ],
+    keyPoint:"Annular plaque + central clearing + KOH hyphae = dermatophyte (tinea). Localised disease → topical terbinafine; never a steroid alone.",
+    keyDiff:"KOH <b>hyphae</b> → dermatophyte (antifungal). KOH 'spaghetti & meatballs' → pityriasis versicolor. Steroid alone = tinea incognito.",
+    sum:{headers:["Clue","Meaning"],rows:[["Annular, central clearing","Tinea (dermatophyte)"],["KOH hyphae","Confirms fungus"],["Localised","Topical terbinafine"],["Scalp/nail/extensive","Oral antifungal"]]},
+    refs:"NICE CKS; Davidson's" }
+]}
+,
+{ id:"FMT", title:"Question formats (demo)", color:"#7e9fd1", questions:[
+  { id:"emq1", type:"emq", topic:"Headache", source:"Demo · EMQ", optionsTitle:"Theme: Headache — choose the single most likely diagnosis",
+    stem:"A 48-year-old man describes a <b>sudden, severe occipital headache</b> that peaked within seconds ('worst of my life'), with neck stiffness and photophobia. He briefly lost consciousness.",
+    choices:[
+      {l:"A",t:"Migraine",correct:false,e:""},
+      {l:"B",t:"Cluster headache",correct:false,e:""},
+      {l:"C",t:"Subarachnoid haemorrhage",correct:true,e:"A <b>thunderclap</b> headache peaking in seconds with meningism is SAH until excluded. Urgent non-contrast CT head; if negative beyond 6h, LP for xanthochromia."},
+      {l:"D",t:"Giant cell (temporal) arteritis",correct:false,e:""},
+      {l:"E",t:"Tension-type headache",correct:false,e:""},
+      {l:"F",t:"Medication-overuse headache",correct:false,e:""},
+      {l:"G",t:"Idiopathic intracranial hypertension",correct:false,e:""},
+      {l:"H",t:"Bacterial meningitis",correct:false,e:""}
+    ],
+    keyPoint:"Thunderclap headache (maximal intensity in under a minute) = subarachnoid haemorrhage until proven otherwise.",
+    refs:"NICE CKS; Davidson's" },
+  { id:"emq2", type:"emq", topic:"Headache", source:"Demo · EMQ", optionsTitle:"Theme: Headache — choose the single most likely diagnosis",
+    stem:"A 72-year-old woman has a <b>new right temporal headache</b>, <b>jaw claudication</b>, scalp tenderness when combing her hair, and an ESR of 92 mm/h.",
+    choices:[
+      {l:"A",t:"Migraine",correct:false,e:""},
+      {l:"B",t:"Cluster headache",correct:false,e:""},
+      {l:"C",t:"Subarachnoid haemorrhage",correct:false,e:""},
+      {l:"D",t:"Giant cell (temporal) arteritis",correct:true,e:"New temporal headache with <b>jaw claudication</b> and a high ESR in someone over 50 is GCA. Start high-dose corticosteroids immediately to protect sight; confirm with temporal artery biopsy/US."},
+      {l:"E",t:"Tension-type headache",correct:false,e:""},
+      {l:"F",t:"Medication-overuse headache",correct:false,e:""},
+      {l:"G",t:"Idiopathic intracranial hypertension",correct:false,e:""},
+      {l:"H",t:"Bacterial meningitis",correct:false,e:""}
+    ],
+    keyPoint:"New temporal headache + jaw claudication + raised ESR in the over-50s = GCA. Treat first, biopsy second.",
+    refs:"BSR guideline; Davidson's" },
+  { id:"emq3", type:"emq", topic:"Headache", source:"Demo · EMQ", optionsTitle:"Theme: Headache — choose the single most likely diagnosis",
+    stem:"A 26-year-old woman has recurrent <b>unilateral throbbing</b> headaches preceded by <b>zig-zag visual lines</b>, with nausea and photophobia, relieved by sleeping in a dark room.",
+    choices:[
+      {l:"A",t:"Migraine",correct:true,e:"Recurrent unilateral throbbing headache with <b>aura</b> (visual zig-zags), photophobia and nausea, relieved by rest, is migraine with aura."},
+      {l:"B",t:"Cluster headache",correct:false,e:""},
+      {l:"C",t:"Subarachnoid haemorrhage",correct:false,e:""},
+      {l:"D",t:"Giant cell (temporal) arteritis",correct:false,e:""},
+      {l:"E",t:"Tension-type headache",correct:false,e:""},
+      {l:"F",t:"Medication-overuse headache",correct:false,e:""},
+      {l:"G",t:"Idiopathic intracranial hypertension",correct:false,e:""},
+      {l:"H",t:"Bacterial meningitis",correct:false,e:""}
+    ],
+    keyPoint:"Unilateral throbbing headache with aura, photophobia and nausea = migraine.",
+    refs:"NICE CKS" },
+  { id:"sa1", type:"sa", topic:"Obstetric emergencies", source:"Demo · Short answer",
+    stem:"A woman has brisk bleeding immediately after a vaginal delivery and the uterus feels <b>soft and boggy</b>. Outline your <b>first-line management</b> of primary PPH due to uterine atony.",
+    modelAnswer:"Call for help and resuscitate (ABC): two large-bore cannulae, bloods including crossmatch, IV fluids, close monitoring.\nMechanical: 'rub up' a contraction with uterine massage and empty the bladder.\nUterotonics, in order: IV/IM oxytocin → ergometrine (avoid in hypertension) → IM carboprost (avoid in asthma) → misoprostol.\nIf bleeding continues: exclude retained products/genital-tract trauma, then escalate to surgical measures — intrauterine balloon tamponade, B-Lynch suture, uterine/internal iliac artery ligation, and hysterectomy as a last resort.",
+    keyPoint:"Atony causes ~70% of primary PPH. Sequence: resuscitate + massage + uterotonics, then escalate to tamponade/surgery.",
+    refs:"Bailey & Love; RCOG Green-top 52" }
+]}
+];
+
+/* flatten lookup */
+const QMAP = {};
+function buildIndex(){
+  for(const k in QMAP) delete QMAP[k];
+  BANK.forEach(p=>p.questions.forEach(q=>{
+    q.packId=p.id; q.packTitle=p.title;
+    if(!q.system) q.system = p.title;
+    if(!q.reference) q.reference = (typeof q.source==="string"? q.source : "") || "Other";
+    QMAP[q.id]=q;
+  }));
+}
+function correctLabel(q){ const c=q.choices&&q.choices.find(x=>x.correct); return c?c.l:null; }
+
+/* ============================================================
+   REMOTE BANK SYNC
+   Pulls canonical packs from a hosted manifest (GitHub Pages / raw),
+   caches them, and falls back to the bundled bank when offline or
+   no source is set. This is the real §2 mechanism; in this sandbox
+   it will usually fall back to bundled (no repo / cross-origin limits).
+   ============================================================ */
+async function syncBank(base){
+  base=(base||"").trim().replace(/\/+$/,"");
+  if(!base) throw new Error("no source");
+  const mfRes=await fetch(base+"/manifest.json",{cache:"no-store"});
+  if(!mfRes.ok) throw new Error("manifest "+mfRes.status);
+  const mf=await mfRes.json();
+  // leaderboard endpoint travels in the manifest → every device gets it automatically, no per-user setup
+  if(mf.leaderboard !== undefined){ DB.settings.groupEndpoint = mf.leaderboard || ""; save.settings(); }
+  const packs=[];
+  for(const entry of (mf.packs||[])){
+    const u=/^https?:/.test(entry.url)? entry.url : base+"/"+entry.url;
+    const r=await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(entry.packId+" "+r.status);
+    packs.push(adaptPack(await r.json()));
+  }
+  if(!packs.length) throw new Error("empty manifest");
+  BANK.length=0; packs.forEach(p=>BANK.push(p)); buildIndex();
+  wsSet("medrecall:bankcache:v1", packs);   // keep a copy for offline / instant start
+  return packs.reduce((n,p)=>n+p.questions.length,0);
+}
+function adaptPack(c){
+  return { id:c.packId, title:c.title, color:c.color||"#3fb6a8",
+    questions:(c.questions||[]).map(q=>{
+      const hasSys = q.topic && q.topic.includes(" · ");
+      const system = q.system || (hasSys? q.topic.split(" · ")[0] : null) || c.title;
+      const topic  = q.topic ? (hasSys? q.topic.split(" · ").slice(1).join(" · ") : q.topic) : "General";
+      const reference = q.reference || (q.source && (q.source.part || q.source.paper)) || "Other";
+      return {
+        id:q.id, type:q.type||"mcq", system, reference, topic,
+        source:typeof q.source==="string"?q.source:[q.source&&q.source.paper, q.source&&q.source.institution].filter(Boolean).join(" · "),
+        stem:q.stem,
+        choices:(q.choices||[]).map(ch=>({l:ch.label,t:ch.text,correct:!!ch.correct,e:ch.explanation})),
+        optionsTitle:q.optionsTitle||null, modelAnswer:q.modelAnswer||null,
+        keyPoint:q.keyPoint, keyDiff:q.keyDifferentiator||null, sum:q.summaryTable||null,
+        flag:q.flag?{severity:q.flag.severity,app:q.flag.appAnswer,correct:q.flag.correctAnswer,source:q.flag.source,note:q.flag.note}:undefined,
+        refs:q.references||null
+      };
+    }) };
+}
+
+/* ============================================================
+   APP STATE
+   ============================================================ */
+const App = { screen:"home", nav:{system:null,reference:null}, practice:null, exam:null, examResult:null, builder:null, examReview:false };
+let ghToken=null; // fine-grained GitHub token, stored only on this device (for posting your own leaderboard score)
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const stripBold = s => String(s).replace(/<\/?b>/g,""); // remove emphasis cues while a question is being answered
+
+function dueCount(packId){
+  const t=today(); let n=0;
+  const questions = packId ? (BANK.find(p=>p.id===packId)||{questions:[]}).questions : Object.values(QMAP);
+  questions.forEach(q=>{
+    const p=DB.progress.questions[q.id];
+    if(!p || !p.srs) return; // new cards counted separately
+    if(p.srs.due && p.srs.due<=t) n++;
+  });
+  return n;
+}
+function seenCount(packId){
+  const arr = (BANK.find(p=>p.id===packId)||{questions:[]}).questions;
+  return arr.filter(q=>DB.progress.questions[q.id]).length;
+}
+function masteredCount(packId){
+  const arr = (BANK.find(p=>p.id===packId)||{questions:[]}).questions;
+  return arr.filter(q=>{const p=DB.progress.questions[q.id];return p&&p.srs&&p.srs.interval>=21;}).length;
+}
+
+/* ---- browse hierarchy: System → Reference → Topic ---- */
+const allQs = () => Object.values(QMAP);
+const qSys = q => q.system || q.packTitle || "Other";
+const qRef = q => q.reference || (typeof q.source==="string"?q.source:"") || "Other";
+const colorOf = q => (BANK.find(p=>p.id===q.packId)||{}).color || "#3fb6a8";
+function groupCounts(filterFn, keyFn){
+  const total=new Map(), seen=new Map(), due=new Map(), col=new Map();
+  const t=today();
+  allQs().forEach(q=>{ if(filterFn && !filterFn(q)) return; const k=keyFn(q);
+    total.set(k,(total.get(k)||0)+1);
+    const pr=DB.progress.questions[q.id];
+    if(pr) seen.set(k,(seen.get(k)||0)+1);
+    if(pr&&pr.srs&&pr.srs.due&&pr.srs.due<=t) due.set(k,(due.get(k)||0)+1);
+    if(!col.has(k)) col.set(k, colorOf(q));
+  });
+  return [...total.keys()].sort((a,b)=>a.localeCompare(b)).map(k=>({name:k,total:total.get(k),seen:seen.get(k)||0,due:due.get(k)||0,color:col.get(k)}));
+}
+const listSystems    = ()      => groupCounts(null, qSys);
+const listReferences = sys     => groupCounts(q=>qSys(q)===sys, qRef);
+const listTopics     = (sys,r) => groupCounts(q=>qSys(q)===sys && qRef(q)===r, q=>q.topic||"General");
+const poolFor = ctx => {
+  if(ctx.ids) return ctx.ids.filter(id=>QMAP[id]);
+  return allQs().filter(q=>{
+    if(ctx.system!=null   && qSys(q)!==ctx.system)              return false;
+    if(ctx.reference!=null&& qRef(q)!==ctx.reference)           return false;
+    if(ctx.topic!=null    && (q.topic||"General")!==ctx.topic)  return false;
+    return true;
+  }).map(q=>q.id);
+};
+function ringSVG(pct,col){ const R=20,C=2*Math.PI*R,off=C*(1-Math.min(1,Math.max(0,pct)));
+  return `<svg viewBox="0 0 48 48" style="width:48px;height:48px;flex:none"><circle cx="24" cy="24" r="${R}" fill="none" stroke="var(--line)" stroke-width="5"/><circle cx="24" cy="24" r="${R}" fill="none" stroke="${col||'var(--teal)'}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 24 24)"/></svg>`;
+}
+function bumpStreak(){
+  const s=DB.progress.streak||{current:0,lastStudied:null}, t=today();
+  if(s.lastStudied!==t){ s.current = (s.lastStudied===yesterday())? s.current+1 : 1; s.lastStudied=t; }
+  DB.progress.streak=s;
+}
+function dailyCount(){ const d=DB.progress.daily; return (d&&d.date===today())? d.count : 0; }
+function bumpDaily(){
+  const t=today(), goal=DB.settings.dailyGoal||20;
+  let d=DB.progress.daily; if(!d || d.date!==t){ d={date:t,count:0,celebrated:false}; }
+  d.count++;
+  if(d.count>=goal && !d.celebrated){ d.celebrated=true; DB.progress.daily=d; setTimeout(()=>{ confetti(); cue("daily"); toast("Daily goal reached — "+goal+" done!"); }, 60); }
+  DB.progress.daily=d;
+}
+function recordAttempt(q, chosen, grade, okOverride){
+  const ok = (typeof okOverride==="boolean") ? okOverride : (correctLabel(q)===chosen);
+  const p = DB.progress.questions[q.id] || {seen:0,correct:0,history:[],marked:false,srs:null};
+  p.seen++; if(ok)p.correct++; p.lastResult=ok?"correct":"wrong"; p.lastSeen=today();
+  p.history.push({date:today(),answer:chosen,correct:ok,grade});
+  if(grade) p.srs = schedule(p.srs, grade);
+  DB.progress.questions[q.id]=p;
+  bumpStreak(); bumpDaily(); save.progress();
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastT;
+function toast(msg){
+  let t=$("toast"); if(!t){ t=document.createElement("div"); t.id="toast"; t.className="toast"; document.body.appendChild(t); }
+  t.textContent=msg; t.style.display="block"; clearTimeout(toastT);
+  toastT=setTimeout(()=>{t.style.display="none";},1900);
+}
+
+/* ============================================================
+   ISSUE REPORTING
+   Prototype: stored locally + exportable.
+   Production: submit as a GitHub issue (design doc §5).
+   ============================================================ */
+let reportType="Wrong answer";
+let maintTaps=0, maintTapT;
+function openReport(qid){
+  closeReport();
+  App.reportQid=qid; reportType="Wrong answer";
+  const q=QMAP[qid];
+  const types=["Wrong answer","Wrong explanation","Typo / formatting","Other"];
+  const m=document.createElement("div"); m.id="modal"; m.className="modal-bg"; m.dataset.action="modal-bg";
+  m.innerHTML=`<div class="modal" data-action="noop">
+    <div class="row between"><b class="serif" style="font-size:19px">Report an issue</b>
+      <button class="iconbtn" data-action="report-close"><svg class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="faint" style="font-size:12.5px;margin:6px 0 14px">${esc(q.packTitle)} · ${esc(q.topic)}</div>
+    <div class="faint" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:8px">What's wrong?</div>
+    <div class="wrapflex" id="rtypes">${types.map(t=>`<button class="btn-ghost btn-sm rtype ${t===reportType?'on':''}" data-action="report-type" data-type="${t}">${t}</button>`).join("")}</div>
+    <div class="faint" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:16px 0 8px">Details (optional)</div>
+    <textarea class="inp" id="reporttext" placeholder="Describe the problem…" style="min-height:90px;font-family:inherit;font-size:14px"></textarea>
+    <div style="height:14px"></div>
+    <button class="btn btn-primary" data-action="report-submit">Send report</button>
+  </div>`;
+  document.body.appendChild(m);
+}
+function closeReport(){ const m=$("modal"); if(m) m.remove(); }
+
+function exportJSON(obj,name){
+  const b=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"});
+  const u=URL.createObjectURL(b), a=document.createElement("a");
+  a.href=u; a.download=name; a.click(); URL.revokeObjectURL(u);
+}
+
+/* ============================================================
+   RENDER ROUTER
+   ============================================================ */
+function render(){
+  const a=$("app");
+  let foot=$("foot"); if(foot) foot.remove();
+  if(App.screen==="home") a.innerHTML=viewHome();
+  else if(App.screen==="system") a.innerHTML=viewSystem();
+  else if(App.screen==="reference") a.innerHTML=viewReference();
+  else if(App.screen==="quiz") a.innerHTML=viewQuiz();
+  else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
+  else if(App.screen==="exam-runner") a.innerHTML=viewExam();
+  else if(App.screen==="exam-results") a.innerHTML=viewResults();
+  else if(App.screen==="celebrate") a.innerHTML=viewCelebrate();
+  else if(App.screen==="search") a.innerHTML=viewSearch();
+  else if(App.screen==="trophies") a.innerHTML=viewTrophies();
+  else if(App.screen==="leaderboard") a.innerHTML=viewLeaderboard();
+  else if(App.screen==="stats") a.innerHTML=viewStats();
+  else if(App.screen==="settings") a.innerHTML=viewSettings();
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+/* ---------- HOME ---------- */
+function viewHome(){
+  const totalQ=Object.keys(QMAP).length;
+  const totalSeen=Object.keys(DB.progress.questions).length;
+  const allDue=dueCount();
+  const streak=DB.progress.streak?.current||0;
+  let html=`<div class="fade">`;
+
+  // level + streak banner
+  const xp=DB.progress.xp||0, lvl=levelOf(xp), inLvl=xpInLevel(xp);
+  const flame=`<svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`;
+  html+=`<div class="levelcard">
+    <div class="row between">
+      <div class="row" style="gap:11px">
+        <div class="lvlbadge">${lvl}</div>
+        <div><div style="font-weight:700;font-size:15px">Level ${lvl}</div><div class="faint" style="font-size:12px">${inLvl} / 200 XP</div></div>
+      </div>
+      <div class="streakpill">${flame}${streak}</div>
+    </div>
+    <div class="progressbar" style="margin-top:11px"><i style="width:${inLvl/200*100}%"></i></div>
+  </div>`;
+
+  // daily goal ring
+  const dc=dailyCount(), goal=DB.settings.dailyGoal||20, dpct=goal?dc/goal:0, done=dc>=goal;
+  html+=`<div class="card pad" style="margin-bottom:14px"><div class="row" style="gap:14px">
+    ${ringSVG(dpct, done?'var(--green)':'var(--teal)')}
+    <div style="flex:1"><div style="font-weight:700;font-size:15px">Daily goal</div><div class="faint" style="font-size:12.5px;margin-top:1px">${dc} / ${goal} today${done?' · reached!':''}</div></div>
+  </div></div>`;
+
+  html+=`<div class="stat3 stagger">
+    <div class="card"><div class="n teal">${allDue}</div><div class="l">Due today</div></div>
+    <div class="card"><div class="n amber">${streak}</div><div class="l">Day streak</div></div>
+    <div class="card"><div class="n green">${totalSeen}/${totalQ}</div><div class="l">Seen</div></div>
+  </div>`;
+
+  // suggestions — "what should I study?"
+  const sugg=computeSuggestions();
+  html+=`<div class="sectlabel">What should I study?</div>`;
+  sugg.forEach(s=>{
+    const act = s.action==="topic"
+      ? `data-action="study-topic" data-system="${esc(s.data.system)}" data-reference="${esc(s.data.reference)}" data-topic="${esc(s.data.topic)}"`
+      : s.action==="none" ? '' : `data-action="${s.action}"`;
+    const tag = s.action==="none" ? "div" : "button";
+    html+=`<${tag} class="card pad sugg" ${act} style="margin-bottom:9px;width:100%;text-align:left">
+      <div class="row" style="gap:12px">
+        <span class="suggicon">${s.icon}</span>
+        <div style="flex:1"><div style="font-weight:700;font-size:14.5px">${esc(s.title)}</div>${s.sub?`<div class="faint" style="font-size:12.5px;margin-top:1px">${esc(s.sub)}</div>`:''}</div>
+        ${s.action!=="none"?`<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--teal)"><path d="M9 6l6 6-6 6"/></svg>`:''}
+      </div>
+    </${tag}>`;
+  });
+
+  const newAvail=totalQ-totalSeen;
+  html+=`<div class="sectlabel">Recall</div>
+  <button class="card pad subj" data-action="start-smart" style="width:100%">
+    <div class="row between">
+      <div><h3 style="font-size:18px">Smart Review</h3>
+      <div class="muted" style="font-size:13.5px;margin-top:2px">${allDue} due + up to ${Math.min(DB.settings.newPerDay,newAvail)} new · interleaved</div></div>
+      <svg class="i" viewBox="0 0 24 24" style="stroke:var(--teal);width:24px;height:24px"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>
+    </div>
+  </button>
+  <div style="height:10px"></div>
+  <button class="btn btn-ghost" data-action="nav" data-screen="exam-builder">
+    <svg class="i" viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg> Exam Simulation
+  </button>
+  <div class="row" style="gap:10px;margin-top:10px">
+    <button class="btn btn-ghost" data-action="nav" data-screen="trophies" style="flex:1"><svg class="i" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg> Achievements</button>
+    <button class="btn btn-ghost" data-action="nav" data-screen="leaderboard" style="flex:1"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg> Leaderboard</button>
+  </div>`;
+
+  // browse by system
+  const sys=listSystems();
+  html+=`<div class="sectlabel">Study by system</div>`;
+  if(!sys.length) html+=`<div class="empty">No questions loaded.</div>`;
+  sys.forEach(s=>{
+    const pct=s.total?Math.round(s.seen/s.total*100):0;
+    html+=`<button class="card pad subj" data-action="open-system" data-system="${esc(s.name)}" style="margin-bottom:10px">
+      <div class="row between">
+        <h3 style="color:${s.color}">${esc(s.name)}</h3>
+        ${s.due>0?`<span class="badge due">${s.due} due</span>`:`<span class="badge zero">${s.seen}/${s.total}</span>`}
+      </div>
+      <div class="row" style="gap:14px;margin-top:7px;font-size:12.5px;color:var(--faint)">
+        <span>${s.total} questions</span><span>·</span><span>${listReferences(s.name).length} references</span>
+      </div>
+      <div class="progressbar"><i style="width:${pct}%"></i></div>
+    </button>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+/* ---------- BROWSE: references within a system ---------- */
+function viewSystem(){
+  const sys=App.nav.system, refs=listReferences(sys);
+  const sysColor=(listSystems().find(s=>s.name===sys)||{}).color||"#3fb6a8";
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:${sysColor}">${esc(sys)}</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${refs.length} references · ${poolFor({system:sys}).length} questions</p>
+    <div style="height:10px"></div>
+    <button class="btn btn-primary" data-action="study-system" data-system="${esc(sys)}">Study everything in ${esc(sys)}</button>
+    <div class="sectlabel">References</div>`;
+  refs.forEach(r=>{
+    const pct=r.total?Math.round(r.seen/r.total*100):0;
+    html+=`<button class="card pad subj" data-action="open-reference" data-system="${esc(sys)}" data-reference="${esc(r.name)}" style="margin-bottom:10px">
+      <div class="row between"><h3 style="font-size:16px">${esc(r.name)}</h3>${r.due>0?`<span class="badge due">${r.due} due</span>`:`<span class="badge zero">${r.seen}/${r.total}</span>`}</div>
+      <div class="row" style="gap:14px;margin-top:7px;font-size:12.5px;color:var(--faint)"><span>${r.total} questions</span><span>·</span><span>${listTopics(sys,r.name).length} topics</span></div>
+      <div class="progressbar"><i style="width:${pct}%"></i></div>
+    </button>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+/* ---------- BROWSE: topics within a reference ---------- */
+function viewReference(){
+  const sys=App.nav.system, ref=App.nav.reference, tops=listTopics(sys,ref);
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="open-system" data-system="${esc(sys)}" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(sys)}</button>
+    <div class="faint mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(sys)}</div>
+    <h2 class="serif" style="font-size:21px;font-weight:600;margin-top:2px">${esc(ref)}</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${tops.length} topics · ${poolFor({system:sys,reference:ref}).length} questions</p>
+    <div style="height:10px"></div>
+    <button class="btn btn-primary" data-action="study-reference" data-system="${esc(sys)}" data-reference="${esc(ref)}">Study all of this reference</button>
+    <div class="sectlabel">Topics</div>`;
+  tops.forEach(tp=>{
+    const pct=tp.total?Math.round(tp.seen/tp.total*100):0;
+    html+=`<button class="card pad subj" data-action="study-topic" data-system="${esc(sys)}" data-reference="${esc(ref)}" data-topic="${esc(tp.name)}" style="margin-bottom:9px">
+      <div class="row between"><span style="font-weight:600;font-size:14.5px">${esc(tp.name)}</span>${tp.due>0?`<span class="badge due">${tp.due}</span>`:`<span class="faint mono" style="font-size:12px">${tp.seen}/${tp.total}</span>`}</div>
+      <div class="progressbar" style="margin-top:9px"><i style="width:${pct}%"></i></div>
+    </button>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+/* ---------- QUIZ (answer-then-reveal) ---------- */
+function startPracticeCtx(ctx, label, startIndex){
+  const pool = ctx.smart ? smartPool() : poolFor(ctx);
+  if(!pool.length){ toast(ctx.smart?"Nothing due — pick a topic":"No questions here yet"); return; }
+  App.practice={ctx,label,pool,i:startIndex||0,revealed:false,selected:null,answered:0,correct:0,xp:0};
+  if(!ctx.smart){ DB.progress.resume={ctx,i:App.practice.i,label}; save.progress(); }
+  App.screen="quiz"; render();
+}
+function smartPool(){
+  const t=today(), due=[], fresh=[];
+  allQs().forEach(q=>{ const p=DB.progress.questions[q.id];
+    if(p&&p.srs){ if(p.srs.due&&p.srs.due<=t) due.push(q.id); }
+    else fresh.push(q.id);
+  });
+  fresh.sort(()=>Math.random()-0.5);
+  return [...due, ...fresh.slice(0, DB.settings.newPerDay)];
+}
+function viewQuiz(){
+  const s=App.practice, q=QMAP[s.pool[s.i]];
+  const prog=DB.progress.questions[q.id];
+  const marked=prog?.marked;
+  let html=`<div class="fade">
+    <div class="row between" style="margin-bottom:6px">
+      <button class="btn-sm btn-ghost" data-action="end-practice"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Exit</button>
+      <span class="mono faint" style="font-size:13px">${s.i+1} / ${s.pool.length}</span>
+      <button class="iconbtn" data-action="toggle-mark" title="Mark for review" style="${marked?'color:var(--amber);border-color:#6b541f':''}">
+        <svg class="i" viewBox="0 0 24 24" style="${marked?'fill:var(--amber)':''}"><path d="M5 3v18l7-5 7 5V3z"/></svg>
+      </button>
+    </div>
+    <div class="progressbar" style="margin-bottom:16px"><i style="width:${(s.i)/s.pool.length*100}%"></i></div>`;
+
+  html+=`<div class="qmeta">
+    <span class="pill" style="color:${colorOf(q)}">${esc(qSys(q))}</span>
+    <span class="pill">${esc(q.topic)}</span>
+    ${q.type==="emq"?'<span class="pill emqtag">EMQ</span>':q.type==="sa"?'<span class="pill emqtag">Short answer</span>':''}
+  </div>
+  ${q.type==="emq"&&q.optionsTitle?`<div class="optstitle">${esc(q.optionsTitle)}</div>`:''}
+  <div class="stem serif" style="font-family:inherit">${s.revealed ? q.stem : stripBold(q.stem)}</div>`;
+
+  // answer area (type-aware)
+  if(q.type==="sa"){
+    if(!s.revealed) html+=`<div class="faint" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 8px">Your answer</div>
+      <textarea id="saInput" class="sainput" placeholder="Write your answer, then reveal the model answer…">${esc(s.saText||"")}</textarea>`;
+  } else {
+    if(q.type==="emq") html+=`<div class="optshdr">Pick the single best option</div>`;
+    html+=`<div class="choices">`;
+    q.choices.forEach(c=>{
+      let cls="choice"+(q.type==="emq"?" opt":""), vd="";
+      if(!s.revealed){ if(s.selected===c.l) cls+=" sel"; }
+      else {
+        if(c.correct){ cls+=" correct"; vd=`<span class="vd">CORRECT</span>`; }
+        else if(s.selected===c.l){ cls+=" wrong"; vd=`<span class="vd">YOUR PICK</span>`; }
+      }
+      html+=`<button class="${cls}" ${s.revealed?'':`data-action="select-choice" data-label="${c.l}"`}>
+        <span class="lab">${c.l}</span><span>${esc(c.t)}</span>${vd}
+      </button>`;
+    });
+    html+=`</div>`;
+  }
+
+  // reveal block
+  if(s.revealed) html+=renderReveal(q,s.selected,{saText:s.saText});
+  html+=`<div style="text-align:center;margin-top:20px"><button class="reportlink" data-action="report-open" data-qid="${q.id}">⚑ Report an issue with this question</button></div>`;
+
+  // footer
+  let foot;
+  if(!s.revealed){
+    foot=`<button class="btn btn-primary" data-action="reveal" ${(q.type==="sa"||s.selected)?'':'disabled'}>Reveal answer</button>`;
+  } else {
+    foot=`<div style="width:100%">
+      <div class="faint" style="font-size:11px;text-align:center;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">How well did you recall it?</div>
+      <div class="grades">
+        <button class="grade again" data-action="grade" data-grade="again"><div class="gl">Again</div><div class="gi">&lt;1d</div></button>
+        <button class="grade hard" data-action="grade" data-grade="hard"><div class="gl">Hard</div><div class="gi">soon</div></button>
+        <button class="grade good" data-action="grade" data-grade="good"><div class="gl">Good</div><div class="gi">${schedDays(q,'good')}d</div></button>
+        <button class="grade easy" data-action="grade" data-grade="easy"><div class="gl">Easy</div><div class="gi">${schedDays(q,'easy')}d</div></button>
+      </div></div>`;
+  }
+  html+=`</div>`;
+  setFoot(foot);
+  return html;
+}
+function schedDays(q,grade){ const cur=DB.progress.questions[q.id]?.srs; return schedule(cur,grade).interval; }
+
+function renderReveal(q, chosen, opts={}){
+  const cl=correctLabel(q);
+  let html=`<div class="reveal stagger">`;
+  // flag
+  if(q.flag){
+    const f=q.flag;
+    html+=`<div class="flag ${f.severity}">
+      <div class="k"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> ${f.severity} · FILE ANSWER vs STANDARD TEACHING</div>
+      ${(f.app||f.correct)?`<div class="vs">${f.app?`<span class="tag" style="color:var(--red)">App: ${esc(f.app)}</span>`:''}${f.correct?`<span class="tag" style="color:var(--green)">Correct: ${esc(f.correct)}</span>`:''}${f.source?`<span class="tag">${esc(f.source)}</span>`:''}</div>`:(f.source?`<div class="vs"><span class="tag">${esc(f.source)}</span></div>`:'')}
+      ${f.note?`<div class="note">${esc(f.note)}</div>`:''}
+    </div>`;
+  }
+  // answer / model answer (type-aware)
+  if(q.type==="sa"){
+    if(opts.saText) html+=`<div class="block"><div class="ttl">Your answer</div><div class="body"><div style="white-space:pre-wrap">${esc(opts.saText)}</div></div></div>`;
+    html+=`<div class="ansbox"><div class="k">Model answer</div><div class="v" style="white-space:pre-wrap">${esc(q.modelAnswer||"—")}</div></div>`;
+  } else {
+    if(cl) html+=`<div class="ansbox"><div class="k">Correct answer</div>
+      <div class="v">${cl} — ${esc((q.choices.find(c=>c.l===cl)||{}).t||"")}</div></div>`;
+    if(q.type==="emq"){
+      const cc=q.choices.find(c=>c.correct);
+      if(cc && cc.e) html+=`<div class="block"><div class="ttl">Why this option</div><div class="body"><div class="exp" style="margin:0">${cc.e}</div></div></div>`;
+    } else {
+      html+=`<div class="block"><div class="ttl">Choice analysis</div><div class="body" style="padding:0">`;
+      q.choices.forEach((c,idx)=>{
+        const isC=c.correct;
+        html+=`<div style="padding:12px 14px;${idx?'border-top:1px solid var(--line-soft)':''}">
+          <div class="row" style="gap:9px;align-items:flex-start">
+            <span class="lab" style="background:${isC?'var(--green)':'var(--surface-3)'};color:${isC?'#04211e':'var(--muted)'};border:none;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-weight:700;font-size:12px;flex:none">${c.l}</span>
+            <div class="grow"><b style="${isC?'color:var(--green)':''}">${esc(c.t)}</b>
+            <span style="font-size:11px;font-weight:800;letter-spacing:.05em;margin-left:6px;color:${isC?'var(--green)':'var(--red)'}">${isC?'CORRECT':'WRONG'}</span>
+            ${(chosen===c.l&&!isC)?'<span class="pill amber" style="margin-left:6px">your pick</span>':''}
+            <div class="exp">${c.e}</div></div>
+          </div></div>`;
+      });
+      html+=`</div></div>`;
+    }
+  }
+
+  // key differentiator
+  if(q.keyDiff) html+=`<div class="keydiff"><b>KEY DIFFERENTIATOR</b><br>${q.keyDiff}</div>`;
+  // key point
+  if(q.keyPoint) html+=`<div class="keypoint"><div class="k"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg> KEY POINT</div>
+    <div class="v">${esc(q.keyPoint)}</div></div>`;
+  // summary table
+  if(q.sum){
+    html+=`<div class="block"><div class="ttl">High-yield summary</div><div style="overflow-x:auto"><table class="sum"><thead><tr>`;
+    q.sum.headers.forEach(h=>html+=`<th>${esc(h)}</th>`);
+    html+=`</tr></thead><tbody>`;
+    q.sum.rows.forEach(r=>{ html+="<tr>"; r.forEach(cell=>html+=`<td>${esc(cell)}</td>`); html+="</tr>"; });
+    html+=`</tbody></table></div></div>`;
+  }
+  if(q.refs) html+=`<div class="faint" style="font-size:12px;text-align:right">Source: ${esc(q.refs)}</div>`;
+  html+=`</div>`;
+  return html;
+}
+
+function advancePractice(){
+  const s=App.practice;
+  if(s.i+1>=s.pool.length){
+    DB.progress.resume=null; save.progress();
+    App.lastSession={answered:s.answered, correct:s.correct, xp:s.xp, label:s.label};
+    evaluateAchievements({perfectSet: s.answered>=10 && s.correct===s.answered});
+    App.practice=null; App.screen="celebrate"; render(); confetti(); cue("done");
+    return;
+  }
+  s.i++; s.revealed=false; s.selected=null; s.saText="";
+  if(s.ctx && !s.ctx.smart){ DB.progress.resume={ctx:s.ctx, i:s.i, label:s.label}; save.progress(); }
+  render();
+}
+
+/* ---------- SESSION CELEBRATION ---------- */
+function viewCelebrate(){
+  const r=App.lastSession||{answered:0,correct:0,xp:0,label:""};
+  const acc=r.answered?Math.round(r.correct/r.answered*100):0;
+  const msg = acc>=90?"Outstanding!" : acc>=70?"Great work!" : acc>=50?"Nice progress!" : "Every rep counts!";
+  const lvl=levelOf(DB.progress.xp), streak=DB.progress.streak?.current||0;
+  return `<div class="fade celebrate">
+    <div style="font-size:46px;line-height:1">&#127881;</div>
+    <div class="big" style="margin-top:6px">${msg}</div>
+    <div class="muted" style="margin-top:4px">${esc(r.label||"Session")} complete</div>
+    <div class="xpgain">+${r.xp} XP</div>
+    <div class="stat3 stagger" style="margin-top:18px">
+      <div class="card"><div class="n teal">${r.correct}/${r.answered}</div><div class="l">Correct</div></div>
+      <div class="card"><div class="n amber">${streak}</div><div class="l">Day streak</div></div>
+      <div class="card"><div class="n green">Lv ${lvl}</div><div class="l">Level</div></div>
+    </div>
+    <div style="height:20px"></div>
+    <button class="btn btn-primary" data-action="celebrate-done">Back to home</button>
+    <div style="height:8px"></div>
+    <button class="btn btn-ghost" data-action="start-smart">Keep going — Smart Review</button>
+  </div>`;
+}
+
+/* ---------- SEARCH ---------- */
+function viewSearch(){
+  return `<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">Search</h2>
+    <p class="muted" style="font-size:13.5px;margin:2px 0 12px">Find any question by keyword, topic, drug, or diagnosis.</p>
+    <input id="searchbox" class="searchbox" type="search" placeholder="e.g. glaucoma, otitis, thunderclap…" autocomplete="off">
+    <div id="searchresults" style="margin-top:14px"></div>
+  </div>`;
+}
+function searchResultsHTML(qstr){
+  const term=(qstr||"").trim().toLowerCase();
+  if(term.length<2) return `<div class="empty">Type at least 2 letters.</div>`;
+  const words=term.split(/\s+/);
+  const hay=q=>((q.stem||"")+" "+(q.topic||"")+" "+qSys(q)+" "+(q.choices||[]).map(c=>c.t).join(" ")+" "+(q.keyPoint||"")+" "+(q.modelAnswer||"")).toLowerCase();
+  const hits=allQs().filter(q=>{ const h=hay(q); return words.every(w=>h.includes(w)); }).slice(0,60);
+  if(!hits.length) return `<div class="empty">No matches for “${esc(qstr)}”.</div>`;
+  let html=`<div class="faint" style="font-size:12px;margin-bottom:8px">${hits.length}${hits.length===60?'+':''} result${hits.length>1?'s':''}</div>`;
+  hits.forEach(q=>{
+    const plain=stripBold(q.stem).replace(/<[^>]+>/g,"");
+    const snip=plain.length>120?plain.slice(0,120)+"…":plain;
+    html+=`<button class="card pad sugg" data-action="open-q" data-qid="${q.id}" style="margin-bottom:8px;width:100%;text-align:left">
+      <div class="row between" style="margin-bottom:3px"><span class="pill" style="color:${colorOf(q)}">${esc(qSys(q))}</span><span class="faint" style="font-size:11px">${esc(q.topic)}${q.type&&q.type!=="mcq"?' · '+q.type.toUpperCase():''}</span></div>
+      <div style="font-size:13.5px;line-height:1.45">${esc(snip)}</div>
+    </button>`;
+  });
+  return html;
+}
+document.body.addEventListener("input", e=>{ if(e.target && e.target.id==="searchbox"){ const r=$("searchresults"); if(r) r.innerHTML=searchResultsHTML(e.target.value); } });
+
+/* ---------- ACHIEVEMENTS / TROPHIES ---------- */
+function viewTrophies(){
+  const got=DB.progress.achievements||{};
+  const n=Object.keys(got).length;
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">Achievements</h2>
+    <p class="muted" style="font-size:13.5px;margin:2px 0 14px">${n} of ${ACHIEVEMENTS.length} unlocked</p>`;
+  ACHIEVEMENTS.forEach(a=>{
+    const on=!!got[a.id];
+    html+=`<div class="card pad" style="margin-bottom:9px;${on?'':'opacity:.55'}">
+      <div class="row" style="gap:13px">
+        <div class="ach-ic" style="${on?'':'filter:grayscale(1)'}">${a.icon}</div>
+        <div style="flex:1"><div style="font-weight:700;font-size:14.5px">${a.name}</div><div class="faint" style="font-size:12.5px;margin-top:1px">${a.desc}</div></div>
+        ${on?`<svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--green)"><path d="M20 6L9 17l-5-5"/></svg>`:`<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--faint)"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`}
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+/* ---------- LEADERBOARD (study group) ---------- */
+/* ---- anonymous identity + windowed scoring ---- */
+const LB_ADJ=["Swift","Brave","Sharp","Calm","Keen","Bold","Quiet","Clever","Lucky","Steady","Bright","Nimble","Sly","Witty","Mighty","Gentle","Fierce","Wise","Stoic","Zesty"];
+const LB_ANI=["Falcon","Otter","Heron","Lynx","Ibex","Raven","Cobra","Gecko","Panda","Tiger","Wolf","Fox","Owl","Hawk","Bison","Crane","Seal","Moth","Stork","Mantis"];
+function randomAlias(){ return LB_ADJ[Math.floor(Math.random()*LB_ADJ.length)]+" "+LB_ANI[Math.floor(Math.random()*LB_ANI.length)]+" "+(1+Math.floor(Math.random()*99)); }
+function ensureAlias(){ if(!DB.settings.displayName){ DB.settings.displayName=randomAlias(); save.settings(); } return DB.settings.displayName; }
+function lbId(){ if(!DB.settings.lbId){ DB.settings.lbId="u"+Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4); save.settings(); } return DB.settings.lbId; }
+const curMonth=()=>today().slice(0,7), curYear=()=>today().slice(0,4);
+function xpToday(){ return (DB.progress.xpLog||{})[today()]||0; }
+function xpWindow(prefix){ const l=DB.progress.xpLog||{}; let s=0; for(const k in l){ if(k.indexOf(prefix)===0) s+=l[k]; } return s; }
+function topSubject(){ const m={}; allQs().forEach(q=>{ const p=DB.progress.questions[q.id]; if(p&&p.seen){ const s=qSys(q); m[s]=(m[s]||0)+p.seen; } }); let best="—",bv=0; for(const k in m){ if(m[k]>bv){bv=m[k];best=k;} } return best; }
+function activeDays7(){
+  const l=DB.progress.xpLog||{}; const now=new Date(today()+"T00:00:00"); let n=0;
+  for(const k in l){ if(l[k]>0){ const diff=(now-new Date(k+"T00:00:00"))/86400000; if(diff>=0 && diff<=6) n++; } }
+  return n;
+}
+function myEntry(){
+  const t=today();
+  return { id:lbId(), name:ensureAlias(), level:levelOf(DB.progress.xp), streak:DB.progress.streak?.current||0,
+    subject:topSubject(), week:activeDays7(),
+    xpDay:xpToday(), xpMonth:xpWindow(curMonth()), xpYear:xpWindow(curYear()), xpAll:DB.progress.xp||0,
+    day:t, month:curMonth(), year:curYear() };
+}
+function lbValue(e, view){
+  if(view==="month") return (e.month===curMonth())? (e.xpMonth||0) : 0;
+  if(view==="year")  return (e.year===curYear())?   (e.xpYear||0)  : 0;
+  if(view==="all")   return e.xpAll||0;
+  return (e.day===today())? (e.xpDay||0) : 0;
+}
+function viewLeaderboard(){
+  const me=myEntry(), view=App.lbView||"day", subj=App.lbSubject||null;
+  const tabs=[["day","Today"],["month","Month"],["year","Year"],["all","All-time"]];
+  let board=(App.board && Array.isArray(App.board)) ? App.board.slice() : [];
+  board=board.filter(e=>e.id!==me.id).concat([me]);
+  // subject filter chips come from whoever is actually on the board
+  const subjects=[...new Set(board.map(e=>e.subject).filter(s=>s&&s!=="—"))].sort();
+  if(subj) board=board.filter(e=>e.subject===subj);
+  board=board.sort((a,b)=>lbValue(b,view)-lbValue(a,view));
+  const label=view==="day"?"today":view==="month"?"this month":view==="year"?"this year":"all-time";
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">Leaderboard</h2>
+    <div class="card pad" style="margin:8px 0 12px"><div class="row between">
+      <div><div class="faint" style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">You appear as</div><div style="font-weight:700;margin-top:2px">${esc(me.name)}</div></div>
+      <button class="btn-sm btn-ghost" data-action="set-name">Shuffle</button>
+    </div></div>
+    <div class="seg" style="display:flex;width:100%;margin-bottom:10px">${tabs.map(([v,t])=>`<button class="segbtn ${view===v?'on':''}" data-action="lb-view" data-v="${v}" style="flex:1">${t}</button>`).join("")}</div>`;
+  if(subjects.length>1){
+    html+=`<div class="wrapflex" style="gap:6px;margin-bottom:12px">
+      <button class="chip ${!subj?'on':''}" data-action="lb-subject" data-s="">All</button>
+      ${subjects.map(s=>`<button class="chip ${subj===s?'on':''}" data-action="lb-subject" data-s="${esc(s)}">${esc(s)}</button>`).join("")}
+    </div>`;
+  }
+  if(!board.length){ html+=`<div class="empty">No one studying ${esc(subj||"")} yet.</div>`; }
+  board.forEach((e,i)=>{
+    const you=e.id===me.id, val=lbValue(e,view), medal=i===0?"#d9a441":i===1?"#9fb0c0":i===2?"#c08457":null;
+    const onFire=(e.week||0)>=3;
+    html+=`<div class="card pad" style="margin-bottom:8px;${you?'border-color:var(--teal-dim);background:var(--teal-deep)':''}">
+      <div class="row" style="gap:13px">
+        <div class="rank" ${medal?`style="background:${medal}22;color:${medal}"`:''}>${i+1}</div>
+        <div style="flex:1">
+          <div class="row" style="gap:7px;align-items:center;flex-wrap:wrap"><span style="font-weight:700;font-size:14.5px">${esc(e.name||"Anon")}${you?' · you':''}</span>${onFire?`<span class="firebadge">🔥 ${e.week}d this week</span>`:''}</div>
+          <div class="row" style="gap:8px;margin-top:3px;flex-wrap:wrap">
+            <span class="faint" style="font-size:12px">Lv ${e.level||1} · ${e.streak||0}🔥 streak</span>
+            ${e.subject&&e.subject!=="—"?`<span class="subjtag">${esc(e.subject)}</span>`:''}
+          </div>
+        </div>
+        <div class="mono" style="font-weight:800;color:var(--teal);text-align:right">${val}<div class="faint" style="font-size:10px;font-weight:600">XP ${label}</div></div>
+      </div>
+    </div>`;
+  });
+  if(!DB.settings.groupEndpoint && !DB.settings.lbRepo){
+    html+=`<div class="card pad" style="margin-top:6px"><div class="faint" style="font-size:13px;line-height:1.5">Right now this shows just you. Connect your group endpoint (Settings → maintainer → Leaderboard, or via the manifest) and everyone syncs automatically.</div></div>`;
+  } else {
+    html+=`<div class="faint" style="font-size:11.5px;text-align:center;margin-top:6px">Daily board resets at midnight · 🔥 = studied 3+ days this week · names are anonymous</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+function ghSlug(s){ return (s||"user").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40)||"user"; }
+function b64(str){ return btoa(unescape(encodeURIComponent(str))); }
+async function ghPushScore(){
+  const repo=DB.settings.lbRepo, dir=DB.settings.lbDir||"scores", branch=DB.settings.lbBranch||"main";
+  if(!repo || !ghToken) return false;
+  const me=myEntry(); const path=dir+"/"+ghSlug(me.id)+".json";
+  const url="https://api.github.com/repos/"+repo+"/contents/"+path;
+  const H={Authorization:"Bearer "+ghToken, Accept:"application/vnd.github+json"};
+  let sha=null;
+  try{ const g=await fetch(url+"?ref="+encodeURIComponent(branch),{headers:H,cache:"no-store"}); if(g.ok){ sha=(await g.json()).sha; } }catch(e){}
+  const body={message:"score "+me.id, content:b64(JSON.stringify(me,null,2)), branch};
+  if(sha) body.sha=sha;
+  try{ const r=await fetch(url,{method:"PUT",headers:H,body:JSON.stringify(body)}); return r.ok; }catch(e){ return false; }
+}
+async function ghReadBoard(){
+  const repo=DB.settings.lbRepo, dir=DB.settings.lbDir||"scores", branch=DB.settings.lbBranch||"main";
+  if(!repo) return null;
+  const listUrl="https://api.github.com/repos/"+repo+"/contents/"+dir+"?ref="+encodeURIComponent(branch);
+  const r=await fetch(listUrl,{cache:"no-store"}); if(!r.ok) return null;
+  const files=await r.json(); const board=[];
+  for(const f of (Array.isArray(files)?files:[])){ if(!/\.json$/i.test(f.name)||!f.download_url) continue;
+    try{ const fr=await fetch(f.download_url,{cache:"no-store"}); if(fr.ok){ const e=await fr.json(); if(e&&typeof e.xp==="number") board.push(e); } }catch(_){}
+  }
+  return board;
+}
+async function syncBoard(){
+  const ep=DB.settings.groupEndpoint;
+  try{
+    if(ep){
+      await fetch(ep,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(myEntry())}).catch(()=>{});
+      const r=await fetch(ep,{cache:"no-store"}); if(r.ok){ App.board=await r.json(); }
+    } else if(DB.settings.lbRepo){
+      if(ghToken) await ghPushScore();
+      const b=await ghReadBoard(); if(b) App.board=b;
+    }
+  }catch(e){}
+  if(App.screen==="leaderboard") render();
+}
+function viewBuilder(){
+  if(!App.builder) App.builder={subjects:new Set(BANK.map(p=>p.id)), count:10, timer:"total", minutes:15, pass:DB.settings.passMark, shuffle:true};
+  const b=App.builder;
+  const avail=BANK.filter(p=>b.subjects.has(p.id)).reduce((n,p)=>n+p.questions.length,0);
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Back</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">Exam Simulation</h2>
+    <p class="muted" style="font-size:14px;margin-top:4px">Build a timed mock from any topics. Answers stay locked until you submit.</p>
+
+    <div class="sectlabel">Include subjects</div>`;
+  BANK.forEach(p=>{
+    const on=b.subjects.has(p.id);
+    html+=`<div class="check ${on?'on':''}" data-action="exam-toggle-subject" data-subject="${p.id}" style="margin-bottom:8px">
+      <div class="box">${on?'<svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#04211e;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg>':''}</div>
+      <div class="grow"><b style="color:${p.color}">${esc(p.title)}</b></div>
+      <span class="faint" style="font-size:13px">${p.questions.length} Q</span>
+    </div>`;
+  });
+
+  html+=`<div class="sectlabel">Number of questions (max ${avail})</div>
+    <div class="wrapflex">`;
+  const countOpts=[...new Set([5,10,20,30].filter(n=>n<avail))]; countOpts.push(avail);
+  countOpts.forEach(n=>{
+    const lbl = n===avail? "All ("+avail+")" : n;
+    html+=`<button class="btn-ghost btn-sm" data-action="exam-count" data-n="${n}" style="${b.count===n?'border-color:var(--teal);color:var(--teal)':''}">${lbl}</button>`;
+  });
+  html+=`</div>`;
+
+  html+=`<div class="sectlabel">Timer</div>
+  <div class="seg" style="margin-bottom:10px">
+    <button class="${b.timer==='total'?'on':''}" data-action="exam-timer" data-mode="total">Total time</button>
+    <button class="${b.timer==='off'?'on':''}" data-action="exam-timer" data-mode="off">Untimed</button>
+  </div>`;
+  if(b.timer==="total"){
+    html+=`<div class="wrapflex">`;
+    [5,10,15,30].forEach(m=>html+=`<button class="btn-ghost btn-sm" data-action="exam-min" data-m="${m}" style="${b.minutes===m?'border-color:var(--teal);color:var(--teal)':''}">${m} min</button>`);
+    html+=`</div>`;
+  }
+
+  html+=`<div class="sectlabel">Options</div>
+  <div class="check ${b.shuffle?'on':''}" data-action="exam-shuffle">
+    <div class="box">${b.shuffle?'<svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#04211e;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg>':''}</div>
+    <div class="grow"><b>Shuffle choice order</b></div>
+  </div>
+  <div class="row between card pad" style="margin-top:8px">
+    <b>Pass mark</b>
+    <div class="row" style="gap:8px">
+      <button class="iconbtn" data-action="exam-pass" data-d="-5">–</button>
+      <span class="mono" style="font-size:16px;min-width:46px;text-align:center">${b.pass}%</span>
+      <button class="iconbtn" data-action="exam-pass" data-d="5">+</button>
+    </div>
+  </div>
+  </div>`;
+
+  setFoot(`<button class="btn btn-primary" data-action="exam-start" ${avail&&b.count?'':'disabled'}>Start exam · ${b.count} Q${b.timer==='total'?' · '+b.minutes+' min':''}</button>`);
+  return html;
+}
+
+/* ---------- EXAM RUNNER ---------- */
+function startExam(){
+  const b=App.builder;
+  let ids=[];
+  BANK.filter(p=>b.subjects.has(p.id)).forEach(p=>p.questions.forEach(q=>{ if(q.type!=="sa") ids.push(q.id); }));
+  ids.sort(()=>Math.random()-0.5);
+  ids=ids.slice(0,b.count);
+  const order={};
+  ids.forEach(id=>{ const cs=[...QMAP[id].choices]; if(b.shuffle) cs.sort(()=>Math.random()-0.5); order[id]=cs; });
+  App.exam={ ids, order, i:0, answers:{}, flags:new Set(), timerMode:b.timer, timeLeft:b.timer==="total"?b.minutes*60:0, total:b.timer==="total"?b.minutes*60:0, startedAt:Date.now(), timerId:null };
+  App.examReview=false;
+  App.screen="exam-runner"; render();
+  if(b.timer==="total"){
+    App.exam.timerId=setInterval(()=>{
+      App.exam.timeLeft--;
+      const el=$("exam-timer");
+      if(el){ el.textContent=fmtTime(App.exam.timeLeft); el.classList.toggle("warn",App.exam.timeLeft<=60); }
+      if(App.exam.timeLeft<=0) submitExam(true);
+    },1000);
+  }
+}
+function viewExam(){
+  const e=App.exam, id=e.ids[e.i], q=QMAP[id], chosen=e.answers[id], flagged=e.flags.has(id);
+  const answered=Object.keys(e.answers).length;
+  let html=`<div class="fade">
+    <div class="row between" style="margin-bottom:12px">
+      <button class="btn-sm btn-ghost" data-action="exam-quit"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <span class="timer ${e.timerMode==='total'&&e.timeLeft<=60?'warn':''}" id="exam-timer">${e.timerMode==='total'?fmtTime(e.timeLeft):'∞'}</span>
+      <span class="faint mono" style="font-size:13px">${answered}/${e.ids.length}</span>
+    </div>
+
+    <div class="palette">`;
+  e.ids.forEach((qid,idx)=>{
+    let cls="pcell";
+    if(e.answers[qid]) cls+=" answered";
+    if(idx===e.i) cls+=" current";
+    if(e.flags.has(qid)) cls+=" flagged";
+    html+=`<div class="${cls}" data-action="exam-jump" data-i="${idx}">${idx+1}</div>`;
+  });
+  html+=`</div>`;
+
+  html+=`<div class="qmeta" style="margin-top:18px">
+    <span class="pill" style="color:${BANK.find(p=>p.id===q.packId).color}">${esc(q.packTitle)}</span>
+    <span class="faint mono" style="font-size:12px;align-self:center">Q${e.i+1}</span>
+    <button class="pill ${flagged?'amber':''}" data-action="exam-flag" style="margin-left:auto;cursor:pointer">${flagged?'★ Flagged':'☆ Flag'}</button>
+  </div>
+  <div class="stem">${stripBold(q.stem)}</div>
+  <div class="choices">`;
+  e.order[id].forEach(c=>{
+    html+=`<button class="choice ${chosen===c.l?'sel':''}" data-action="exam-select" data-label="${c.l}">
+      <span class="lab">${c.l}</span><span>${esc(c.t)}</span></button>`;
+  });
+  html+=`</div></div>`;
+
+  const last=e.i===e.ids.length-1;
+  setFoot(`
+    <button class="btn btn-ghost" data-action="exam-prev" ${e.i===0?'disabled':''} style="flex:0 0 90px">Prev</button>
+    ${last
+      ? `<button class="btn btn-primary" data-action="exam-submit">Submit exam</button>`
+      : `<button class="btn btn-ghost" data-action="exam-next">Next</button>`}
+  `);
+  return html;
+}
+function submitExam(auto){
+  const e=App.exam;
+  if(e.timerId) clearInterval(e.timerId);
+  let score=0; const answers=[], byTopic={};
+  e.ids.forEach(id=>{
+    const q=QMAP[id], chosen=e.answers[id]||null, cl=correctLabel(q), ok=chosen===cl;
+    if(ok) score++;
+    answers.push({qid:id, chosen, correct:cl, ok, flagged:e.flags.has(id)});
+    byTopic[q.topic]=byTopic[q.topic]||{c:0,t:0}; byTopic[q.topic].t++; if(ok)byTopic[q.topic].c++;
+    // feed progress memory (not SRS)
+    if(chosen) recordAttempt(q, chosen, null);
+  });
+  const total=e.ids.length, pct=Math.round(score/total*100), pass=DB.settings.passMark;
+  const result={ examId:"exam-"+Date.now(), date:today(), score, total, percent:pct,
+    passed:pct>=pass, timeUsedSec: Math.round((Date.now()-e.startedAt)/1000),
+    byTopic:Object.entries(byTopic).map(([k,v])=>({topic:k,correct:v.c,total:v.t})), answers, auto:!!auto };
+  DB.exams.push({examId:result.examId,date:result.date,percent:pct,score,total}); save.exams();
+  awardXP(score*10 + (total-score)*4);
+  evaluateAchievements();
+  App.examResult=result; App.examReview=false; App.screen="exam-results"; render();
+  if(result.passed){ confetti(); cue("done"); }
+}
+
+/* ---------- EXAM RESULTS ---------- */
+function viewResults(){
+  const r=App.examResult;
+  if(App.examReview) return viewExamReview();
+  let html=`<div class="fade" style="text-align:center;padding-top:8px">
+    ${r.auto?'<span class="pill amber" style="margin-bottom:14px;display:inline-block">⏱ Time expired — auto-submitted</span>':''}
+    <div class="ring" style="--p:${r.percent}">
+      <div class="in"><div><div class="scorebig" style="color:${r.passed?'var(--green)':'var(--red)'}">${r.percent}%</div></div></div>
+    </div>
+    <h2 class="serif" style="font-size:23px;font-weight:600;margin-top:16px">${r.passed?'Pass':'Below pass mark'}</h2>
+    <p class="muted">${r.score} / ${r.total} correct · ${fmtTime(r.timeUsedSec)} · pass mark ${DB.settings.passMark}%</p>
+  </div>
+
+  <div class="sectlabel">By topic</div><div class="card pad" style="padding:6px 14px">`;
+  r.byTopic.forEach((t,idx)=>{
+    const pct=Math.round(t.correct/t.total*100);
+    html+=`<div style="padding:11px 0;${idx?'border-top:1px solid var(--line-soft)':''}">
+      <div class="row between" style="font-size:14px;margin-bottom:6px"><span>${esc(t.topic)}</span><span class="mono faint">${t.correct}/${t.total}</span></div>
+      <div class="progressbar" style="margin:0"><i style="width:${pct}%;background:${pct>=DB.settings.passMark?'linear-gradient(90deg,var(--teal-dim),var(--green))':'linear-gradient(90deg,#7a3b40,var(--red))'}"></i></div>
+    </div>`;
+  });
+  html+=`</div>`;
+
+  const wrong=r.answers.filter(a=>!a.ok).length;
+  let foot=`<button class="btn btn-ghost" data-action="exam-review">Review answers</button>`;
+  if(wrong) foot=`<button class="btn btn-ghost" data-action="exam-review" style="flex:1">Review (${r.total})</button>
+    <button class="btn btn-primary" data-action="exam-push-srs" style="flex:1">Add ${wrong} misses to review</button>`;
+  setFoot(foot);
+  html+=`<div style="height:10px"></div><button class="btn btn-ghost" data-action="nav" data-screen="home">Back to home</button>`;
+  return html;
+}
+function viewExamReview(){
+  const r=App.examResult;
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="exam-results-back" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Results</button>
+    <h2 class="serif" style="font-size:22px;font-weight:600">Review</h2>`;
+  r.answers.forEach((a,idx)=>{
+    const q=QMAP[a.qid];
+    html+=`<div class="card pad" style="margin-top:14px">
+      <div class="row between" style="margin-bottom:8px">
+        <span class="faint mono" style="font-size:12px">Q${idx+1} · ${esc(q.topic)}</span>
+        <span class="pill" style="color:${a.ok?'var(--green)':'var(--red)'};border-color:${a.ok?'#2c5f44':'#6e2b30'}">${a.ok?'Correct':a.chosen?'Wrong':'Blank'}</span>
+      </div>
+      <div class="stem" style="font-size:15px">${q.stem}</div>
+      ${renderReveal(q, a.chosen, {review:true})}
+      <div style="text-align:center;margin-top:6px"><button class="reportlink" data-action="report-open" data-qid="${q.id}">⚑ Report an issue</button></div>
+    </div>`;
+  });
+  html+=`</div>`;
+  setFoot(`<button class="btn btn-ghost" data-action="exam-results-back">Back to results</button>`);
+  return html;
+}
+
+/* ---------- STATS ---------- */
+function viewStats(){
+  const qs=DB.progress.questions, ids=Object.keys(qs);
+  let att=0, corr=0; ids.forEach(id=>{att+=qs[id].seen;corr+=qs[id].correct;});
+  const acc=att?Math.round(corr/att*100):0;
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Back</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">Your progress</h2>
+    <div class="stat3 stagger" style="margin-top:14px">
+      <div class="card"><div class="n teal">${acc}%</div><div class="l">Accuracy</div></div>
+      <div class="card"><div class="n">${att}</div><div class="l">Attempts</div></div>
+      <div class="card"><div class="n amber">${DB.progress.streak?.current||0}</div><div class="l">Streak</div></div>
+    </div>`;
+
+  html+=`<div class="sectlabel">Mastery by subject</div><div class="card pad" style="padding:6px 14px">`;
+  BANK.forEach((p,idx)=>{
+    const tot=p.questions.length, seen=seenCount(p.id), mast=masteredCount(p.id);
+    html+=`<div style="padding:12px 0;${idx?'border-top:1px solid var(--line-soft)':''}">
+      <div class="row between" style="font-size:14px;margin-bottom:6px">
+        <span style="color:${p.color};font-weight:600">${esc(p.title)}</span>
+        <span class="mono faint" style="font-size:12px">${mast} mastered · ${seen}/${tot} seen</span>
+      </div>
+      <div class="progressbar" style="margin:0">
+        <i style="width:${seen/tot*100}%"></i>
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+
+  // accuracy by topic (heatmap-style chips, weakest first)
+  const tmap=new Map();
+  allQs().forEach(q=>{ const p=qs[q.id]; if(!p||!p.seen) return; const k=qSys(q)+" · "+(q.topic||"General");
+    const o=tmap.get(k)||{seen:0,correct:0}; o.seen+=p.seen; o.correct+=p.correct; tmap.set(k,o); });
+  const tops=[...tmap.entries()].map(([k,v])=>({t:k,acc:v.correct/v.seen,seen:v.seen})).filter(x=>x.seen>=3).sort((a,b)=>a.acc-b.acc);
+  if(tops.length){
+    html+=`<div class="sectlabel">Accuracy by topic</div><div class="card pad"><div class="faint" style="font-size:12px;margin-bottom:10px">Weakest first — tap a colour to gauge where to focus.</div><div class="wrapflex" style="gap:7px">`;
+    tops.slice(0,30).forEach(x=>{
+      const pct=Math.round(x.acc*100);
+      const bg = pct<50?'var(--red-deep)':pct<75?'var(--amber-deep)':'var(--green-deep)';
+      const fg = pct<50?'var(--red)':pct<75?'var(--amber)':'var(--green)';
+      html+=`<span class="heat" style="background:${bg};color:${fg}" title="${esc(x.t)}">${esc(x.t.split(" · ").pop())} ${pct}%</span>`;
+    });
+    html+=`</div>${tops.length>30?`<div class="faint" style="font-size:11px;margin-top:8px">+${tops.length-30} more</div>`:''}</div>`;
+  }
+
+  // upcoming reviews forecast
+  const tdy=today(); const d7=new Date(); d7.setDate(d7.getDate()+7); const in7=d7.toISOString().slice(0,10);
+  let dueT=0, due7=0, sched=0, freshN=0;
+  allQs().forEach(q=>{ const p=qs[q.id]; if(p&&p.srs&&p.srs.due){ sched++; if(p.srs.due<=tdy)dueT++; if(p.srs.due<=in7)due7++; } else if(!p){ freshN++; } });
+  html+=`<div class="sectlabel">Upcoming reviews</div>
+  <div class="stat3 stagger">
+    <div class="card"><div class="n teal">${dueT}</div><div class="l">Due today</div></div>
+    <div class="card"><div class="n amber">${due7}</div><div class="l">Next 7 days</div></div>
+    <div class="card"><div class="n">${freshN}</div><div class="l">Unseen</div></div>
+  </div>
+  <div class="faint" style="font-size:12px;margin:8px 2px 0">${sched} cards in your spaced-repetition schedule.</div>`;
+
+  // exam history
+  if(DB.exams.length){
+    const max=Math.max(...DB.exams.map(e=>e.percent),100);
+    html+=`<div class="sectlabel">Exam scores</div><div class="card pad">
+      <div style="display:flex;align-items:flex-end;gap:8px;height:120px">`;
+    DB.exams.slice(-10).forEach(ex=>{
+      html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%">
+        <div style="width:100%;border-radius:6px 6px 0 0;height:${ex.percent}%;background:${ex.percent>=DB.settings.passMark?'linear-gradient(var(--teal),var(--teal-dim))':'linear-gradient(var(--red),#7a3b40)'}"></div>
+        <span class="mono faint" style="font-size:10px">${ex.percent}</span>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  }
+
+  // marked
+  const marked=ids.filter(id=>qs[id].marked);
+  if(marked.length){
+    html+=`<div class="sectlabel">Marked for review (${marked.length})</div><div class="card pad" style="padding:4px 14px">`;
+    marked.forEach((id,idx)=>{ const q=QMAP[id];
+      html+=`<div class="row" style="gap:9px;padding:11px 0;${idx?'border-top:1px solid var(--line-soft)':''}">
+        <svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px;fill:var(--amber);stroke:var(--amber);flex:none"><path d="M5 3v18l7-5 7 5V3z"/></svg>
+        <span style="font-size:13.5px">${esc(q.topic)} — ${esc((q.choices.find(c=>c.correct)||{}).t || stripBold(q.stem).replace(/<[^>]+>/g,'').slice(0,42))}</span></div>`;
+    });
+    html+=`</div>`;
+  }
+
+  if(!ids.length) html+=`<div class="empty">No data yet — answer a few questions and your progress will appear here, saved across sessions.</div>`;
+  html+=`</div>`;
+  return html;
+}
+
+/* ---------- SETTINGS ---------- */
+function viewSettings(){
+  const reportsHTML = (function(){
+    if(!DB.reports.length) return `<div class="empty" style="padding:16px">No reports yet. Tap “⚑ Report an issue” on any question.</div>`;
+    let h=`<div class="card pad" style="padding:4px 14px">`;
+    DB.reports.slice().reverse().forEach((r,idx)=>{
+      h+=`<div style="padding:11px 0;${idx?'border-top:1px solid var(--line-soft)':''}">
+        <div class="row between" style="font-size:13.5px"><b>${esc(r.type)}</b><span class="faint mono" style="font-size:11px">${esc(r.date)}</span></div>
+        <div class="faint" style="font-size:12.5px;margin-top:2px">${esc(r.subject)} · ${esc(r.topic)}</div>
+        ${r.note?`<div class="muted" style="font-size:13px;margin-top:5px">${esc(r.note)}</div>`:""}
+      </div>`;
+    });
+    h+=`</div><div style="height:8px"></div>
+      <button class="btn btn-ghost" data-action="export-reports">Export reports (JSON)</button>
+      <div style="height:8px"></div>
+      <button class="btn btn-ghost" data-action="clear-reports" style="border-color:#6b541f;color:var(--amber)">Clear reports</button>`;
+    return h;
+  })();
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Back</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">Settings</h2>
+
+    <div class="sectlabel">Recall</div>
+    <div class="row between card pad">
+      <div><b>New cards / day</b><div class="faint" style="font-size:12.5px">Smart Review limit</div></div>
+      <div class="row" style="gap:8px">
+        <button class="iconbtn" data-action="set-newperday" data-d="-5">–</button>
+        <span class="mono" style="font-size:16px;min-width:36px;text-align:center">${DB.settings.newPerDay}</span>
+        <button class="iconbtn" data-action="set-newperday" data-d="5">+</button>
+      </div>
+    </div>
+    <div class="row between card pad" style="margin-top:8px">
+      <div><b>Pass mark</b><div class="faint" style="font-size:12.5px">Exam Simulation</div></div>
+      <div class="row" style="gap:8px">
+        <button class="iconbtn" data-action="set-pass" data-d="-5">–</button>
+        <span class="mono" style="font-size:16px;min-width:46px;text-align:center">${DB.settings.passMark}%</span>
+        <button class="iconbtn" data-action="set-pass" data-d="5">+</button>
+      </div>
+    </div>
+
+    <div class="row between card pad" style="margin-top:8px">
+      <div><b>Daily goal</b><div class="faint" style="font-size:12.5px">Questions per day</div></div>
+      <div class="row" style="gap:8px">
+        <button class="iconbtn" data-action="set-goal" data-d="-5">–</button>
+        <span class="mono" style="font-size:16px;min-width:36px;text-align:center">${DB.settings.dailyGoal||20}</span>
+        <button class="iconbtn" data-action="set-goal" data-d="5">+</button>
+      </div>
+    </div>
+    <div class="row between card pad" style="margin-top:8px">
+      <div><b>Sounds</b><div class="faint" style="font-size:12.5px">Soft cues for answers, level-ups, goals</div></div>
+      <button class="switch ${DB.settings.sounds?'on':''}" data-action="set-sound" aria-label="Toggle sounds"><span class="knob"></span></button>
+    </div>
+
+    <div class="sectlabel">Appearance</div>
+    <div class="row between card pad" style="margin-bottom:8px">
+      <div><b>Theme</b><div class="faint" style="font-size:12.5px">Light or dark — your choice</div></div>
+      <div class="seg">
+        <button class="segbtn ${DB.settings.theme!=='light'?'on':''}" data-action="set-theme" data-theme="dark">Dark</button>
+        <button class="segbtn ${DB.settings.theme==='light'?'on':''}" data-action="set-theme" data-theme="light">Light</button>
+      </div>
+    </div>
+    <div class="card pad">
+      <div class="faint" style="font-size:12.5px;margin-bottom:10px">Background — pick a theme, or use your own image</div>
+      <div class="wrapflex">
+        ${Object.entries(WALLPAPERS).map(([id,w])=>`<button class="wallsw ${DB.settings.wallpaper===id?'on':''}" data-action="set-wall" data-id="${id}" title="${w.name}" style="background:${w[wallTheme()]}"></button>`).join("")}
+        <button class="wallsw ${DB.settings.wallpaper==='custom'?'on':''}" data-action="wall-upload" title="Custom image" style="display:grid;place-items:center;background:var(--surface-2)">+</button>
+      </div>
+      <input type="file" id="wallfile" accept="image/*" style="display:none">
+      ${DB.settings.wallpaper==='custom'?`<div style="height:8px"></div><button class="btn btn-ghost" data-action="wall-remove">Remove custom image</button>`:''}
+    </div>
+
+    <div class="sectlabel">Progress memory</div>
+    <p class="muted" style="font-size:13.5px;margin:0 2px 10px">Your progress is saved automatically and persists when you close and reopen this prototype. Export a backup or move it to another device below.</p>
+    <button class="btn btn-ghost" data-action="export"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Export progress (JSON)</button>
+    <div style="height:8px"></div>
+    <button class="btn btn-ghost" data-action="import-toggle"><svg class="i" viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg> Import progress</button>
+    <div id="importbox" style="display:none;margin-top:10px">
+      <textarea class="inp" id="importtext" placeholder="Paste exported JSON here…"></textarea>
+      <div style="height:8px"></div>
+      <button class="btn btn-primary" data-action="import-apply">Apply import</button>
+    </div>
+
+    ${DB.settings.maintainer ? `
+    <div class="sectlabel">Bank · maintainer</div>
+    <div class="card pad">
+      <div class="row between"><b>Loaded questions</b><span class="mono faint">${Object.keys(QMAP).length} across ${BANK.length} packs</span></div>
+      <div class="faint" style="font-size:12.5px;margin:6px 0 12px">Sync your bank from a hosted GitHub manifest — edit one JSON file and every device updates. (Design doc §2.)</div>
+      <input class="inp" id="bankurl" placeholder="https://you.github.io/medcall-bank/" value="${esc(DB.settings.bankUrl||defaultBase())}">
+      <div style="height:8px"></div>
+      <button class="btn btn-primary" data-action="sync-bank">Sync now</button>
+      ${DB.settings.lastSync?`<div class="faint" style="font-size:12px;text-align:center;margin-top:8px">Last sync: ${esc(DB.settings.lastSync)}</div>`:""}
+    </div>
+    <div class="sectlabel">Leaderboard · maintainer</div>
+    <div class="card pad">
+      <div class="faint" style="font-size:12.5px;margin-bottom:10px">Group leaderboard via your GitHub repo. It reads everyone's scores from a <span class="mono">scores/</span> folder (public — automatic, no token needed). To let <b>this device post your score</b>, add a fine-grained token with <b>Contents: write</b> on that repo. The token is stored only on this device, never in the app code — but a token can edit the repo, so use your own and only share it within your group.</div>
+      <input class="inp" id="lbrepo" placeholder="owner/repo  ·  e.g. Fulcrum003/medcall-bank" value="${esc(DB.settings.lbRepo||"")}">
+      <div style="height:8px"></div>
+      <button class="btn btn-primary" data-action="save-lb">Save leaderboard repo</button>
+      <div style="height:8px"></div>
+      <button class="btn btn-ghost" data-action="set-token">${ghToken?"Replace":"Add"} GitHub token (this device)</button>
+      ${ghToken?`<div class="faint" style="font-size:12px;text-align:center;margin-top:8px">Token set on this device · <button class="reportlink" data-action="clear-token">remove</button></div>`:""}
+      <div style="height:8px"></div>
+      <button class="btn btn-ghost" data-action="push-score">Post my score now</button>
+    </div>
+    <div style="height:10px"></div>
+    <button class="btn btn-ghost" data-action="maint-lock">Hide maintainer tools</button>
+    ` : ``}
+
+    <div class="sectlabel">Issue reports (${DB.reports.length})</div>
+    ${reportsHTML}
+
+    <div class="sectlabel">Danger zone</div>
+    <button class="btn btn-ghost" data-action="reset" style="border-color:#6e2b30;color:var(--red)">Reset all progress</button>
+
+    <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v0.1<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
+  </div>`;
+  return html;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+function setFoot(inner){
+  if(!inner) return;
+  let f=document.createElement("div"); f.id="foot"; f.className="foot";
+  f.innerHTML=`<div class="foot-in">${inner}</div>`;
+  document.body.appendChild(f);
+}
+
+/* ============================================================
+   EVENT DELEGATION
+   ============================================================ */
+document.body.addEventListener("click", async e=>{
+  const t=e.target.closest("[data-action]"); if(!t) return;
+  const a=t.dataset.action;
+
+  if(a==="maint-tap"){
+    maintTaps++; clearTimeout(maintTapT); maintTapT=setTimeout(()=>{maintTaps=0;},1500);
+    if(maintTaps>=5){ maintTaps=0; DB.settings.maintainer=!DB.settings.maintainer; save.settings(); render(); toast(DB.settings.maintainer?"Maintainer tools unlocked":"Maintainer tools hidden"); }
+    return;
+  }
+  if(a==="maint-lock"){ DB.settings.maintainer=false; save.settings(); render(); toast("Maintainer tools hidden"); return; }
+
+  if(a==="sync-bank"){
+    const url=($("bankurl")?.value||"").trim();
+    DB.settings.bankUrl=url; save.settings();
+    if(!url){ toast("Enter a source URL"); return; }
+    toast("Syncing…");
+    try{ const n=await syncBank(url); DB.settings.lastSync=today()+" · "+n+" Q"; save.settings(); App.screen="home"; render(); toast("Synced "+n+" questions ✓"); }
+    catch(err){ toast("Couldn't reach source — using bundled bank"); }
+    return;
+  }
+
+  // leaderboard (maintainer)
+  if(a==="save-lb"){ DB.settings.lbRepo=($("lbrepo")?.value||"").trim(); save.settings(); render(); toast(DB.settings.lbRepo?"Leaderboard repo saved":"Cleared"); if(DB.settings.lbRepo) syncBoard(); return; }
+  if(a==="set-token"){ const v=(prompt("Paste a GitHub fine-grained token (Contents: write on your repo). Stored on this device only:")||"").trim(); if(v){ ghToken=v; wsSet("medrecall:ghtoken:v1", v); render(); toast("Token saved on this device"); } return; }
+  if(a==="clear-token"){ ghToken=null; wsSet("medrecall:ghtoken:v1", null); render(); toast("Token removed"); return; }
+  if(a==="push-score"){ if(!DB.settings.lbRepo){ toast("Save your repo first"); return; } if(!ghToken){ toast("Add a token to post"); return; } toast("Posting…"); const ok=await ghPushScore(); toast(ok?"Score posted ✓":"Couldn't post — check token/repo"); if(ok) syncBoard(); return; }
+
+  if(a==="nav"){ const sc=t.dataset.screen; if(sc==="exam-builder") App.builder=null; App.screen=sc; render(); if(sc==="leaderboard") syncBoard(); return; }
+
+  // search → study one question
+  if(a==="open-q"){ startPracticeCtx({ids:[t.dataset.qid]}, "Search result"); return; }
+  // daily goal stepper
+  if(a==="set-goal"){ const d=parseInt(t.dataset.d,10)||0; DB.settings.dailyGoal=Math.max(5,Math.min(200,(DB.settings.dailyGoal||20)+d)); save.settings(); render(); return; }
+  // sounds on/off
+  if(a==="set-sound"){ DB.settings.sounds=!DB.settings.sounds; save.settings(); if(DB.settings.sounds) cue("correct"); render(); return; }
+  // leaderboard display name
+  if(a==="set-name"){ const v=(prompt("Choose a nickname for the leaderboard — please DON'T use your real name. Leave blank for a random one:", "")||"").trim().slice(0,24); DB.settings.displayName = v || randomAlias(); save.settings(); render(); syncBoard(); return; }
+  if(a==="lb-view"){ App.lbView=t.dataset.v; render(); return; }
+  if(a==="lb-subject"){ App.lbSubject=t.dataset.s||null; render(); return; }
+
+  // issue reporting
+  if(a==="report-open"){ openReport(t.dataset.qid); return; }
+  if(a==="report-close"||a==="modal-bg"){ closeReport(); return; }
+  if(a==="noop"){ return; }
+  if(a==="report-type"){ reportType=t.dataset.type; document.querySelectorAll(".rtype").forEach(b=>b.classList.toggle("on", b.dataset.type===reportType)); return; }
+  if(a==="report-submit"){
+    const note=($("reporttext")?.value||"").trim(); const q=QMAP[App.reportQid];
+    DB.reports.push({reportId:"rep-"+Date.now(), date:today(), qid:q.id, subject:q.packTitle, topic:q.topic, type:reportType, note});
+    save.reports(); closeReport(); toast("Report sent — thank you"); return;
+  }
+  if(a==="export-reports"){ exportJSON(DB.reports,"medrecall-reports-"+today()+".json"); toast("Reports exported"); return; }
+  if(a==="clear-reports"){ if(confirm("Clear all collected reports?")){ DB.reports=[]; save.reports(); render(); toast("Reports cleared"); } return; }
+
+  // wallpaper
+  if(a==="set-wall"){ DB.settings.wallpaper=t.dataset.id; save.settings(); applyWallpaper(); render(); return; }
+  if(a==="set-theme"){ DB.settings.theme=t.dataset.theme; save.settings(); applyTheme(); applyWallpaper(); render(); return; }
+  if(a==="celebrate-done"){ App.screen="home"; render(); return; }
+  if(a==="wall-upload"){ const f=$("wallfile"); if(f) f.click(); return; }
+  if(a==="wall-remove"){ wallImg=null; wsSet("medrecall:wallpaperimg:v1", null); DB.settings.wallpaper="ink"; save.settings(); applyWallpaper(); render(); toast("Custom image removed"); return; }
+
+  // home / browse
+  if(a==="start-smart"){ startPracticeCtx({smart:true}, "Smart Review"); return; }
+  if(a==="open-system"){ App.nav={system:t.dataset.system, reference:null}; App.screen="system"; render(); return; }
+  if(a==="open-reference"){ App.nav={system:t.dataset.system, reference:t.dataset.reference}; App.screen="reference"; render(); return; }
+  if(a==="study-system"){ startPracticeCtx({system:t.dataset.system}, t.dataset.system); return; }
+  if(a==="study-reference"){ startPracticeCtx({system:t.dataset.system, reference:t.dataset.reference}, t.dataset.reference); return; }
+  if(a==="study-topic"){ startPracticeCtx({system:t.dataset.system, reference:t.dataset.reference, topic:t.dataset.topic}, t.dataset.topic); return; }
+  if(a==="resume"){ const r=DB.progress.resume; if(r&&r.ctx) startPracticeCtx(r.ctx, r.label, r.i); return; }
+
+  // quiz
+  if(a==="select-choice"){ App.practice.selected=t.dataset.label; render(); return; }
+  if(a==="reveal"){ const s=App.practice,q=QMAP[s.pool[s.i]]; if(q.type==="sa"){ const ta=$("saInput"); s.saText=ta?ta.value:""; } s.revealed=true; render(); return; }
+  if(a==="grade"){ const s=App.practice,q=QMAP[s.pool[s.i]];
+    const g=t.dataset.grade;
+    const ok = q.type==="sa" ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
+    recordAttempt(q,s.selected,g,q.type==="sa"?ok:undefined);
+    cue(ok?"correct":"wrong");
+    s.answered++; if(ok)s.correct++; s.xp+=awardXP(ok?10:4);
+    evaluateAchievements();
+    advancePractice(); return; }
+  if(a==="toggle-mark"){ const s=App.practice,q=QMAP[s.pool[s.i]];
+    const p=DB.progress.questions[q.id]||{seen:0,correct:0,history:[],marked:false,srs:null};
+    p.marked=!p.marked; DB.progress.questions[q.id]=p; save.progress(); render();
+    toast(p.marked?"Marked for review":"Unmarked"); return; }
+  if(a==="end-practice"){ const s=App.practice; if(s&&s.ctx&&!s.ctx.smart){ DB.progress.resume={ctx:s.ctx,i:s.i,label:s.label}; save.progress(); } App.practice=null; App.screen="home"; render(); return; }
+
+  // builder
+  if(a==="exam-toggle-subject"){ const id=t.dataset.subject; App.builder.subjects.has(id)?App.builder.subjects.delete(id):App.builder.subjects.add(id);
+    const avail=BANK.filter(p=>App.builder.subjects.has(p.id)).reduce((n,p)=>n+p.questions.length,0);
+    if(App.builder.count>avail) App.builder.count=avail; render(); return; }
+  if(a==="exam-count"){ App.builder.count=+t.dataset.n; render(); return; }
+  if(a==="exam-timer"){ App.builder.timer=t.dataset.mode; render(); return; }
+  if(a==="exam-min"){ App.builder.minutes=+t.dataset.m; render(); return; }
+  if(a==="exam-shuffle"){ App.builder.shuffle=!App.builder.shuffle; render(); return; }
+  if(a==="exam-pass"){ App.builder.pass=Math.max(0,Math.min(100,App.builder.pass+ +t.dataset.d)); DB.settings.passMark=App.builder.pass; save.settings(); render(); return; }
+  if(a==="exam-start"){ startExam(); return; }
+
+  // exam runner
+  if(a==="exam-select"){ App.exam.answers[App.exam.ids[App.exam.i]]=t.dataset.label; render(); return; }
+  if(a==="exam-flag"){ const id=App.exam.ids[App.exam.i]; App.exam.flags.has(id)?App.exam.flags.delete(id):App.exam.flags.add(id); render(); return; }
+  if(a==="exam-jump"){ App.exam.i=+t.dataset.i; render(); return; }
+  if(a==="exam-prev"){ if(App.exam.i>0)App.exam.i--; render(); return; }
+  if(a==="exam-next"){ if(App.exam.i<App.exam.ids.length-1)App.exam.i++; render(); return; }
+  if(a==="exam-submit"){ submitExam(false); return; }
+  if(a==="exam-quit"){ if(App.exam.timerId)clearInterval(App.exam.timerId); App.exam=null; App.screen="home"; render(); return; }
+
+  // results
+  if(a==="exam-review"){ App.examReview=true; render(); return; }
+  if(a==="exam-results-back"){ App.examReview=false; render(); return; }
+  if(a==="exam-push-srs"){
+    let n=0; App.examResult.answers.filter(x=>!x.ok).forEach(x=>{
+      const q=QMAP[x.qid], p=DB.progress.questions[q.id]||{seen:0,correct:0,history:[],marked:false,srs:null};
+      p.srs=schedule(p.srs,"again"); p.marked=true; DB.progress.questions[q.id]=p; n++;
+    });
+    save.progress(); toast(n+" added to review"); t.setAttribute("disabled",""); return; }
+
+  // settings
+  if(a==="set-newperday"){ DB.settings.newPerDay=Math.max(5,DB.settings.newPerDay+ +t.dataset.d); save.settings(); render(); return; }
+  if(a==="set-pass"){ DB.settings.passMark=Math.max(0,Math.min(100,DB.settings.passMark+ +t.dataset.d)); save.settings(); render(); return; }
+  if(a==="export"){ exportProgress(); return; }
+  if(a==="import-toggle"){ const b=$("importbox"); b.style.display=b.style.display==="none"?"block":"none"; return; }
+  if(a==="import-apply"){ importProgress($("importtext").value); return; }
+  if(a==="reset"){ if(confirm("Erase all saved progress? This cannot be undone.")){ DB.progress={questions:{},resume:null,streak:{current:0,lastStudied:null}}; DB.exams=[]; save.progress(); save.exams(); App.screen="home"; render(); toast("Progress reset"); } return; }
+});
+
+function exportProgress(){
+  const data=JSON.stringify({progress:DB.progress,exams:DB.exams,settings:DB.settings},null,2);
+  const blob=new Blob([data],{type:"application/json"});
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download="medrecall-progress-"+today()+".json"; a.click(); URL.revokeObjectURL(url);
+  toast("Backup downloaded");
+}
+function importProgress(txt){
+  try{
+    const d=JSON.parse(txt);
+    if(d.progress && typeof d.progress==="object"){
+      const defaults={questions:{},resume:null,streak:{current:0,lastStudied:null}};
+      DB.progress=Object.assign(defaults, d.progress);
+    }
+    if(d.exams) DB.exams=d.exams;
+    if(d.settings) DB.settings=Object.assign(DB.settings,d.settings);
+    save.progress(); save.exams(); save.settings();
+    App.screen="home"; render(); toast("Progress imported ✓");
+  }catch(err){ toast("Invalid JSON"); }
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+/* ============================================================
+   THEME + WALLPAPER
+   ============================================================ */
+function applyTheme(){
+  document.documentElement.setAttribute("data-theme", DB.settings.theme==="light"?"light":"dark");
+}
+const WALLPAPERS = {
+  ink:      {name:"Ink",       dark:"radial-gradient(900px 500px at 80% -10%, rgba(63,182,168,.10), transparent 60%), radial-gradient(700px 400px at -10% 0%, rgba(44,62,80,.35), transparent 55%), #0d1318", light:"radial-gradient(900px 500px at 80% -10%, rgba(63,182,168,.10), transparent 60%), radial-gradient(700px 400px at -10% 0%, rgba(120,150,200,.16), transparent 55%), #eef1f6"},
+  midnight: {name:"Midnight",  dark:"linear-gradient(160deg,#0b1622,#0d1318)", light:"linear-gradient(160deg,#e6eef7,#eef1f6)"},
+  teal:     {name:"Deep Teal", dark:"linear-gradient(160deg,#08201e,#0d1318)", light:"linear-gradient(160deg,#dbefeb,#eef1f6)"},
+  charcoal: {name:"Charcoal",  dark:"#15171a", light:"#e9ecef"},
+  plum:     {name:"Plum",      dark:"linear-gradient(160deg,#1a1020,#0d1318)", light:"linear-gradient(160deg,#f0e7f4,#eef1f6)"},
+  aurora:   {name:"Aurora",    dark:"radial-gradient(700px 380px at 90% -5%, rgba(126,159,209,.18), transparent), radial-gradient(700px 380px at -5% 10%, rgba(63,182,168,.16), transparent), #0b1016", light:"radial-gradient(700px 380px at 90% -5%, rgba(126,159,209,.22), transparent), radial-gradient(700px 380px at -5% 10%, rgba(63,182,168,.20), transparent), #eaf0f6"}
+};
+function wallTheme(){ return DB.settings.theme==="light"?"light":"dark"; }
+let wallImg=null;
+function applyWallpaper(){
+  const th=wallTheme(), w=DB.settings.wallpaper||"ink";
+  let css;
+  if(w==="custom" && wallImg){
+    const ov = th==="light" ? "rgba(238,241,246,.80),rgba(238,241,246,.88)" : "rgba(13,19,24,.74),rgba(13,19,24,.84)";
+    css=`linear-gradient(${ov}), url('${wallImg}') center/cover no-repeat`;
+  } else { const wp=WALLPAPERS[w]||WALLPAPERS.ink; css=wp[th]; }
+  document.body.style.background=css;
+  document.body.style.backgroundAttachment="fixed";
+}
+function handleWallpaperFile(file){
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const max=1280; let w=img.width, h=img.height; const sc=Math.min(1,max/Math.max(w,h));
+      w=Math.round(w*sc); h=Math.round(h*sc);
+      const cv=document.createElement("canvas"); cv.width=w; cv.height=h;
+      cv.getContext("2d").drawImage(img,0,0,w,h);
+      let data; try{ data=cv.toDataURL("image/jpeg",0.72); }catch(e){ toast("Couldn't process image"); return; }
+      wallImg=data; wsSet("medrecall:wallpaperimg:v1", data);
+      DB.settings.wallpaper="custom"; save.settings(); applyWallpaper(); render(); toast("Wallpaper set");
+    };
+    img.onerror=()=>toast("Couldn't load image");
+    img.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+document.body.addEventListener("change", e=>{ if(e.target && e.target.id==="wallfile") handleWallpaperFile(e.target.files[0]); });
+
+/* ============================================================
+   XP · LEVELS · CELEBRATION
+   ============================================================ */
+const levelOf  = xp => Math.floor((xp||0)/200)+1;
+const xpInLevel= xp => (xp||0)%200;
+function awardXP(amount){
+  const old=DB.progress.xp||0, oldLvl=levelOf(old);
+  DB.progress.xp = old+amount;
+  DB.progress.xpLog = DB.progress.xpLog || {};
+  const t=today(); DB.progress.xpLog[t] = (DB.progress.xpLog[t]||0) + amount;
+  save.progress();
+  if(levelOf(DB.progress.xp)>oldLvl){ confetti(); cue("level"); toast("Level up! You reached Level "+levelOf(DB.progress.xp)); }
+  return amount;
+}
+function confetti(){
+  const c=document.createElement("canvas"); c.className="confetti"; document.body.appendChild(c);
+  const ctx=c.getContext("2d"); const W=c.width=innerWidth, H=c.height=innerHeight;
+  const cols=["#3fb6a8","#5ec48f","#d9a441","#7e9fd1","#e07a83"];
+  const P=[]; for(let i=0;i<130;i++) P.push({x:Math.random()*W,y:-20-Math.random()*H*0.3,vx:(Math.random()-0.5)*3.2,vy:2+Math.random()*4,s:4+Math.random()*7,c:cols[i%cols.length],a:Math.random()*6.28,va:(Math.random()-0.5)*0.34});
+  const t0=performance.now();
+  (function frame(t){ ctx.clearRect(0,0,W,H);
+    P.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=0.045; p.a+=p.va; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.62); ctx.restore(); });
+    if(t-t0<2300) requestAnimationFrame(frame); else c.remove();
+  })(t0);
+}
+
+/* ============================================================
+   SOUND CUES (synthesized, optional, off by default)
+   ============================================================ */
+let _ac=null;
+function audioCtx(){ try{ _ac=_ac||new (window.AudioContext||window.webkitAudioContext)(); if(_ac.state==="suspended")_ac.resume(); return _ac; }catch(e){ return null; } }
+function beep(freq, t0, dur, type, gain){
+  const ac=audioCtx(); if(!ac) return;
+  const o=ac.createOscillator(), g=ac.createGain();
+  o.type=type||"sine"; o.frequency.value=freq;
+  const start=ac.currentTime+t0;
+  g.gain.setValueAtTime(0, start);
+  g.gain.linearRampToValueAtTime(gain||0.16, start+0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, start+dur);
+  o.connect(g); g.connect(ac.destination); o.start(start); o.stop(start+dur+0.02);
+}
+function cue(name){
+  if(!DB.settings.sounds) return;
+  if(name==="correct"){ beep(660,0,0.12,"sine",0.16); beep(880,0.09,0.16,"sine",0.15); }
+  else if(name==="wrong"){ beep(200,0,0.18,"sine",0.14); }
+  else if(name==="level"){ [523,659,784,1047].forEach((f,i)=>beep(f,i*0.09,0.22,"triangle",0.15)); }
+  else if(name==="achieve"){ [784,988,1319].forEach((f,i)=>beep(f,i*0.07,0.2,"sine",0.15)); }
+  else if(name==="daily"){ [659,880].forEach((f,i)=>beep(f,i*0.1,0.25,"triangle",0.15)); }
+  else if(name==="done"){ [523,784].forEach((f,i)=>beep(f,i*0.08,0.2,"sine",0.14)); }
+}
+
+/* ============================================================
+   ACHIEVEMENTS
+   ============================================================ */
+const ACHIEVEMENTS = [
+  {id:"first",    icon:"&#127793;", name:"First Steps",   desc:"Answer your first question",           test:s=>s.answered>=1},
+  {id:"fifty",    icon:"&#128293;", name:"Warming Up",     desc:"Answer 50 questions",                  test:s=>s.answered>=50},
+  {id:"century",  icon:"&#128175;", name:"Century",        desc:"Answer 100 questions",                 test:s=>s.answered>=100},
+  {id:"halfk",    icon:"&#128640;", name:"Marathoner",     desc:"Answer 500 questions",                 test:s=>s.answered>=500},
+  {id:"streak3",  icon:"&#128197;", name:"Three in a Row", desc:"Hit a 3-day study streak",             test:s=>s.streak>=3},
+  {id:"streak7",  icon:"&#128467;", name:"Week Warrior",   desc:"Hit a 7-day study streak",             test:s=>s.streak>=7},
+  {id:"streak30", icon:"&#127942;", name:"Unstoppable",    desc:"Hit a 30-day study streak",            test:s=>s.streak>=30},
+  {id:"perfect",  icon:"&#127919;", name:"Flawless",       desc:"A perfect set of 10 or more",          test:s=>s.perfectSet},
+  {id:"master10", icon:"&#129504;", name:"Sticking",       desc:"Master 10 questions (21-day interval)",test:s=>s.mastered>=10},
+  {id:"master50", icon:"&#127793;", name:"Deep Roots",     desc:"Master 50 questions",                  test:s=>s.mastered>=50},
+  {id:"exam80",   icon:"&#129658;", name:"Exam Ready",     desc:"Score 80%+ on an Exam Simulation",     test:s=>s.bestExam>=80},
+  {id:"level5",   icon:"&#11088;",  name:"Rising",         desc:"Reach Level 5",                        test:s=>s.level>=5},
+  {id:"level10",  icon:"&#127775;", name:"Seasoned",       desc:"Reach Level 10",                       test:s=>s.level>=10},
+];
+function achStats(extra){
+  let answered=0, mastered=0;
+  Object.values(DB.progress.questions).forEach(p=>{ answered+=p.seen||0; if(p.srs&&p.srs.interval>=21)mastered++; });
+  const bestExam=(DB.exams||[]).reduce((m,e)=>Math.max(m,e.percent||0),0);
+  return Object.assign({ answered, mastered, bestExam,
+    streak:DB.progress.streak?.current||0, level:levelOf(DB.progress.xp), perfectSet:false }, extra||{});
+}
+function evaluateAchievements(extra){
+  const s=achStats(extra);
+  DB.progress.achievements = DB.progress.achievements || {};
+  const newly=[];
+  ACHIEVEMENTS.forEach(a=>{ if(!DB.progress.achievements[a.id] && a.test(s)){ DB.progress.achievements[a.id]=today(); newly.push(a); } });
+  if(newly.length){ save.progress(); confetti(); newly.forEach((a,i)=>setTimeout(()=>{ toast("Achievement unlocked — "+a.name); cue("achieve"); }, i*900)); }
+  return newly;
+}
+function weakestTopic(){
+  const g=new Map();
+  allQs().forEach(q=>{ const pr=DB.progress.questions[q.id]; if(!pr||!pr.seen) return;
+    const k=qSys(q)+"|"+qRef(q)+"|"+(q.topic||"General");
+    const o=g.get(k)||{seen:0,correct:0,system:qSys(q),reference:qRef(q),topic:q.topic||"General"};
+    o.seen+=pr.seen; o.correct+=pr.correct; g.set(k,o);
+  });
+  let best=null; g.forEach(o=>{ if(o.seen>=3){ const acc=o.correct/o.seen; if(!best||acc<best.acc) best={...o,acc}; } });
+  return best;
+}
+function freshTopic(){
+  const g=new Map();
+  allQs().forEach(q=>{ const k=qSys(q)+"|"+qRef(q)+"|"+(q.topic||"General");
+    const o=g.get(k)||{count:0,seenAny:false,system:qSys(q),reference:qRef(q),topic:q.topic||"General"};
+    o.count++; if(DB.progress.questions[q.id]) o.seenAny=true; g.set(k,o);
+  });
+  let best=null; g.forEach(o=>{ if(!o.seenAny){ if(!best||o.count>best.count) best=o; } });
+  return best;
+}
+function computeSuggestions(){
+  const out=[];
+  if(DB.progress.resume && DB.progress.resume.ctx && poolFor(DB.progress.resume.ctx).length)
+    out.push({icon:"&#9654;", title:"Continue where you left off", sub:DB.progress.resume.label||"", action:"resume"});
+  const due=dueCount();
+  if(due>0) out.push({icon:"&#8635;", title:"Review "+due+" due now", sub:"Lock it in with spaced repetition", action:"start-smart"});
+  const w=weakestTopic();
+  if(w) out.push({icon:"&#9678;", title:"Shore up: "+w.topic, sub:Math.round(w.acc*100)+"% so far · "+w.system, action:"topic", data:w});
+  const n=freshTopic();
+  if(n && out.length<3) out.push({icon:"&#10022;", title:"Try something new: "+n.topic, sub:n.system+" · "+n.count+" fresh", action:"topic", data:n});
+  if(!out.length) out.push({icon:"&#10022;", title:"Start studying", sub:"Pick a system below", action:"none"});
+  return out.slice(0,3);
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+// Where the question bank + leaderboard live. Used when the app runs as a
+// downloaded file (file://) so it can still phone home for updates.
+const REMOTE_BANK = "https://raw.githubusercontent.com/Fulcrum003/medcall-bank/main/";
+function defaultBase(){
+  if(location.protocol==="http:"||location.protocol==="https:"){
+    // hosted next to its own bank (e.g. GitHub Pages) → use same origin
+    let u=location.href.split("#")[0].split("?")[0].replace(/\/[^\/]*\.html?$/i,"/");
+    if(!u.endsWith("/")) u+="/";
+    return u;
+  }
+  return REMOTE_BANK; // downloaded file → fetch the bank directly from the repo
+}
+
+// offline app shell
+if("serviceWorker" in navigator && (location.protocol==="https:"||location.protocol==="http:")){
+  window.addEventListener("load", ()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+
+(async function(){
+  await loadDB();
+  applyTheme();
+  try{ ghToken = await wsGet("medrecall:ghtoken:v1"); }catch(e){}
+  try{ wallImg = await wsGet("medrecall:wallpaperimg:v1"); }catch(e){}
+  applyWallpaper();
+  // instant + offline start from the cached bank
+  try{ const cached = await wsGet("medrecall:bankcache:v1"); if(cached && cached.length){ BANK.length=0; cached.forEach(p=>BANK.push(p)); } }catch(e){}
+  buildIndex();
+  render();
+  // revalidate from the network when online
+  const base = DB.settings.bankUrl || defaultBase();
+  if(base){ try{ await syncBank(base); if(App.screen==="home") render(); }catch(e){ /* offline → keep cached/bundled bank */ } }
+  // keep the group board fresh (posts your score + pulls others) once the endpoint is known
+  if(DB.settings.groupEndpoint || DB.settings.lbRepo){ syncBoard(); }
+})();
+
 </script>
 </body>
 </html>
