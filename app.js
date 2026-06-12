@@ -349,7 +349,7 @@ export function adaptPack(c){
       const reference = q.reference || (q.source && (q.source.part || q.source.paper)) || "Other";
       return {
         id:q.id, type:q.type||"mcq", system, reference, topic,
-        source:[q.source&&q.source.paper, q.source&&q.source.institution].filter(Boolean).join(" · "),
+        source:typeof q.source==="string"?q.source:[q.source&&q.source.paper, q.source&&q.source.institution].filter(Boolean).join(" · "),
         stem:q.stem,
         choices:(q.choices||[]).map(ch=>({l:ch.label,t:ch.text,correct:!!ch.correct,e:ch.explanation})),
         optionsTitle:q.optionsTitle||null, modelAnswer:q.modelAnswer||null,

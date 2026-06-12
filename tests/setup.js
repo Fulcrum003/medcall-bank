@@ -41,3 +41,6 @@ global.requestAnimationFrame = vi.fn((cb) => setTimeout(cb, 16));
 // Stub URL.createObjectURL
 global.URL.createObjectURL = vi.fn(() => 'blob:mock');
 global.URL.revokeObjectURL = vi.fn();
+
+// Stub window.scrollTo (not implemented by jsdom)
+global.scrollTo = vi.fn();
