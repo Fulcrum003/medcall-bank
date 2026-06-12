@@ -1,0 +1,4 @@
+node_modules/
+extract.py
+coverage/
+.nyc_output/
