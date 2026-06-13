@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 3,
+  "manifestVersion": 4,
   "updated": "2026-06-11",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
@@ -50,6 +50,14 @@
       "version": 2,
       "url": "obgyn.json",
       "questionCount": 553
+    },
+    {
+      "packId": "paediatrics",
+      "title": "Paediatrics",
+      "color": "#d8a25e",
+      "version": 1,
+      "url": "paediatrics.json",
+      "questionCount": 110
     }
   ]
 }
