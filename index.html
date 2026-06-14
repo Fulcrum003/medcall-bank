@@ -677,7 +677,7 @@ function adaptPack(c){
 /* ============================================================
    APP STATE
    ============================================================ */
-const App = { screen:"home", nav:{system:null,reference:null}, practice:null, exam:null, examResult:null, builder:null, examReview:false };
+const App = { screen:"home", nav:{system:null,type:null,reference:null}, practice:null, exam:null, examResult:null, builder:null, examReview:false };
 let ghToken=null; // fine-grained GitHub token, stored only on this device (for posting your own leaderboard score)
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -719,13 +719,17 @@ function groupCounts(filterFn, keyFn){
   });
   return [...total.keys()].sort((a,b)=>a.localeCompare(b)).map(k=>({name:k,total:total.get(k),seen:seen.get(k)||0,due:due.get(k)||0,color:col.get(k)}));
 }
-const listSystems    = ()      => groupCounts(null, qSys);
-const listReferences = sys     => groupCounts(q=>qSys(q)===sys, qRef);
-const listTopics     = (sys,r) => groupCounts(q=>qSys(q)===sys && qRef(q)===r, q=>q.topic||"General");
+const qType = q => (q.type==='emq' ? 'EMQs' : q.type==='sa' ? 'Short Answer' : 'MCQs');
+const typeRank = t => (t==='MCQs'?0 : t==='EMQs'?1 : 2);
+const listSystems    = ()         => groupCounts(null, qSys);
+const listTypes      = sys        => groupCounts(q=>qSys(q)===sys, qType).sort((a,b)=>typeRank(a.name)-typeRank(b.name));
+const listReferences = (sys,ty)   => groupCounts(q=>qSys(q)===sys && qType(q)===ty, qRef);
+const listTopics     = (sys,ty,r) => groupCounts(q=>qSys(q)===sys && qType(q)===ty && qRef(q)===r, q=>q.topic||"General");
 const poolFor = ctx => {
   if(ctx.ids) return ctx.ids.filter(id=>QMAP[id]);
   return allQs().filter(q=>{
     if(ctx.system!=null   && qSys(q)!==ctx.system)              return false;
+    if(ctx.type!=null     && qType(q)!==ctx.type)               return false;
     if(ctx.reference!=null&& qRef(q)!==ctx.reference)           return false;
     if(ctx.topic!=null    && (q.topic||"General")!==ctx.topic)  return false;
     return true;
@@ -809,6 +813,7 @@ function render(){
   let foot=$("foot"); if(foot) foot.remove();
   if(App.screen==="home") a.innerHTML=viewHome();
   else if(App.screen==="system") a.innerHTML=viewSystem();
+  else if(App.screen==="type") a.innerHTML=viewType();
   else if(App.screen==="reference") a.innerHTML=viewReference();
   else if(App.screen==="quiz") a.innerHTML=viewQuiz();
   else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
@@ -905,7 +910,7 @@ function viewHome(){
         ${s.due>0?`<span class="badge due">${s.due} due</span>`:`<span class="badge zero">${s.seen}/${s.total}</span>`}
       </div>
       <div class="row" style="gap:14px;margin-top:7px;font-size:12.5px;color:var(--faint)">
-        <span>${s.total} questions</span><span>·</span><span>${listReferences(s.name).length} references</span>
+        <span>${s.total} questions</span><span>·</span><span>${listTypes(s.name).map(t=>t.name).join(' + ')}</span>
       </div>
       <div class="progressbar"><i style="width:${pct}%"></i></div>
     </button>`;
@@ -916,20 +921,44 @@ function viewHome(){
 
 /* ---------- BROWSE: references within a system ---------- */
 function viewSystem(){
-  const sys=App.nav.system, refs=listReferences(sys);
+  const sys=App.nav.system, types=listTypes(sys);
   const sysColor=(listSystems().find(s=>s.name===sys)||{}).color||"#3fb6a8";
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
     <h2 class="serif" style="font-size:24px;font-weight:600;color:${sysColor}">${esc(sys)}</h2>
-    <p class="muted" style="font-size:13.5px;margin-top:2px">${refs.length} references · ${poolFor({system:sys}).length} questions</p>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${poolFor({system:sys}).length} questions</p>
     <div style="height:10px"></div>
     <button class="btn btn-primary" data-action="study-system" data-system="${esc(sys)}">Study everything in ${esc(sys)}</button>
+    <div class="sectlabel">Question type</div>`;
+  types.forEach(t=>{
+    const pct=t.total?Math.round(t.seen/t.total*100):0;
+    html+=`<button class="card pad subj" data-action="open-type" data-system="${esc(sys)}" data-type="${esc(t.name)}" style="margin-bottom:10px">
+      <div class="row between"><h3 style="font-size:17px">${esc(t.name)}</h3>${t.due>0?`<span class="badge due">${t.due} due</span>`:`<span class="badge zero">${t.seen}/${t.total}</span>`}</div>
+      <div class="row" style="gap:14px;margin-top:7px;font-size:12.5px;color:var(--faint)"><span>${t.total} questions</span><span>·</span><span>${listReferences(sys,t.name).length} references</span></div>
+      <div class="progressbar"><i style="width:${pct}%"></i></div>
+    </button>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+/* ---------- BROWSE: references within a system + type ---------- */
+function viewType(){
+  const sys=App.nav.system, ty=App.nav.type, refs=listReferences(sys,ty);
+  const sysColor=(listSystems().find(s=>s.name===sys)||{}).color||"#3fb6a8";
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="open-system" data-system="${esc(sys)}" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(sys)}</button>
+    <div class="faint mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(sys)}</div>
+    <h2 class="serif" style="font-size:22px;font-weight:600;color:${sysColor};margin-top:2px">${esc(ty)}</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${refs.length} references · ${poolFor({system:sys,type:ty}).length} questions</p>
+    <div style="height:10px"></div>
+    <button class="btn btn-primary" data-action="study-type" data-system="${esc(sys)}" data-type="${esc(ty)}">Study all ${esc(ty)} in ${esc(sys)}</button>
     <div class="sectlabel">References</div>`;
   refs.forEach(r=>{
     const pct=r.total?Math.round(r.seen/r.total*100):0;
-    html+=`<button class="card pad subj" data-action="open-reference" data-system="${esc(sys)}" data-reference="${esc(r.name)}" style="margin-bottom:10px">
+    html+=`<button class="card pad subj" data-action="open-reference" data-system="${esc(sys)}" data-type="${esc(ty)}" data-reference="${esc(r.name)}" style="margin-bottom:10px">
       <div class="row between"><h3 style="font-size:16px">${esc(r.name)}</h3>${r.due>0?`<span class="badge due">${r.due} due</span>`:`<span class="badge zero">${r.seen}/${r.total}</span>`}</div>
-      <div class="row" style="gap:14px;margin-top:7px;font-size:12.5px;color:var(--faint)"><span>${r.total} questions</span><span>·</span><span>${listTopics(sys,r.name).length} topics</span></div>
+      <div class="row" style="gap:14px;margin-top:7px;font-size:12.5px;color:var(--faint)"><span>${r.total} questions</span><span>·</span><span>${listTopics(sys,ty,r.name).length} topics</span></div>
       <div class="progressbar"><i style="width:${pct}%"></i></div>
     </button>`;
   });
@@ -939,18 +968,18 @@ function viewSystem(){
 
 /* ---------- BROWSE: topics within a reference ---------- */
 function viewReference(){
-  const sys=App.nav.system, ref=App.nav.reference, tops=listTopics(sys,ref);
+  const sys=App.nav.system, ty=App.nav.type, ref=App.nav.reference, tops=listTopics(sys,ty,ref);
   let html=`<div class="fade">
-    <button class="btn-sm btn-ghost" data-action="open-system" data-system="${esc(sys)}" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(sys)}</button>
-    <div class="faint mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(sys)}</div>
+    <button class="btn-sm btn-ghost" data-action="open-type" data-system="${esc(sys)}" data-type="${esc(ty)}" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(ty)}</button>
+    <div class="faint mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(sys)} · ${esc(ty)}</div>
     <h2 class="serif" style="font-size:21px;font-weight:600;margin-top:2px">${esc(ref)}</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">${tops.length} topics · ${poolFor({system:sys,reference:ref}).length} questions</p>
     <div style="height:10px"></div>
-    <button class="btn btn-primary" data-action="study-reference" data-system="${esc(sys)}" data-reference="${esc(ref)}">Study all of this reference</button>
+    <button class="btn btn-primary" data-action="study-reference" data-system="${esc(sys)}" data-type="${esc(ty)}" data-reference="${esc(ref)}">Study all of this reference</button>
     <div class="sectlabel">Topics</div>`;
   tops.forEach(tp=>{
     const pct=tp.total?Math.round(tp.seen/tp.total*100):0;
-    html+=`<button class="card pad subj" data-action="study-topic" data-system="${esc(sys)}" data-reference="${esc(ref)}" data-topic="${esc(tp.name)}" style="margin-bottom:9px">
+    html+=`<button class="card pad subj" data-action="study-topic" data-system="${esc(sys)}" data-type="${esc(ty)}" data-reference="${esc(ref)}" data-topic="${esc(tp.name)}" style="margin-bottom:9px">
       <div class="row between"><span style="font-weight:600;font-size:14.5px">${esc(tp.name)}</span>${tp.due>0?`<span class="badge due">${tp.due}</span>`:`<span class="faint mono" style="font-size:12px">${tp.seen}/${tp.total}</span>`}</div>
       <div class="progressbar" style="margin-top:9px"><i style="width:${pct}%"></i></div>
     </button>`;
@@ -1785,11 +1814,13 @@ document.body.addEventListener("click", async e=>{
 
   // home / browse
   if(a==="start-smart"){ startPracticeCtx({smart:true}, "Smart Review"); return; }
-  if(a==="open-system"){ App.nav={system:t.dataset.system, reference:null}; App.screen="system"; render(); return; }
-  if(a==="open-reference"){ App.nav={system:t.dataset.system, reference:t.dataset.reference}; App.screen="reference"; render(); return; }
+  if(a==="open-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="system"; render(); return; }
+  if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
+  if(a==="open-reference"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}; App.screen="reference"; render(); return; }
   if(a==="study-system"){ startPracticeCtx({system:t.dataset.system}, t.dataset.system); return; }
-  if(a==="study-reference"){ startPracticeCtx({system:t.dataset.system, reference:t.dataset.reference}, t.dataset.reference); return; }
-  if(a==="study-topic"){ startPracticeCtx({system:t.dataset.system, reference:t.dataset.reference, topic:t.dataset.topic}, t.dataset.topic); return; }
+  if(a==="study-type"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type}, t.dataset.type); return; }
+  if(a==="study-reference"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}, t.dataset.reference); return; }
+  if(a==="study-topic"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference, topic:t.dataset.topic}, t.dataset.topic); return; }
   if(a==="resume"){ const r=DB.progress.resume; if(r&&r.ctx) startPracticeCtx(r.ctx, r.label, r.i); return; }
 
   // quiz

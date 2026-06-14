@@ -1,6 +1,6 @@
 {
-  "manifestVersion": 4,
-  "updated": "2026-06-11",
+  "manifestVersion": 5,
+  "updated": "2026-06-13",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
     {
@@ -58,6 +58,14 @@
       "version": 1,
       "url": "paediatrics.json",
       "questionCount": 110
+    },
+    {
+      "packId": "dermatology-mcq",
+      "title": "Dermatology",
+      "color": "#d99a6c",
+      "version": 1,
+      "url": "dermatology-mcq.json",
+      "questionCount": 108
     }
   ]
 }
