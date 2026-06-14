@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 7,
+  "manifestVersion": 8,
   "updated": "2026-06-14",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
@@ -82,6 +82,14 @@
       "version": 1,
       "url": "surgical-special-senses-mcq.json",
       "questionCount": 319
+    },
+    {
+      "packId": "obgyn-mcq",
+      "title": "Obstetrics & Gynaecology",
+      "color": "#3fb6a8",
+      "version": 1,
+      "url": "obgyn-mcq.json",
+      "questionCount": 187
     }
   ]
 }
