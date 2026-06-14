@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 6,
+  "manifestVersion": 7,
   "updated": "2026-06-14",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
@@ -74,6 +74,14 @@
       "version": 1,
       "url": "psychiatry-mcq.json",
       "questionCount": 49
+    },
+    {
+      "packId": "surgical-special-senses-mcq",
+      "title": "ENT & Ophthalmology",
+      "color": "#5ec48f",
+      "version": 1,
+      "url": "surgical-special-senses-mcq.json",
+      "questionCount": 319
     }
   ]
 }
