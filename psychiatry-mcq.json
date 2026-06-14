@@ -1,0 +1,2405 @@
+{
+ "packId": "psychiatry-mcq",
+ "title": "Psychiatry",
+ "color": "#7e9fd1",
+ "version": 1,
+ "updated": "2026-06-14",
+ "questionCount": 49,
+ "questions": [
+  {
+   "id": "psych_mcq_q1",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "What medication has she received for the past 25 years?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Diazepam",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Phenobarbital",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Clozapine",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Perphenazine",
+     "correct": true,
+     "explanation": "Perphenazine = typical (1st-generation) antipsychotic (phenothiazine). 25 years of D2 blockade → nigrostriatal receptor supersensitivity → Tardive Dyskinesia. Clozapine (C) has the LOWEST risk of TD of all antipsychotics."
+    },
+    {
+     "label": "E",
+     "text": "Amitriptyline",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "Typicals cause TD. Atypicals are Safer (except high-dose olanzapine/risperidone).",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q2",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "These abnormal movements are seen, characteristically, in:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Tourette's syndrome",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Akathisia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Tardive dyskinesia",
+     "correct": true,
+     "explanation": "PATHOGNOMONIC buccolingual-masticatory triad: lip smacking + tongue protrusion + chewing movements. Patient UNAWARE. Akathisia (B) = restlessness, no orofacial movements. Parkinson's (D) = pill-rolling resting tremor, not orofacial. A 44-year-old woman with schizophrenia is struggling with paranoia, auditory hallucinations, and delusions. She lives with her mother but has a poor relationship with her. She tells you that everyone wants her to spend a lot of money and buy drugs."
+    },
+    {
+     "label": "D",
+     "text": "Parkinson's disease",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Wilson's disease",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q3",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "Which of the following would be the most appropriate goal of supportive therapy for this patient?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Correcting faulty ideas",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Exploring the feeling of meaninglessness in life",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Investigating the freedom of individuals",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Personality change",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Strengthening of defenses",
+     "correct": true,
+     "explanation": "Supportive therapy = strengthen ego defences + support reality testing + improve coping + stabilise functioning. Does NOT challenge delusions directly (A) — that is CBT. Does NOT aim for personality change (D) — that is long-term psychodynamic therapy."
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q4",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "Which of the following responses would be the most useful?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "\"Well, deciding for yourself is best.\"",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "\"If you buy drugs, I'll call the police.\"",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "\"Perhaps we should look at what your mother would think about that.\"",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "\"Why do you think everyone wants you to do that?\"",
+     "correct": true,
+     "explanation": "KEY: Open-ended, non-confrontational = maintains alliance. NEVER threaten (B = destroys alliance). NEVER directly contradict delusions (E = patient disengages). Involving conflicted relationship (mother, C) increases paranoia. A 28-year-old taxi driver is chronically consumed by fears of having accidentally run over a pedestrian. He drives back to the scene to prove nobody was hurt."
+    },
+    {
+     "label": "E",
+     "text": "\"No, they don't.\"",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q5",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "Obsessive compulsive disorder:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Usually has an onset in middle age",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Has a lifetime prevalence of 2.5%",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Is usually caused by traumatic events",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Is not responsive to pharmacological intervention",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Has frequent spontaneous periods of complete remission",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "■ FLAG — FILE ANSWER = C (traumatic events). STANDARD TEACHING = B (2.5% lifetime prevalence). OCD",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q6",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "This is an example of:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "A compulsion secondary to an obsession.",
+     "correct": true,
+     "explanation": "CLASSIC OCD SEQUENCE: Obsession (intrusive fear of hitting someone) → anxiety → Compulsion (returning to check the scene) → temporary relief → cycle repeats. Insight preserved (knows worries are silly) = rules out delusion (C). A 34-year-old secretary climbs 12 flights of stairs every day to reach her office, because she is terrified by the thought of being trapped in the elevator."
+    },
+    {
+     "label": "B",
+     "text": "An obsession triggered by a compulsion.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "A delusional ideation.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "A typical manifestation of obsessive compulsive personality disorder.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "A phobia.",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q7",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "The treatment of choice for this disorder is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Imipramine",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Clonazepam",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Propranolol",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Exposure",
+     "correct": true,
+     "explanation": "Specific Phobia: FIRST-LINE = Exposure therapy (systematic desensitisation / in vivo exposure + response prevention). CBT with exposure = gold standard. Pharmacotherapy plays a limited role. Propranolol (C) used for performance anxiety situationally, not specific phobia."
+    },
+    {
+     "label": "E",
+     "text": "Psychoanalysis",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q8",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "Her diagnosis is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Social phobia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Performance anxiety",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Generalized anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Specific phobia",
+     "correct": true,
+     "explanation": "KEY DIFFERENTIATOR: Specific phobia = fear LIMITED to ONE specific situation/object (elevator = situational subtype). Agoraphobia = fear of MULTIPLE situations where escape is difficult (crowds, open spaces, public transport). GAD = generalised, non-situational worry. A 19-year-old man is brought to A&E.; He states \"the voices told me to do it.\" For the past year he has felt people are not who they say they are. He has smoked cannabis daily for 6 months."
+    },
+    {
+     "label": "E",
+     "text": "Agoraphobia",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q9",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "What is the psychopathology described here?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Delusion",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Obsession",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Hallucination",
+     "correct": true,
+     "explanation": "KEY: His friends CANNOT hear the neighbours = HALLUCINATION (auditory, perception without external stimulus). Delusion = false BELIEF. Over-valued idea = intensely held belief with some emotional basis. The inability of others to share the experience = hallucination."
+    },
+    {
+     "label": "D",
+     "text": "Over-valued idea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Erotomania",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q10",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section A — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section A — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "What is the most likely diagnosis?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Schizophrenia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Schizophrenia-like psychotic disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Delusional disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Depressive episode, severe, with psychotic features",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Psychosis secondary to psychoactive substance use",
+     "correct": true,
+     "explanation": "Cannabis + legal highs + acute onset + <6 months duration → Substance-induced psychosis. Schizophrenia requires: >6 months symptoms + cannot be attributed to substance. Rule out organic/substance cause FIRST before diagnosing primary psychosis."
+    }
+   ],
+   "keyPoint": "SECTION B — Batch 38 | G3 MCQ Examination | 2025-11-27 | Pages 6 & 13",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q11",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section B — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section B — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "Which of the following would be the most appropriate goal of supportive therapy?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Correcting faulty ideas",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Exploring the feeling of meaninglessness in life",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Investigating the freedom of individuals",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Personality change",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Strengthening of defenses",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "REPEAT of Section A Q3. Same schizophrenia scenario. Answer confirmed E from page 13 circled paper.",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q12",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section B — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section B — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "Which of the following responses would be the most useful?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "\"Well, deciding for yourself is best.\"",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "\"If you buy drugs, I'll call the police.\"",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "\"Perhaps we should look at what your mother would think about that.\"",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "\"Why do you think everyone wants you to do that?\"",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "\"No, they don't.\"",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "REPEAT of Section A Q4. Answer confirmed D from page 13 circled paper.",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q13",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section B — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section B — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "The treatment of choice for this disorder is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Imipramine",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Clonazepam",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Propranolol",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Exposure",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Psychoanalysis",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "REPEAT of Section A Q7. Specific phobia → Exposure therapy. Answer confirmed D from page 13 circled paper.",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q14",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section B — Batch 38",
+   "topic": "General",
+   "source": {
+    "paper": "Section B — Batch 38",
+    "institution": "University of Kufa"
+   },
+   "stem": "Her diagnosis is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Social phobia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Performance anxiety",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Generalized anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Specific phobia",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Agoraphobia",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "REPEAT of Section A Q8. Specific phobia (situational subtype). Answer confirmed D from page 13 circled paper.",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q15",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section J — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section J — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "Jood is a 6-year-old child with history of birth asphyxia, does not communicate well, slow mental and physical growth, does not mix with people, has limited interests, gets widely agitated if disturbed. The most likely diagnosis is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Oppositional defiant disorder.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Conduct disorder.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Separation anxiety disorder.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Autism Spectrum disorder.",
+     "correct": true,
+     "explanation": "Birth asphyxia + social communication deficit + restricted interests + agitation when routine disturbed = ASD. Birth asphyxia = recognised risk factor for neurodevelopmental disorders."
+    },
+    {
+     "label": "E",
+     "text": "Selective mutism.",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q16",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section J — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section J — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "Medication plus behavioral treatment of attention deficit hyperactivity disorder is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Improved social skills as medications did.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Three-year follow-up found superior benefits of medications did persist.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Slightly better than medications alone.",
+     "correct": true,
+     "explanation": "MTA Study (landmark ADHD trial): Combined (medication + behaviour therapy) slightly better than medication alone specifically for social skills. Medication alone = superior to behaviour therapy alone for core ADHD symptoms."
+    },
+    {
+     "label": "D",
+     "text": "Slightly better than behavioral treatment alone.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Largely better behavioral treatment alone.",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q17",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section J — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section J — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "The effective management of Conduct disorder is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Antipsychotics.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Methylphenidate.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Antidepressants.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Family interventions.",
+     "correct": true,
+     "explanation": "Conduct Disorder FIRST-LINE = Multisystemic Treatment (MST): family interventions + parent-child interaction training + school coordination. Pharmacotherapy only for comorbid ADHD (methylphenidate) or severe aggression (risperidone)."
+    },
+    {
+     "label": "E",
+     "text": "Clonidine.",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q18",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section J — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section J — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "The first line of management of Vascular Dementia is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Serotonin reuptake inhibitors.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Atypical neuroleptic.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Cholinesterase inhibitor.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Treatment of hypertension.",
+     "correct": true,
+     "explanation": "Vascular dementia: PRIMARY management = treat VASCULAR RISK FACTORS (hypertension #1 → prevents further infarcts). Cholinesterase inhibitors have limited/no robust evidence in pure vascular dementia (used in mixed dementia)."
+    },
+    {
+     "label": "E",
+     "text": "Shunt operation.",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q19",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section J — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section J — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "Which class of medications can ameliorate the symptoms of Alzheimer's disease?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Serotonin reuptake inhibitors.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "TCAs.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Atypical neuroleptics.",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Cholinesterase inhibitors.",
+     "correct": true,
+     "explanation": "Alzheimer's: Cholinergic deficit → Cholinesterase inhibitors (donepezil, rivastigmine, galantamine) = first-line symptomatic treatment. Memantine (NMDA antagonist) = moderate-severe AD. No disease-modifying treatment currently available. True/False Statements — Q2 Case: 16-year-old male, post-wrist-cutting 16-year-old male, post-wrist-cutting. Assessment: lack of interest, low energy, disturbed sleep/appetite, hopelessness, overthinking, irritability, muscle tension, frequent headaches, irritable bowel — over last month. # Statement Answer 1 Patient most likely to have a severe major depressive disorder. T 2 First step in management is assessment of patient intention about death. T 3 Assessment of premorbid personality includes patient information from birth till now. T 4 Suicide risk assessment reveals that this patient had severe risk. T 5 In the same patient, the diagnosis of presented attack may differ from previous attack. T 6 When patient talks about stressful event, interviewer should express empathy. T 7 In assessment of depression, it is not important to assess if there is previous attack of mania. F 8 Formal thought disorder is one of the disorders of thought content. F 9 Mental state examination is regarded as a part of psychiatric interview. T 10 Hallucination can occur in normal people. T Key T/F explanations: Q7 FALSE: CRITICAL to ask about previous mania — undiagnosed bipolar + antidepressant alone → triggers mania. Q8 FALSE: Formal thought disorder = disorder of thought FORM (loosening, flight of ideas). Thought CONTENT disorders = delusions, obsessions. Q10 TRUE: Hypnagogic (sleep onset) and hypnopompic (waking) hallucinations occur in normal people."
+    },
+    {
+     "label": "E",
+     "text": "Beta blockers.",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "SECTION K — Batch 37 | Practical OCD Structured Case |",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q20",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section L — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section L — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "1. What is the most appropriate diagnosis?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Schizophrenia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Personality disorders",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Bipolar disorders",
+     "correct": true,
+     "explanation": "Bipolar I + psychotic features: elevated/expansive mood + grandiosity (thinks can fly) + psychosis + 2 suicide attempts. Distinguish from schizophrenia: prominent mood elevation + episodic course + onset often adolescence."
+    },
+    {
+     "label": "D",
+     "text": "Major depressive disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Anxiety disorders",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q21",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section L — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section L — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "2. What is the treatment of choice?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Antipsychotics",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Lithium",
+     "correct": true,
+     "explanation": "Acute manic episode → Mood stabiliser (Lithium or Valproate) + Atypical antipsychotic (if psychosis). Lithium = only mood stabiliser FDA-approved for bipolar in children ≥12 years. NEVER antidepressant alone (triggers mania)."
+    },
+    {
+     "label": "C",
+     "text": "Antidepressants",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ECT",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Antianxiety",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q22",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section L — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section L — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "3. What is the risk of suicide?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Mild",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Moderate",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Severe",
+     "correct": true,
+     "explanation": "HIGH RISK: 2 prior attempts + current intent (bridge jump) + psychotic features + male + age 16. Bipolar disorder = 20–30x higher suicide risk than general population. Immediate inpatient admission mandatory."
+    },
+    {
+     "label": "D",
+     "text": "Profound",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "No risk",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q23",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section L — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section L — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "4. What is the maintenance treatment?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Antipsychotics",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Lithium",
+     "correct": true,
+     "explanation": "Lithium = GOLD STANDARD maintenance for bipolar disorder. ONLY mood stabiliser proven to reduce suicidality. Monitor: serum lithium (0.6–1.2 mEq/L), renal function, thyroid function. Side effects: tremor, polyuria, hypothyroidism."
+    },
+    {
+     "label": "C",
+     "text": "Antidepressants",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ECT",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Antianxiety",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q24",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section L — Batch 37",
+   "topic": "General",
+   "source": {
+    "paper": "Section L — Batch 37",
+    "institution": "University of Kufa"
+   },
+   "stem": "5. Management place?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Inpatient",
+     "correct": true,
+     "explanation": "Mandatory inpatient: active suicidal ideation + 2 prior attempts + psychosis + poor impulse control. Outpatient only when risk low + robust social support + good treatment adherence."
+    },
+    {
+     "label": "B",
+     "text": "Inpatient or outpatient",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Outpatient",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "In emergency room",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "In police station",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "SECTION M — Old Questions | Batches 34–35 | App Quiz | Pages 36–60 | 25 MCQs",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q25",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Which class of medications can ameliorate the symptoms of Alzheimer's disease?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "TCAs",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Serotonin reuptake inhibitors",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Beta blockers",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Cholinesterase inhibitors",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Atypical neuroleptics",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "Repeat of Section J Q5 (different option order). Cholinesterase inhibitors (donepezil, rivastigmine, galantamine) =",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q26",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "In Parkinson's disease:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Young age group is usually affected",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "The reflexes are exaggerated",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "L-dopa therapy is cornerstone in the management",
+     "correct": true,
+     "explanation": "L-dopa (levodopa + carbidopa) = cornerstone of PD management — replaces dopamine in nigrostriatal pathway. Kayser-Fleischer rings = Wilson's disease (copper deposition). PD typically >60yr. No true weakness (akinesia, not weakness). Reflexes normal or slightly reduced."
+    },
+    {
+     "label": "D",
+     "text": "Kayser-Fleischer ring in young = characteristic of punch-drunken syndrome",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "The weakness is distal in nature",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q27",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "All the following are true regarding Multiple Sclerosis EXCEPT:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Immune mediated pathogenesis in genetically susceptible patient triggered by environmental factor is accepted theory",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Vertigo tends to be peripheral in type",
+     "correct": true,
+     "explanation": "MS vertigo = CENTRAL (not peripheral) — caused by demyelination in brainstem/cerebellum. Central vertigo features: direction-changing nystagmus, no tinnitus/hearing loss, cannot be suppressed by fixation, accompanied by other brainstem signs."
+    },
+    {
+     "label": "C",
+     "text": "Oral therapy (Fingolimod) is a promising line of therapy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "MRI finding is essential in follow up disease process",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Betaferon therapy is important to delay progression in relapsing remitting disease",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q28",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Dystonia is defined:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Slow distal involuntary movement",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Rhythmic contraction and relaxation around a joint",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Jerky involuntary movement",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Involuntary muscle contraction leading to abnormal posture",
+     "correct": true,
+     "explanation": "Movement disorder definitions: Tremor = rhythmic oscillation (b). Chorea = brief, jerky, random (c). Dystonia = sustained involuntary muscle contraction → abnormal posture (d). Athetosis = slow writhing. Myoclonus = sudden shock-like jerk."
+    },
+    {
+     "label": "E",
+     "text": "Resting involuntary movement",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q29",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Among the following, the true statement regarding types of ataxia:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Depressed or absent ankle jerk seen in sensory ataxia",
+     "correct": true,
+     "explanation": "Sensory (posterior column) ataxia: absent ankle jerks (peripheral neuropathy component) + Romberg positive + impaired vibration/proprioception + worse in dark. Cerebellar ataxia: nystagmus + dysarthria + intention tremor + Romberg negative (can compensate with vision)."
+    },
+    {
+     "label": "B",
+     "text": "Impaired vibration and position sense is seen in vestibular ataxia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Nystagmus is seen in cases of sensory ataxia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "In vestibular ataxia, dysarthria is important sign",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q30",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Medication plus behavioral treatment of Attention Deficit Hyperactivity Disorder is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Slightly better than behavioral treatment alone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Three-year follow-up found superior benefits of medications did persist",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Improved social skills as medications did",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Slightly better than medications alone",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Largely better behavioral treatment alone",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "Repeat of Section J Q2 (different option order). D here = \"Slightly better than medications alone.\" Combined treatment best",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q31",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "A 30-year-old presents with acute right-sided lower motor neuron facial weakness. Which of the following is NOT correct?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Presence of rash at external auditory meatus is consistent with herpes zoster infection",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Viral etiology should be suspected as common cause",
+     "correct": true,
+     "explanation": "Bell's palsy = IDIOPATHIC LMN CN VII palsy by definition. Saying \"viral etiology is the COMMON cause\" is NOT correct — it remains idiopathic. Ramsay Hunt = herpes zoster + vesicles at external auditory meatus. Steroids within 72 hours of onset improve outcome."
+    },
+    {
+     "label": "C",
+     "text": "Additional right side Abducent nerve palsy suggests a cerebello-pontine angle lesion",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Loss of sensation in right side of face is consistent with idiopathic type",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "A course of steroid can be given within 1st 2 weeks of onset",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q32",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "A sexual urge to dress in the opposite gender's clothing to get sexual gratification is called:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Transvestic fetishism",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Frotturism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Fetishism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Exhibitionism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Transsexualism",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "■ FLAG — FILE radio button marked B (Frotteurism). THIS IS WRONG. Frotteurism = sexual arousal from",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q33",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "A 36-year-old female — gradual loss of vision right eye over 1 week + previous spastic lower limb weakness + T2 MRI brain: multiple periventricular hyperintense lesions + normal ESR. Which is true?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Steroid pulse therapy is useful initial therapeutic approach",
+     "correct": true,
+     "explanation": "Multiple Sclerosis: Optic neuritis (right eye) + previous cord relapse + periventricular lesions + normal ESR (rules out vasculitis). Acute relapse → IV Methylprednisolone (speeds recovery). Pupillary reflex ABNORMAL in optic neuritis (RAPD = relative afferent pupillary defect)."
+    },
+    {
+     "label": "B",
+     "text": "Behcet's disease is most likely diagnosis",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Antibiotic is treatment of choice",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Screen for vasculitis is of no value",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Pupillary reflexes are expected to be normal",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q34",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "In a 19-year-old on SSRI, addition of bupropion (Wellbutrin) should be considered for which side effect?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Sexual dysfunction",
+     "correct": true,
+     "explanation": "SSRI most troublesome LONG-TERM side effect = sexual dysfunction (delayed ejaculation, anorgasmia, decreased libido). Bupropion (NDRI) = added as augmentation for SSRI-induced sexual dysfunction. Also helps smoking cessation (secondary benefit)."
+    },
+    {
+     "label": "B",
+     "text": "Nausea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Desire for cigarettes",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Headache",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Dystonia",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q35",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "The first line of management of Vascular Dementia is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Atypical neuroleptics",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Serotonin reuptake inhibitors",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Cholinesterase inhibitors",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Shunt operation",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Treatment of hypertension",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "Repeat of Section J Q4 (different option order). E here = Treatment of hypertension. Primary strategy = treat vascular risk",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q36",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "All of the following are clinical presentations of conversion disorder, EXCEPT:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Coma",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Sensory loss",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Paralysis",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Loss of speech",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Seizure",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "■ FLAG — FILE ANSWER = E (Seizure). STANDARD TEACHING = A (Coma). Pseudoseizures (functional",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q37",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "A patient has been standing immobile for several hours. One arm stretched upward, other wrapped around his neck. Does not appear aware of surroundings and actively resists any attempt to change position. This is an example of:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Synesthesia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Dystonia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Apraxia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Trance",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Catatonia",
+     "correct": true,
+     "explanation": "Catatonia features: STOP = Stupor, Tone increased, Odd posturing, Posturing persists (catalepsy/waxy flexibility) + mutism + negativism (actively resists movement) + stereotypies. Treatment: Lorazepam (benzodiazepine) first-line. Refractory: ECT."
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q38",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "The followings are features of anterior spinal artery thrombosis EXCEPT:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Loss of vibration and position sense",
+     "correct": true,
+     "explanation": "Anterior Spinal Artery Syndrome: PRESERVES dorsal column (vibration + proprioception) — supplied by POSTERIOR spinal arteries. LOSSES: Pain + temperature (spinothalamic) + motor (corticospinal) + sphincters. = Dissociated sensory loss."
+    },
+    {
+     "label": "B",
+     "text": "Dissociated sensory loss",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Paraparesis",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Sensory level",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Sphincter disturbance",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q39",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "The effective management of Conduct disorder is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Antidepressants",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Antipsychotics",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Family interventions",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Methylphenidate",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Clonidine",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "Repeat of Section J Q3 (different option order). C here = Family interventions. MST approach = gold standard for conduct",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q40",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Which of the following treatment should be started for Sleep Apnoea Syndrome?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Nasal continuous positive airway pressure",
+     "correct": true,
+     "explanation": "Obstructive Sleep Apnoea (OSA): nCPAP = first-line treatment. Keeps upper airway patent by pneumatic splinting. Adjuncts: weight loss, positional therapy, mandibular advancement devices. Surgery (UPPP) for CPAP failure."
+    },
+    {
+     "label": "B",
+     "text": "Nasal intermittent positive airway pressure",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Nasal intermittent negative airway pressure",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Nasal continuous negative airway pressure",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Endotracheal continuous positive airway pressure",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q41",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "A patient gives very long complicated explanations with many unnecessary details before finally answering the original question. The patient displayed:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Circumstantialities",
+     "correct": true,
+     "explanation": "Circumstantiality = reaches the goal EVENTUALLY but via excessive unnecessary details. Tangentiality = NEVER reaches the goal. Perseveration = pathological repetition of same word/phrase. Flight of ideas = rapid shifting topics (mania, pressure of speech)."
+    },
+    {
+     "label": "B",
+     "text": "Perseveration",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Goal-oriented thought processes",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Loose associations",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Flight of ideas",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q42",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Regarding Guillain-Barré Syndrome, the following is true:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Extreme ages, history of diarrheal illness and axonal affection are good prognostic signs",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "The cardinal features are flaccid areflexic weakness",
+     "correct": true,
+     "explanation": "GBS cardinal features: Ascending FLACCID AREFLEXIC weakness (peripheral, NOT central). CSF: ALBUMINO-CYTOLOGICAL DISSOCIATION (↑protein, normal WBC <10). Steroids CONTRAINDICATED. Treatment: IVIG or Plasma exchange (not combined). Campylobacter = #1 trigger."
+    },
+    {
+     "label": "C",
+     "text": "Urine retention and sensory level are common features",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Central nervous system is affected in scattered manner",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Lymphocytes more than 500 cells with increased protein level are main CSF abnormality",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q43",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "In Duchenne Muscular Dystrophy:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Life expectancy is more than 35 years of age",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Age of onset around 10 years of age",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "It is autosomal inheritance",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Cardiac assessment should be done frequently early in disease",
+     "correct": true,
+     "explanation": "DMD: X-LINKED RECESSIVE (not autosomal). Onset 3–5 years (not 10). CK markedly elevated (10–100x normal, not mild). Life expectancy ~25 years without aggressive management. DILATED CARDIOMYOPATHY = leading cause of death → early cardiology assessment ESSENTIAL."
+    },
+    {
+     "label": "E",
+     "text": "CPK is mildly elevated",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q44",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Prevalence of schizophrenia in siblings is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "2.5%",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "10%",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "20%",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "30%",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "5%",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "■ FLAG — FILE ANSWER = D (30%). STANDARD TEACHING = B (10%). Sibling risk of schizophrenia = ~10%",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q45",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "In diabetic neuropathy, all are true EXCEPT:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Diabetic amyotrophy (proximal motor neuropathy) is asymmetrical in presentation",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Mononeuritis multiplex has vascular basis",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Diabetic polyneuropathy presents with proximal weakness",
+     "correct": true,
+     "explanation": "Diabetic polyneuropathy = DISTAL symmetrical sensorimotor (glove and stocking). PROXIMAL = Diabetic amyotrophy (painful, asymmetrical — this is the EXCEPTION). Amitriptyline (TCA) = effective neuropathic pain treatment (also duloxetine, gabapentin, pregabalin)."
+    },
+    {
+     "label": "D",
+     "text": "Glove and stocking sensory loss and absent ankle jerks is one of common presentation",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Amitriptyline is useful treatment to control the pain",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q46",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "The preoccupation with the fear of having an ugly nose, which persists despite different views of others, is called:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Conversion disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Morbid grief",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Somatization",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Dysmorphic disorder",
+     "correct": true,
+     "explanation": "Body Dysmorphic Disorder: preoccupation with perceived physical defect + persists despite reassurance. OCD spectrum. Treated with SSRIs + CBT. Distinguish from Hypochondriasis: HD = preoccupation with having a DISEASE (not a defect)."
+    },
+    {
+     "label": "E",
+     "text": "Hypochondriasis",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q47",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "GAD is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Manifested by muscle tension, autonomic hyperactivity, vigilance and scanning",
+     "correct": true,
+     "explanation": "GAD: generalised persistent worry + muscle tension + autonomic hyperactivity (palpitations, sweating) + vigilance/scanning. More common in FEMALES (2:1). Onset young-to-middle age. CHRONIC worry (NOT acute attacks — that = Panic Disorder)."
+    },
+    {
+     "label": "B",
+     "text": "More common in males than females",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Characterised by acute attacks of anxiety",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Associated with increased mortality from malignancy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Most common in the elderly",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q48",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "Ameer is a 6-year-old child with history of birth asphyxia, does not communicate well, slow mental and physical growth, does not mix, limited interests, gets widely agitated if disturbed. Most likely diagnosis:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Selective mutism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Conduct disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Oppositional defiant disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Separation anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Autism Spectrum disorder",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "Same vignette as Section J Q1 (Jood). ASD. Birth asphyxia + social communication deficit + restricted interests + agitation",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  },
+  {
+   "id": "psych_mcq_q49",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "reference": "Section M — Old Questions",
+   "topic": "General",
+   "source": {
+    "paper": "Section M — Old Questions",
+    "institution": "University of Kufa"
+   },
+   "stem": "CSF finding in patient with viral encephalitis includes:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Decreased sugar",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Lymphocytic leukocytosis",
+     "correct": true,
+     "explanation": "CSF profiles: Viral = Lymphocytic pleocytosis + normal/mildly elevated protein + NORMAL glucose + no bacteria. Bacterial = Neutrophilic pleocytosis + markedly elevated protein + LOW glucose + positive gram stain. Tuberculous = Lymphocytic + very high protein + low glucose + AFB."
+    },
+    {
+     "label": "C",
+     "text": "Positive gram stain for bacteria",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "CSF protein more than 100 mg/dl",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Elevated opening CSF pressure",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "SECTION N — Mental Health Block Cases | Prof. Dr. Arafat Aldujaili | Pages 61–72",
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "flag": null,
+   "references": null
+  }
+ ]
+}
