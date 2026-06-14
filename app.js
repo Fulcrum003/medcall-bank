@@ -348,7 +348,7 @@ export function adaptPack(c){
       const topic  = q.topic ? (hasSys? q.topic.split(" · ").slice(1).join(" · ") : q.topic) : "General";
       const reference = q.reference || (q.source && (q.source.part || q.source.paper)) || "Other";
       return {
-        id:q.id, type:q.type||"mcq", system, reference, topic,
+        id:q.id, stage:c.stage||"5th Stage", type:q.type||"mcq", system, reference, topic,
         source:typeof q.source==="string"?q.source:[q.source&&q.source.paper, q.source&&q.source.institution].filter(Boolean).join(" · "),
         stem:q.stem,
         choices:(q.choices||[]).map(ch=>({l:ch.label,t:ch.text,correct:!!ch.correct,e:ch.explanation})),
@@ -391,6 +391,7 @@ export function masteredCount(packId){
 /* ---- browse hierarchy: System → Reference → Topic ---- */
 const allQs = () => Object.values(QMAP);
 const qSys = q => q.system || q.packTitle || "Other";
+const qStage = q => q.stage || "5th Stage";
 const qRef = q => q.reference || (typeof q.source==="string"?q.source:"") || "Other";
 const colorOf = q => (BANK.find(p=>p.id===q.packId)||{}).color || "#3fb6a8";
 export function groupCounts(filterFn, keyFn){
@@ -584,22 +585,32 @@ function viewHome(){
     <button class="btn btn-ghost" data-action="nav" data-screen="leaderboard" style="flex:1"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg> Leaderboard</button>
   </div>`;
 
-  // browse by system
+  // browse by stage -> subject
+  const EMOJI={"Ophthalmology":"\u{1F441}️","ENT":"\u{1F442}","Dermatology":"\u{1F9F4}","Haematology & Oncology":"\u{1FA78}","Neurology":"\u{1F9E0}","Psychiatry":"\u{1F6CB}️","Obstetrics & Gynaecology":"\u{1F930}","Paediatrics":"\u{1F9D2}"};
   const sys=listSystems();
-  html+=`<div class="sectlabel">Study by system</div>`;
-  if(!sys.length) html+=`<div class="empty">No questions loaded.</div>`;
-  sys.forEach(s=>{
-    const pct=s.total?Math.round(s.seen/s.total*100):0;
-    html+=`<button class="card pad subj" data-action="open-system" data-system="${esc(s.name)}" style="margin-bottom:10px">
-      <div class="row between">
-        <h3 style="color:${s.color}">${esc(s.name)}</h3>
-        ${s.due>0?`<span class="badge due">${s.due} due</span>`:`<span class="badge zero">${s.seen}/${s.total}</span>`}
-      </div>
-      <div class="row" style="gap:14px;margin-top:7px;font-size:12.5px;color:var(--faint)">
-        <span>${s.total} questions</span><span>·</span><span>${listTypes(s.name).map(t=>t.name).join(' + ')}</span>
-      </div>
-      <div class="progressbar"><i style="width:${pct}%"></i></div>
-    </button>`;
+  if(!sys.length) html+=`<div class="empty">No questions loaded yet — pull to sync.</div>`;
+  const stageMap={};
+  sys.forEach(s=>{ const q=allQs().find(x=>qSys(x)===s.name); const st=q?qStage(q):"5th Stage"; (stageMap[st]=stageMap[st]||[]).push(s); });
+  Object.keys(stageMap).sort().forEach(stage=>{
+    const list=stageMap[stage], tot=list.reduce((n,s)=>n+s.total,0);
+    html+=`<div class="row" style="gap:11px;margin:26px 2px 13px">
+      <span style="font-size:23px;line-height:1">\u{1F393}</span>
+      <div style="flex:1"><div class="serif" style="font-size:20px;font-weight:600">${esc(stage)}</div>
+      <div class="faint" style="font-size:11.5px;margin-top:1px">${list.length} subjects · ${tot} questions · let's get you through finals</div></div>
+    </div>`;
+    list.forEach(s=>{
+      const pct=s.total?Math.round(s.seen/s.total*100):0, em=EMOJI[s.name]||"\u{1F4D8}";
+      html+=`<button class="card pad subj" data-action="open-system" data-system="${esc(s.name)}" style="margin-bottom:10px;border-left:3px solid ${s.color}">
+        <div class="row between">
+          <div class="row" style="gap:10px"><span style="font-size:21px;line-height:1">${em}</span><h3 style="color:${s.color}">${esc(s.name)}</h3></div>
+          ${s.due>0?`<span class="badge due">${s.due} due</span>`:`<span class="badge zero">${s.seen}/${s.total}</span>`}
+        </div>
+        <div class="row" style="gap:10px;margin-top:8px;font-size:12.5px;color:var(--faint)">
+          <span>${s.total} questions</span><span>·</span><span>${listTypes(s.name).map(t=>t.name).join(' + ')}</span>
+        </div>
+        <div class="progressbar"><i style="width:${pct}%"></i></div>
+      </button>`;
+    });
   });
   html+=`</div>`;
   return html;
