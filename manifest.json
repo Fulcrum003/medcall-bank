@@ -1,6 +1,6 @@
 {
-  "manifestVersion": 8,
-  "updated": "2026-06-14",
+  "manifestVersion": 9,
+  "updated": "2026-06-15",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
     {
@@ -90,6 +90,14 @@
       "version": 1,
       "url": "obgyn-mcq.json",
       "questionCount": 187
+    },
+    {
+      "packId": "batch37-mcq",
+      "title": "Batch 37 Final",
+      "color": "#cf9b6b",
+      "version": 1,
+      "url": "batch37-mcq.json",
+      "questionCount": 15
     }
   ]
 }
