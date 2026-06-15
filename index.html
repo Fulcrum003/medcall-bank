@@ -706,6 +706,9 @@ function masteredCount(packId){
 const allQs = () => Object.values(QMAP);
 const qSys = q => q.system || q.packTitle || "Other";
 const qStage = q => q.stage || "5th Stage";
+const missCount = id => { const p=DB.progress.questions[id]; return (p&&p.history)? p.history.filter(h=>!h.correct).length : 0; };
+const mistakeIds = () => Object.keys(QMAP).filter(id=>missCount(id)>0);
+const mistakePool = () => mistakeIds().sort((a,b)=>{ const pa=DB.progress.questions[a]||{}, pb=DB.progress.questions[b]||{}; const wa=pa.lastResult==='wrong'?1:0, wb=pb.lastResult==='wrong'?1:0; return (wb-wa)||(missCount(b)-missCount(a))||((pb.lastSeen||'').localeCompare(pa.lastSeen||'')); });
 const qRef = q => q.reference || (typeof q.source==="string"?q.source:"") || "Other";
 const colorOf = q => (BANK.find(p=>p.id===q.packId)||{}).color || "#3fb6a8";
 function groupCounts(filterFn, keyFn){
@@ -816,6 +819,7 @@ function render(){
   else if(App.screen==="system") a.innerHTML=viewSystem();
   else if(App.screen==="type") a.innerHTML=viewType();
   else if(App.screen==="reference") a.innerHTML=viewReference();
+  else if(App.screen==="mistakes") a.innerHTML=viewMistakes();
   else if(App.screen==="quiz") a.innerHTML=viewQuiz();
   else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
   else if(App.screen==="exam-runner") a.innerHTML=viewExam();
@@ -882,6 +886,12 @@ function viewHome(){
   });
 
   const newAvail=totalQ-totalSeen;
+  const _mc=mistakeIds().length;
+  if(_mc>0) html+=`<button class="card pad subj" data-action="open-mistakes" style="width:100%;margin-bottom:11px;border-left:3px solid var(--red)">
+    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">\u{1F525}</span>
+    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Fix my mistakes</div>
+    <div class="faint" style="font-size:12.5px">${_mc} question${_mc>1?'s':''} you've missed · tap to drill</div></div></div>
+    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--red);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
   html+=`<div class="sectlabel">Recall</div>
   <button class="card pad subj" data-action="start-smart" style="width:100%">
     <div class="row between">
@@ -997,6 +1007,31 @@ function viewReference(){
   });
   html+=`</div>`;
   return html;
+}
+
+/* ---------- MISTAKE NOTEBOOK ---------- */
+function viewMistakes(){
+  const ids=mistakeIds();
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--red)">\u{1F525} Mistake notebook</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} question${ids.length!==1?'s':''} you've missed at least once</p>`;
+  if(!ids.length){ html+=`<div class="empty">No mistakes yet — the questions you get wrong collect here automatically.</div></div>`; return html; }
+  html+=`<div style="height:10px"></div><button class="btn btn-primary" data-action="start-mistakes">Drill all ${ids.length} mistakes</button>`;
+  const groups={};
+  ids.forEach(id=>{ const q=QMAP[id]; (groups[qSys(q)]=groups[qSys(q)]||[]).push(id); });
+  Object.keys(groups).sort().forEach(sys=>{
+    const list=groups[sys].sort((a,b)=>missCount(b)-missCount(a));
+    html+=`<div class="sectlabel">${esc(sys)} · ${list.length}</div>`;
+    list.forEach(id=>{ const q=QMAP[id], mc=missCount(id), p=DB.progress.questions[id]||{};
+      html+=`<button class="card pad subj" data-action="study-one" data-id="${esc(id)}" style="margin-bottom:8px;border-left:3px solid ${mc>1?'var(--red)':'var(--amber)'}">
+        <div class="row between"><span style="font-weight:600;font-size:14px">${esc(q.topic||'General')}</span>
+        ${mc>1?`<span class="badge" style="background:var(--red-deep);color:var(--red)">missed ${mc}×</span>`:`<span class="faint mono" style="font-size:11.5px">${esc(p.lastResult||'')}</span>`}</div>
+        <div class="faint" style="font-size:12px;margin-top:4px;line-height:1.4">${esc((q.stem||'').slice(0,95))}…</div>
+      </button>`;
+    });
+  });
+  html+=`</div>`; return html;
 }
 
 /* ---------- QUIZ (answer-then-reveal) ---------- */
@@ -1826,6 +1861,9 @@ document.body.addEventListener("click", async e=>{
   // home / browse
   if(a==="start-smart"){ startPracticeCtx({smart:true}, "Smart Review"); return; }
   if(a==="open-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="system"; render(); return; }
+  if(a==="open-mistakes"){ App.screen="mistakes"; render(); return; }
+  if(a==="start-mistakes"){ const pool=mistakePool(); if(!pool.length){ toast("No mistakes yet"); return; } startPracticeCtx({ids:pool}, "Fix my mistakes"); return; }
+  if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
   if(a==="open-reference"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}; App.screen="reference"; render(); return; }
   if(a==="study-system"){ startPracticeCtx({system:t.dataset.system}, t.dataset.system); return; }
