@@ -933,19 +933,30 @@ function subjTimeHTML(){ const m=studyBySysWindow(7),rows=Object.entries(m).sort
   const tot=rows.reduce((a,b)=>a+b[1],0)||1;
   return `<div class="sectlabel">By subject · last 7 days</div><div class="card pad">${rows.map(([x,sec])=>`<div style="margin-bottom:10px"><div class="row between" style="font-size:13px"><span style="font-weight:600">${esc(x)}</span><span class="faint mono">${fmtHM(sec)}</span></div><div class="progressbar" style="margin-top:5px"><i style="width:${Math.round(sec/tot*100)}%"></i></div></div>`).join("")}</div>`; }
 function viewTimer(){
-  const t=DB.progress.timer||{}, running=!!t.running, sys=t.subject||"General";
+  const t=DB.progress.timer||{}, running=!!t.running;
   const subs=["General",...listSystems().map(z=>z.name)];
   const tod=studyToday(), wk=weekTime().reduce((a,b)=>a+b.sec,0), streak=studyStreakDays(), dd=dDay();
+  const bySys=(timeLog()[today()]||{}).bySys||{};
+  const subjSec=sub=>(bySys[sub]||0)+(running&&t.subject===sub?sessionElapsed():0);
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
     <h2 class="serif" style="font-size:24px;font-weight:600">⏱️ Study timer</h2>
-    <p class="muted" style="font-size:13.5px;margin-top:2px">Track real study time.${dd!=null?` Exam in <b>${dd>0?dd:0}</b> day${dd===1?"":"s"}.`:""}</p>
-    <div class="card pad" style="text-align:center;padding:26px 16px;margin-top:10px">
-      <div class="faint" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase">${running?("Studying"+(t.subject?" · "+esc(t.subject):"")):"Ready when you are"}</div>
-      <div id="timerDisp" class="mono" style="font-size:46px;font-weight:800;letter-spacing:1px;margin:8px 0">${fmtHMS(sessionElapsed())}</div>
-      <button class="btn ${running?"btn-ghost":"btn-primary"}" data-action="${running?"stop-timer":"start-timer"}">${running?"Stop & save":"Start studying"}</button>
-    </div>`;
-  if(!running){ html+=`<div class="sectlabel">Subject</div><div class="wrapflex">${subs.map(z=>`<button class="chip ${sys===z?"on":""}" data-action="timer-subject" data-s="${esc(z)}">${esc(z)}</button>`).join("")}</div>`; }
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${dd!=null?`Exam in <b>${dd>0?dd:0}</b> day${dd===1?"":"s"} · `:""}tap a subject to start the clock.</p>
+    <div class="card pad" style="text-align:center;padding:24px 16px;margin-top:10px;${running?"border:1px solid var(--teal-dim)":""}">
+      <div class="faint" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase">${running?("Studying · "+esc(t.subject||"General")):"Total studied today"}</div>
+      <div id="timerDisp" class="mono" style="font-size:46px;font-weight:800;letter-spacing:1px;margin:8px 0">${running?fmtHMS(sessionElapsed()):fmtHMS(tod)}</div>
+      ${running?`<button class="btn btn-ghost" data-action="timer-toggle" data-s="${esc(t.subject||"General")}">Stop & save</button>`:`<div class="faint" style="font-size:12px">${streak} day streak · keep it going</div>`}
+    </div>
+    <div class="sectlabel">Subjects · tap to start</div>`;
+  subs.forEach(sub=>{
+    const isRun=running&&t.subject===sub, sec=subjSec(sub);
+    html+=`<button class="card pad subj" data-action="timer-toggle" data-s="${esc(sub)}" style="width:100%;margin-bottom:8px;${isRun?"border-left:3px solid var(--teal);background:var(--teal-deep)":""}">
+      <div class="row between">
+        <div class="row" style="gap:11px"><span style="font-size:16px;line-height:1">${isRun?"⏸️":"▶️"}</span><span style="font-weight:600;font-size:14.5px">${esc(sub)}</span></div>
+        <span class="mono" style="font-size:14px;${isRun?"color:var(--teal);font-weight:700":"color:var(--faint)"}">${sec?fmtHM(sec):"—"}</span>
+      </div>
+    </button>`;
+  });
   html+=`<div class="stat3 stagger" style="margin-top:14px">
       <div class="card"><div class="n teal">${fmtHM(tod)}</div><div class="l">Today</div></div>
       <div class="card"><div class="n amber">${streak}</div><div class="l">Day streak</div></div>
@@ -2297,6 +2308,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="start-timer"){ startTimer(); render(); return; }
   if(a==="stop-timer"){ stopTimer(); render(); const s=studyToday(); toast("Saved · "+fmtHM(s)+" today"); return; }
   if(a==="timer-subject"){ const cur=DB.progress.timer||{running:false,startedAt:null}; DB.progress.timer={...cur, subject:t.dataset.s}; save.progress(); render(); return; }
+  if(a==="timer-toggle"){ const sub=t.dataset.s, cur=DB.progress.timer||{}; if(cur.running && cur.subject===sub){ stopTimer(); } else { if(cur.running) stopTimer(); DB.progress.timer={running:true,startedAt:Date.now(),subject:sub}; save.progress(); } render(); return; }
   if(a==="set-examdate"){ const v=($("examdate")?.value||"").trim(); DB.settings.examDate=v; save.settings(); render(); toast(v?"Exam date set":"Exam date cleared"); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
