@@ -2,7 +2,7 @@
  "packId": "batch37-mcq",
  "title": "Batch 37 Final",
  "color": "#cf9b6b",
- "version": 1,
+ "version": 2,
  "updated": "2026-06-15",
  "questionCount": 15,
  "questions": [
@@ -700,7 +700,7 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "stem": "",
+   "stem": "Low platelet level — which of the following is the LEAST LIKELY diagnosis?",
    "choices": [
     {
      "label": "A",

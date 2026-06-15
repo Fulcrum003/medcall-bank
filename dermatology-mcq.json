@@ -2,8 +2,8 @@
  "packId": "dermatology-mcq",
  "title": "Dermatology",
  "color": "#d99a6c",
- "version": 1,
- "updated": "2026-06-13",
+ "version": 2,
+ "updated": "2026-06-15",
  "questionCount": 108,
  "questions": [
   {
@@ -306,7 +306,7 @@
     "paper": "MSS MCQ",
     "institution": "University of Kufa"
    },
-   "stem": "",
+   "stem": "Systemic steroid in psoriasis is indicated in:",
    "choices": [
     {
      "label": "A",
@@ -1796,7 +1796,7 @@
     "paper": "MSS MCQ",
     "institution": "University of Kufa"
    },
-   "stem": "",
+   "stem": "Pityriasis rosea is almost always characterized by:",
    "choices": [
     {
      "label": "A",
@@ -2454,7 +2454,7 @@
     "paper": "MSS MCQ",
     "institution": "University of Kufa"
    },
-   "stem": "",
+   "stem": "A small elevated solid lesion with diameter less than 4 mm is called:",
    "choices": [
     {
      "label": "A",

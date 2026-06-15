@@ -709,6 +709,20 @@ const qStage = q => q.stage || "5th Stage";
 const missCount = id => { const p=DB.progress.questions[id]; return (p&&p.history)? p.history.filter(h=>!h.correct).length : 0; };
 const mistakeIds = () => Object.keys(QMAP).filter(id=>missCount(id)>0);
 const mistakePool = () => mistakeIds().sort((a,b)=>{ const pa=DB.progress.questions[a]||{}, pb=DB.progress.questions[b]||{}; const wa=pa.lastResult==='wrong'?1:0, wb=pb.lastResult==='wrong'?1:0; return (wb-wa)||(missCount(b)-missCount(a))||((pb.lastSeen||'').localeCompare(pa.lastSeen||'')); });
+const cramPool = (limit) => {                       // Exam-tomorrow cram: highest-yield first
+  limit = limit || 40;
+  const t=today(), P=DB.progress.questions, seen=new Set(), out=[];
+  const push=id=>{ if(QMAP[id] && !seen.has(id)){ seen.add(id); out.push(id); } };
+  Object.keys(P).filter(id=>P[id].marked).forEach(push);                                  // 1 you flagged it
+  Object.keys(P).filter(id=>P[id].lastResult==='wrong').forEach(push);                    // 2 missed last time
+  mistakeIds().sort((a,b)=>missCount(b)-missCount(a)).forEach(push);                       // 3 missed ever
+  allQs().forEach(q=>{ const p=P[q.id]; if(p&&p.srs&&p.srs.due&&p.srs.due<=t) push(q.id); });// 4 due today
+  Object.keys(P).filter(id=>{ const p=P[id]; return p.seen>=2 && (p.correct/p.seen)<0.6; }).forEach(push); // 5 weak
+  if(out.length<limit){ const fresh=allQs().filter(q=>!P[q.id]).map(q=>q.id);
+    for(let i=fresh.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const x=fresh[i];fresh[i]=fresh[j];fresh[j]=x; }
+    fresh.forEach(push); }                                                                  // 6 fill with fresh
+  return out.slice(0, limit);
+};
 const qRef = q => q.reference || (typeof q.source==="string"?q.source:"") || "Other";
 const colorOf = q => (BANK.find(p=>p.id===q.packId)||{}).color || "#3fb6a8";
 function groupCounts(filterFn, keyFn){
@@ -830,6 +844,7 @@ function render(){
   else if(App.screen==="leaderboard") a.innerHTML=viewLeaderboard();
   else if(App.screen==="stats") a.innerHTML=viewStats();
   else if(App.screen==="settings") a.innerHTML=viewSettings();
+  else if(App.screen==="repair") a.innerHTML=viewRepair();
   window.scrollTo({top:0,behavior:"instant"});
 }
 
@@ -898,6 +913,15 @@ function viewHome(){
       <div><h3 style="font-size:18px">Smart Review</h3>
       <div class="muted" style="font-size:13.5px;margin-top:2px">${allDue} due + up to ${Math.min(DB.settings.newPerDay,newAvail)} new · interleaved</div></div>
       <svg class="i" viewBox="0 0 24 24" style="stroke:var(--teal);width:24px;height:24px"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>
+    </div>
+  </button>
+  <div style="height:10px"></div>
+  <button class="card pad subj" data-action="start-cram" style="width:100%;border-left:3px solid var(--amber)">
+    <div class="row between">
+      <div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⏰</span>
+      <div style="text-align:left"><div style="font-weight:700;font-size:15px">Exam tomorrow?</div>
+      <div class="faint" style="font-size:12.5px">Cram mode — your highest-yield questions, hardest first</div></div></div>
+      <svg class="i" viewBox="0 0 24 24" style="stroke:var(--amber);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg>
     </div>
   </button>
   <div style="height:10px"></div>
@@ -1118,9 +1142,20 @@ function viewQuiz(){
 }
 function schedDays(q,grade){ const cur=DB.progress.questions[q.id]?.srs; return schedule(cur,grade).interval; }
 
+function reviewStatusBadge(q){
+  const p=DB.progress.questions[q.id];
+  const box=inner=>`<div style="display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-size:12px;color:var(--faint);background:var(--surface-2);border:1px solid var(--line-soft);border-radius:10px;padding:8px 11px;margin-bottom:12px">${inner}</div>`;
+  if(!p || !p.seen){ return box(`<span style="font-weight:700;color:var(--teal)">\u{1F195} First time</span><span>this one enters your review schedule now</span>`); }
+  const acc=Math.round(p.correct/p.seen*100);
+  const accCol = acc>=70?'var(--green)':acc>=40?'var(--amber)':'var(--red)';
+  let last=''; if(p.lastResult==='correct') last=`<span style="color:var(--green)">last: correct</span>`; else if(p.lastResult==='wrong') last=`<span style="color:var(--red)">last: missed</span>`;
+  let srs=''; if(p.srs){ if(p.srs.due){ const d=Math.round((new Date(p.srs.due)-new Date(today()))/864e5); srs = d<=0?`<span style="color:var(--teal)">due now</span>`:`next in ${d}d`; } if(p.srs.lapses){ srs += (srs?' · ':'')+`${p.srs.lapses} lapse${p.srs.lapses>1?'s':''}`; } }
+  return box(`<span>Seen <b>${p.seen}×</b></span><span style="color:${accCol};font-weight:700">${acc}% right</span>${last?`<span>${last}</span>`:''}${srs?`<span>${srs}</span>`:''}`);
+}
 function renderReveal(q, chosen, opts={}){
   const cl=correctLabel(q);
   let html=`<div class="reveal stagger">`;
+  html+=reviewStatusBadge(q);
   // flag
   if(q.flag){
     const f=q.flag;
@@ -1771,6 +1806,8 @@ function viewSettings(){
       <button class="btn btn-ghost" data-action="push-score">Post my score now</button>
     </div>
     <div style="height:10px"></div>
+    <button class="btn btn-ghost" data-action="nav" data-screen="repair"><svg class="i" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Bank health check</button>
+    <div style="height:10px"></div>
     <button class="btn btn-ghost" data-action="maint-lock">Hide maintainer tools</button>
     ` : ``}
 
@@ -1782,6 +1819,49 @@ function viewSettings(){
 
     <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v0.1<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
   </div>`;
+  return html;
+}
+
+/* ============================================================
+   MAINTAINER · BANK HEALTH (live structural scan of synced data)
+   ============================================================ */
+function scanBank(){
+  const errs=[], warns=[], ids={};
+  BANK.forEach(pack=>{
+    (pack.questions||[]).forEach((q,i)=>{
+      const where=`${pack.title||pack.id} Q${i+1}`;
+      if(ids[q.id]) errs.push(`${where}: duplicate id "${q.id}" (also ${ids[q.id]})`); else ids[q.id]=where;
+      if(!q.stem || !String(q.stem).trim()) errs.push(`${where} [${q.id}]: empty stem`);
+      if(q.type==='sa'){ if(!q.modelAnswer || !String(q.modelAnswer).trim()) warns.push(`${where} [${q.id}]: short-answer with no model answer`); return; }
+      const ch=q.choices||[];
+      const nc=ch.filter(c=>c.correct).length;
+      if(nc!==1) errs.push(`${where} [${q.id}]: ${nc} correct choices (need exactly 1)`);
+      if(ch.length<2) warns.push(`${where} [${q.id}]: fewer than 2 choices`);
+      ch.forEach(c=>{ if(!c.t || !String(c.t).trim()) errs.push(`${where} [${q.id}]: empty text on choice ${c.l}`); });
+      const labs=ch.map(c=>c.l); if(new Set(labs).size!==labs.length) errs.push(`${where} [${q.id}]: duplicate choice labels`);
+      if(q.flag) warns.push(`${where} [${q.id}]: flagged ${(q.flag.severity||'').trim()}`.trim());
+    });
+  });
+  return {errs, warns, total:Object.keys(ids).length, packs:BANK.length};
+}
+function viewRepair(){
+  const r=scanBank();
+  const rows=(arr,col)=>arr.map((x,i)=>`<div style="padding:8px 11px;font-size:12.5px;${i?'border-top:1px solid var(--line-soft);':''}border-left:3px solid ${col}">${esc(x)}</div>`).join('');
+  const store = App.persisted ? 'persisted (protected from eviction)' : STORE.kind==='local' ? 'saved on this device' : STORE.kind==='artifact' ? 'saved (preview)' : 'this session only';
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="settings" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Settings</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">Bank health check</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">Live scan of ${r.total} questions across ${r.packs} loaded packs. Storage: ${store}.</p>
+    <div class="stat3 stagger" style="margin-top:12px">
+      <div class="card"><div class="n ${r.errs.length?'red':'green'}">${r.errs.length}</div><div class="l">Errors</div></div>
+      <div class="card"><div class="n amber">${r.warns.length}</div><div class="l">Warnings</div></div>
+      <div class="card"><div class="n green">${r.total}</div><div class="l">Questions</div></div>
+    </div>`;
+  if(!r.errs.length) html+=`<div class="ansbox" style="margin-top:14px"><div class="k">All clear</div><div class="v">No structural errors in the loaded bank ✓</div></div>`;
+  else html+=`<div class="sectlabel">Errors — fix in source JSON</div><div class="card" style="overflow:hidden">${rows(r.errs,'var(--red)')}</div>`;
+  if(r.warns.length){ const show=r.warns.slice(0,150);
+    html+=`<div class="sectlabel">Warnings (${r.warns.length})</div><div class="card" style="overflow:hidden">${rows(show,'var(--amber)')}${r.warns.length>show.length?`<div class="faint" style="padding:8px 11px;font-size:12px">…and ${r.warns.length-show.length} more (export for the full list)</div>`:''}</div>`; }
+  html+=`<div style="height:12px"></div><button class="btn btn-ghost" data-action="repair-export"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Export full report (JSON)</button></div>`;
   return html;
 }
 
@@ -1863,6 +1943,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="open-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="system"; render(); return; }
   if(a==="open-mistakes"){ App.screen="mistakes"; render(); return; }
   if(a==="start-mistakes"){ const pool=mistakePool(); if(!pool.length){ toast("No mistakes yet"); return; } startPracticeCtx({ids:pool}, "Fix my mistakes"); return; }
+  if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
   if(a==="open-reference"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}; App.screen="reference"; render(); return; }
@@ -1922,6 +2003,7 @@ document.body.addEventListener("click", async e=>{
   // settings
   if(a==="set-newperday"){ DB.settings.newPerDay=Math.max(5,DB.settings.newPerDay+ +t.dataset.d); save.settings(); render(); return; }
   if(a==="set-pass"){ DB.settings.passMark=Math.max(0,Math.min(100,DB.settings.passMark+ +t.dataset.d)); save.settings(); render(); return; }
+  if(a==="repair-export"){ const r=scanBank(); exportJSON({generated:today(), packs:r.packs, total:r.total, errors:r.errs, warnings:r.warns}, "medcall-bank-health-"+today()+".json"); toast("Health report downloaded"); return; }
   if(a==="export"){ exportProgress(); return; }
   if(a==="import-toggle"){ const b=$("importbox"); b.style.display=b.style.display==="none"?"block":"none"; return; }
   if(a==="import-apply"){ importProgress($("importtext").value); return; }
@@ -2139,6 +2221,7 @@ if("serviceWorker" in navigator && (location.protocol==="https:"||location.proto
 
 async function boot(){
   await loadDB();
+  try{ if(navigator.storage && navigator.storage.persist){ let ps = navigator.storage.persisted ? await navigator.storage.persisted() : false; if(!ps) ps = await navigator.storage.persist(); App.persisted = ps; } }catch(e){}
   applyTheme();
   try{ ghToken = await wsGet("medrecall:ghtoken:v1"); }catch(e){}
   try{ wallImg = await wsGet("medrecall:wallpaperimg:v1"); }catch(e){}

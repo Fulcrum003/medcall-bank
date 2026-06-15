@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "validate": "node validate.mjs",
+    "prebuild": "node validate.mjs",
     "build": "node build.mjs",
     "test": "vitest run",
     "test:watch": "vitest"

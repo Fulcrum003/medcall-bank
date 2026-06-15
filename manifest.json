@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 9,
+  "manifestVersion": 10,
   "updated": "2026-06-15",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
@@ -63,7 +63,7 @@
       "packId": "dermatology-mcq",
       "title": "Dermatology",
       "color": "#d99a6c",
-      "version": 1,
+      "version": 2,
       "url": "dermatology-mcq.json",
       "questionCount": 108
     },
@@ -95,7 +95,7 @@
       "packId": "batch37-mcq",
       "title": "Batch 37 Final",
       "color": "#cf9b6b",
-      "version": 1,
+      "version": 2,
       "url": "batch37-mcq.json",
       "questionCount": 15
     }
