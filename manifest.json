@@ -1,7 +1,7 @@
 {
-  "manifestVersion": 15,
+  "manifestVersion": 16,
   "updated": "2026-06-15",
-  "leaderboard": "",
+  "leaderboard": "https://script.google.com/macros/s/AKfycbypC31uzfeM9kLgMYSakCdLuxuwfCfepjHVJOvZ8xdx-ND4dM57A-owXu7zySKU7fuMQg/exec",
   "packs": [
     {
       "packId": "surgical-special-senses",

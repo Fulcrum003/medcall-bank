@@ -1266,33 +1266,48 @@ function viewCelebrate(){
 
 /* ---------- SEARCH ---------- */
 function viewSearch(){
+  const f=App.search||(App.search={q:"",subject:null,type:null});
+  const subs=listSystems().map(s=>s.name);
   return `<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
     <h2 class="serif" style="font-size:24px;font-weight:600">Search</h2>
-    <p class="muted" style="font-size:13.5px;margin:2px 0 12px">Find any question by keyword, topic, drug, or diagnosis.</p>
-    <input id="searchbox" class="searchbox" type="search" placeholder="e.g. glaucoma, otitis, thunderclap…" autocomplete="off">
-    <div id="searchresults" style="margin-top:14px"></div>
+    <p class="muted" style="font-size:13.5px;margin:2px 0 12px">Find any question by keyword, topic, drug, diagnosis — or filter by subject and type.</p>
+    <input id="searchbox" class="searchbox" type="search" placeholder="e.g. glaucoma, otitis, thunderclap…" autocomplete="off" value="${esc(f.q||"")}">
+    <div class="wrapflex" style="gap:6px;margin-top:10px">
+      <button class="chip ${!f.type?"on":""}" data-action="search-filter" data-k="type" data-v="">All types</button>
+      <button class="chip ${f.type==="MCQs"?"on":""}" data-action="search-filter" data-k="type" data-v="MCQs">MCQs</button>
+      <button class="chip ${f.type==="EMQs"?"on":""}" data-action="search-filter" data-k="type" data-v="EMQs">EMQs</button>
+    </div>
+    <div class="wrapflex" style="gap:6px;margin-top:8px">
+      <button class="chip ${!f.subject?"on":""}" data-action="search-filter" data-k="subject" data-v="">All subjects</button>
+      ${subs.map(sb=>`<button class="chip ${f.subject===sb?"on":""}" data-action="search-filter" data-k="subject" data-v="${esc(sb)}">${esc(sb)}</button>`).join("")}
+    </div>
+    <div id="searchresults" style="margin-top:14px">${searchResultsHTML()}</div>
   </div>`;
 }
-function searchResultsHTML(qstr){
-  const term=(qstr||"").trim().toLowerCase();
-  if(term.length<2) return `<div class="empty">Type at least 2 letters.</div>`;
-  const words=term.split(/\s+/);
-  const hay=q=>((q.stem||"")+" "+(q.topic||"")+" "+qSys(q)+" "+(q.choices||[]).map(c=>c.t).join(" ")+" "+(q.keyPoint||"")+" "+(q.modelAnswer||"")).toLowerCase();
-  const hits=allQs().filter(q=>{ const h=hay(q); return words.every(w=>h.includes(w)); }).slice(0,60);
-  if(!hits.length) return `<div class="empty">No matches for “${esc(qstr)}”.</div>`;
-  let html=`<div class="faint" style="font-size:12px;margin-bottom:8px">${hits.length}${hits.length===60?'+':''} result${hits.length>1?'s':''}</div>`;
+function searchResultsHTML(){
+  const f=App.search||(App.search={q:"",subject:null,type:null});
+  const term=(f.q||"").trim().toLowerCase();
+  if(term.length<2 && !f.subject && !f.type) return `<div class="empty">Type at least 2 letters, or pick a subject/type filter.</div>`;
+  const words=term?term.split(/\s+/):[];
+  const hay=q=>((q.stem||"")+" "+(q.topic||"")+" "+qSys(q)+" "+(q.reference||"")+" "+(q.choices||[]).map(c=>c.t).join(" ")+" "+(q.keyPoint||"")+" "+(q.modelAnswer||"")).toLowerCase();
+  let pool=allQs();
+  if(f.subject) pool=pool.filter(q=>qSys(q)===f.subject);
+  if(f.type) pool=pool.filter(q=>qType(q)===f.type);
+  const hits=pool.filter(q=>!words.length || words.every(w=>hay(q).includes(w))).slice(0,80);
+  if(!hits.length) return `<div class="empty">No matches${f.subject?" in "+esc(f.subject):""}${f.type?" · "+esc(f.type):""}${term?` for “${esc(f.q)}”`:""}.</div>`;
+  let html=`<div class="faint" style="font-size:12px;margin-bottom:8px">${hits.length}${hits.length===80?'+':''} result${hits.length!==1?'s':''}</div>`;
   hits.forEach(q=>{
-    const plain=stripBold(q.stem).replace(/<[^>]+>/g,"");
+    const plain=stripBold(q.stem||"").replace(/<[^>]+>/g,"");
     const snip=plain.length>120?plain.slice(0,120)+"…":plain;
     html+=`<button class="card pad sugg" data-action="open-q" data-qid="${q.id}" style="margin-bottom:8px;width:100%;text-align:left">
-      <div class="row between" style="margin-bottom:3px"><span class="pill" style="color:${colorOf(q)}">${esc(qSys(q))}</span><span class="faint" style="font-size:11px">${esc(q.topic)}${q.type&&q.type!=="mcq"?' · '+q.type.toUpperCase():''}</span></div>
+      <div class="row between" style="margin-bottom:3px"><span class="pill" style="color:${colorOf(q)}">${esc(qSys(q))}</span><span class="faint" style="font-size:11px">${esc(q.topic)} · ${qType(q)}</span></div>
       <div style="font-size:13.5px;line-height:1.45">${esc(snip)}</div>
     </button>`;
   });
   return html;
 }
-document.body.addEventListener("input", e=>{ if(e.target && e.target.id==="searchbox"){ const r=$("searchresults"); if(r) r.innerHTML=searchResultsHTML(e.target.value); } });
+document.body.addEventListener("input", e=>{ if(e.target && e.target.id==="searchbox"){ App.search=App.search||{q:"",subject:null,type:null}; App.search.q=e.target.value; const r=$("searchresults"); if(r) r.innerHTML=searchResultsHTML(); } });
 
 /* ---------- ACHIEVEMENTS / TROPHIES ---------- */
 function viewTrophies(){
@@ -1944,6 +1959,7 @@ document.body.addEventListener("click", async e=>{
 
   // search → study one question
   if(a==="open-q"){ startPracticeCtx({ids:[t.dataset.qid]}, "Search result"); return; }
+  if(a==="search-filter"){ App.search=App.search||{q:"",subject:null,type:null}; App.search[t.dataset.k]=t.dataset.v||null; render(); return; }
   // daily goal stepper
   if(a==="set-goal"){ const d=parseInt(t.dataset.d,10)||0; DB.settings.dailyGoal=Math.max(5,Math.min(200,(DB.settings.dailyGoal||20)+d)); save.settings(); render(); return; }
   // sounds on/off
@@ -1996,7 +2012,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="start-timer"){ startTimer(); render(); return; }
   if(a==="stop-timer"){ stopTimer(); render(); const s=studyToday(); toast("Saved · "+fmtHM(s)+" today"); return; }
   if(a==="timer-subject"){ const cur=DB.progress.timer||{running:false,startedAt:null}; DB.progress.timer={...cur, subject:t.dataset.s}; save.progress(); render(); return; }
-  if(a==="timer-toggle"){ const sub=t.dataset.s, cur=DB.progress.timer||{}; if(cur.running && cur.subject===sub){ stopTimer(); } else { if(cur.running) stopTimer(); DB.progress.timer={running:true,startedAt:Date.now(),subject:sub}; save.progress(); } render(); return; }
+  if(a==="timer-toggle"){ const sub=t.dataset.s, cur=DB.progress.timer||{}; if(cur.running && cur.subject===sub){ stopTimer(); } else { if(cur.running) stopTimer(); DB.progress.timer={running:true,startedAt:Date.now(),subject:sub}; save.progress(); } if(DB.settings.groupEndpoint||DB.settings.lbRepo) syncBoard(); render(); return; }
   if(a==="set-examdate"){ const v=($("examdate")?.value||"").trim(); DB.settings.examDate=v; save.settings(); render(); toast(v?"Exam date set":"Exam date cleared"); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
