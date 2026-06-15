@@ -899,14 +899,78 @@ function studyStreakDays(){ const L=timeLog(); let n=0; for(let i=0;i<400;i++){ 
 function weekTime(){ const L=timeLog(),out=[]; for(let i=6;i>=0;i--){ const d=addDays(today(),-i); out.push({d,sec:(L[d]?L[d].total:0)+(i===0?sessionElapsed():0)}); } return out; }
 function studyBySysWindow(days){ const L=timeLog(),m={}; for(let i=0;i<days;i++){ const e=L[addDays(today(),-i)]; if(e&&e.bySys){ for(const x in e.bySys) m[x]=(m[x]||0)+e.bySys[x]; } } const t=DB.progress.timer; if(t&&t.running&&t.subject) m[t.subject]=(m[t.subject]||0)+sessionElapsed(); return m; }
 function dDay(){ const ex=DB.settings.examDate; if(!ex) return null; return Math.round((new Date(ex+"T00:00:00")-new Date(today()+"T00:00:00"))/86400000); }
+function fmtHrMin(sec){ sec=Math.max(0,Math.floor(sec)); const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60); return h+":"+String(m).padStart(2,"0"); }
+function fmtFull(sec){ sec=Math.max(0,Math.floor(sec)); const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60; return h+":"+String(m).padStart(2,"0")+":"+String(x).padStart(2,"0"); }
+function fmtClock(ms){ if(!ms) return "\u2014"; const dt=new Date(ms); let h=dt.getHours(),m=dt.getMinutes(),ap=h<12?"AM":"PM"; h=h%12||12; return h+":"+String(m).padStart(2,"0")+" "+ap; }
+function ymd(dt){ return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0"); }
+function daySessions(d){ const e=timeLog()[d]; return (e&&e.sessions)?e.sessions:[]; }
+function dayTotalSec(d){ const e=timeLog()[d]; let s=e?e.total:0; if(d===today()) s+=sessionElapsed(); return s; }
+function dayMaxFocus(d){ let m=daySessions(d).reduce((a,x)=>Math.max(a,x.sec||0),0); if(d===today()) m=Math.max(m,sessionElapsed()); return m; }
+function dayStartEnd(d){ const ss=daySessions(d).map(x=>[x.s,x.e]); const t=DB.progress.timer; if(d===today()&&t&&t.running&&t.startedAt) ss.push([t.startedAt,Date.now()]); if(!ss.length) return [null,null]; return [Math.min(...ss.map(x=>x[0])), Math.max(...ss.map(x=>x[1]))]; }
 function startTimer(){ const t=DB.progress.timer||{}; if(t.running) return; DB.progress.timer={running:true,startedAt:Date.now(),subject:t.subject||null}; save.progress(); }
-function stopTimer(){ const t=DB.progress.timer; if(t&&t.running){ let sec=Math.min(Math.floor((Date.now()-t.startedAt)/1000),6*3600); logStudy(sec,t.subject); } DB.progress.timer={running:false,startedAt:null,subject:t?t.subject:null}; save.progress(); }
+function stopTimer(){ const t=DB.progress.timer; if(t&&t.running){ const endMs=Date.now(); let sec=Math.min(Math.floor((endMs-t.startedAt)/1000),6*3600); logStudy(sec,t.subject); const e=timeLog()[today()]; if(e&&sec>0){ (e.sessions||(e.sessions=[])).push({s:t.startedAt,e:endMs,sec:sec}); } } DB.progress.timer={running:false,startedAt:null,subject:t?t.subject:null}; save.progress(); }
 function weekBarsHTML(){ const w=weekTime(),max=Math.max(1,...w.map(x=>x.sec)),DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   return `<div class="card pad"><div style="display:flex;align-items:flex-end;gap:8px;height:118px">${w.map(x=>{ const h=Math.round(x.sec/max*100),dn=DOW[new Date(x.d+"T00:00:00").getDay()],it=x.d===today();
     return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end"><div class="faint" style="font-size:9px">${x.sec?fmtHM(x.sec):""}</div><div style="width:100%;height:${Math.max(2,h)}%;min-height:3px;border-radius:5px 5px 0 0;background:${it?"var(--teal)":"var(--surface-3)"}"></div><div class="faint" style="font-size:10px;${it?"color:var(--teal);font-weight:700":""}">${dn}</div></div>`; }).join("")}</div></div>`; }
 function subjTimeHTML(){ const m=studyBySysWindow(7),rows=Object.entries(m).sort((a,b)=>b[1]-a[1]); if(!rows.length) return "";
   const tot=rows.reduce((a,b)=>a+b[1],0)||1;
   return `<div class="sectlabel">By subject · last 7 days</div><div class="card pad">${rows.map(([x,sec])=>`<div style="margin-bottom:10px"><div class="row between" style="font-size:13px"><span style="font-weight:600">${esc(x)}</span><span class="faint mono">${fmtHM(sec)}</span></div><div class="progressbar" style="margin-top:5px"><i style="width:${Math.round(sec/tot*100)}%"></i></div></div>`).join("")}</div>`; }
+function focusTrackerHTML(){
+  const sel=App.trkSel||today(), view=App.trkView||"day", mstr=App.trkMonth||sel.slice(0,7);
+  const Y=+mstr.slice(0,4), M=+mstr.slice(5,7);
+  const daysInMonth=new Date(Y,M,0).getDate(), first=new Date(Y,M-1,1);
+  const WS=5; // week starts Friday (matches the regional YPT layout)
+  const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const ord=[]; for(let i=0;i<7;i++) ord.push((WS+i)%7);
+  const lead=(first.getDay()-WS+7)%7;
+  const base="padding:7px 0 6px;border-radius:10px;border:1.5px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50px;gap:2px;background:var(--surface-2);cursor:pointer;width:100%";
+  let cells="";
+  for(let i=0;i<lead;i++) cells+=`<div></div>`;
+  for(let day=1;day<=daysInMonth;day++){
+    const d=`${Y}-${String(M).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+    const sec=dayTotalSec(d), has=sec>0, isSel=d===sel, isTod=d===today();
+    let st=base; if(has) st+=";background:rgba(193,142,57,0.20)"; if(isSel) st+=";border-color:var(--amber)";
+    cells+=`<button data-action="trk-day" data-date="${d}" style="${st}"><span style="font-size:13px;font-weight:${isTod?"800":"600"};color:${isTod?"var(--amber)":"var(--text)"}">${day}</span>${has?`<span class="mono" style="font-size:10px;color:var(--amber);font-weight:700">${fmtHrMin(sec)}</span>`:`<span style="font-size:10px;color:transparent">.</span>`}</button>`;
+  }
+  const monthName=first.toLocaleString("en",{month:"long",year:"numeric"});
+  const head=ord.map(i=>`<div class="faint" style="text-align:center;font-size:11px;font-weight:600">${DOW[i]}</div>`).join("");
+  const tog=["day","week","month"].map(v=>`<button data-action="trk-view" data-v="${v}" class="btn-sm ${v===view?"btn-primary":"btn-ghost"}" style="border-radius:16px;padding:5px 18px;text-transform:capitalize">${v}</button>`).join("");
+  let dates=[];
+  if(view==="day") dates=[sel];
+  else if(view==="week"){ const off=(new Date(sel+"T00:00:00").getDay()-WS+7)%7; const start=addDays(sel,-off); for(let i=0;i<7;i++) dates.push(addDays(start,i)); }
+  else { for(let day=1;day<=daysInMonth;day++) dates.push(`${Y}-${String(M).padStart(2,"0")}-${String(day).padStart(2,"0")}`); }
+  let total=0,maxF=0,active=0;
+  dates.forEach(d=>{ const sx=dayTotalSec(d); total+=sx; if(sx>0)active++; maxF=Math.max(maxF,dayMaxFocus(d)); });
+  let label,b1,b2;
+  if(view==="day"){ const se=dayStartEnd(sel);
+    label=new Date(sel+"T00:00:00").toLocaleDateString("en",{weekday:"long",month:"short",day:"numeric"});
+    b1=[["Total study time",fmtFull(total)],["Max focus time",fmtFull(maxF)]];
+    b2=[["Start time",fmtClock(se[0])],["End time",fmtClock(se[1])]];
+  } else { const avg=active?Math.round(total/active):0;
+    label=view==="week"?`${new Date(dates[0]+"T00:00:00").toLocaleDateString("en",{month:"short",day:"numeric"})} \u2013 ${new Date(dates[6]+"T00:00:00").toLocaleDateString("en",{month:"short",day:"numeric"})}`:monthName;
+    b1=[["Total study time",fmtFull(total)],["Max focus time",fmtFull(maxF)]];
+    b2=[["Daily average",fmtFull(avg)],["Active days",String(active)]];
+  }
+  const cell=(L,V)=>`<div style="flex:1;text-align:center;padding:6px 2px"><div style="font-size:11.5px;color:var(--amber);font-weight:600">${L}</div><div class="mono" style="font-size:20px;font-weight:800;margin-top:5px;color:var(--text)">${V}</div></div>`;
+  return `
+    <div class="sectlabel">Focus time</div>
+    <div class="card pad">
+      <div class="row between" style="margin-bottom:10px">
+        <button class="iconbtn" data-action="trk-month" data-delta="-1"><svg class="i" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <b style="font-size:15px">${monthName}</b>
+        <button class="iconbtn" data-action="trk-month" data-delta="1"><svg class="i" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:5px">${head}</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">${cells}</div>
+    </div>
+    <div class="row" style="gap:8px;justify-content:center;margin:13px 0">${tog}</div>
+    <div style="text-align:center;font-weight:700;font-size:15px;margin-bottom:9px">${label}</div>
+    <div class="card pad">
+      <div class="row">${b1.map(x=>cell(x[0],x[1])).join("")}</div>
+      <div style="height:1px;background:var(--surface-3);margin:8px 0"></div>
+      <div class="row">${b2.map(x=>cell(x[0],x[1])).join("")}</div>
+    </div>`;
+}
 function viewTimer(){
   const t=DB.progress.timer||{}, running=!!t.running;
   const subs=["General",...listSystems().map(z=>z.name)];
@@ -937,7 +1001,7 @@ function viewTimer(){
       <div class="card"><div class="n amber">${streak}</div><div class="l">Day streak</div></div>
       <div class="card"><div class="n green">${fmtHM(wk)}</div><div class="l">This week</div></div>
     </div>
-    <div class="sectlabel">This week</div>${weekBarsHTML()}
+    ${focusTrackerHTML()}
     ${subjTimeHTML()}
   </div>`;
   return html;
@@ -1661,6 +1725,13 @@ function myEntry(){
     studyingNow:!!(DB.progress.timer&&DB.progress.timer.running), studyingSubject:(DB.progress.timer&&DB.progress.timer.running)?DB.progress.timer.subject:null,
     day:t, month:curMonth(), year:curYear() };
 }
+function postReport(rep,q){
+  const ep=DB.settings.groupEndpoint; if(!ep) return false;
+  const payload={type:"report", reportId:rep.reportId, date:rep.date, who:ensureAlias(), uid:lbId(),
+    qid:rep.qid, subject:rep.subject||"", topic:rep.topic||"", issue:rep.type, note:rep.note||"",
+    stem:(q&&q.stem)?String(q.stem).slice(0,400):""};
+  try{ fetch(ep,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(()=>{}); return true; }catch(e){ return false; }
+}
 export function lbValue(e, view){
   if(view==="month") return (e.month===curMonth())? (e.xpMonth||0) : 0;
   if(view==="year")  return (e.year===curYear())?   (e.xpYear||0)  : 0;
@@ -2294,8 +2365,8 @@ document.body.addEventListener("click", async e=>{
   if(a==="report-type"){ reportType=t.dataset.type; document.querySelectorAll(".rtype").forEach(b=>b.classList.toggle("on", b.dataset.type===reportType)); return; }
   if(a==="report-submit"){
     const note=($("reporttext")?.value||"").trim(); const q=QMAP[App.reportQid];
-    DB.reports.push({reportId:"rep-"+Date.now(), date:today(), qid:q.id, subject:q.packTitle, topic:q.topic, type:reportType, note});
-    save.reports(); closeReport(); toast("Report sent — thank you"); return;
+    const rep={reportId:"rep-"+Date.now(), date:today(), qid:q.id, subject:q.packTitle, topic:q.topic, type:reportType, note};
+    DB.reports.push(rep); save.reports(); postReport(rep,q); closeReport(); toast("Report sent — thank you"); return;
   }
   if(a==="export-reports"){ exportJSON(DB.reports,"medrecall-reports-"+today()+".json"); toast("Reports exported"); return; }
   if(a==="clear-reports"){ if(confirm("Clear all collected reports?")){ DB.reports=[]; save.reports(); render(); toast("Reports cleared"); } return; }
@@ -2328,6 +2399,9 @@ document.body.addEventListener("click", async e=>{
   if(a==="duel-done"){ const sc=App.duel?App.duel.score:0, n=App.duel?App.duel.order.length:0; App.duel=null; App.screen="home"; render(); if(n) toast("Duel complete · "+sc+"/"+n); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
   if(a==="open-timer"){ App.screen="timer"; render(); return; }
+  if(a==="trk-day"){ App.trkSel=t.dataset.date; App.trkMonth=t.dataset.date.slice(0,7); render(); return; }
+  if(a==="trk-month"){ const d=+t.dataset.delta, b=(App.trkMonth||today().slice(0,7))+"-01", dt=new Date(b+"T00:00:00"); dt.setMonth(dt.getMonth()+d); App.trkMonth=ymd(dt).slice(0,7); render(); return; }
+  if(a==="trk-view"){ App.trkView=t.dataset.v; render(); return; }
   if(a==="start-timer"){ startTimer(); render(); return; }
   if(a==="stop-timer"){ stopTimer(); render(); const s=studyToday(); toast("Saved · "+fmtHM(s)+" today"); return; }
   if(a==="timer-subject"){ const cur=DB.progress.timer||{running:false,startedAt:null}; DB.progress.timer={...cur, subject:t.dataset.s}; save.progress(); render(); return; }
