@@ -509,11 +509,11 @@ export function bumpDaily(){
   if(d.count>=goal && !d.celebrated){ d.celebrated=true; DB.progress.daily=d; setTimeout(()=>{ confetti(); cue("daily"); toast("Daily goal reached — "+goal+" done!"); }, 60); }
   DB.progress.daily=d;
 }
-export function recordAttempt(q, chosen, grade, okOverride){
+export function recordAttempt(q, chosen, grade, okOverride, confidence){
   const ok = (typeof okOverride==="boolean") ? okOverride : (correctLabel(q)===chosen);
   const p = DB.progress.questions[q.id] || {seen:0,correct:0,history:[],marked:false,srs:null};
   p.seen++; if(ok)p.correct++; p.lastResult=ok?"correct":"wrong"; p.lastSeen=today();
-  p.history.push({date:today(),answer:chosen,correct:ok,grade});
+  p.history.push({date:today(),answer:chosen,correct:ok,grade,confidence:confidence||null});
   if(grade) p.srs = schedule(p.srs, grade);
   DB.progress.questions[q.id]=p;
   bumpStreak(); bumpDaily(); save.progress();
@@ -1045,6 +1045,20 @@ export function smartPool(){
   fresh.sort(()=>Math.random()-0.5);
   return [...due, ...fresh.slice(0, DB.settings.newPerDay)];
 }
+function gradeCurrent(g){
+  const s=App.practice, q=QMAP[s.pool[s.i]];
+  const ok = q.type==="sa" ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
+  recordAttempt(q,s.selected,g,q.type==="sa"?ok:undefined, s.confidence);
+  cue(ok?"correct":"wrong");
+  s.answered++; if(ok)s.correct++; s.xp+=awardXP(ok?10:4);
+  evaluateAchievements(); advancePractice();
+}
+function duelPick(side){
+  if(App.duel.revealed) return;
+  App.duel.picked=side; App.duel.revealed=true;
+  const d=DUELS[App.duel.order[App.duel.i]]; const ok=side===d.correct; if(ok) App.duel.score++;
+  cue(ok?"correct":"wrong"); render();
+}
 function viewQuiz(){
   const s=App.practice, q=QMAP[s.pool[s.i]];
   const prog=DB.progress.questions[q.id];
@@ -1092,6 +1106,13 @@ function viewQuiz(){
 
   // reveal block
   if(s.revealed) html+=renderReveal(q,s.selected,{saText:s.saText});
+  if(!s.revealed && (s.selected || q.type==="sa")){
+    html+=`<div class="row" style="gap:8px;justify-content:center;align-items:center;margin-top:16px">
+      <span class="faint" style="font-size:12px">How sure?</span>
+      <button class="chip ${s.confidence==='sure'?'on':''}" data-action="confidence" data-c="sure">\u{1F44D} Confident</button>
+      <button class="chip ${s.confidence==='unsure'?'on':''}" data-action="confidence" data-c="unsure">\u{1F914} Not sure</button>
+    </div>`;
+  }
   html+=`<div style="text-align:center;margin-top:20px"><button class="reportlink" data-action="report-open" data-qid="${q.id}">⚑ Report an issue with this question</button></div>`;
 
   // footer
@@ -1201,7 +1222,7 @@ function advancePractice(){
     App.practice=null; App.screen="celebrate"; render(); confetti(); cue("done");
     return;
   }
-  s.i++; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false;
+  s.i++; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null;
   if(s.ctx && !s.ctx.smart){ DB.progress.resume={ctx:s.ctx, i:s.i, label:s.label}; save.progress(); }
   render();
 }
@@ -1614,6 +1635,15 @@ function viewStats(){
       <div class="card"><div class="n amber">${DB.progress.streak?.current||0}</div><div class="l">Streak</div></div>
     </div>`;
 
+  // confidence calibration
+  let _sc=0,_st=0,_uc=0,_ut=0,_cw=0;
+  ids.forEach(id=>{ (qs[id].history||[]).forEach(h=>{ if(h.confidence==="sure"){ _st++; if(h.correct)_sc++; else _cw++; } else if(h.confidence==="unsure"){ _ut++; if(h.correct)_uc++; } }); });
+  if(_st+_ut>0){ html+=`<div class="sectlabel">Confidence calibration</div><div class="card pad">
+    <div class="row between" style="font-size:13.5px"><span>When you felt <b style="color:var(--green)">confident</b></span><span class="mono">${_st?Math.round(_sc/_st*100):0}% right · ${_st}</span></div>
+    <div class="row between" style="font-size:13.5px;margin-top:8px"><span>When <b style="color:var(--amber)">not sure</b></span><span class="mono">${_ut?Math.round(_uc/_ut*100):0}% right · ${_ut}</span></div>
+    ${_cw>0?`<div class="row between" style="font-size:13.5px;margin-top:8px"><span style="color:var(--red)">⚠️ Confidently wrong</span><span class="mono" style="color:var(--red)">${_cw}</span></div>`:''}
+    <div class="faint" style="font-size:11.5px;margin-top:10px">"Confidently wrong" = you were sure but missed it — the highest-value gaps to review.</div>
+  </div>`; }
   html+=`<div class="sectlabel">Mastery by subject</div><div class="card pad" style="padding:6px 14px">`;
   BANK.forEach((p,idx)=>{
     const tot=p.questions.length, seen=seenCount(p.id), mast=masteredCount(p.id);
@@ -1944,7 +1974,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="checklist-toggle"){ DB.progress.checklist=DB.progress.checklist||{}; const k=t.dataset.key; DB.progress.checklist[k]=!DB.progress.checklist[k]; save.progress(); render(); return; }
   if(a==="checklist-drill"){ const sys=t.dataset.sys, it=CHECKLISTS[sys][+t.dataset.idx]; const pool=checklistMatch(sys,it); if(!pool.length){ toast("No matching questions"); return; } startPracticeCtx({ids:pool}, it.t); return; }
   if(a==="start-duel"){ const order=DUELS.map((_,i)=>i); for(let i=order.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const x=order[i];order[i]=order[j];order[j]=x; } App.duel={order,i:0,score:0,picked:null,revealed:false}; App.screen="duel"; render(); return; }
-  if(a==="duel-pick"){ if(App.duel.revealed) return; App.duel.picked=t.dataset.pick; App.duel.revealed=true; const d=DUELS[App.duel.order[App.duel.i]]; const ok=App.duel.picked===d.correct; if(ok) App.duel.score++; cue(ok?"correct":"wrong"); render(); return; }
+  if(a==="duel-pick"){ duelPick(t.dataset.pick); return; }
   if(a==="duel-next"){ App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); return; }
   if(a==="duel-done"){ const sc=App.duel?App.duel.score:0, n=App.duel?App.duel.order.length:0; App.duel=null; App.screen="home"; render(); if(n) toast("Duel complete · "+sc+"/"+n); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
@@ -1970,14 +2000,8 @@ document.body.addEventListener("click", async e=>{
   if(a==="select-choice"){ App.practice.selected=t.dataset.label; render(); return; }
   if(a==="toggle-emq-opts"){ App.practice.optsCollapsed=!App.practice.optsCollapsed; render(); return; }
   if(a==="reveal"){ const s=App.practice,q=QMAP[s.pool[s.i]]; if(q.type==="sa"){ const ta=$("saInput"); s.saText=ta?ta.value:""; } s.revealed=true; render(); return; }
-  if(a==="grade"){ const s=App.practice,q=QMAP[s.pool[s.i]];
-    const g=t.dataset.grade;
-    const ok = q.type==="sa" ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
-    recordAttempt(q,s.selected,g,q.type==="sa"?ok:undefined);
-    cue(ok?"correct":"wrong");
-    s.answered++; if(ok)s.correct++; s.xp+=awardXP(ok?10:4);
-    evaluateAchievements();
-    advancePractice(); return; }
+  if(a==="grade"){ gradeCurrent(t.dataset.grade); return; }
+  if(a==="confidence"){ if(App.practice){ App.practice.confidence=t.dataset.c; render(); } return; }
   if(a==="toggle-mark"){ const s=App.practice,q=QMAP[s.pool[s.i]];
     const p=DB.progress.questions[q.id]||{seen:0,correct:0,history:[],marked:false,srs:null};
     p.marked=!p.marked; DB.progress.questions[q.id]=p; save.progress(); render();
@@ -2024,6 +2048,28 @@ document.body.addEventListener("click", async e=>{
   if(a==="reset"){ if(confirm("Erase all saved progress? This cannot be undone.")){ DB.progress={questions:{},resume:null,streak:{current:0,lastStudied:null}}; DB.exams=[]; save.progress(); save.exams(); App.screen="home"; render(); toast("Progress reset"); } return; }
 });
 
+document.addEventListener("keydown", e=>{
+  const tn=(e.target&&e.target.tagName)||""; if(/^(INPUT|TEXTAREA|SELECT)$/.test(tn)) return;
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  const k=e.key;
+  if(App.screen==="quiz" && App.practice){
+    const s=App.practice, q=QMAP[s.pool[s.i]]; if(!q) return;
+    if(!s.revealed){
+      const up=(k||"").toUpperCase();
+      if(q.type!=="sa" && /^[A-H]$/.test(up) && q.choices.some(c=>c.l===up)){ s.selected=up; render(); e.preventDefault(); return; }
+      if((k===" "||k==="Enter") && (q.type==="sa"||s.selected)){ if(q.type==="sa"){ const ta=$("saInput"); s.saText=ta?ta.value:""; } s.revealed=true; render(); e.preventDefault(); return; }
+    } else {
+      const g={"1":"again","2":"hard","3":"good","4":"easy"}[k];
+      if(g){ gradeCurrent(g); e.preventDefault(); return; }
+      if(k===" "||k==="Enter"){ gradeCurrent("good"); e.preventDefault(); return; }
+    }
+    return;
+  }
+  if(App.screen==="duel" && App.duel){
+    if(!App.duel.revealed){ if(k==="a"||k==="A"||k==="1"){ duelPick("a"); e.preventDefault(); } else if(k==="b"||k==="B"||k==="2"){ duelPick("b"); e.preventDefault(); } }
+    else if(k===" "||k==="Enter"){ if(App.duel.i+1>=App.duel.order.length){ App.duel=null; App.screen="home"; render(); } else { App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); } e.preventDefault(); }
+  }
+});
 export function exportProgress(){
   const data=JSON.stringify({progress:DB.progress,exams:DB.exams,settings:DB.settings},null,2);
   const blob=new Blob([data],{type:"application/json"});
