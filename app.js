@@ -138,7 +138,7 @@ export const BANK = [
     keyPoint:"Tocolysis buys ~48h for steroids/transfer. NICE first-line = nifedipine; atosiban if contraindicated.",
     keyDiff:"Tocolytic = delay delivery (nifedipine). MgSO₄ here = fetal neuroprotection, a different purpose.",
     sum:{headers:["Role","Agent"],rows:[["1st-line tocolytic","Nifedipine"],["Alternative tocolytic","Atosiban"],["Neuroprotection <30/40","Magnesium sulfate"],["Fetal lung maturity","Antenatal corticosteroids"]]},
-    flag:{severity:"HIGH",app:"B — Atosiban",correct:"A — Nifedipine",source:"NICE NG25",note:"This question is included to demonstrate the answer-discrepancy flag. Some Q-banks mark Atosiban; NICE NG25 (2015) specifies nifedipine as first-line tocolytic."},
+    flag:{severity:"HIGH",app:"B — Atosiban",correct:"A — Nifedipine",source:"NICE NG25",note:"Some Q-banks mark Atosiban; NICE NG25 (2015) specifies nifedipine as first-line tocolytic."},
     refs:"NICE NG25" },
   { id:"obg5", topic:"Contraception", source:"Formative gp1 · Univ of Kufa",
     stem:"A 26-year-old with a history of <b>migraine with aura</b> requests contraception. Which method is <b>contraindicated</b>?",
@@ -249,56 +249,7 @@ export const BANK = [
     sum:{headers:["Clue","Meaning"],rows:[["Annular, central clearing","Tinea (dermatophyte)"],["KOH hyphae","Confirms fungus"],["Localised","Topical terbinafine"],["Scalp/nail/extensive","Oral antifungal"]]},
     refs:"NICE CKS; Davidson's" }
 ]}
-,
-{ id:"FMT", title:"Question formats (demo)", color:"#7e9fd1", questions:[
-  { id:"emq1", type:"emq", topic:"Headache", source:"Demo · EMQ", optionsTitle:"Theme: Headache — choose the single most likely diagnosis",
-    stem:"A 48-year-old man describes a <b>sudden, severe occipital headache</b> that peaked within seconds ('worst of my life'), with neck stiffness and photophobia. He briefly lost consciousness.",
-    choices:[
-      {l:"A",t:"Migraine",correct:false,e:""},
-      {l:"B",t:"Cluster headache",correct:false,e:""},
-      {l:"C",t:"Subarachnoid haemorrhage",correct:true,e:"A <b>thunderclap</b> headache peaking in seconds with meningism is SAH until excluded. Urgent non-contrast CT head; if negative beyond 6h, LP for xanthochromia."},
-      {l:"D",t:"Giant cell (temporal) arteritis",correct:false,e:""},
-      {l:"E",t:"Tension-type headache",correct:false,e:""},
-      {l:"F",t:"Medication-overuse headache",correct:false,e:""},
-      {l:"G",t:"Idiopathic intracranial hypertension",correct:false,e:""},
-      {l:"H",t:"Bacterial meningitis",correct:false,e:""}
-    ],
-    keyPoint:"Thunderclap headache (maximal intensity in under a minute) = subarachnoid haemorrhage until proven otherwise.",
-    refs:"NICE CKS; Davidson's" },
-  { id:"emq2", type:"emq", topic:"Headache", source:"Demo · EMQ", optionsTitle:"Theme: Headache — choose the single most likely diagnosis",
-    stem:"A 72-year-old woman has a <b>new right temporal headache</b>, <b>jaw claudication</b>, scalp tenderness when combing her hair, and an ESR of 92 mm/h.",
-    choices:[
-      {l:"A",t:"Migraine",correct:false,e:""},
-      {l:"B",t:"Cluster headache",correct:false,e:""},
-      {l:"C",t:"Subarachnoid haemorrhage",correct:false,e:""},
-      {l:"D",t:"Giant cell (temporal) arteritis",correct:true,e:"New temporal headache with <b>jaw claudication</b> and a high ESR in someone over 50 is GCA. Start high-dose corticosteroids immediately to protect sight; confirm with temporal artery biopsy/US."},
-      {l:"E",t:"Tension-type headache",correct:false,e:""},
-      {l:"F",t:"Medication-overuse headache",correct:false,e:""},
-      {l:"G",t:"Idiopathic intracranial hypertension",correct:false,e:""},
-      {l:"H",t:"Bacterial meningitis",correct:false,e:""}
-    ],
-    keyPoint:"New temporal headache + jaw claudication + raised ESR in the over-50s = GCA. Treat first, biopsy second.",
-    refs:"BSR guideline; Davidson's" },
-  { id:"emq3", type:"emq", topic:"Headache", source:"Demo · EMQ", optionsTitle:"Theme: Headache — choose the single most likely diagnosis",
-    stem:"A 26-year-old woman has recurrent <b>unilateral throbbing</b> headaches preceded by <b>zig-zag visual lines</b>, with nausea and photophobia, relieved by sleeping in a dark room.",
-    choices:[
-      {l:"A",t:"Migraine",correct:true,e:"Recurrent unilateral throbbing headache with <b>aura</b> (visual zig-zags), photophobia and nausea, relieved by rest, is migraine with aura."},
-      {l:"B",t:"Cluster headache",correct:false,e:""},
-      {l:"C",t:"Subarachnoid haemorrhage",correct:false,e:""},
-      {l:"D",t:"Giant cell (temporal) arteritis",correct:false,e:""},
-      {l:"E",t:"Tension-type headache",correct:false,e:""},
-      {l:"F",t:"Medication-overuse headache",correct:false,e:""},
-      {l:"G",t:"Idiopathic intracranial hypertension",correct:false,e:""},
-      {l:"H",t:"Bacterial meningitis",correct:false,e:""}
-    ],
-    keyPoint:"Unilateral throbbing headache with aura, photophobia and nausea = migraine.",
-    refs:"NICE CKS" },
-  { id:"sa1", type:"sa", topic:"Obstetric emergencies", source:"Demo · Short answer",
-    stem:"A woman has brisk bleeding immediately after a vaginal delivery and the uterus feels <b>soft and boggy</b>. Outline your <b>first-line management</b> of primary PPH due to uterine atony.",
-    modelAnswer:"Call for help and resuscitate (ABC): two large-bore cannulae, bloods including crossmatch, IV fluids, close monitoring.\nMechanical: 'rub up' a contraction with uterine massage and empty the bladder.\nUterotonics, in order: IV/IM oxytocin → ergometrine (avoid in hypertension) → IM carboprost (avoid in asthma) → misoprostol.\nIf bleeding continues: exclude retained products/genital-tract trauma, then escalate to surgical measures — intrauterine balloon tamponade, B-Lynch suture, uterine/internal iliac artery ligation, and hysterectomy as a last resort.",
-    keyPoint:"Atony causes ~70% of primary PPH. Sequence: resuscitate + massage + uterotonics, then escalate to tamponade/surgery.",
-    refs:"Bailey & Love; RCOG Green-top 52" }
-]}
+
 ];
 
 /* flatten lookup */
@@ -1352,6 +1303,7 @@ function myEntry(){
     subject:topSubject(), week:activeDays7(),
     xpDay:xpToday(), xpMonth:xpWindow(curMonth()), xpYear:xpWindow(curYear()), xpAll:DB.progress.xp||0,
     timeDay:studyToday(), timeWeek:weekTime().reduce((a,b)=>a+b.sec,0),
+    studyingNow:!!(DB.progress.timer&&DB.progress.timer.running), studyingSubject:(DB.progress.timer&&DB.progress.timer.running)?DB.progress.timer.subject:null,
     day:t, month:curMonth(), year:curYear() };
 }
 export function lbValue(e, view){
@@ -1385,6 +1337,8 @@ function viewLeaderboard(){
       ${subjects.map(s=>`<button class="chip ${subj===s?'on':''}" data-action="lb-subject" data-s="${esc(s)}">${esc(s)}</button>`).join("")}
     </div>`;
   }
+  const _liveN=board.filter(e=>e.studyingNow).length;
+  if(_liveN>0) html+=`<div class="card pad" style="margin-bottom:10px;border-left:3px solid var(--green)"><span style="color:var(--green);font-weight:700">\u{1F7E2} ${_liveN} studying right now</span></div>`;
   if(!board.length){ html+=`<div class="empty">No one studying ${esc(subj||"")} yet.</div>`; }
   board.forEach((e,i)=>{
     const you=e.id===me.id, val=lbValue(e,view), medal=i===0?"#d9a441":i===1?"#9fb0c0":i===2?"#c08457":null;
@@ -1393,7 +1347,7 @@ function viewLeaderboard(){
       <div class="row" style="gap:13px">
         <div class="rank" ${medal?`style="background:${medal}22;color:${medal}"`:''}>${i+1}</div>
         <div style="flex:1">
-          <div class="row" style="gap:7px;align-items:center;flex-wrap:wrap"><span style="font-weight:700;font-size:14.5px">${esc(e.name||"Anon")}${you?' · you':''}</span>${onFire?`<span class="firebadge">🔥 ${e.week}d this week</span>`:''}</div>
+          <div class="row" style="gap:7px;align-items:center;flex-wrap:wrap"><span style="font-weight:700;font-size:14.5px">${esc(e.name||"Anon")}${you?' · you':''}</span>${onFire?`<span class="firebadge">🔥 ${e.week}d this week</span>`:''}${e.studyingNow?`<span class="firebadge" style="color:var(--green)">\u{1F7E2} studying${e.studyingSubject?" · "+esc(e.studyingSubject):""}</span>`:''}</div>
           <div class="row" style="gap:8px;margin-top:3px;flex-wrap:wrap">
             <span class="faint" style="font-size:12px">Lv ${e.level||1} · ${e.streak||0}🔥 streak</span>
             ${e.subject&&e.subject!=="—"?`<span class="subjtag">${esc(e.subject)}</span>`:''}
