@@ -348,7 +348,7 @@ async function wsGet(k){ return STORE.get(k); }
 async function wsSet(k,v){ return STORE.set(k,v); }
 const SK = {progress:"medrecall:progress:v1", exams:"medrecall:exams:v1", settings:"medrecall:settings:v1", reports:"medrecall:reports:v1"};
 let DB = {
-  progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null} },
+  progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{} },
   exams:[],
   reports:[],
   settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:false }
@@ -726,6 +726,80 @@ const cramPool = (limit) => {                       // Exam-tomorrow cram: highe
 const disputedIds = () => Object.keys(QMAP).filter(id=>!!QMAP[id].flag);
 const RED_FLAGS = ["ectopic","torsion","cord prolapse","neutropenic","sepsis","septic","ketoacidosis","dka","anaphylax","postpartum h","pph","raised icp","intracranial pressure","subarachnoid","meningitis","status epilepticus","eclampsia","tension pneumothorax","aortic dissection","cauda equina","tamponade","serotonin syndrome","neuroleptic malignant","suicid","self-harm","angle closure","acute glaucoma","compartment syndrome","epiglottitis","necrotis","necrotiz","shock","placental abruption","placenta praevia","placenta previa","amniotic fluid embol","malignant hyperthermia","thyroid storm","addisonian","hyperkalaem","myocardial infarction","pulmonary embol","variceal","gi bleed","abruption","subdural","extradural","torsade","wernicke"];
 const redFlagIds = () => Object.keys(QMAP).filter(id=>{ const q=QMAP[id]; const hay=((q.topic||"")+" "+(q.stem||"")).toLowerCase(); return RED_FLAGS.some(k=>hay.includes(k)); });
+const CHECKLISTS = {
+  "Obstetrics & Gynaecology":[
+    {t:"PPH — the 4 Ts + step-wise management",k:["postpartum","pph","haemorrhage","atony","uterine aton"]},
+    {t:"Ectopic pregnancy — diagnosis + management options",k:["ectopic"]},
+    {t:"Pre-eclampsia / eclampsia — MgSO4, labetalol, delivery",k:["eclampsia","pre-eclampsia","preeclampsia","magnesium","proteinuria"]},
+    {t:"CTG interpretation — DR C BRAVADO",k:["ctg","cardiotocograph","fetal heart","decelerat"]},
+    {t:"Cord prolapse — immediate steps",k:["cord prolapse"]},
+    {t:"Anti-D — indications & sensitising events",k:["anti-d","rhesus","rh d","rh-d"]},
+    {t:"PROM / preterm labour — tocolysis & steroids",k:["prom","preterm","rupture of membranes","tocolytic"]},
+    {t:"Placenta praevia vs abruption",k:["praevia","previa","abruption","antepartum"]},
+    {t:"Menorrhagia / fibroids",k:["fibroid","menorrhagia","heavy menstrual"]},
+    {t:"Gynae cancer red flags (ovarian, cervical, endometrial)",k:["ovarian","cervical","endometrial","ca 125","colposcopy","post-menopausal bleed"]}],
+  "Paediatrics":[
+    {t:"Neonatal jaundice — causes by age of onset",k:["jaundice","bilirubin","kernicterus"]},
+    {t:"Febrile child / sepsis — NICE traffic lights",k:["febrile","sepsis","fever","meningococc"]},
+    {t:"Stridor — croup vs epiglottitis vs bronchiolitis",k:["croup","epiglottitis","bronchiolitis","stridor"]},
+    {t:"Developmental milestones & red flags",k:["milestone","development","delay"]},
+    {t:"Congenital heart disease — cyanotic vs acyanotic",k:["tetralogy","congenital heart","murmur","cyanotic","ductus"]},
+    {t:"Paediatric DKA — fluids & insulin",k:["ketoacidosis","dka","diabet"]},
+    {t:"Non-accidental injury — safeguarding",k:["non-accidental","abuse","safeguard","neglect"]},
+    {t:"Vaccination schedule",k:["vaccin","immunis","immuniz"]}],
+  "Neurology":[
+    {t:"Stroke — territory localisation + thrombolysis window",k:["stroke","mca","infarct","thrombolys"]},
+    {t:"SAH — CT then LP (xanthochromia)",k:["subarachnoid","thunderclap"]},
+    {t:"Status epilepticus — the drug ladder",k:["status epilepticus","seizure"]},
+    {t:"MS — McDonald criteria + relapse Rx",k:["multiple sclerosis","mcdonald","optic neuritis","demyelinat"]},
+    {t:"Myasthenia gravis vs LEMS",k:["myasthenia","lambert","fatigab"]},
+    {t:"Parkinsonism — PD vs drug/atypical",k:["parkinson","bradykinesia","lewy"]},
+    {t:"Cord compression / cauda equina — emergency",k:["cord compression","cauda equina","intracranial pressure"]},
+    {t:"Meningitis/encephalitis — CSF patterns",k:["meningitis","encephalitis","csf"]},
+    {t:"Bell's palsy vs UMN facial weakness",k:["bell","facial nerve","facial palsy"]}],
+  "Psychiatry":[
+    {t:"Suicide / self-harm risk assessment",k:["suicid","self-harm","risk assess"]},
+    {t:"Serotonin syndrome vs NMS",k:["serotonin syndrome","neuroleptic malignant"]},
+    {t:"Depression — first-line + referral",k:["depress","ssri","antidepress"]},
+    {t:"Bipolar / mania — mood stabilisers",k:["bipolar","mania","manic","lithium"]},
+    {t:"Schizophrenia — first-rank + antipsychotics",k:["schizophren","psychosis","antipsychotic","first-rank","delusion","hallucin"]},
+    {t:"Delirium vs dementia",k:["delirium","dementia","confusion"]},
+    {t:"Lithium toxicity & monitoring",k:["lithium"]},
+    {t:"Alcohol withdrawal / Wernicke",k:["alcohol","withdrawal","wernicke","delirium tremens"]},
+    {t:"Mental Health Act / capacity basics",k:["mental health act","section","capacity","detain"]}],
+  "Haematology & Oncology":[
+    {t:"Neutropenic sepsis — antibiotics within 1 hour",k:["neutropenic","sepsis"]},
+    {t:"Acute leukaemia — BMA >20% blasts",k:["leukaemia","leukemia","blast","bone marrow"]},
+    {t:"Anaemia — micro / normo / macrocytic",k:["anaemia","anemia","microcytic","macrocytic","mcv"]},
+    {t:"Sickle cell crisis — management",k:["sickle","vaso-occlus"]},
+    {t:"Lymphoma — Hodgkin vs non-Hodgkin",k:["lymphoma","hodgkin","reed-sternberg"]},
+    {t:"VTE — Wells + anticoagulation",k:["dvt","pulmonary embol","wells","anticoagul","thrombo"]},
+    {t:"Transfusion reactions",k:["transfusion","haemolytic","abo"]},
+    {t:"Myeloma — CRAB features",k:["myeloma","bence","crab"]}],
+  "Dermatology":[
+    {t:"Melanoma — ABCDE + Breslow",k:["melanoma","breslow","mole","pigmented"]},
+    {t:"SCC vs BCC",k:["squamous cell","basal cell"]},
+    {t:"Psoriasis — types + treatment ladder",k:["psoriasis"]},
+    {t:"Eczema / atopic dermatitis",k:["eczema","atopic","dermatitis"]},
+    {t:"SJS / TEN — drug triggers",k:["stevens","toxic epidermal"]},
+    {t:"Bullous — pemphigus vs pemphigoid",k:["pemphigus","pemphigoid","bullous"]},
+    {t:"Skin infection — cellulitis / necrotising",k:["cellulitis","necrotis","erysipelas"]}],
+  "ENT":[
+    {t:"Epistaxis — management ladder",k:["epistaxis","nosebleed","nasal bleed"]},
+    {t:"Otitis media vs OME (glue ear)",k:["otitis media","glue ear","effusion"]},
+    {t:"Vertigo — BPPV vs Meniere vs neuritis",k:["vertigo","bppv","meniere","vestibular"]},
+    {t:"Sudden sensorineural hearing loss — emergency",k:["sensorineural","hearing loss"]},
+    {t:"Tonsillitis / quinsy",k:["tonsill","quinsy","peritonsillar"]},
+    {t:"Head & neck red-flag neck lump",k:["neck lump","head and neck","laryng"]}],
+  "Ophthalmology":[
+    {t:"Acute red eye — differentials",k:["red eye","conjunctivitis","uveitis","scleritis","keratitis"]},
+    {t:"Acute angle-closure glaucoma — emergency",k:["angle closure","glaucoma"]},
+    {t:"Sudden painless visual loss — CRAO/CRVO/detachment",k:["central retinal","retinal detach","amaurosis","painless"]},
+    {t:"Diabetic / hypertensive retinopathy",k:["retinopathy"]},
+    {t:"RAPD / optic neuritis",k:["rapd","afferent pupillary","optic neuritis"]},
+    {t:"Orbital vs preseptal cellulitis",k:["orbital cellulitis","preseptal","periorbital"]}]
+};
+const checklistMatch = (sys,item) => Object.keys(QMAP).filter(id=>{ const q=QMAP[id]; if(qSys(q)!==sys) return false; const hay=((q.topic||"")+" "+(q.stem||"")).toLowerCase(); return item.k.some(k=>hay.includes(k)); });
 const qRef = q => q.reference || (typeof q.source==="string"?q.source:"") || "Other";
 const colorOf = q => (BANK.find(p=>p.id===q.packId)||{}).color || "#3fb6a8";
 function groupCounts(filterFn, keyFn){
@@ -839,6 +913,7 @@ function render(){
   else if(App.screen==="mistakes") a.innerHTML=viewMistakes();
   else if(App.screen==="disputed") a.innerHTML=viewDisputed();
   else if(App.screen==="redflag") a.innerHTML=viewRedflag();
+  else if(App.screen==="checklist") a.innerHTML=viewChecklist();
   else if(App.screen==="quiz") a.innerHTML=viewQuiz();
   else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
   else if(App.screen==="exam-runner") a.innerHTML=viewExam();
@@ -924,6 +999,11 @@ function viewHome(){
     <div style="text-align:left"><div style="font-weight:700;font-size:15px">Red-flag drills</div>
     <div class="faint" style="font-size:12.5px">${_rf} can't-miss emergencies · missing these changes management</div></div></div>
     <svg class="i" viewBox="0 0 24 24" style="stroke:var(--red);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
+  html+=`<button class="card pad subj" data-action="open-checklist" style="width:100%;margin-bottom:11px;border-left:3px solid var(--teal)">
+    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">\u{1F4CB}</span>
+    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Before-exam checklist</div>
+    <div class="faint" style="font-size:12.5px">Must-know patterns per subject · tick &amp; drill</div></div></div>
+    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--teal);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
   html+=`<div class="sectlabel">Recall</div>
   <button class="card pad subj" data-action="start-smart" style="width:100%">
     <div class="row between">
@@ -1054,6 +1134,32 @@ function viewReference(){
 }
 
 /* ---------- MISTAKE NOTEBOOK ---------- */
+function viewChecklist(){
+  DB.progress.checklist = DB.progress.checklist||{};
+  const subs=Object.keys(CHECKLISTS);
+  const sub=(App.checklistSubject && CHECKLISTS[App.checklistSubject]) ? App.checklistSubject : subs[0];
+  const items=CHECKLISTS[sub]||[];
+  const doneN=items.filter((it,i)=>DB.progress.checklist[sub+"|"+i]).length;
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">\u{1F4CB} Before-exam checklist</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">Must-know patterns per subject — tick what you've nailed, tap a row to drill its questions.</p>
+    <div class="wrapflex" style="margin:12px 0 6px">`;
+  subs.forEach(x=>{ html+=`<button class="btn-ghost btn-sm ${x===sub?'on':''}" data-action="checklist-subject" data-subject="${esc(x)}">${esc(x)}</button>`; });
+  html+=`</div>
+    <div class="row between" style="margin:10px 2px 8px"><span class="faint" style="font-size:12.5px">${esc(sub)}</span><span class="mono faint" style="font-size:12px">${doneN}/${items.length} done</span></div>
+    <div class="progressbar" style="margin-bottom:14px"><i style="width:${items.length?Math.round(doneN/items.length*100):0}%"></i></div>`;
+  items.forEach((it,i)=>{
+    const key=sub+"|"+i, done=!!DB.progress.checklist[key], n=checklistMatch(sub,it).length;
+    html+=`<div class="card pad" style="margin-bottom:8px;display:flex;gap:11px;align-items:center;${done?'opacity:.62':''}">
+      <button class="iconbtn" data-action="checklist-toggle" data-key="${esc(key)}" style="flex:none;width:34px;height:34px;${done?'color:var(--green);border-color:#2e6b4f':''}">${done?'✓':''}</button>
+      <div style="flex:1"><div style="font-weight:600;font-size:14px;${done?'text-decoration:line-through':''}">${esc(it.t)}</div>
+      <div class="faint" style="font-size:12px;margin-top:1px">${n} question${n!==1?'s':''} in bank</div></div>
+      ${n>0?`<button class="iconbtn" data-action="checklist-drill" data-sys="${esc(sub)}" data-idx="${i}" style="flex:none"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--teal)"><path d="M9 6l6 6-6 6"/></svg></button>`:''}
+    </div>`;
+  });
+  html+=`</div>`; return html;
+}
 function viewDisputed(){
   const ids=disputedIds();
   let html=`<div class="fade">
@@ -2013,6 +2119,10 @@ document.body.addEventListener("click", async e=>{
   if(a==="start-disputed"){ const pool=disputedIds(); if(!pool.length){ toast("Nothing flagged"); return; } startPracticeCtx({ids:pool}, "Disputed answers"); return; }
   if(a==="open-redflag"){ App.screen="redflag"; render(); return; }
   if(a==="start-redflag"){ const pool=redFlagIds(); if(!pool.length){ toast("No red-flag questions"); return; } startPracticeCtx({ids:pool}, "Red-flag drills"); return; }
+  if(a==="open-checklist"){ App.screen="checklist"; render(); return; }
+  if(a==="checklist-subject"){ App.checklistSubject=t.dataset.subject; render(); return; }
+  if(a==="checklist-toggle"){ DB.progress.checklist=DB.progress.checklist||{}; const k=t.dataset.key; DB.progress.checklist[k]=!DB.progress.checklist[k]; save.progress(); render(); return; }
+  if(a==="checklist-drill"){ const sys=t.dataset.sys, it=CHECKLISTS[sys][+t.dataset.idx]; const pool=checklistMatch(sys,it); if(!pool.length){ toast("No matching questions"); return; } startPracticeCtx({ids:pool}, it.t); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
@@ -2314,7 +2424,7 @@ if (typeof document !== "undefined" && document.getElementById("app")) {
 }
 
 function resetDB() {
-  DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null } };
+  DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {} };
   DB.exams = [];
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: false };
