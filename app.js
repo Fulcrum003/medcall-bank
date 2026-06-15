@@ -409,6 +409,9 @@ const cramPool = (limit) => {                       // Exam-tomorrow cram: highe
     fresh.forEach(push); }                                                                  // 6 fill with fresh
   return out.slice(0, limit);
 };
+const disputedIds = () => Object.keys(QMAP).filter(id=>!!QMAP[id].flag);
+const RED_FLAGS = ["ectopic","torsion","cord prolapse","neutropenic","sepsis","septic","ketoacidosis","dka","anaphylax","postpartum h","pph","raised icp","intracranial pressure","subarachnoid","meningitis","status epilepticus","eclampsia","tension pneumothorax","aortic dissection","cauda equina","tamponade","serotonin syndrome","neuroleptic malignant","suicid","self-harm","angle closure","acute glaucoma","compartment syndrome","epiglottitis","necrotis","necrotiz","shock","placental abruption","placenta praevia","placenta previa","amniotic fluid embol","malignant hyperthermia","thyroid storm","addisonian","hyperkalaem","myocardial infarction","pulmonary embol","variceal","gi bleed","abruption","subdural","extradural","torsade","wernicke"];
+const redFlagIds = () => Object.keys(QMAP).filter(id=>{ const q=QMAP[id]; const hay=((q.topic||"")+" "+(q.stem||"")).toLowerCase(); return RED_FLAGS.some(k=>hay.includes(k)); });
 const qRef = q => q.reference || (typeof q.source==="string"?q.source:"") || "Other";
 const colorOf = q => (BANK.find(p=>p.id===q.packId)||{}).color || "#3fb6a8";
 export function groupCounts(filterFn, keyFn){
@@ -520,6 +523,8 @@ export function render(){
   else if(App.screen==="type") a.innerHTML=viewType();
   else if(App.screen==="reference") a.innerHTML=viewReference();
   else if(App.screen==="mistakes") a.innerHTML=viewMistakes();
+  else if(App.screen==="disputed") a.innerHTML=viewDisputed();
+  else if(App.screen==="redflag") a.innerHTML=viewRedflag();
   else if(App.screen==="quiz") a.innerHTML=viewQuiz();
   else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
   else if(App.screen==="exam-runner") a.innerHTML=viewExam();
@@ -592,6 +597,18 @@ function viewHome(){
     <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">\u{1F525}</span>
     <div style="text-align:left"><div style="font-weight:700;font-size:15px">Fix my mistakes</div>
     <div class="faint" style="font-size:12.5px">${_mc} question${_mc>1?'s':''} you've missed · tap to drill</div></div></div>
+    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--red);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
+  const _dc=disputedIds().length;
+  if(_dc>0) html+=`<button class="card pad subj" data-action="open-disputed" style="width:100%;margin-bottom:11px;border-left:3px solid var(--amber)">
+    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⚖️</span>
+    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Disputed answers</div>
+    <div class="faint" style="font-size:12.5px">${_dc} flagged · file answer vs standard teaching</div></div></div>
+    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--amber);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
+  const _rf=redFlagIds().length;
+  if(_rf>0) html+=`<button class="card pad subj" data-action="open-redflag" style="width:100%;margin-bottom:11px;border-left:3px solid var(--red)">
+    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">\u{1F6A8}</span>
+    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Red-flag drills</div>
+    <div class="faint" style="font-size:12.5px">${_rf} can't-miss emergencies · missing these changes management</div></div></div>
     <svg class="i" viewBox="0 0 24 24" style="stroke:var(--red);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
   html+=`<div class="sectlabel">Recall</div>
   <button class="card pad subj" data-action="start-smart" style="width:100%">
@@ -723,6 +740,49 @@ function viewReference(){
 }
 
 /* ---------- MISTAKE NOTEBOOK ---------- */
+function viewDisputed(){
+  const ids=disputedIds();
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--amber)">⚖️ Disputed answers</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} question${ids.length!==1?'s':''} where the source answer is flagged against standard teaching</p>`;
+  if(!ids.length){ html+=`<div class="empty">No flagged questions in the loaded bank.</div></div>`; return html; }
+  html+=`<div style="height:10px"></div><button class="btn btn-primary" data-action="start-disputed">Drill all ${ids.length}</button>`;
+  const groups={};
+  ids.forEach(id=>{ const q=QMAP[id]; (groups[qSys(q)]=groups[qSys(q)]||[]).push(id); });
+  Object.keys(groups).sort().forEach(sys=>{
+    html+=`<div class="sectlabel">${esc(sys)} · ${groups[sys].length}</div>`;
+    groups[sys].forEach(id=>{ const q=QMAP[id], f=q.flag||{}; const col=/CRITICAL|HIGH/i.test(f.severity||"")?"var(--red)":"var(--amber)";
+      html+=`<button class="card pad subj" data-action="study-one" data-id="${esc(id)}" style="margin-bottom:8px;border-left:3px solid ${col}">
+        <div class="row between"><span style="font-weight:600;font-size:14px">${esc(q.topic||"General")}</span><span class="badge" style="color:${col}">${esc(f.severity||"FLAG")}</span></div>
+        ${(f.app||f.correct)?`<div style="font-size:12px;margin-top:5px">${f.app?`<span style="color:var(--red)">File: ${esc(f.app)}</span>`:""}${f.correct?`<span style="color:var(--green);margin-left:10px">Standard: ${esc(f.correct)}</span>`:""}</div>`:""}
+        ${f.note?`<div class="faint" style="font-size:12px;margin-top:4px;line-height:1.4">${esc((f.note||"").slice(0,150))}…</div>`:""}
+      </button>`;
+    });
+  });
+  html+=`</div>`; return html;
+}
+function viewRedflag(){
+  const ids=redFlagIds();
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--red)">\u{1F6A8} Red-flag drills</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} can't-miss / emergency question${ids.length!==1?'s':''} — missing these changes management</p>`;
+  if(!ids.length){ html+=`<div class="empty">No red-flag questions matched in the loaded bank.</div></div>`; return html; }
+  html+=`<div style="height:10px"></div><button class="btn btn-primary" data-action="start-redflag">Drill all ${ids.length}</button>`;
+  const groups={};
+  ids.forEach(id=>{ const q=QMAP[id]; (groups[qSys(q)]=groups[qSys(q)]||[]).push(id); });
+  Object.keys(groups).sort().forEach(sys=>{
+    html+=`<div class="sectlabel">${esc(sys)} · ${groups[sys].length}</div>`;
+    groups[sys].forEach(id=>{ const q=QMAP[id];
+      html+=`<button class="card pad subj" data-action="study-one" data-id="${esc(id)}" style="margin-bottom:8px;border-left:3px solid var(--red)">
+        <div class="row between"><span style="font-weight:600;font-size:14px">${esc(q.topic||"General")}</span><span class="pill" style="color:var(--red)">⚠️</span></div>
+        <div class="faint" style="font-size:12px;margin-top:4px;line-height:1.4">${esc((q.stem||"").slice(0,95))}…</div>
+      </button>`;
+    });
+  });
+  html+=`</div>`; return html;
+}
 function viewMistakes(){
   const ids=mistakeIds();
   let html=`<div class="fade">
@@ -1635,6 +1695,10 @@ document.body.addEventListener("click", async e=>{
   if(a==="toggle-stage"){ const st=t.dataset.stage; App.collapsedStages[st]=!App.collapsedStages[st]; render(); return; }
   if(a==="open-mistakes"){ App.screen="mistakes"; render(); return; }
   if(a==="start-mistakes"){ const pool=mistakePool(); if(!pool.length){ toast("No mistakes yet"); return; } startPracticeCtx({ids:pool}, "Fix my mistakes"); return; }
+  if(a==="open-disputed"){ App.screen="disputed"; render(); return; }
+  if(a==="start-disputed"){ const pool=disputedIds(); if(!pool.length){ toast("Nothing flagged"); return; } startPracticeCtx({ids:pool}, "Disputed answers"); return; }
+  if(a==="open-redflag"){ App.screen="redflag"; render(); return; }
+  if(a==="start-redflag"){ const pool=redFlagIds(); if(!pool.length){ toast("No red-flag questions"); return; } startPracticeCtx({ids:pool}, "Red-flag drills"); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
