@@ -800,6 +800,32 @@ const CHECKLISTS = {
     {t:"Orbital vs preseptal cellulitis",k:["orbital cellulitis","preseptal","periorbital"]}]
 };
 const checklistMatch = (sys,item) => Object.keys(QMAP).filter(id=>{ const q=QMAP[id]; if(qSys(q)!==sys) return false; const hay=((q.topic||"")+" "+(q.stem||"")).toLowerCase(); return item.k.some(k=>hay.includes(k)); });
+const DUELS = [
+ {sys:"Gastro",a:"Crohn's disease",b:"Ulcerative colitis",correct:"a",stem:"Transmural inflammation with SKIP lesions, perianal fistula and non-caseating granulomas; terminal ileum involved.",why:"Transmural + skip lesions + granulomas + fistulae = Crohn's. UC is continuous, mucosa-only, rectum-upward, with NO granulomas."},
+ {sys:"Ophthalmology",a:"Central retinal artery occlusion",b:"Retinal detachment",correct:"a",stem:"Sudden PAINLESS total visual loss; pale retina with a CHERRY-RED SPOT and an RAPD.",why:"Cherry-red spot + pale retina + RAPD = CRAO. Detachment gives a 'curtain'/flashes/floaters with a raised, folded retina."},
+ {sys:"Obs & Gynae",a:"Salpingectomy",b:"Salpingotomy",correct:"a",stem:"Ruptured ectopic, haemodynamically UNSTABLE, with a healthy contralateral tube.",why:"Ruptured/unstable or healthy other tube -> salpingectomy (remove tube). Salpingotomy (conserve) only if the OTHER tube is damaged and fertility is wanted."},
+ {sys:"Paediatrics",a:"Kwashiorkor",b:"Marasmus",correct:"a",stem:"Toddler with OEDEMA, fatty hepatomegaly, skin/hair depigmentation and a near-normal weight-for-age.",why:"Oedema + fatty liver = kwashiorkor (protein deficiency). Marasmus = severe wasting with NO oedema (global calorie deficiency)."},
+ {sys:"Psychiatry",a:"Postpartum blues",b:"Postnatal depression",correct:"a",stem:"Day 4 postpartum: tearful and labile, fully resolves by day 10 with no treatment.",why:"Onset day 3-10, transient, self-limiting = blues. PND: onset over weeks, persistent low mood >2 weeks, needs treatment."},
+ {sys:"Respiratory",a:"Pulmonary embolism",b:"Pneumonia",correct:"a",stem:"Sudden pleuritic pain + hypoxia + tachycardia, CLEAR chest, recent long-haul flight, no fever.",why:"Sudden onset, hypoxia out of proportion, clear lungs, VTE risk = PE. Pneumonia: fever, productive cough, focal crackles/consolidation."},
+ {sys:"Paediatrics",a:"Congenital CMV",b:"Congenital toxoplasmosis",correct:"a",stem:"Neonate with PERIVENTRICULAR calcification, microcephaly, sensorineural deafness and a blueberry-muffin rash.",why:"PERIventricular calcification + deafness = CMV. Toxoplasmosis = DIFFUSE intracranial calcification + chorioretinitis + hydrocephalus."},
+ {sys:"Nephrology",a:"Minimal change disease",b:"Post-streptococcal GN",correct:"a",stem:"Child with generalised oedema, heavy proteinuria, NORMAL BP and complement, no haematuria.",why:"Nephrotic (proteinuria, oedema, normal C3) = minimal change. Post-strep GN is nephritic: haematuria, HTN, LOW C3, 1-2 wks after infection."},
+ {sys:"Psychiatry",a:"Delirium",b:"Dementia",correct:"a",stem:"Acute FLUCTUATING confusion over 2 days, inattention, visual hallucinations, drowsy, post-operative.",why:"Acute + fluctuating + inattention + altered consciousness = delirium. Dementia is chronic, progressive, with CLEAR consciousness."},
+ {sys:"Psychiatry",a:"Neuroleptic malignant syndrome",b:"Serotonin syndrome",correct:"a",stem:"Days after starting an ANTIPSYCHOTIC: lead-pipe RIGIDITY, hyperthermia, reduced reflexes, very high CK.",why:"Antipsychotic + lead-pipe rigidity + HYPO-reflexia + high CK, slow onset = NMS. Serotonin syndrome: serotonergic drug, HYPER-reflexia/clonus, rapid onset."},
+ {sys:"Paediatrics",a:"Epiglottitis",b:"Croup",correct:"a",stem:"Rapid onset, DROOLING, tripod posture, muffled voice, high fever and NO cough; toxic-looking child.",why:"Drooling + tripod + no cough + toxic = epiglottitis (H. influenzae b). Croup: BARKING cough, stridor, low-grade fever, gradual, viral."},
+ {sys:"ENT",a:"BPPV",b:"Meniere's disease",correct:"a",stem:"Brief vertigo lasting <1 minute, triggered by head turning, with NO hearing loss or tinnitus.",why:"Seconds, positional, no auditory symptoms = BPPV. Meniere's: vertigo lasting minutes-hours + tinnitus + fluctuating hearing loss + aural fullness."},
+ {sys:"Neurology",a:"Bell's palsy (LMN)",b:"Stroke (UMN facial)",correct:"a",stem:"Unilateral facial droop INCLUDING the forehead, unable to close the eye, no limb signs.",why:"FOREHEAD involved = lower motor neuron = Bell's. A stroke (UMN) SPARES the forehead and has other CNS signs."},
+ {sys:"Obs & Gynae",a:"Placental abruption",b:"Placenta praevia",correct:"a",stem:"PAINFUL bleeding with a tense, tender 'woody' uterus, fetal distress and shock out of proportion to visible loss.",why:"Painful + hard tender uterus + concealed bleed = abruption. Praevia: PAINLESS bleeding, soft non-tender uterus, often malpresentation."},
+ {sys:"Neurology",a:"Subarachnoid haemorrhage",b:"Migraine",correct:"a",stem:"Instant THUNDERCLAP worst-ever headache peaking in seconds, with neck stiffness and photophobia.",why:"Thunderclap (max <1 min) + meningism = SAH -> CT then LP for xanthochromia. Migraine builds over minutes-hours, recurrent, with aura."},
+ {sys:"Endocrine",a:"DKA",b:"HHS",correct:"a",stem:"Young type-1 diabetic, ketones, Kussmaul breathing, pH 7.1, glucose 22 mmol/L over hours.",why:"Ketones + acidosis + young T1DM = DKA. HHS: elderly T2DM, glucose often >33, very high osmolality, MINIMAL ketones, no acidosis, over days."},
+ {sys:"Neurology",a:"Wernicke encephalopathy",b:"Korsakoff syndrome",correct:"a",stem:"Alcoholic with the ACUTE triad of confusion + ophthalmoplegia + ataxia.",why:"Acute, REVERSIBLE triad = Wernicke (give IV thiamine now). Korsakoff: chronic, irreversible anterograde amnesia with confabulation."},
+ {sys:"Haematology",a:"B12 deficiency",b:"Folate deficiency",correct:"a",stem:"Macrocytic anaemia WITH peripheral neuropathy and loss of proprioception.",why:"Macrocytic + NEUROLOGICAL signs (subacute combined degeneration) = B12. Folate deficiency is macrocytic WITHOUT neuro signs; replace B12 first."},
+ {sys:"Respiratory",a:"Asthma",b:"COPD",correct:"a",stem:"Young non-smoker, episodic wheeze with diurnal variation, FULLY reversible on spirometry, atopic history.",why:"Reversible airflow + young + atopy + variability = asthma. COPD: smoker, FIXED/irreversible obstruction, progressive."},
+ {sys:"Endocrine",a:"Graves' disease",b:"Hashimoto's thyroiditis",correct:"a",stem:"Young woman: weight loss, tremor, EYE bulging, pretibial myxoedema and a diffuse goitre.",why:"Thyrotoxic + ophthalmopathy + pretibial myxoedema = Graves' (TSH-receptor antibody). Hashimoto's is HYPO-thyroid with anti-TPO and a firm goitre."},
+ {sys:"Cardiology",a:"Pericarditis",b:"STEMI",correct:"a",stem:"Sharp pleuritic chest pain RELIEVED by sitting forward, SADDLE-shaped ST elevation in all leads, friction rub.",why:"Positional pain + widespread saddle ST + PR depression + rub = pericarditis. STEMI: territorial ST elevation with reciprocal change, crushing pain."},
+ {sys:"Obs & Gynae",a:"Pre-eclampsia",b:"Gestational hypertension",correct:"a",stem:"After 20 weeks: BP 160/110 WITH proteinuria (++), headache and brisk reflexes.",why:"Hypertension + PROTEINURIA / end-organ signs after 20 wks = pre-eclampsia. Gestational HTN is new hypertension WITHOUT proteinuria or organ involvement."},
+ {sys:"Neurology",a:"Bacterial meningitis",b:"Viral meningitis",correct:"a",stem:"CSF: TURBID, neutrophils high, glucose LOW, protein high.",why:"Low glucose + neutrophils + high protein + turbid = bacterial. Viral: clear CSF, lymphocytes, NORMAL glucose, only mildly high protein."},
+ {sys:"Cardiology",a:"Aortic stenosis",b:"Mitral regurgitation",correct:"a",stem:"Ejection-systolic murmur radiating to the CAROTIDS, with a slow-rising pulse and exertional syncope.",why:"ESM to carotids + slow-rising pulse + syncope = aortic stenosis. MR: PANsystolic murmur radiating to the AXILLA, with a displaced apex."}
+];
 const qRef = q => q.reference || (typeof q.source==="string"?q.source:"") || "Other";
 const colorOf = q => (BANK.find(p=>p.id===q.packId)||{}).color || "#3fb6a8";
 function groupCounts(filterFn, keyFn){
@@ -914,6 +940,7 @@ function render(){
   else if(App.screen==="disputed") a.innerHTML=viewDisputed();
   else if(App.screen==="redflag") a.innerHTML=viewRedflag();
   else if(App.screen==="checklist") a.innerHTML=viewChecklist();
+  else if(App.screen==="duel") a.innerHTML=viewDuel();
   else if(App.screen==="quiz") a.innerHTML=viewQuiz();
   else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
   else if(App.screen==="exam-runner") a.innerHTML=viewExam();
@@ -1004,6 +1031,11 @@ function viewHome(){
     <div style="text-align:left"><div style="font-weight:700;font-size:15px">Before-exam checklist</div>
     <div class="faint" style="font-size:12.5px">Must-know patterns per subject · tick &amp; drill</div></div></div>
     <svg class="i" viewBox="0 0 24 24" style="stroke:var(--teal);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
+  html+=`<button class="card pad subj" data-action="start-duel" style="width:100%;margin-bottom:11px;border-left:3px solid var(--purple, #b58fce)">
+    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⚔️</span>
+    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Wrong Answer Duel</div>
+    <div class="faint" style="font-size:12.5px">${DUELS.length} commonly-confused pairs · pick the stronger answer</div></div></div>
+    <svg class="i" viewBox="0 0 24 24" style="stroke:#b58fce;width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
   html+=`<div class="sectlabel">Recall</div>
   <button class="card pad subj" data-action="start-smart" style="width:100%">
     <div class="row between">
@@ -1134,6 +1166,37 @@ function viewReference(){
 }
 
 /* ---------- MISTAKE NOTEBOOK ---------- */
+function viewDuel(){
+  const D=App.duel; const d=DUELS[D.order[D.i]];
+  let html=`<div class="fade">
+    <div class="row between" style="margin-bottom:6px">
+      <button class="btn-sm btn-ghost" data-action="duel-done"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Exit</button>
+      <span class="mono faint" style="font-size:13px">${D.i+1} / ${D.order.length}</span>
+      <span class="streakpill">⚔️ ${D.score}</span>
+    </div>
+    <div class="progressbar" style="margin-bottom:16px"><i style="width:${D.i/D.order.length*100}%"></i></div>
+    <div class="qmeta"><span class="pill">${esc(d.sys)}</span><span class="pill emqtag">Duel</span></div>
+    <div class="stem serif" style="font-family:inherit">${esc(d.stem)}</div>
+    <div class="optshdr">Which one fits — pick the stronger answer</div>
+    <div class="choices">`;
+  ["a","b"].forEach(side=>{
+    let cls="choice", vd="";
+    if(D.revealed){ if(side===d.correct){ cls+=" correct"; vd=`<span class="vd">CORRECT</span>`; } else if(D.picked===side){ cls+=" wrong"; vd=`<span class="vd">YOUR PICK</span>`; } }
+    else if(D.picked===side) cls+=" sel";
+    html+=`<button class="${cls}" ${D.revealed?'':`data-action="duel-pick" data-pick="${side}"`}><span class="lab">${side.toUpperCase()}</span><span>${esc(d[side])}</span>${vd}</button>`;
+  });
+  html+=`</div>`;
+  if(D.revealed) html+=`<div class="keydiff" style="margin-top:14px"><b>KEY DIFFERENTIATOR</b><br>${esc(d.why)}</div>`;
+  html+=`</div>`;
+  let foot;
+  if(D.revealed){
+    foot = (D.i+1>=D.order.length)
+      ? `<button class="btn btn-primary" data-action="duel-done">Finish · scored ${D.score}/${D.order.length}</button>`
+      : `<button class="btn btn-primary" data-action="duel-next">Next duel</button>`;
+  }
+  setFoot(foot);
+  return html;
+}
 function viewChecklist(){
   DB.progress.checklist = DB.progress.checklist||{};
   const subs=Object.keys(CHECKLISTS);
@@ -2123,6 +2186,10 @@ document.body.addEventListener("click", async e=>{
   if(a==="checklist-subject"){ App.checklistSubject=t.dataset.subject; render(); return; }
   if(a==="checklist-toggle"){ DB.progress.checklist=DB.progress.checklist||{}; const k=t.dataset.key; DB.progress.checklist[k]=!DB.progress.checklist[k]; save.progress(); render(); return; }
   if(a==="checklist-drill"){ const sys=t.dataset.sys, it=CHECKLISTS[sys][+t.dataset.idx]; const pool=checklistMatch(sys,it); if(!pool.length){ toast("No matching questions"); return; } startPracticeCtx({ids:pool}, it.t); return; }
+  if(a==="start-duel"){ const order=DUELS.map((_,i)=>i); for(let i=order.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const x=order[i];order[i]=order[j];order[j]=x; } App.duel={order,i:0,score:0,picked:null,revealed:false}; App.screen="duel"; render(); return; }
+  if(a==="duel-pick"){ if(App.duel.revealed) return; App.duel.picked=t.dataset.pick; App.duel.revealed=true; const d=DUELS[App.duel.order[App.duel.i]]; const ok=App.duel.picked===d.correct; if(ok) App.duel.score++; cue(ok?"correct":"wrong"); render(); return; }
+  if(a==="duel-next"){ App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); return; }
+  if(a==="duel-done"){ const sc=App.duel?App.duel.score:0, n=App.duel?App.duel.order.length:0; App.duel=null; App.screen="home"; render(); if(n) toast("Duel complete · "+sc+"/"+n); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
