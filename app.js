@@ -1351,17 +1351,19 @@ function myEntry(){
   return { id:lbId(), name:ensureAlias(), level:levelOf(DB.progress.xp), streak:DB.progress.streak?.current||0,
     subject:topSubject(), week:activeDays7(),
     xpDay:xpToday(), xpMonth:xpWindow(curMonth()), xpYear:xpWindow(curYear()), xpAll:DB.progress.xp||0,
+    timeDay:studyToday(), timeWeek:weekTime().reduce((a,b)=>a+b.sec,0),
     day:t, month:curMonth(), year:curYear() };
 }
 export function lbValue(e, view){
   if(view==="month") return (e.month===curMonth())? (e.xpMonth||0) : 0;
   if(view==="year")  return (e.year===curYear())?   (e.xpYear||0)  : 0;
   if(view==="all")   return e.xpAll||0;
+  if(view==="time")  return (e.day===today())? (e.timeDay||0) : 0;
   return (e.day===today())? (e.xpDay||0) : 0;
 }
 function viewLeaderboard(){
   const me=myEntry(), view=App.lbView||"day", subj=App.lbSubject||null;
-  const tabs=[["day","Today"],["month","Month"],["year","Year"],["all","All-time"]];
+  const tabs=[["day","Today"],["month","Month"],["year","Year"],["all","All-time"],["time","Time"]];
   let board=(App.board && Array.isArray(App.board)) ? App.board.slice() : [];
   board=board.filter(e=>e.id!==me.id).concat([me]);
   // subject filter chips come from whoever is actually on the board
@@ -1397,7 +1399,7 @@ function viewLeaderboard(){
             ${e.subject&&e.subject!=="—"?`<span class="subjtag">${esc(e.subject)}</span>`:''}
           </div>
         </div>
-        <div class="mono" style="font-weight:800;color:var(--teal);text-align:right">${val}<div class="faint" style="font-size:10px;font-weight:600">XP ${label}</div></div>
+        <div class="mono" style="font-weight:800;color:var(--teal);text-align:right">${view==="time"?fmtHM(val):val}<div class="faint" style="font-size:10px;font-weight:600">${view==="time"?"studied today":"XP "+label}</div></div>
       </div>
     </div>`;
   });
