@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 16,
+  "manifestVersion": 17,
   "updated": "2026-06-15",
   "leaderboard": "https://script.google.com/macros/s/AKfycbypC31uzfeM9kLgMYSakCdLuxuwfCfepjHVJOvZ8xdx-ND4dM57A-owXu7zySKU7fuMQg/exec",
   "packs": [
@@ -111,9 +111,9 @@
       "packId": "batch37-mcq",
       "title": "Batch 37 Final",
       "color": "#cf9b6b",
-      "version": 2,
+      "version": 3,
       "url": "batch37-mcq.json",
-      "questionCount": 15
+      "questionCount": 74
     }
   ]
 }
