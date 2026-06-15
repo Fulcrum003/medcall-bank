@@ -348,10 +348,10 @@ async function wsGet(k){ return STORE.get(k); }
 async function wsSet(k,v){ return STORE.set(k,v); }
 const SK = {progress:"medrecall:progress:v1", exams:"medrecall:exams:v1", settings:"medrecall:settings:v1", reports:"medrecall:reports:v1"};
 let DB = {
-  progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{} },
+  progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
   exams:[],
   reports:[],
-  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:false }
+  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:false, examDate:"" }
 };
 async function loadDB(){
   const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
@@ -942,6 +942,7 @@ function render(){
   else if(App.screen==="checklist") a.innerHTML=viewChecklist();
   else if(App.screen==="duel") a.innerHTML=viewDuel();
   else if(App.screen==="theme") a.innerHTML=viewTheme();
+  else if(App.screen==="timer") a.innerHTML=viewTimer();
   else if(App.screen==="quiz") a.innerHTML=viewQuiz();
   else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
   else if(App.screen==="exam-runner") a.innerHTML=viewExam();
@@ -953,9 +954,56 @@ function render(){
   else if(App.screen==="stats") a.innerHTML=viewStats();
   else if(App.screen==="settings") a.innerHTML=viewSettings();
   else if(App.screen==="repair") a.innerHTML=viewRepair();
+  if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
   window.scrollTo({top:0,behavior:"instant"});
 }
 
+/* ---------- STUDY TIME TRACKING (YPT-style) ---------- */
+let _timerTick=null;
+function startTimerTick(){ if(_timerTick) return; _timerTick=setInterval(()=>{ const el=document.getElementById("timerDisp"); if(el){ el.textContent=fmtHMS(sessionElapsed()); } else { clearInterval(_timerTick); _timerTick=null; } },1000); }
+function stopTimerTick(){ if(_timerTick){ clearInterval(_timerTick); _timerTick=null; } }
+function fmtHMS(sec){ sec=Math.max(0,Math.floor(sec)); const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60; return (h?h+":"+String(m).padStart(2,"0"):String(m))+":"+String(x).padStart(2,"0"); }
+function fmtHM(sec){ sec=Math.max(0,Math.floor(sec)); const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60); return h?(h+"h "+(m?m+"m":"")).trim():(m+"m"); }
+function timeLog(){ if(!DB.progress.timeLog) DB.progress.timeLog={}; return DB.progress.timeLog; }
+function sessionElapsed(){ const t=DB.progress.timer; return (t&&t.running&&t.startedAt)? Math.floor((Date.now()-t.startedAt)/1000):0; }
+function logStudy(sec,sys){ if(sec<=0) return; const L=timeLog(),d=today(); const e=L[d]||(L[d]={total:0,bySys:{}}); e.total+=sec; if(sys){ e.bySys[sys]=(e.bySys[sys]||0)+sec; } }
+function studyToday(){ const e=timeLog()[today()]; return (e?e.total:0)+sessionElapsed(); }
+function studyStreakDays(){ const L=timeLog(); let n=0; for(let i=0;i<400;i++){ const d=addDays(today(),-i); const has=(L[d]&&L[d].total>0)||(i===0&&sessionElapsed()>0); if(has)n++; else break; } return n; }
+function weekTime(){ const L=timeLog(),out=[]; for(let i=6;i>=0;i--){ const d=addDays(today(),-i); out.push({d,sec:(L[d]?L[d].total:0)+(i===0?sessionElapsed():0)}); } return out; }
+function studyBySysWindow(days){ const L=timeLog(),m={}; for(let i=0;i<days;i++){ const e=L[addDays(today(),-i)]; if(e&&e.bySys){ for(const x in e.bySys) m[x]=(m[x]||0)+e.bySys[x]; } } const t=DB.progress.timer; if(t&&t.running&&t.subject) m[t.subject]=(m[t.subject]||0)+sessionElapsed(); return m; }
+function dDay(){ const ex=DB.settings.examDate; if(!ex) return null; return Math.round((new Date(ex+"T00:00:00")-new Date(today()+"T00:00:00"))/86400000); }
+function startTimer(){ const t=DB.progress.timer||{}; if(t.running) return; DB.progress.timer={running:true,startedAt:Date.now(),subject:t.subject||null}; save.progress(); }
+function stopTimer(){ const t=DB.progress.timer; if(t&&t.running){ let sec=Math.min(Math.floor((Date.now()-t.startedAt)/1000),6*3600); logStudy(sec,t.subject); } DB.progress.timer={running:false,startedAt:null,subject:t?t.subject:null}; save.progress(); }
+function weekBarsHTML(){ const w=weekTime(),max=Math.max(1,...w.map(x=>x.sec)),DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  return `<div class="card pad"><div style="display:flex;align-items:flex-end;gap:8px;height:118px">${w.map(x=>{ const h=Math.round(x.sec/max*100),dn=DOW[new Date(x.d+"T00:00:00").getDay()],it=x.d===today();
+    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end"><div class="faint" style="font-size:9px">${x.sec?fmtHM(x.sec):""}</div><div style="width:100%;height:${Math.max(2,h)}%;min-height:3px;border-radius:5px 5px 0 0;background:${it?"var(--teal)":"var(--surface-3)"}"></div><div class="faint" style="font-size:10px;${it?"color:var(--teal);font-weight:700":""}">${dn}</div></div>`; }).join("")}</div></div>`; }
+function subjTimeHTML(){ const m=studyBySysWindow(7),rows=Object.entries(m).sort((a,b)=>b[1]-a[1]); if(!rows.length) return "";
+  const tot=rows.reduce((a,b)=>a+b[1],0)||1;
+  return `<div class="sectlabel">By subject · last 7 days</div><div class="card pad">${rows.map(([x,sec])=>`<div style="margin-bottom:10px"><div class="row between" style="font-size:13px"><span style="font-weight:600">${esc(x)}</span><span class="faint mono">${fmtHM(sec)}</span></div><div class="progressbar" style="margin-top:5px"><i style="width:${Math.round(sec/tot*100)}%"></i></div></div>`).join("")}</div>`; }
+function viewTimer(){
+  const t=DB.progress.timer||{}, running=!!t.running, sys=t.subject||"General";
+  const subs=["General",...listSystems().map(z=>z.name)];
+  const tod=studyToday(), wk=weekTime().reduce((a,b)=>a+b.sec,0), streak=studyStreakDays(), dd=dDay();
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600">⏱️ Study timer</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">Track real study time.${dd!=null?` Exam in <b>${dd>0?dd:0}</b> day${dd===1?"":"s"}.`:""}</p>
+    <div class="card pad" style="text-align:center;padding:26px 16px;margin-top:10px">
+      <div class="faint" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase">${running?("Studying"+(t.subject?" · "+esc(t.subject):"")):"Ready when you are"}</div>
+      <div id="timerDisp" class="mono" style="font-size:46px;font-weight:800;letter-spacing:1px;margin:8px 0">${fmtHMS(sessionElapsed())}</div>
+      <button class="btn ${running?"btn-ghost":"btn-primary"}" data-action="${running?"stop-timer":"start-timer"}">${running?"Stop & save":"Start studying"}</button>
+    </div>`;
+  if(!running){ html+=`<div class="sectlabel">Subject</div><div class="wrapflex">${subs.map(z=>`<button class="chip ${sys===z?"on":""}" data-action="timer-subject" data-s="${esc(z)}">${esc(z)}</button>`).join("")}</div>`; }
+  html+=`<div class="stat3 stagger" style="margin-top:14px">
+      <div class="card"><div class="n teal">${fmtHM(tod)}</div><div class="l">Today</div></div>
+      <div class="card"><div class="n amber">${streak}</div><div class="l">Day streak</div></div>
+      <div class="card"><div class="n green">${fmtHM(wk)}</div><div class="l">This week</div></div>
+    </div>
+    <div class="sectlabel">This week</div>${weekBarsHTML()}
+    ${subjTimeHTML()}
+  </div>`;
+  return html;
+}
 /* ---------- HOME ---------- */
 function viewHome(){
   const totalQ=Object.keys(QMAP).length;
@@ -977,6 +1025,14 @@ function viewHome(){
     </div>
     <div class="progressbar" style="margin-top:11px"><i style="width:${inLvl/200*100}%"></i></div>
   </div>`;
+
+  // D-day countdown + study-timer entry (YPT)
+  { const _dd=dDay(), _st=studyToday();
+    html+=`<button class="card pad subj" data-action="open-timer" style="width:100%;margin-bottom:14px;border-left:3px solid var(--amber)">
+      <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⏱️</span>
+      <div style="text-align:left">${_dd!=null?`<div style="font-weight:700;font-size:15px">${_dd>0?"D-"+_dd:_dd===0?"D-Day — exam today!":"exam "+(-_dd)+"d ago"}</div><div class="faint" style="font-size:12.5px">${_dd>0?"days to your exam · tap to study":_dd===0?"good luck!":"set a new exam date in settings"}</div>`:`<div style="font-weight:700;font-size:15px">Study timer</div><div class="faint" style="font-size:12.5px">track real study time · set an exam date for a D-day</div>`}</div></div>
+      <div class="mono" style="color:var(--teal);text-align:right">${_st>0?fmtHM(_st):"⏱️"}<div class="faint" style="font-size:10px;font-weight:600">${_st>0?"today":"start"}</div></div></div>
+    </button>`; }
 
   // daily goal ring
   const dc=dailyCount(), goal=DB.settings.dailyGoal||20, dpct=goal?dc/goal:0, done=dc>=goal;
@@ -2039,6 +2095,10 @@ function viewSettings(){
       </div>
     </div>
     <div class="row between card pad" style="margin-top:8px">
+      <div><b>Exam date</b><div class="faint" style="font-size:12.5px">For the D-day countdown</div></div>
+      <div class="row" style="gap:8px"><input type="date" id="examdate" class="inp" value="${esc(DB.settings.examDate||'')}" style="width:auto;padding:7px 9px"><button class="btn-sm btn-primary" data-action="set-examdate">Set</button></div>
+    </div>
+    <div class="row between card pad" style="margin-top:8px">
       <div><b>Sounds</b><div class="faint" style="font-size:12.5px">Soft cues for answers, level-ups, goals</div></div>
       <button class="switch ${DB.settings.sounds?'on':''}" data-action="set-sound" aria-label="Toggle sounds"><span class="knob"></span></button>
     </div>
@@ -2246,6 +2306,11 @@ document.body.addEventListener("click", async e=>{
   if(a==="duel-next"){ App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); return; }
   if(a==="duel-done"){ const sc=App.duel?App.duel.score:0, n=App.duel?App.duel.order.length:0; App.duel=null; App.screen="home"; render(); if(n) toast("Duel complete · "+sc+"/"+n); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
+  if(a==="open-timer"){ App.screen="timer"; render(); return; }
+  if(a==="start-timer"){ startTimer(); render(); return; }
+  if(a==="stop-timer"){ stopTimer(); render(); const s=studyToday(); toast("Saved · "+fmtHM(s)+" today"); return; }
+  if(a==="timer-subject"){ const cur=DB.progress.timer||{running:false,startedAt:null}; DB.progress.timer={...cur, subject:t.dataset.s}; save.progress(); render(); return; }
+  if(a==="set-examdate"){ const v=($("examdate")?.value||"").trim(); DB.settings.examDate=v; save.settings(); render(); toast(v?"Exam date set":"Exam date cleared"); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
   if(a==="open-reference"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}; App.screen="reference"; render(); return; }
@@ -2550,10 +2615,10 @@ if (typeof document !== "undefined" && document.getElementById("app")) {
 }
 
 function resetDB() {
-  DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {} };
+  DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {}, timeLog: {}, timer: null };
   DB.exams = [];
   DB.reports = [];
-  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: false };
+  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: false, examDate: "" };
 }
 
 </script>
