@@ -37,7 +37,7 @@ export let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
   exams:[],
   reports:[],
-  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:false, examDate:"" }
+  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true }
 };
 export async function loadDB(){
   const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
@@ -592,10 +592,11 @@ export function render(){
   else if(App.screen==="settings") a.innerHTML=viewSettings();
   else if(App.screen==="repair") a.innerHTML=viewRepair();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
+  if(App.screen==="leaderboard") startBoardPoll(); else stopBoardPoll();
   const _DASH=new Set(["home","system","type","reference","mistakes","disputed","redflag","checklist"]);
   document.body.classList.toggle("dash", _DASH.has(App.screen));
   document.body.classList.toggle("read", !_DASH.has(App.screen));
-  window.scrollTo({top:0,behavior:"instant"});
+  if(App.screen!==render._last){ window.scrollTo({top:0,behavior:"instant"}); render._last=App.screen; }
 }
 
 /* ---------- STUDY TIME TRACKING (YPT-style) ---------- */
@@ -778,9 +779,9 @@ function viewHome(){
   sys.forEach(s=>{ const q=allQs().find(x=>qSys(x)===s.name); const st=q?qStage(q):"5th Stage"; (stageMap[st]=stageMap[st]||[]).push(s); });
   Object.keys(stageMap).sort().forEach(stage=>{
     const list=stageMap[stage], tot=list.reduce((n,s)=>n+s.total,0);
-    const collapsed=!!App.collapsedStages[stage];
-    html+=`<button class="stagebar" data-action="toggle-stage" data-stage="${esc(stage)}" style="width:100%;background:none;border:none;color:inherit;text-align:left;padding:0;cursor:pointer">
-      <div class="row" style="gap:11px;margin:26px 2px 13px">
+    const collapsed=App.collapsedStages[stage]!==false;
+    html+=`<button class="stagebar" data-action="toggle-stage" data-stage="${esc(stage)}" style="width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;color:inherit;text-align:left;padding:14px 16px;margin:22px 0 12px;cursor:pointer;box-shadow:var(--shadow)">
+      <div class="row" style="gap:11px;margin:0">
       <span style="font-size:23px;line-height:1">\u{1F393}</span>
       <div style="flex:1"><div class="serif" style="font-size:20px;font-weight:600">${esc(stage)}</div>
       <div class="faint" style="font-size:11.5px;margin-top:1px">${list.length} subjects · ${tot} questions · ${collapsed?'tap to expand':"let's get you through finals"}</div></div>
@@ -1238,7 +1239,7 @@ function advancePractice(){
   }
   s.i++; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null;
   if(s.ctx && !s.ctx.smart){ DB.progress.resume={ctx:s.ctx, i:s.i, label:s.label}; save.progress(); }
-  render();
+  render(); window.scrollTo({top:0,behavior:"instant"});
 }
 
 /* ---------- SESSION CELEBRATION ---------- */
@@ -1440,6 +1441,9 @@ async function ghReadBoard(){
   }
   return board;
 }
+let _boardPoll=null;
+function startBoardPoll(){ if(_boardPoll) return; _boardPoll=setInterval(()=>{ if(App.screen==="leaderboard" && (DB.settings.groupEndpoint||DB.settings.lbRepo)){ syncBoard(); } else { stopBoardPoll(); } }, 12000); }
+function stopBoardPoll(){ if(_boardPoll){ clearInterval(_boardPoll); _boardPoll=null; } }
 async function syncBoard(){
   const ep=DB.settings.groupEndpoint;
   try{
@@ -1803,6 +1807,10 @@ function viewSettings(){
       <div><b>Sounds</b><div class="faint" style="font-size:12.5px">Soft cues for answers, level-ups, goals</div></div>
       <button class="switch ${DB.settings.sounds?'on':''}" data-action="set-sound" aria-label="Toggle sounds"><span class="knob"></span></button>
     </div>
+    <div class="row between card pad" style="margin-top:8px">
+      <div><b>Reveal on pick</b><div class="faint" style="font-size:12.5px">Show the answer the instant you choose (off = tap Reveal, and rate your confidence first)</div></div>
+      <button class="switch ${DB.settings.revealOnPick!==false?'on':''}" data-action="set-revealonpick" aria-label="Toggle reveal on pick"><span class="knob"></span></button>
+    </div>
 
     <div class="sectlabel">Appearance</div>
     <div class="row between card pad" style="margin-bottom:8px">
@@ -1964,6 +1972,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="set-goal"){ const d=parseInt(t.dataset.d,10)||0; DB.settings.dailyGoal=Math.max(5,Math.min(200,(DB.settings.dailyGoal||20)+d)); save.settings(); render(); return; }
   // sounds on/off
   if(a==="set-sound"){ DB.settings.sounds=!DB.settings.sounds; save.settings(); if(DB.settings.sounds) cue("correct"); render(); return; }
+  if(a==="set-revealonpick"){ DB.settings.revealOnPick=(DB.settings.revealOnPick===false); save.settings(); render(); return; }
   // leaderboard display name
   if(a==="set-name"){ const v=(prompt("Choose a nickname for the leaderboard — please DON'T use your real name. Leave blank for a random one:", "")||"").trim().slice(0,24); DB.settings.displayName = v || randomAlias(); save.settings(); render(); syncBoard(); return; }
   if(a==="lb-view"){ App.lbView=t.dataset.v; render(); return; }
@@ -1992,7 +2001,7 @@ document.body.addEventListener("click", async e=>{
   // home / browse
   if(a==="start-smart"){ startPracticeCtx({smart:true}, "Smart Review"); return; }
   if(a==="open-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="system"; render(); return; }
-  if(a==="toggle-stage"){ const st=t.dataset.stage; App.collapsedStages[st]=!App.collapsedStages[st]; render(); return; }
+  if(a==="toggle-stage"){ const st=t.dataset.stage; App.collapsedStages[st]=(App.collapsedStages[st]===false); render(); return; }
   if(a==="open-mistakes"){ App.screen="mistakes"; render(); return; }
   if(a==="start-mistakes"){ const pool=mistakePool(); if(!pool.length){ toast("No mistakes yet"); return; } startPracticeCtx({ids:pool}, "Fix my mistakes"); return; }
   if(a==="open-disputed"){ App.screen="disputed"; render(); return; }
@@ -2005,7 +2014,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="checklist-drill"){ const sys=t.dataset.sys, it=CHECKLISTS[sys][+t.dataset.idx]; const pool=checklistMatch(sys,it); if(!pool.length){ toast("No matching questions"); return; } startPracticeCtx({ids:pool}, it.t); return; }
   if(a==="start-duel"){ const order=DUELS.map((_,i)=>i); for(let i=order.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const x=order[i];order[i]=order[j];order[j]=x; } App.duel={order,i:0,score:0,picked:null,revealed:false}; App.screen="duel"; render(); return; }
   if(a==="duel-pick"){ duelPick(t.dataset.pick); return; }
-  if(a==="duel-next"){ App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); return; }
+  if(a==="duel-next"){ App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
   if(a==="duel-done"){ const sc=App.duel?App.duel.score:0, n=App.duel?App.duel.order.length:0; App.duel=null; App.screen="home"; render(); if(n) toast("Duel complete · "+sc+"/"+n); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
   if(a==="open-timer"){ App.screen="timer"; render(); return; }
@@ -2028,7 +2037,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="resume"){ const r=DB.progress.resume; if(r&&r.ctx) startPracticeCtx(r.ctx, r.label, r.i); return; }
 
   // quiz
-  if(a==="select-choice"){ App.practice.selected=t.dataset.label; render(); return; }
+  if(a==="select-choice"){ const s=App.practice; s.selected=t.dataset.label; const q=QMAP[s.pool[s.i]]; if(DB.settings.revealOnPick!==false && q.type!=="sa") s.revealed=true; render(); return; }
   if(a==="toggle-emq-opts"){ App.practice.optsCollapsed=!App.practice.optsCollapsed; render(); return; }
   if(a==="reveal"){ const s=App.practice,q=QMAP[s.pool[s.i]]; if(q.type==="sa"){ const ta=$("saInput"); s.saText=ta?ta.value:""; } s.revealed=true; render(); return; }
   if(a==="grade"){ gradeCurrent(t.dataset.grade); return; }
@@ -2053,9 +2062,9 @@ document.body.addEventListener("click", async e=>{
   // exam runner
   if(a==="exam-select"){ App.exam.answers[App.exam.ids[App.exam.i]]=t.dataset.label; render(); return; }
   if(a==="exam-flag"){ const id=App.exam.ids[App.exam.i]; App.exam.flags.has(id)?App.exam.flags.delete(id):App.exam.flags.add(id); render(); return; }
-  if(a==="exam-jump"){ App.exam.i=+t.dataset.i; render(); return; }
-  if(a==="exam-prev"){ if(App.exam.i>0)App.exam.i--; render(); return; }
-  if(a==="exam-next"){ if(App.exam.i<App.exam.ids.length-1)App.exam.i++; render(); return; }
+  if(a==="exam-jump"){ App.exam.i=+t.dataset.i; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
+  if(a==="exam-prev"){ if(App.exam.i>0)App.exam.i--; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
+  if(a==="exam-next"){ if(App.exam.i<App.exam.ids.length-1)App.exam.i++; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
   if(a==="exam-submit"){ submitExam(false); return; }
   if(a==="exam-quit"){ if(App.exam.timerId)clearInterval(App.exam.timerId); App.exam=null; App.screen="home"; render(); return; }
 
@@ -2313,6 +2322,7 @@ if("serviceWorker" in navigator && (location.protocol==="https:"||location.proto
 export async function boot(){
   await loadDB();
   try{ if(navigator.storage && navigator.storage.persist){ let ps = navigator.storage.persisted ? await navigator.storage.persisted() : false; if(!ps) ps = await navigator.storage.persist(); App.persisted = ps; } }catch(e){}
+  if(DB.settings.soundDefaulted===undefined){ DB.settings.sounds=true; DB.settings.soundDefaulted=true; save.settings(); }
   applyTheme();
   try{ ghToken = await wsGet("medrecall:ghtoken:v1"); }catch(e){}
   try{ wallImg = await wsGet("medrecall:wallpaperimg:v1"); }catch(e){}
@@ -2337,5 +2347,5 @@ export function resetDB() {
   DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {}, timeLog: {}, timer: null };
   DB.exams = [];
   DB.reports = [];
-  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: false, examDate: "" };
+  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true };
 }
