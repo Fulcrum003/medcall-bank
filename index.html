@@ -281,6 +281,24 @@
   .cta{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--teal-dim);background:linear-gradient(135deg,var(--teal-deep),transparent);border-radius:var(--r);padding:15px 16px;cursor:pointer;color:var(--text);transition:.15s}
   .cta:hover{transform:translateY(-2px)}
   .cta .em{font-size:22px}
+  /* ---- desktop: fill the screen (2-col dashboard, readable quiz column) ---- */
+  @media (min-width:1024px){
+    .wrap{ max-width:min(1180px,94vw); }
+    body.read .wrap{ max-width:760px; }
+    body.read .foot-in{ max-width:760px; }
+    body.dash #app>.fade{ display:grid; grid-template-columns:1fr 1fr; column-gap:18px; align-items:start; }
+    body.dash #app>.fade>h2,
+    body.dash #app>.fade>p,
+    body.dash #app>.fade>.sectlabel,
+    body.dash #app>.fade>.levelcard,
+    body.dash #app>.fade>.stat3,
+    body.dash #app>.fade>.stagebar,
+    body.dash #app>.fade>.row,
+    body.dash #app>.fade>.btn,
+    body.dash #app>.fade>.btn-sm,
+    body.dash #app>.fade>.empty{ grid-column:1 / -1; }
+    body.dash #app>.fade>div[style^="height:"]{ display:none; }
+  }
 </style>
 </head>
 <body>
@@ -907,6 +925,9 @@ function render(){
   else if(App.screen==="settings") a.innerHTML=viewSettings();
   else if(App.screen==="repair") a.innerHTML=viewRepair();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
+  const _DASH=new Set(["home","system","type","reference","mistakes","disputed","redflag","checklist"]);
+  document.body.classList.toggle("dash", _DASH.has(App.screen));
+  document.body.classList.toggle("read", !_DASH.has(App.screen));
   window.scrollTo({top:0,behavior:"instant"});
 }
 

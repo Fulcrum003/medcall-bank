@@ -592,6 +592,9 @@ export function render(){
   else if(App.screen==="settings") a.innerHTML=viewSettings();
   else if(App.screen==="repair") a.innerHTML=viewRepair();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
+  const _DASH=new Set(["home","system","type","reference","mistakes","disputed","redflag","checklist"]);
+  document.body.classList.toggle("dash", _DASH.has(App.screen));
+  document.body.classList.toggle("read", !_DASH.has(App.screen));
   window.scrollTo({top:0,behavior:"instant"});
 }
 
