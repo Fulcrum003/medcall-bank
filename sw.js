@@ -2,7 +2,7 @@
    Strategy: network-first for same-origin (so you always get the latest
    app + questions when online, and the cached copy when offline);
    cache-first for cross-origin assets like fonts. */
-const CACHE = "medrecall-v3";
+const CACHE = "medrecall-v4";
 const SHELL = ["./", "./index.html"];
 
 self.addEventListener("install", (e) => {

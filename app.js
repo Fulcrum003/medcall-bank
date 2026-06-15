@@ -627,6 +627,7 @@ export function render(){
   else if(App.screen==="redflag") a.innerHTML=viewRedflag();
   else if(App.screen==="checklist") a.innerHTML=viewChecklist();
   else if(App.screen==="duel") a.innerHTML=viewDuel();
+  else if(App.screen==="theme") a.innerHTML=viewTheme();
   else if(App.screen==="quiz") a.innerHTML=viewQuiz();
   else if(App.screen==="exam-builder") a.innerHTML=viewBuilder();
   else if(App.screen==="exam-runner") a.innerHTML=viewExam();
@@ -842,7 +843,7 @@ function viewReference(){
     <div class="sectlabel">Topics</div>`;
   tops.forEach(tp=>{
     const pct=tp.total?Math.round(tp.seen/tp.total*100):0;
-    html+=`<button class="card pad subj" data-action="study-topic" data-system="${esc(sys)}" data-type="${esc(ty)}" data-reference="${esc(ref)}" data-topic="${esc(tp.name)}" style="margin-bottom:9px">
+    html+=`<button class="card pad subj" data-action="${ty==='EMQs'?'open-theme':'study-topic'}" data-system="${esc(sys)}" data-type="${esc(ty)}" data-reference="${esc(ref)}" data-topic="${esc(tp.name)}" style="margin-bottom:9px">
       <div class="row between"><span style="font-weight:600;font-size:14.5px">${esc(tp.name)}</span>${tp.due>0?`<span class="badge due">${tp.due}</span>`:`<span class="faint mono" style="font-size:12px">${tp.seen}/${tp.total}</span>`}</div>
       <div class="progressbar" style="margin-top:9px"><i style="width:${pct}%"></i></div>
     </button>`;
@@ -852,6 +853,50 @@ function viewReference(){
 }
 
 /* ---------- MISTAKE NOTEBOOK ---------- */
+function viewTheme(){
+  const T=App.theme;
+  const ids=poolFor({system:T.sys, type:T.ty, reference:T.reference, topic:T.topic});
+  const cases=ids.map(id=>QMAP[id]).filter(Boolean);
+  const back=`<button class="btn-sm btn-ghost" data-action="open-reference" data-system="${esc(T.sys)}" data-type="${esc(T.ty)}" data-reference="${esc(T.reference)}" style="margin-bottom:12px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(T.reference)}</button>`;
+  if(!cases.length) return `<div class="fade">${back}<div class="empty">No cases in this theme.</div></div>`;
+  const opts=cases[0].choices||[]; const oc=T.optsCollapsed;
+  const done=cases.filter((q,i)=>T.revealed[i]).length;
+  let html=`<div class="fade">${back}
+    <div class="faint mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(T.sys)} · EMQ theme</div>
+    <h2 class="serif" style="font-size:21px;font-weight:600;margin-top:2px">${esc(T.topic)}</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${cases.length} cases · pick from the shared list · ${done}/${cases.length} revealed</p>
+    <button class="optshdr" data-action="theme-toggle-opts" style="width:100%;background:none;border:none;color:inherit;font:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-top:6px"><span>Option list · ${opts.length} options</span><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;transition:transform .2s;transform:rotate(${oc?'-90deg':'0deg'})"><path d="M6 9l6 6 6-6"/></svg></button>`;
+  if(!oc){ html+=`<div class="card pad" style="margin-bottom:14px;border-left:3px solid var(--teal)">`;
+    opts.forEach(o=>{ html+=`<div style="padding:4px 0;font-size:13.5px"><b style="color:var(--teal)">${o.l}.</b> ${esc(o.t)}</div>`; });
+    html+=`</div>`; }
+  const chipS=(state)=>{ let bg="var(--surface-2)",bd="var(--line)",co="inherit";
+    if(state==="ok"){bg="var(--green)";co="#04211e";bd="var(--green)";}
+    else if(state==="bad"){bg="var(--red-deep,#3a1f24)";co="var(--red)";bd="#6e2b30";}
+    else if(state==="sel"){bd="var(--teal)";bg="rgba(63,182,168,.14)";}
+    return `display:inline-grid;place-items:center;width:34px;height:34px;border-radius:8px;border:1px solid ${bd};background:${bg};color:${co};font-weight:700;font-size:13px;cursor:pointer`; };
+  cases.forEach((q,ci)=>{
+    const rv=!!T.revealed[ci], pick=T.picks[ci], cl=correctLabel(q);
+    html+=`<div class="card pad" style="margin-bottom:12px">
+      <div class="row between" style="margin-bottom:6px"><span class="mono faint" style="font-size:12px">Case ${ci+1}</span>${rv?(pick===cl?'<span class="pill" style="color:var(--green)">✓ correct</span>':(pick?'<span class="pill" style="color:var(--red)">✗ missed</span>':'')):''}</div>
+      <div class="serif" style="font-size:15px;line-height:1.5">${rv?q.stem:stripBold(q.stem)}</div>
+      <div class="wrapflex" style="margin-top:10px;gap:7px">`;
+    q.choices.forEach(c=>{ let st=""; if(rv){ if(c.correct)st="ok"; else if(pick===c.l)st="bad"; } else if(pick===c.l)st="sel";
+      html+=`<button ${rv?"":`data-action="theme-pick" data-i="${ci}" data-label="${c.l}"`} style="${chipS(st)}">${c.l}</button>`; });
+    html+=`</div>`;
+    if(!rv){ html+=`<div style="margin-top:11px"><button class="btn-sm btn-primary" data-action="theme-reveal" data-i="${ci}">Reveal answer</button></div>`; }
+    else {
+      const cc=q.choices.find(c=>c.correct);
+      html+=`<div class="ansbox" style="margin-top:11px"><div class="k">Answer</div><div class="v">${cc.l} — ${esc(cc.t)}</div></div>`;
+      if(cc.e) html+=`<div class="exp" style="margin-top:9px">${cc.e}</div>`;
+      const wn=q.choices.filter(c=>!c.correct&&c.e).slice(0,3);
+      if(wn.length){ html+=`<div class="ttl" style="margin:12px 0 4px">Why not the closest answers</div>`;
+        wn.forEach(c=>{ html+=`<div style="margin-top:7px"><b>${c.l}. ${esc(c.t)}</b><div class="exp" style="margin-top:2px">${c.e}</div></div>`; }); }
+      if(q.keyPoint) html+=`<div class="keypoint" style="margin-top:11px"><div class="k">KEY POINT</div><div class="v">${esc(q.keyPoint)}</div></div>`;
+    }
+    html+=`</div>`;
+  });
+  html+=`</div>`; return html;
+}
 function viewDuel(){
   const D=App.duel; const d=DUELS[D.order[D.i]];
   let html=`<div class="fade">
@@ -1703,7 +1748,7 @@ function viewSettings(){
     </div>
 
     <div class="sectlabel">Progress memory</div>
-    <p class="muted" style="font-size:13.5px;margin:0 2px 10px">Your progress is saved automatically and persists when you close and reopen this prototype. Export a backup or move it to another device below.</p>
+    <p class="muted" style="font-size:13.5px;margin:0 2px 10px">Your progress is saved automatically and persists when you close and reopen the app. Export a backup or move it to another device below.</p>
     <button class="btn btn-ghost" data-action="export"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Export progress (JSON)</button>
     <div style="height:8px"></div>
     <button class="btn btn-ghost" data-action="import-toggle"><svg class="i" viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg> Import progress</button>
@@ -1747,7 +1792,7 @@ function viewSettings(){
     <div class="sectlabel">Danger zone</div>
     <button class="btn btn-ghost" data-action="reset" style="border-color:#6e2b30;color:var(--red)">Reset all progress</button>
 
-    <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v0.1<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
+    <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v1.0<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
   </div>`;
   return html;
 }
@@ -1894,6 +1939,10 @@ document.body.addEventListener("click", async e=>{
   if(a==="study-type"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type}, t.dataset.type); return; }
   if(a==="study-reference"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}, t.dataset.reference); return; }
   if(a==="study-topic"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference, topic:t.dataset.topic}, t.dataset.topic); return; }
+  if(a==="open-theme"){ App.theme={sys:t.dataset.system, ty:t.dataset.type, reference:t.dataset.reference, topic:t.dataset.topic, revealed:{}, picks:{}, optsCollapsed:false}; App.screen="theme"; render(); return; }
+  if(a==="theme-toggle-opts"){ App.theme.optsCollapsed=!App.theme.optsCollapsed; render(); return; }
+  if(a==="theme-pick"){ const i=t.dataset.i; if(App.theme.revealed[i]) return; App.theme.picks[i]=t.dataset.label; render(); return; }
+  if(a==="theme-reveal"){ const i=t.dataset.i; if(App.theme.revealed[i]) return; const ids=poolFor({system:App.theme.sys,type:App.theme.ty,reference:App.theme.reference,topic:App.theme.topic}); const q=QMAP[ids[+i]]; const pick=App.theme.picks[i]; App.theme.revealed[i]=true; if(q&&pick){ const ok=correctLabel(q)===pick; recordAttempt(q,pick,ok?"good":"again"); cue(ok?"correct":"wrong"); } render(); return; }
   if(a==="resume"){ const r=DB.progress.resume; if(r&&r.ctx) startPracticeCtx(r.ctx, r.label, r.i); return; }
 
   // quiz
