@@ -1095,6 +1095,16 @@ function renderReveal(q, chosen, opts={}){
     if(q.type==="emq"){
       const cc=q.choices.find(c=>c.correct);
       if(cc && cc.e) html+=`<div class="block"><div class="ttl">Why this option</div><div class="body"><div class="exp" style="margin:0">${cc.e}</div></div></div>`;
+      const _wn=q.choices.filter(c=>!c.correct && c.e).slice(0,3);
+      if(_wn.length){
+        html+=`<div class="block"><div class="ttl">Why not the closest answers</div><div class="body" style="padding:0">`;
+        _wn.forEach((c,idx)=>{ html+=`<div style="padding:12px 14px;${idx?'border-top:1px solid var(--line-soft)':''}">
+          <div class="row" style="gap:9px;align-items:flex-start">
+            <span class="lab" style="background:var(--surface-3);color:var(--muted);border:none;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-weight:700;font-size:12px;flex:none">${c.l}</span>
+            <div class="grow"><b>${esc(c.t)}</b><div class="exp" style="margin-top:3px">${c.e}</div></div>
+          </div></div>`; });
+        html+=`</div></div>`;
+      }
     } else {
       html+=`<div class="block"><div class="ttl">Choice analysis</div><div class="body" style="padding:0">`;
       q.choices.forEach((c,idx)=>{

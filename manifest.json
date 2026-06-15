@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 12,
+  "manifestVersion": 13,
   "updated": "2026-06-15",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
@@ -7,7 +7,7 @@
       "packId": "surgical-special-senses",
       "title": "Surgical Special Senses",
       "color": "#5ec48f",
-      "version": 2,
+      "version": 3,
       "url": "surgical-special-senses.json",
       "questionCount": 622
     },
@@ -15,7 +15,7 @@
       "packId": "dermatology",
       "title": "Dermatology",
       "color": "#d99a6c",
-      "version": 2,
+      "version": 3,
       "url": "dermatology.json",
       "questionCount": 202
     },
@@ -23,7 +23,7 @@
       "packId": "haemato-onco",
       "title": "Haematology & Oncology",
       "color": "#c0738a",
-      "version": 3,
+      "version": 4,
       "url": "haemato-onco.json",
       "questionCount": 288
     },
@@ -31,7 +31,7 @@
       "packId": "neurology",
       "title": "Neurology",
       "color": "#b58fce",
-      "version": 2,
+      "version": 3,
       "url": "neurology.json",
       "questionCount": 185
     },
@@ -47,7 +47,7 @@
       "packId": "psychiatry",
       "title": "Psychiatry",
       "color": "#7e9fd1",
-      "version": 3,
+      "version": 4,
       "url": "psychiatry.json",
       "questionCount": 402
     },
@@ -55,7 +55,7 @@
       "packId": "obgyn",
       "title": "Obstetrics & Gynaecology",
       "color": "#3fb6a8",
-      "version": 2,
+      "version": 3,
       "url": "obgyn.json",
       "questionCount": 553
     },
