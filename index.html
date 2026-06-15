@@ -677,7 +677,7 @@ function adaptPack(c){
 /* ============================================================
    APP STATE
    ============================================================ */
-const App = { screen:"home", nav:{system:null,type:null,reference:null}, practice:null, exam:null, examResult:null, builder:null, examReview:false };
+const App = { screen:"home", nav:{system:null,type:null,reference:null}, collapsedStages:{}, practice:null, exam:null, examResult:null, builder:null, examReview:false };
 let ghToken=null; // fine-grained GitHub token, stored only on this device (for posting your own leaderboard score)
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -941,12 +941,15 @@ function viewHome(){
   sys.forEach(s=>{ const q=allQs().find(x=>qSys(x)===s.name); const st=q?qStage(q):"5th Stage"; (stageMap[st]=stageMap[st]||[]).push(s); });
   Object.keys(stageMap).sort().forEach(stage=>{
     const list=stageMap[stage], tot=list.reduce((n,s)=>n+s.total,0);
-    html+=`<div class="row" style="gap:11px;margin:26px 2px 13px">
+    const collapsed=!!App.collapsedStages[stage];
+    html+=`<button class="stagebar" data-action="toggle-stage" data-stage="${esc(stage)}" style="width:100%;background:none;border:none;color:inherit;text-align:left;padding:0;cursor:pointer">
+      <div class="row" style="gap:11px;margin:26px 2px 13px">
       <span style="font-size:23px;line-height:1">\u{1F393}</span>
       <div style="flex:1"><div class="serif" style="font-size:20px;font-weight:600">${esc(stage)}</div>
-      <div class="faint" style="font-size:11.5px;margin-top:1px">${list.length} subjects · ${tot} questions · let's get you through finals</div></div>
-    </div>`;
-    list.forEach(s=>{
+      <div class="faint" style="font-size:11.5px;margin-top:1px">${list.length} subjects · ${tot} questions · ${collapsed?'tap to expand':"let's get you through finals"}</div></div>
+      <svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;flex:none;transition:transform .2s;transform:rotate(${collapsed?'-90deg':'0deg'})"><path d="M6 9l6 6 6-6"/></svg>
+    </div></button>`;
+    if(!collapsed) list.forEach(s=>{
       const pct=s.total?Math.round(s.seen/s.total*100):0, em=EMOJI[s.name]||"\u{1F4D8}";
       html+=`<button class="card pad subj" data-action="open-system" data-system="${esc(s.name)}" style="margin-bottom:10px;border-left:3px solid ${s.color}">
         <div class="row between">
@@ -1102,8 +1105,10 @@ function viewQuiz(){
     if(!s.revealed) html+=`<div class="faint" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 8px">Your answer</div>
       <textarea id="saInput" class="sainput" placeholder="Write your answer, then reveal the model answer…">${esc(s.saText||"")}</textarea>`;
   } else {
-    if(q.type==="emq") html+=`<div class="optshdr">Pick the single best option</div>`;
-    html+=`<div class="choices">`;
+    const _emqColl = (q.type==="emq") && s.optsCollapsed;
+    if(q.type==="emq") html+=`<button class="optshdr" data-action="toggle-emq-opts" style="width:100%;background:none;border:none;color:inherit;font:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between"><span>Pick the single best option · ${q.choices.length} options</span><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;transition:transform .2s;transform:rotate(${_emqColl?'-90deg':'0deg'})"><path d="M6 9l6 6 6-6"/></svg></button>`;
+    if(_emqColl){ html+=`<div class="faint" style="font-size:12.5px;padding:8px 2px 0">${q.choices.length} options hidden — tap the header to show them.</div>`; }
+    else { html+=`<div class="choices">`;
     q.choices.forEach(c=>{
       let cls="choice"+(q.type==="emq"?" opt":""), vd="";
       if(!s.revealed){ if(s.selected===c.l) cls+=" sel"; }
@@ -1115,7 +1120,7 @@ function viewQuiz(){
         <span class="lab">${c.l}</span><span>${esc(c.t)}</span>${vd}
       </button>`;
     });
-    html+=`</div>`;
+    html+=`</div>`; }
   }
 
   // reveal block
@@ -1219,7 +1224,7 @@ function advancePractice(){
     App.practice=null; App.screen="celebrate"; render(); confetti(); cue("done");
     return;
   }
-  s.i++; s.revealed=false; s.selected=null; s.saText="";
+  s.i++; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false;
   if(s.ctx && !s.ctx.smart){ DB.progress.resume={ctx:s.ctx, i:s.i, label:s.label}; save.progress(); }
   render();
 }
@@ -1941,6 +1946,7 @@ document.body.addEventListener("click", async e=>{
   // home / browse
   if(a==="start-smart"){ startPracticeCtx({smart:true}, "Smart Review"); return; }
   if(a==="open-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="system"; render(); return; }
+  if(a==="toggle-stage"){ const st=t.dataset.stage; App.collapsedStages[st]=!App.collapsedStages[st]; render(); return; }
   if(a==="open-mistakes"){ App.screen="mistakes"; render(); return; }
   if(a==="start-mistakes"){ const pool=mistakePool(); if(!pool.length){ toast("No mistakes yet"); return; } startPracticeCtx({ids:pool}, "Fix my mistakes"); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
@@ -1955,6 +1961,7 @@ document.body.addEventListener("click", async e=>{
 
   // quiz
   if(a==="select-choice"){ App.practice.selected=t.dataset.label; render(); return; }
+  if(a==="toggle-emq-opts"){ App.practice.optsCollapsed=!App.practice.optsCollapsed; render(); return; }
   if(a==="reveal"){ const s=App.practice,q=QMAP[s.pool[s.i]]; if(q.type==="sa"){ const ta=$("saInput"); s.saText=ta?ta.value:""; } s.revealed=true; render(); return; }
   if(a==="grade"){ const s=App.practice,q=QMAP[s.pool[s.i]];
     const g=t.dataset.grade;
