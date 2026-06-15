@@ -2,9 +2,9 @@
  "packId": "batch37-mcq",
  "title": "Batch 37 Final",
  "color": "#cf9b6b",
- "version": 3,
+ "version": 4,
  "updated": "2026-06-15",
- "questionCount": 74,
+ "questionCount": 91,
  "questions": [
   {
    "id": "b37_q1",
@@ -183,11 +183,11 @@
    "references": null
   },
   {
-   "id": "b37_q5",
+   "id": "b37_q5_1",
    "type": "mcq",
    "reference": "Batch 37 — Page 2",
    "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
-   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. Q1 — Diagnosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q1: Diagnosis",
    "choices": [
     {
      "label": "A",
@@ -215,7 +215,7 @@
     },
     {
      "label": "E",
-     "text": "Anxiety disorders Q2 — Treatment of Choice",
+     "text": "Anxiety disorders",
      "correct": false,
      "explanation": "No psychosis, no elated mood in anxiety disorders."
     }
@@ -227,6 +227,147 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q2: Treatment of Choice",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Antipsychotics",
+     "correct": false,
+     "explanation": "Adjunct for acute psychosis. NOT definitive treatment for bipolar."
+    },
+    {
+     "label": "B",
+     "text": "Lithium",
+     "correct": true,
+     "explanation": "LITHIUM = GOLD STANDARD for bipolar disorder. Modulates inositol phosphate. Effective for mania AND maintenance. ONLY drug proven to reduce suicidality. Monitor: levels 0.6-1.2 mEq/L + TSH + U&E; every 3-6 months."
+    },
+    {
+     "label": "C",
+     "text": "Antidepressants",
+     "correct": false,
+     "explanation": "DANGEROUS as monotherapy → triggers manic switch/rapid cycling. NEVER give antidepressants alone in bipolar."
+    },
+    {
+     "label": "D",
+     "text": "ECT",
+     "correct": false,
+     "explanation": "Treatment-resistant cases only. Not first-line."
+    },
+    {
+     "label": "E",
+     "text": "Antianxiety",
+     "correct": false,
+     "explanation": "Symptomatic agitation only. Not mood stabilizers."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q3: Risk of Suicide",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Severe (Two Actual Attempts + Active Psychosis)",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_4",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q4: Maintenance",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Lithium (Long-term Maintenance)",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_5",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q5: Management Place",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Inpatient (Mandatory)",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
    "references": null
@@ -1094,23 +1235,85 @@
    "references": null
   },
   {
-   "id": "b37_q30",
+   "id": "b37_q30_1",
    "type": "mcq",
    "reference": "Batch 37 — Page 20",
    "topic": "Paediatrics | Febrile Seizure",
-   "stem": "PAEDIATRICS CASE: Infant/child with HIGH GRADE FEVER and GENERALISED TONIC-CLONIC SEIZURE. NO signs of neurological deficit. [Note: file states \"age >5yrs\" which is atypical for febrile seizures — this may be a typo; standard febrile seizure age = 6mo-5yrs.] Q1 — Most Likely Diagnosis",
+   "stem": "PAEDIATRICS CASE: Infant/child with HIGH GRADE FEVER and GENERALISED TONIC-CLONIC SEIZURE. NO signs of neurological deficit. [Note: file states \"age >5yrs\" which is atypical for febrile seizures — this may be a typo; standard febrile seizure age = 6mo-5yrs.] — Q1: Most Likely Diagnosis",
    "choices": [
     {
      "label": "A",
-     "text": "Febrile Seizure (in exam context — high fever + GTC + no neurological",
+     "text": "Febrile seizure",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "FEBRILE SEIZURE: occurs 6mo-5yrs (classic range). SIMPLE: <15 min, generalised, single episode in 24h, no postictal deficit. COMPLEX: >15 min, focal, recurs within 24h — higher epilepsy risk. High fever + GTC + no neurological deficit = simple febrile seizure. Most benign, resolves spontaneously."
+    },
+    {
+     "label": "B",
+     "text": "Generalised epilepsy",
+     "correct": false,
+     "explanation": "Epilepsy: recurrent seizures WITHOUT fever trigger. No fever noted as causative. First febrile seizure → do NOT diagnose epilepsy."
+    },
+    {
+     "label": "C",
+     "text": "Focal seizure",
+     "correct": false,
+     "explanation": "This is a GENERALISED tonic-clonic, not focal. Focal seizures: one body part, preserved or impaired awareness."
+    },
+    {
+     "label": "D",
+     "text": "Meningitis",
+     "correct": false,
+     "explanation": "CRITICAL EXCLUSION: always exclude meningitis (fever + seizure in child). Meningitis: meningism, photophobia, petechiae, bulging fontanelle. LP if meningitis suspected. This case: no neurological deficit described."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q30_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 20",
+   "topic": "Paediatrics | Febrile Seizure",
+   "stem": "PAEDIATRICS CASE: Infant/child with HIGH GRADE FEVER and GENERALISED TONIC-CLONIC SEIZURE. NO signs of neurological deficit. [Note: file states \"age >5yrs\" which is atypical for febrile seizures — this may be a typo; standard febrile seizure age = 6mo-5yrs.] — Q2: Initial Management",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Paracetamol/Ibuprofen (antipyretics)",
+     "correct": true,
+     "explanation": "First-line: control temperature. PARACETAMOL 15mg/kg OR IBUPROFEN 10mg/kg orally. Does NOT prevent recurrence but treats discomfort."
+    },
+    {
+     "label": "B",
+     "text": "Reassure parents",
+     "correct": false,
+     "explanation": "Parent education is ESSENTIAL. Most febrile seizures are BENIGN and self-limiting. Explain: not brain damage, excellent prognosis, low risk of epilepsy (<2% in simple febrile seizure)."
+    },
+    {
+     "label": "C",
+     "text": "Ensure hydration and monitor",
+     "correct": false,
+     "explanation": "Hydration treats the febrile illness. Monitor for seizure recurrence, duration, postictal state."
+    },
+    {
+     "label": "D",
+     "text": "IV lorazepam",
+     "correct": false,
+     "explanation": "IV lorazepam = for ACTIVE PROLONGED SEIZURE (>5 min) or STATUS EPILEPTICUS. If seizure has ALREADY STOPPED by arrival → NOT indicated. itial Benzodiazepine first-line if seizure ongoing: rectal diazepam/buccal midazolam. m e d"
     }
    ],
    "keyPoint": "",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "note": "Source marks more than one option correct (A, B, C). Best single answer selected; review all marked options.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -1118,16 +1321,71 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
+   "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
    "references": null
   },
   {
-   "id": "b37_q31",
+   "id": "b37_q30_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 20",
+   "topic": "Paediatrics | Febrile Seizure",
+   "stem": "PAEDIATRICS CASE: Infant/child with HIGH GRADE FEVER and GENERALISED TONIC-CLONIC SEIZURE. NO signs of neurological deficit. [Note: file states \"age >5yrs\" which is atypical for febrile seizures — this may be a typo; standard febrile seizure age = 6mo-5yrs.] — Q3: Risk Factor for RECURRENT Febrile Seizure",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Fever persists >24h",
+     "correct": false,
+     "explanation": "Duration of fever is not an established risk factor specifically for RECURRENT seizures."
+    },
+    {
+     "label": "B",
+     "text": "Complex febrile seizure",
+     "correct": true,
+     "explanation": "COMPLEX FEBRILE SEIZURE features = HIGHER RECURRENCE + epilepsy risk: (1) Duration >15 minutes (2) Focal onset (3) Multiple episodes in 24h Risk of epilepsy: simple FS = <2%; complex FS = up to 10%."
+    },
+    {
+     "label": "C",
+     "text": ">5 years",
+     "correct": false,
+     "explanation": "Age >5 years = actually a feature that suggests alternative diagnosis to febrile seizure. Younger age (<18 months) at first FS = higher recurrence risk."
+    },
+    {
+     "label": "D",
+     "text": "Male sex",
+     "correct": false,
+     "explanation": "Male sex is NOT a significant risk factor for febrile seizure recurrence."
+    },
+    {
+     "label": "E",
+     "text": "Family history of epilepsy",
+     "correct": false,
+     "explanation": "Positive family history of epilepsy = risk factor for progression to epilepsy after febrile seizures."
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Source marks more than one option correct (B, E). Best single answer selected; review all marked options.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q31_1",
    "type": "mcq",
    "reference": "Batch 37 — Page 21",
    "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
-   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. Questions: (1) Most common cause? (2) Cause of near vision improvement? (3) Which treatment is useful? (4) Investigation required for lens choice? Q1 — Most Common Cause of his Disease",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q1: Most Common Cause of his Disease",
    "choices": [
     {
      "label": "A",
@@ -1155,9 +1413,9 @@
     },
     {
      "label": "E",
-     "text": "Metabolic Q2 — Cause of Near Vision Improve",
+     "text": "Metabolic",
      "correct": false,
-     "explanation": "Metabolic cataracts: DM most common cause. \"Snowflake cataract\" in DM. Not the most common overall. Shift)"
+     "explanation": "Metabolic cataracts: DM most common cause. \"Snowflake cataract\" in DM. Not the most common overall."
     }
    ],
    "keyPoint": "",
@@ -1167,74 +1425,451 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
+   "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
    "references": null
   },
   {
-   "id": "b37_q32",
+   "id": "b37_q31_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 21",
+   "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q2: Cause of Near Vision Improvement (Myopic Shift)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Myopic shift due to nuclear cataract",
+     "correct": true,
+     "explanation": "NUCLEAR CATARACT → increased refractive index of hardened/sclerosed nucleus → lens becomes MORE CONVERGING (stronger positive power) → MYOPIC SHIFT → previously presbyopic patient can now read WITHOUT reading glasses. Called \"SECOND SIGHT OF THE AGED\" — temporary improvement before vision worsens. Eventually: opacity increases → vision deteriorates regardless of myopic shift."
+    },
+    {
+     "label": "B",
+     "text": "Hyperopic shift during anterior/posterior subcapsular",
+     "correct": false,
+     "explanation": "Posterior subcapsular cataract: no myopic shift. Causes glare, near vision difficulty. Hyperopic shift would make near vision WORSE not better."
+    },
+    {
+     "label": "C",
+     "text": "Presbyopia",
+     "correct": false,
+     "explanation": "Presbyopia = AGE-RELATED LOSS OF ACCOMMODATION (rigid lens, not cloudy). Presbyopia makes near vision WORSE. This patient has IMPROVED near vision = opposite."
+    },
+    {
+     "label": "D",
+     "text": "Astigmatism shift due to nuclear cataract",
+     "correct": false,
+     "explanation": "Nuclear cataract causes myopic shift, not primarily astigmatic shift. Corneal astigmatism is separate."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q31_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 21",
+   "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q3: Which Treatment is Useful?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "No medical treatment",
+     "correct": true,
+     "explanation": "ATARACT HAS NO MEDICAL TREATMENT. No eye drops, no vitamins, no edications can reverse or halt cataract formation. ONLY treatment: surgical removal = HACOEMULSIFICATION + IOL implantation. The options B (carbonic anhydrase), C alpha agonist), D (beta blocker) are all GLAUCOMA medications — NOT cataract reatments."
+    },
+    {
+     "label": "B",
+     "text": "Carbonic anhydrase",
+     "correct": false,
+     "explanation": "arbonic anhydrase inhibitors (dorzolamide, brinzolamide) = reduce IOP in glaucoma. o role in cataract treatment."
+    },
+    {
+     "label": "C",
+     "text": "Alpha agonist",
+     "correct": false,
+     "explanation": "lpha agonists (brimonidine) = reduce aqueous production in glaucoma. No cataract reatment role."
+    },
+    {
+     "label": "D",
+     "text": "Beta blocker",
+     "correct": false,
+     "explanation": "eta blockers (timolol) = reduce aqueous production in glaucoma. No cataract reatment role."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q31_4",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 21",
+   "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q4: Investigation Required for Lens Choice (IOL Calculation)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Visual acuity",
+     "correct": false,
+     "explanation": "VA assessment is important to assess degree of visual impairment and indicate surgery, but does NOT help calculate IOL power."
+    },
+    {
+     "label": "B",
+     "text": "Biometry",
+     "correct": true,
+     "explanation": "BIOMETRY (A-scan ultrasound or IOL MASTER optical biometry): Measures: axial length + anterior chamber depth + corneal curvature (keratometry) Uses these to calculate the CORRECT IOL POWER needed to achieve target refraction IOL Master = gold standard (non-contact optical biometry, more accurate). Incorrect biometry = wrong IOL power = residual refractive error after surgery."
+    },
+    {
+     "label": "C",
+     "text": "Perimetry",
+     "correct": false,
+     "explanation": "Perimetry = visual field test. Used for glaucoma/neurological visual field assessment. Not for IOL calculation."
+    },
+    {
+     "label": "D",
+     "text": "Tonometry",
+     "correct": false,
+     "explanation": "Tonometry = IOP measurement. Used for glaucoma screening. Not for IOL power calculation."
+    },
+    {
+     "label": "E",
+     "text": "Topography",
+     "correct": false,
+     "explanation": "Corneal topography = maps corneal curvature. Useful for planning toric IOL (for astigmatism) but not the primary investigation for standard IOL calculation."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q32_1",
    "type": "mcq",
    "reference": "Batch 37 — Page 22",
    "topic": "Oncology Case | Pancreatic Cancer Workup",
-   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. Questions: (1) First investigation to send? (2) Tumour marker? (3) Gene mutation? (4) Class of 5-FU? Q1 — First Investigation to Send",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q1: First Investigation to Send",
    "choices": [
     {
      "label": "A",
-     "text": "1. Abdominal Ultrasound (First-Line Imaging for Abdominal Pain + Weight",
+     "text": "Abdominal ultrasound",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "ABDOMINAL USS = appropriate FIRST-LINE imaging: (1) Non-invasive, no radiation, cheap, widely available (2) Can identify: pancreatic mass, biliary dilation (obstructive jaundice), liver metastases, ascites (3) If suspicious → CT pancreas protocol for staging (4) Liver metastasis: hypoechoic lesions After USS: CECT abdomen/pelvis (staging) + CA 19-9 + biopsy confirmation."
+    },
+    {
+     "label": "B",
+     "text": "Start chemotherapy",
+     "correct": false,
+     "explanation": "Never start chemotherapy without confirmed histological diagnosis. Chemotherapy without tissue diagnosis is inappropriate and potentially harmful."
+    },
+    {
+     "label": "C",
+     "text": "Surgical consultation",
+     "correct": false,
+     "explanation": "Surgical consultation comes AFTER imaging confirms resectability. Only 15-20% of pancreatic cancers are resectable at diagnosis. First: image, then assess resectability."
     }
    ],
    "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
+   "flag": null,
    "system": "Batch 37 Final",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
+   "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
    "references": null
   },
   {
-   "id": "b37_q33",
+   "id": "b37_q32_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 22",
+   "topic": "Oncology Case | Pancreatic Cancer Workup",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q2: Tumour Marker for Pancreatic Cancer Follow-Up",
+   "choices": [
+    {
+     "label": "A",
+     "text": "AFP",
+     "correct": false,
+     "explanation": "AFP = hepatocellular carcinoma + testicular germ cell tumours. Not pancreatic cancer marker."
+    },
+    {
+     "label": "B",
+     "text": "CA 19-9",
+     "correct": true,
+     "explanation": "CA 19-9 (Carbohydrate Antigen 19-9) = PRIMARY TUMOUR MARKER for pancreatic adenocarcinoma. Used for: MONITORING TREATMENT RESPONSE + detecting recurrence NOT for SCREENING (poor sensitivity/specificity for early disease) IMPORTANT: CA 19-9 unreliable in Lewis antigen-negative patients (5-10% of population) Elevated also in: cholangiocarcinoma, gastric, ovarian cancer, and benign biliary disease."
+    },
+    {
+     "label": "C",
+     "text": "CA 15-3",
+     "correct": false,
+     "explanation": "CA 15-3 = breast cancer marker (monitoring treatment). Not pancreatic cancer."
+    },
+    {
+     "label": "D",
+     "text": "ADH",
+     "correct": false,
+     "explanation": "ADH = antidiuretic hormone. Not a tumour marker."
+    },
+    {
+     "label": "E",
+     "text": "CA 125",
+     "correct": false,
+     "explanation": "CA 125 = ovarian cancer. Not pancreatic."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q32_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 22",
+   "topic": "Oncology Case | Pancreatic Cancer Workup",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q3: Which Gene Mutation to Check? (Family History of Breast Cancer + Pancreatic Ca)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "VHL",
+     "correct": false,
+     "explanation": "VHL (Von Hippel-Lindau): associated with clear cell RENAL cell carcinoma, haemangioblastomas, phaeochromocytoma, pancreatic cysts. NOT primarily breast + pancreatic cancer association."
+    },
+    {
+     "label": "B",
+     "text": "BRCA2",
+     "correct": true,
+     "explanation": "BRCA2 MUTATION: (1) BREAST cancer: 45-85% lifetime risk (2) OVARIAN cancer: 10-20% lifetime risk (3) PANCREATIC cancer: 3-7% lifetime risk (5x normal population) (4) Also: prostate cancer, male breast cancer Family history of breast cancer + pancreatic cancer = strong indicator for BRCA2 testing. BRCA1 is less strongly associated with pancreatic cancer compared to BRCA2."
+    },
+    {
+     "label": "C",
+     "text": "p25",
+     "correct": false,
+     "explanation": "p53 (not p25) is a tumour suppressor. Mutation = multiple cancers. Not the specific genetic link between breast and pancreatic cancer."
+    },
+    {
+     "label": "D",
+     "text": "KRAS",
+     "correct": false,
+     "explanation": "KRAS mutations (G12D most common) = present in >90% of pancreatic cancers but are SOMATIC (acquired), not germline. Not the inherited gene tested in family cancer risk assessment."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q32_4",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 22",
+   "topic": "Oncology Case | Pancreatic Cancer Workup",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q4: Class of 5-Fluorouracil (5-FU)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Alkylating agent",
+     "correct": false,
+     "explanation": "Alkylating agents: cyclophosphamide, cisplatin, chlorambucil. Mechanism: cross-link DNA strands. 5-FU does NOT alkylate."
+    },
+    {
+     "label": "B",
+     "text": "Antibiotic (antitumour)",
+     "correct": false,
+     "explanation": "Antitumour antibiotics: doxorubicin (anthracycline), bleomycin, mitomycin. 5-FU is not an antibiotic."
+    },
+    {
+     "label": "C",
+     "text": "Microtubule inhibitor",
+     "correct": false,
+     "explanation": "Microtubule inhibitors: vincristine (vinca alkaloids), paclitaxel (taxanes). Mechanism: prevent spindle formation. Not 5-FU."
+    },
+    {
+     "label": "D",
+     "text": "Antimetabolite",
+     "correct": true,
+     "explanation": "5-FLUOROURACIL (5-FU) = FLUOROPYRIMIDINE ANTIMETABOLITE: Mechanism: (1) Inhibits THYMIDYLATE SYNTHASE → blocks dTMP synthesis → no DNA synthesis (S-phase specific) (2) Incorporated into RNA → disrupts RNA processing Used in: colorectal cancer (FOLFOX), pancreatic cancer (FOLFIRINOX), head/neck, breast, gastric cancers. Side effects: myelosuppression, mucositis, hand-foot syndrome (with capecitabine). DPD deficiency → 5-FU toxicity (screen before treatment)."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q33_1",
    "type": "mcq",
    "reference": "Batch 37 — Page 23",
    "topic": "ENT Case 1 | Anterior Epistaxis Management",
-   "stem": "ENT CASE 1: YOUNG MALE with ANTERIOR EPISTAXIS. BLEEDING CONTROLLED BY NASAL PINCH. Q1: Next step? Q2: Which artery is usually ligated if ligation required? Q3: After ligation, bleeding recurs — next step? Q1 — Next Step After Bleeding Controlled by Nasal Pinch",
+   "stem": "ENT CASE 1: YOUNG MALE with ANTERIOR EPISTAXIS. BLEEDING CONTROLLED BY NASAL PINCH. — Q1: Next Step After Bleeding Controlled by Nasal Pinch",
    "choices": [
     {
      "label": "A",
-     "text": "Localise the Bleeding Point (Anterior Rhinoscopy → Identify Little's Area)",
+     "text": "Localise bleeding point",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "Once bleeding is CONTROLLED by nasal pinch (first aid measure), next step: ANTERIOR RHINOSCOPY → identify bleeding point (usually LITTLE'S AREA = Kiesselbach's plexus on anterior nasal septum). Little's area = anastomosis of: anterior ethmoidal, sphenopalatine, superior labial, greater palatine arteries. After identifying: SILVER NITRATE CAUTERY if vessel visible. If not controllable → anterior nasal packing."
+    },
+    {
+     "label": "B",
+     "text": "Bilateral anterior packing",
+     "correct": false,
+     "explanation": "Bilateral anterior packing = for bilateral or uncontrolled anterior epistaxis. Not the FIRST step after successful nasal pinch. Try to identify and cauterise first."
+    },
+    {
+     "label": "C",
+     "text": "Posterior packing",
+     "correct": false,
+     "explanation": "Posterior packing = for POSTERIOR EPISTAXIS (blood seen in posterior pharynx, elderly, hypertensive, no visible anterior bleeding point). This is ANTERIOR epistaxis controlled by pinch."
+    },
+    {
+     "label": "D",
+     "text": "Cautery",
+     "correct": false,
+     "explanation": "Cautery is appropriate but requires FIRST identifying the bleeding point. Cannot cauterise without knowing WHERE to cauterise."
+    },
+    {
+     "label": "E",
+     "text": "Ligation",
+     "correct": false,
+     "explanation": "Ligation = last resort for recurrent/severe uncontrolled epistaxis. Not appropriate as first step after simple nasal pinch control."
     }
    ],
    "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
+   "flag": null,
    "system": "Batch 37 Final",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
+   "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
    "references": null
   },
   {
-   "id": "b37_q34",
+   "id": "b37_q33_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 23",
+   "topic": "ENT Case 1 | Anterior Epistaxis Management",
+   "stem": "ENT CASE 1: YOUNG MALE with ANTERIOR EPISTAXIS. BLEEDING CONTROLLED BY NASAL PINCH. — Q2: Which Artery is Usually Ligated?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Sphenopalatine artery",
+     "correct": true,
+     "explanation": "SPHENOPALATINE ARTERY (SPA) = terminal branch of maxillary artery. Enters nasal cavity through sphenopalatine foramen. Supplies POSTERIOR nasal cavity + lateral nasal wall. SPA LIGATION (endoscopic) = gold standard for recurrent/severe epistaxis that does not respond to packing. Most commonly ligated artery. Success rate: 80-90%."
+    },
+    {
+     "label": "B",
+     "text": "Superior labial artery",
+     "correct": false,
+     "explanation": "Superior labial artery contributes to anterior septum (Kiesselbach's plexus). Rarely ligated for epistaxis (anterior epistaxis controlled more easily by cautery/packing)."
+    },
+    {
+     "label": "C",
+     "text": "Anterior ethmoidal artery",
+     "correct": false,
+     "explanation": "Anterior ethmoidal artery: supplies roof of nasal cavity + upper septum. External ligation via orbital approach occasionally used for high anterior epistaxis not responsive to SPA ligation. Less commonly ligated than SPA."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q33_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 23",
+   "topic": "ENT Case 1 | Anterior Epistaxis Management",
+   "stem": "ENT CASE 1: YOUNG MALE with ANTERIOR EPISTAXIS. BLEEDING CONTROLLED BY NASAL PINCH. — Q3: After Ligation, Bleeding Recurs — Next Step?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Posterior packing",
+     "correct": false,
+     "explanation": "osterior packing was presumably already tried before ligation. After failed ligation, epeat packing is unlikely to control the bleeding. Embolisation is the next step."
+    },
+    {
+     "label": "B",
+     "text": "Embolisation",
+     "correct": true,
+     "explanation": "NTERVENTIONAL RADIOLOGY EMBOLISATION: (1) Performed after FAILED"
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q34_1",
    "type": "mcq",
    "reference": "Batch 37 — Page 24",
    "topic": "ENT Case 2 | Laryngeal Carcinoma",
-   "stem": "ENT CASE 2: ELDERLY MALE with PERSISTENT COUGH + HOARSENESS + STRIDOR. Q1: Investigation for diagnosis? Q2: If Glottic CA T1N0M0 — best option to preserve voice? Q3: Most recognised risk factor for laryngeal CA? Q1 — Investigation for Diagnosis",
+   "stem": "ENT CASE 2: ELDERLY MALE with PERSISTENT COUGH + HOARSENESS + STRIDOR. — Q1: Investigation for Diagnosis",
    "choices": [
     {
      "label": "A",
@@ -1250,9 +1885,9 @@
     },
     {
      "label": "C",
-     "text": "Resolves with rest Q2 — Voice-Preserving Treatment f",
+     "text": "Resolves with rest",
      "correct": false,
-     "explanation": "NEVER assume persistent hoarseness (>3 weeks in adult) will self-resolve. REFER URGENTLY for laryngoscopy. Hoarseness >3 weeks in adult = red flag = 2-week wait urgent referral in UK (NICE 2015). N0M0"
+     "explanation": "NEVER assume persistent hoarseness (>3 weeks in adult) will self-resolve. REFER URGENTLY for laryngoscopy. Hoarseness >3 weeks in adult = red flag = 2-week wait urgent referral in UK (NICE 2015)."
     }
    ],
    "keyPoint": "",
@@ -1262,6 +1897,107 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q34_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 24",
+   "topic": "ENT Case 2 | Laryngeal Carcinoma",
+   "stem": "ENT CASE 2: ELDERLY MALE with PERSISTENT COUGH + HOARSENESS + STRIDOR. — Q2: Voice-Preserving Treatment for Glottic T1N0M0",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Chemoradiotherapy",
+     "correct": false,
+     "explanation": "Chemoradiotherapy = for advanced laryngeal CA (T3/T4 or N+) where organ preservation is attempted instead of total laryngectomy. Not needed for T1N0M0 (early disease — RT alone is curative)."
+    },
+    {
+     "label": "B",
+     "text": "Partial laryngectomy",
+     "correct": false,
+     "explanation": "Partial laryngectomy (supraglottic, hemilaryngectomy) = surgical voice-preserving option but has morbidity (swallowing difficulties). RT preferred for T1N0M0 as it preserves voice quality better."
+    },
+    {
+     "label": "C",
+     "text": "Total laryngectomy",
+     "correct": false,
+     "explanation": "Total laryngectomy = for T4 disease or RT failure. Destroys voice permanently (requires tracheo-oesophageal puncture for voice prosthesis or electronic larynx). NOT appropriate for early T1N0M0."
+    },
+    {
+     "label": "D",
+     "text": "External beam radiation",
+     "correct": true,
+     "explanation": "RADICAL RADIOTHERAPY for GLOTTIC T1N0M0: (1) CURE RATE: 85-95% for T1 glottic cancer (2) VOICE PRESERVATION: excellent (voice quality often better than surgery) (3) Daily fractions over 3-6 weeks (4) Side effects: mucositis, xerostomia, skin reaction GOLD STANDARD for T1N0M0 glottic laryngeal cancer in most guidelines."
+    },
+    {
+     "label": "E",
+     "text": "Neck dissection + chemotherapy",
+     "correct": false,
+     "explanation": "N+ disease (lymph node metastasis) would require neck dissection. This patient is N0. Chemotherapy added for advanced disease. Neither indicated for T1N0M0."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q34_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 24",
+   "topic": "ENT Case 2 | Laryngeal Carcinoma",
+   "stem": "ENT CASE 2: ELDERLY MALE with PERSISTENT COUGH + HOARSENESS + STRIDOR. — Q3: Most Recognised Risk Factor for Laryngeal Cancer",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Alcohol + tobacco",
+     "correct": true,
+     "explanation": "YNERGISTIC EFFECT: tobacco + alcohol together = much greater risk than either lone. TOBACCO = strongest single risk factor (95% of laryngeal Ca patients are/were mokers). ALCOHOL alone: independent risk factor (especially for supraglottic > lottic). COMBINED = multiplicative risk increase. Also: HPV (especially supraglottic), ERD (chronic), radiation exposure."
+    },
+    {
+     "label": "B",
+     "text": "Being a lawyer",
+     "correct": false,
+     "explanation": "awyer = voice overuse → benign vocal cord pathology (nodules, polyps). NOT a ecognised risk factor for laryngeal CARCINOMA."
+    },
+    {
+     "label": "C",
+     "text": "Chronic GERD",
+     "correct": false,
+     "explanation": "ERD is a recognised risk factor for LARYNGOPHARYNGEAL REFLUX → posterior aryngitis → but is a MUCH WEAKER risk factor than tobacco + alcohol."
+    },
+    {
+     "label": "D",
+     "text": "Allergen exposure",
+     "correct": false,
+     "explanation": "llergen exposure → laryngitis, allergic rhinitis. Not a carcinogenic risk factor."
+    },
+    {
+     "label": "E",
+     "text": "Inhaled corticosteroids",
+     "correct": false,
+     "explanation": "nhaled corticosteroids → candidal laryngitis, dysphonia from steroid deposition. Not a isk factor for laryngeal carcinoma."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
    "references": null
@@ -2557,30 +3293,83 @@
    "references": null
   },
   {
-   "id": "b37_q57",
+   "id": "b37_q57_1",
    "type": "mcq",
    "reference": "Batch 37 — Page 32",
    "topic": "Haematology — Thrombocytopenia + Internal Medicine EMQ",
-   "stem": "HAEMATOLOGY CASE: 46-year-old female prepared for CHOLECYSTECTOMY. Pre-op blood: Hb=12, PLATELETS=49 (low), WBC=? (possibly reduced). Q1: Which condition to exclude FIRST? Q2: Bone marrow reveals NO ABNORMAL CELLS — least likely diagnosis? Q1 — Condition to Exclude First",
+   "stem": "HAEMATOLOGY CASE: 46-year-old female prepared for CHOLECYSTECTOMY. Pre-op blood: Hb=12, PLATELETS=49 (low), WBC=? (possibly reduced). — Q1: Condition to Exclude First",
    "choices": [
     {
      "label": "A",
-     "text": "Pseudothrombocytopenia — First Exclusion Before Any Investigation or",
+     "text": "Pregnancy",
+     "correct": false,
+     "explanation": "Always exclude pregnancy in women of reproductive age — valid. But at 46yo, less likely, and pseudothrombocytopenia is the FIRST exclusion in any incidental isolated thrombocytopenia."
+    },
+    {
+     "label": "B",
+     "text": "Malignancy",
+     "correct": false,
+     "explanation": "Malignancy (bone marrow infiltration) = cause of pancytopenia. Important to exclude, but pseudothrombocytopenia is excluded first (simple, non-invasive, immediate)."
+    },
+    {
+     "label": "C",
+     "text": "Pseudothrombocytopenia",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "PSEUDOTHROMBOCYTOPENIA = EDTA-induced platelet clumping in the test tube → analyser counts clumps as ONE platelet → falsely low count. FIRST STEP: repeat CBC in a CITRATE tube (or peripheral blood smear). Clumped platelets on smear = pseudothrombocytopenia confirmed. NO TREATMENT NEEDED. Avoid unnecessary bone marrow biopsy, platelet transfusion, or delay of surgery."
+    },
+    {
+     "label": "D",
+     "text": "Possible HIV",
+     "correct": false,
+     "explanation": "HIV can cause thrombocytopenia (ITP-like mechanism). Worth investigating but NOT the first exclusion. Pseudothrombocytopenia is easier and more immediately actionable to rule out first."
     }
    ],
    "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
+   "flag": null,
    "system": "Batch 37 Final",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q57_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 32",
+   "topic": "Haematology — Thrombocytopenia + Internal Medicine EMQ",
+   "stem": "HAEMATOLOGY CASE: 46-year-old female prepared for CHOLECYSTECTOMY. Pre-op blood: Hb=12, PLATELETS=49 (low), WBC=? (possibly reduced). — Q2: Bone Marrow Shows No Abnormal Cells — Least Likely Diagnosis",
+   "choices": [
+    {
+     "label": "A",
+     "text": "TTP",
+     "correct": false,
+     "explanation": "TTP: peripheral platelet CONSUMPTION (microthrombi). BM = reactive megakaryocytes (increased production). NO abnormal cells. Consistent with normal bone marrow."
+    },
+    {
+     "label": "B",
+     "text": "ITP",
+     "correct": false,
+     "explanation": "ITP: peripheral platelet DESTRUCTION (autoantibodies). BM = increased megakaryocytes (reactive). NO abnormal cells. Consistent with normal BM."
+    },
+    {
+     "label": "C",
+     "text": "vWD",
+     "correct": true,
+     "explanation": "VON WILLEBRAND DISEASE: (1) PRIMARY PLATELET COUNT = NORMAL (except Type 2B where platelets may be reduced) (2) vWD is a QUALITATIVE platelet/vWF disorder, not quantitative (3) Does NOT explain THROMBOCYTOPENIA If bone marrow is normal AND platelets are low → vWD is the LEAST LIKELY explanation for the thrombocytopenia. vWD features: prolonged bleeding time, normal PT, normal/prolonged aPTT, mucocutaneous bleeding."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
    "references": null
