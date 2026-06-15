@@ -918,23 +918,27 @@ function subjTimeHTML(){ const m=studyBySysWindow(7),rows=Object.entries(m).sort
 function focusTrackerHTML(){
   const sel=App.trkSel||today(), view=App.trkView||"day", mstr=App.trkMonth||sel.slice(0,7);
   const Y=+mstr.slice(0,4), M=+mstr.slice(5,7);
-  const daysInMonth=new Date(Y,M,0).getDate(), first=new Date(Y,M-1,1);
-  const WS=5; // week starts Friday (matches the regional YPT layout)
-  const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const daysInMonth=new Date(Y,M,0).getDate(), first=new Date(Y,M-1,1), prevDays=new Date(Y,M-1,0).getDate();
+  const WS=5; const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const ord=[]; for(let i=0;i<7;i++) ord.push((WS+i)%7);
   const lead=(first.getDay()-WS+7)%7;
-  const base="padding:7px 0 6px;border-radius:10px;border:1.5px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50px;gap:2px;background:var(--surface-2);cursor:pointer;width:100%";
+  const head=ord.map(i=>`<div class="faint" style="text-align:center;font-size:11px;font-weight:600;padding-bottom:5px">${DOW[i]}</div>`).join("");
+  const cbase="border-radius:9px;border:1.5px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:48px;gap:1px;width:100%;background:transparent;padding:0";
   let cells="";
-  for(let i=0;i<lead;i++) cells+=`<div></div>`;
+  for(let i=lead;i>0;i--) cells+=`<div style="${cbase};opacity:.32"><span style="font-size:13px;color:var(--faint)">${prevDays-i+1}</span></div>`;
   for(let day=1;day<=daysInMonth;day++){
     const d=`${Y}-${String(M).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
     const sec=dayTotalSec(d), has=sec>0, isSel=d===sel, isTod=d===today();
-    let st=base; if(has) st+=";background:rgba(193,142,57,0.20)"; if(isSel) st+=";border-color:var(--amber)";
-    cells+=`<button data-action="trk-day" data-date="${d}" style="${st}"><span style="font-size:13px;font-weight:${isTod?"800":"600"};color:${isTod?"var(--amber)":"var(--text)"}">${day}</span>${has?`<span class="mono" style="font-size:10px;color:var(--amber);font-weight:700">${fmtHrMin(sec)}</span>`:`<span style="font-size:10px;color:transparent">.</span>`}</button>`;
+    let st=cbase+";cursor:pointer";
+    if(has) st+=";background:rgba(199,133,71,0.30)";
+    if(isTod) st+=";border-color:var(--text)";
+    else if(isSel) st+=";border-color:var(--amber)";
+    cells+=`<button data-action="trk-day" data-date="${d}" style="${st}"><span style="font-size:13px;font-weight:${isTod?"800":(has?"700":"500")};color:var(--text)">${day}</span>${has?`<span class="mono" style="font-size:9.5px;color:var(--amber);font-weight:700;line-height:1">${fmtHrMin(sec)}</span>`:""}</button>`;
   }
+  const used=lead+daysInMonth, trail=(7-used%7)%7;
+  for(let i=1;i<=trail;i++) cells+=`<div style="${cbase};opacity:.32"><span style="font-size:13px;color:var(--faint)">${i}</span></div>`;
   const monthName=first.toLocaleString("en",{month:"long",year:"numeric"});
-  const head=ord.map(i=>`<div class="faint" style="text-align:center;font-size:11px;font-weight:600">${DOW[i]}</div>`).join("");
-  const tog=["day","week","month"].map(v=>`<button data-action="trk-view" data-v="${v}" class="btn-sm ${v===view?"btn-primary":"btn-ghost"}" style="border-radius:16px;padding:5px 18px;text-transform:capitalize">${v}</button>`).join("");
+  const tog=["day","week","month"].map(v=>{const on=v===view;return `<button data-action="trk-view" data-v="${v}" style="border:none;border-radius:18px;padding:7px 22px;font-size:13px;font-weight:600;text-transform:capitalize;cursor:pointer;${on?"background:var(--text);color:var(--ink)":"background:transparent;color:var(--faint)"}">${v}</button>`;}).join("");
   let dates=[];
   if(view==="day") dates=[sel];
   else if(view==="week"){ const off=(new Date(sel+"T00:00:00").getDay()-WS+7)%7; const start=addDays(sel,-off); for(let i=0;i<7;i++) dates.push(addDays(start,i)); }
@@ -947,27 +951,27 @@ function focusTrackerHTML(){
     b1=[["Total study time",fmtFull(total)],["Max focus time",fmtFull(maxF)]];
     b2=[["Start time",fmtClock(se[0])],["End time",fmtClock(se[1])]];
   } else { const avg=active?Math.round(total/active):0;
-    label=view==="week"?`${new Date(dates[0]+"T00:00:00").toLocaleDateString("en",{month:"short",day:"numeric"})} \u2013 ${new Date(dates[6]+"T00:00:00").toLocaleDateString("en",{month:"short",day:"numeric"})}`:monthName;
+    label=view==="week"?`${new Date(dates[0]+"T00:00:00").toLocaleDateString("en",{month:"short",day:"numeric"})} – ${new Date(dates[6]+"T00:00:00").toLocaleDateString("en",{month:"short",day:"numeric"})}`:monthName;
     b1=[["Total study time",fmtFull(total)],["Max focus time",fmtFull(maxF)]];
     b2=[["Daily average",fmtFull(avg)],["Active days",String(active)]];
   }
-  const cell=(L,V)=>`<div style="flex:1;text-align:center;padding:6px 2px"><div style="font-size:11.5px;color:var(--amber);font-weight:600">${L}</div><div class="mono" style="font-size:20px;font-weight:800;margin-top:5px;color:var(--text)">${V}</div></div>`;
+  const cell=(L,V)=>`<div style="flex:1;text-align:center;padding:4px 2px"><div style="font-size:12px;color:var(--amber);font-weight:600">${L}</div><div class="mono" style="font-size:23px;font-weight:800;margin-top:6px;color:var(--text)">${V}</div></div>`;
   return `
-    <div class="sectlabel">Focus time</div>
+    <div class="sectlabel" style="margin-top:18px">Focus time</div>
     <div class="card pad">
-      <div class="row between" style="margin-bottom:10px">
+      <div class="row between" style="margin-bottom:9px">
         <button class="iconbtn" data-action="trk-month" data-delta="-1"><svg class="i" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <b style="font-size:15px">${monthName}</b>
+        <b style="font-size:14px">${monthName}</b>
         <button class="iconbtn" data-action="trk-month" data-delta="1"><svg class="i" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:5px">${head}</div>
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">${cells}</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">${head}</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">${cells}</div>
     </div>
-    <div class="row" style="gap:8px;justify-content:center;margin:13px 0">${tog}</div>
-    <div style="text-align:center;font-weight:700;font-size:15px;margin-bottom:9px">${label}</div>
+    <div class="row" style="gap:6px;justify-content:center;margin:14px 0 10px">${tog}</div>
+    <div style="text-align:center;font-weight:700;font-size:15px;margin-bottom:10px">${label}</div>
     <div class="card pad">
       <div class="row">${b1.map(x=>cell(x[0],x[1])).join("")}</div>
-      <div style="height:1px;background:var(--surface-3);margin:8px 0"></div>
+      <div style="height:1px;background:var(--surface-3);margin:10px 0"></div>
       <div class="row">${b2.map(x=>cell(x[0],x[1])).join("")}</div>
     </div>`;
 }
