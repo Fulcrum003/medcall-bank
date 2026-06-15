@@ -2,7 +2,7 @@
  "packId": "neurology-mcq",
  "title": "Neurology",
  "color": "#b58fce",
- "version": 1,
+ "version": 2,
  "updated": "2026-06-15",
  "questionCount": 265,
  "questions": [
@@ -98,33 +98,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Steroid pulse therapy is a useful initial therapeutic approach Choice",
+     "text": "Steroid pulse therapy is a useful initial therapeutic approach",
      "correct": false,
-     "explanation": "This is actually TRUE in management of an acute MS relapse, but it is not the option highlighted; the marked answer addresses pupillary reflexes. High-dose IV methylprednisolone does shorten relapse duration. Explanation"
+     "explanation": "This is actually TRUE in management of an acute MS relapse, but it is not the option highlighted; the marked answer addresses pupillary reflexes. High-dose IV methylprednisolone does shorten relapse duration."
     },
     {
      "label": "B",
      "text": "Pupillary reflexes are expected to be normal",
      "correct": true,
-     "explanation": "n optic neuritis the affected eye develops a RELATIVE AFFERENT UPILLARY DEFECT (Marcus Gunn pupil): on the swinging-light test the ffected pupil paradoxically dilates. So pupillary reflexes are NOT normal — aking this statement the one the question tests as the abnormality marked; er the file key this option is highlighted. Note: standard teaching says an RAPD s present, so the pupillary light reflex is abnormal."
+     "explanation": "In optic neuritis the affected eye develops a RELATIVE AFFERENT PUPILLARY DEFECT (Marcus Gunn pupil): on the swinging-light test the affected pupil paradoxically dilates. So pupillary reflexes are NOT normal — making this statement the one the question tests as the abnormality marked; per the file key this option is highlighted. Note: standard teaching says an RAPD is present, so the pupillary light reflex is abnormal."
     },
     {
      "label": "C",
      "text": "Screening for vasculitis has no value",
      "correct": false,
-     "explanation": "SR is normal here and the clinical picture (relapsing CNS lesions isseminated in time and space) is MS; vasculitis screening is reasonable to xclude mimics but the picture is classic for MS."
+     "explanation": "ESR is normal here and the clinical picture (relapsing CNS lesions disseminated in time and space) is MS; vasculitis screening is reasonable to exclude mimics but the picture is classic for MS."
     },
     {
      "label": "D",
      "text": "Behcet's disease is the most likely diagnosis",
      "correct": false,
-     "explanation": "ehcet's typically presents with oral/genital ulcers and uveitis. The relapsing NS picture with periventricular T2 lesions is multiple sclerosis."
+     "explanation": "Behcet's typically presents with oral/genital ulcers and uveitis. The relapsing CNS picture with periventricular T2 lesions is multiple sclerosis."
     },
     {
      "label": "E",
      "text": "Antibiotic therapy is the treatment of choice in the above case",
      "correct": false,
-     "explanation": "here is no infection; antibiotics are not indicated. Acute MS relapse is treated ith high-dose IV corticosteroids."
+     "explanation": "There is no infection; antibiotics are not indicated. Acute MS relapse is treated with high-dose IV corticosteroids."
     }
    ],
    "keyPoint": "Optic neuritis in young woman with periventricular white-matter lesions and prior spastic paraparesis = MS; expect a relative afferent pupillary defect (Marcus Gunn pupil).",
@@ -194,9 +194,9 @@
     },
     {
      "label": "B",
-     "text": "Nasal intermittent positive airway pressure (IPAP) Choice",
+     "text": "Nasal intermittent positive airway pressure (IPAP)",
      "correct": false,
-     "explanation": "BiPAP/IPAP is reserved for specific scenarios (e.g., concurrent hypoventilation); first-line for OSA is continuous positive pressure (CPAP). Explanation"
+     "explanation": "BiPAP/IPAP is reserved for specific scenarios (e.g., concurrent hypoventilation); first-line for OSA is continuous positive pressure (CPAP)."
     },
     {
      "label": "C",
@@ -278,7 +278,7 @@
     },
     {
      "label": "B",
-     "text": "Betaferon therapy is ✗ important to delay progression in relapsing-remitting disease",
+     "text": "Betaferon therapy is important to delay progression in relapsing-remitting disease",
      "correct": false,
      "explanation": "This is TRUE — beta-interferon (Betaferon) is a disease-modifying therapy that reduces relapse rate in relapsing-remitting MS."
     },
@@ -296,7 +296,7 @@
     },
     {
      "label": "E",
-     "text": "MRI findings are essential in ✗ W following up the disease process",
+     "text": "MRI findings are essential in following up the disease process",
      "correct": false,
      "explanation": "This is TRUE — MRI is central to diagnosis (dissemination in time/space) and monitoring of MS."
     }
@@ -440,33 +440,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Dissociated sensory loss ✗",
+     "text": "Dissociated sensory loss",
      "correct": false,
-     "explanation": "his is TRUE — anterior spinal artery infarction causes dissociated sensory oss (loss of pain/temperature with preserved vibration/proprioception)."
+     "explanation": "This is TRUE — anterior spinal artery infarction causes dissociated sensory loss (loss of pain/temperature with preserved vibration/proprioception)."
     },
     {
      "label": "B",
-     "text": "Sensory level ✗",
+     "text": "Sensory level",
      "correct": false,
-     "explanation": "his is TRUE — a sensory level (for pain/temperature) is found below the level f the infarct."
+     "explanation": "This is TRUE — a sensory level (for pain/temperature) is found below the level of the infarct."
     },
     {
      "label": "C",
-     "text": "Paraparesis ✗",
+     "text": "Paraparesis",
      "correct": false,
-     "explanation": "his is TRUE — corticospinal tract involvement produces motor eakness/paraparesis below the lesion."
+     "explanation": "This is TRUE — corticospinal tract involvement produces motor weakness/paraparesis below the lesion."
     },
     {
      "label": "D",
-     "text": "Sphincter disturbance ✗",
+     "text": "Sphincter disturbance",
      "correct": false,
-     "explanation": "his is TRUE — autonomic tracts are affected, causing bladder/bowel sphincter isturbance."
+     "explanation": "This is TRUE — autonomic tracts are affected, causing bladder/bowel sphincter disturbance."
     },
     {
      "label": "E",
-     "text": "Loss of vibration and position ✓ sense",
+     "text": "Loss of vibration and position sense",
      "correct": true,
-     "explanation": "his is the EXCEPTION (false). The anterior spinal artery supplies the anterior wo-thirds of the cord, SPARING the dorsal columns. Therefore vibration and roprioception are PRESERVED — their loss is NOT a feature."
+     "explanation": "This is the EXCEPTION (false). The anterior spinal artery supplies the anterior two-thirds of the cord, SPARING the dorsal columns. Therefore vibration and proprioception are PRESERVED — their loss is NOT a feature."
     }
    ],
    "keyPoint": "Anterior spinal artery syndrome spares the dorsal columns — vibration and proprioception are preserved.",
@@ -782,9 +782,9 @@
     },
     {
      "label": "B",
-     "text": "Kayser-Fleischer ring in young is characteristic of punch-drunk syndrome Choice",
+     "text": "Kayser-Fleischer ring in young is characteristic of punch-drunk syndrome",
      "correct": false,
-     "explanation": "Kayser-Fleischer rings are characteristic of WILSON'S disease, not punch-drunk (chronic traumatic) encephalopathy. Explanation"
+     "explanation": "Kayser-Fleischer rings are characteristic of WILSON'S disease, not punch-drunk (chronic traumatic) encephalopathy."
     },
     {
      "label": "C",
@@ -1034,9 +1034,9 @@
     },
     {
      "label": "B",
-     "text": "EMG (electromyography) Choice",
+     "text": "EMG (electromyography)",
      "correct": true,
-     "explanation": "This is the option MARKED in the file (red box). EMG/repetitive nerve stimulation is a confirmatory electrophysiological test for MG (decremental response). NOTE: the page's own explanatory text describes the Tensilon (edrophonium) test, which is the classic bedside CLINICAL test (option C) - see flag. Explanation"
+     "explanation": "This is the option MARKED in the file (red box). EMG/repetitive nerve stimulation is a confirmatory electrophysiological test for MG (decremental response). NOTE: the page's own explanatory text describes the Tensilon (edrophonium) test, which is the classic bedside CLINICAL test (option C) - see flag."
     },
     {
      "label": "C",
@@ -1382,9 +1382,9 @@
     },
     {
      "label": "C",
-     "text": "Lymphocytic leukocytosis Choice",
+     "text": "Lymphocytic leukocytosis",
      "correct": true,
-     "explanation": "Viral encephalitis characteristically shows a LYMPHOCYTIC pleocytosis (mild-to-moderate), with normal/slightly reduced glucose and mildly elevated protein. Explanation"
+     "explanation": "Viral encephalitis characteristically shows a LYMPHOCYTIC pleocytosis (mild-to-moderate), with normal/slightly reduced glucose and mildly elevated protein."
     },
     {
      "label": "D",
@@ -1862,9 +1862,9 @@
    "choices": [
     {
      "label": "A",
-     "text": "Fasciculation Choice",
+     "text": "Fasciculation",
      "correct": true,
-     "explanation": "Pseudobulbar palsy is an UPPER motor neuron lesion of the lower cranial nerves; fasciculations are a LOWER motor neuron sign (seen in BULBAR palsy), so they are NOT seen in pseudobulbar palsy. Explanation"
+     "explanation": "Pseudobulbar palsy is an UPPER motor neuron lesion of the lower cranial nerves; fasciculations are a LOWER motor neuron sign (seen in BULBAR palsy), so they are NOT seen in pseudobulbar palsy."
     },
     {
      "label": "B",
@@ -2108,33 +2108,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Focal preserved consciousness Choice",
+     "text": "Focal preserved consciousness",
      "correct": false,
-     "explanation": "A focal aware (simple partial) seizure preserves awareness; here the patient cannot remember and is confused, so awareness is impaired. Explanation"
+     "explanation": "A focal aware (simple partial) seizure preserves awareness; here the patient cannot remember and is confused, so awareness is impaired."
     },
     {
      "label": "B",
      "text": "Focal impaired consciousness",
      "correct": true,
-     "explanation": "ip-smacking automatisms, impaired awareness and post-ictal confusion are haracteristic of a FOCAL seizure with IMPAIRED AWARENESS (complex artial), typically temporal lobe in origin."
+     "explanation": "Lip-smacking automatisms, impaired awareness and post-ictal confusion are characteristic of a FOCAL seizure with IMPAIRED AWARENESS (complex partial), typically temporal lobe in origin."
     },
     {
      "label": "C",
      "text": "Absence seizure",
      "correct": false,
-     "explanation": "bsence seizures are brief blank stares in children with NO post-ictal confusion nd immediate recovery; automatisms with post-ictal confusion point to focal eizures."
+     "explanation": "Absence seizures are brief blank stares in children with NO post-ictal confusion and immediate recovery; automatisms with post-ictal confusion point to focal seizures."
     },
     {
      "label": "D",
      "text": "-",
      "correct": false,
-     "explanation": "o content."
+     "explanation": "No content."
     },
     {
      "label": "E",
      "text": "-",
      "correct": false,
-     "explanation": "o content."
+     "explanation": "No content."
     }
    ],
    "keyPoint": "Automatisms (lip-smacking) + impaired awareness + post-ictal confusion = focal impaired-awareness (temporal lobe) seizure.",
@@ -2360,33 +2360,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Non contrast CT ✓",
+     "text": "Non contrast CT",
      "correct": true,
-     "explanation": "hunderclap headache with meningism suggests subarachnoid haemorrhage. he best INITIAL investigation is a NON-CONTRAST CT of the head, which is ighly sensitive for acute blood within the first 6-24 hours."
+     "explanation": "Thunderclap headache with meningism suggests subarachnoid haemorrhage. The best INITIAL investigation is a NON-CONTRAST CT of the head, which is highly sensitive for acute blood within the first 6-24 hours."
     },
     {
      "label": "B",
-     "text": "MRI ✗",
+     "text": "MRI",
      "correct": false,
-     "explanation": "RI is less available/slower and not the first-line acute test for SAH."
+     "explanation": "MRI is less available/slower and not the first-line acute test for SAH."
     },
     {
      "label": "C",
-     "text": "X ray ✗",
+     "text": "X ray",
      "correct": false,
-     "explanation": "kull X-ray has no role in detecting intracranial haemorrhage."
+     "explanation": "Skull X-ray has no role in detecting intracranial haemorrhage."
     },
     {
      "label": "D",
-     "text": "LP ✗",
+     "text": "LP",
      "correct": false,
-     "explanation": "P (for xanthochromia) is done only AFTER a negative CT, and not before 12 ours; it is not the initial imaging."
+     "explanation": "LP (for xanthochromia) is done only AFTER a negative CT, and not before 12 hours; it is not the initial imaging."
     },
     {
      "label": "E",
-     "text": "- ✗",
+     "text": "-",
      "correct": false,
-     "explanation": "o content."
+     "explanation": "No content."
     }
    ],
    "keyPoint": "Thunderclap headache → non-contrast CT head first; LP only if CT negative.",
@@ -2540,7 +2540,7 @@
     },
     {
      "label": "C",
-     "text": "Oligoclonal band not matched ✓ with serum",
+     "text": "Oligoclonal band not matched with serum",
      "correct": true,
      "explanation": "MS shows intrathecal IgG synthesis — CSF-restricted OLIGOCLONAL BANDS that are NOT present in matched serum, indicating local CNS antibody production."
     },
@@ -2618,9 +2618,9 @@
     },
     {
      "label": "B",
-     "text": "Affected visual field Choice",
+     "text": "Affected visual field",
      "correct": false,
-     "explanation": "A central scotoma occurs but the specific expected sign on the pupil exam is an RAPD; field testing is not the 'next investigation' clue intended here. Explanation"
+     "explanation": "A central scotoma occurs but the specific expected sign on the pupil exam is an RAPD; field testing is not the 'next investigation' clue intended here."
     },
     {
      "label": "C",
@@ -2870,9 +2870,9 @@
     },
     {
      "label": "B",
-     "text": "Migraine Headache Choice",
+     "text": "Migraine Headache",
      "correct": true,
-     "explanation": "Unilateral THROBBING headache with nausea/vomiting preceded by a visual AURA (flashing lights/scintillations) is classic MIGRAINE WITH AURA, typical in young women. Explanation"
+     "explanation": "Unilateral THROBBING headache with nausea/vomiting preceded by a visual AURA (flashing lights/scintillations) is classic MIGRAINE WITH AURA, typical in young women."
     },
     {
      "label": "C",
@@ -3110,15 +3110,15 @@
     },
     {
      "label": "C",
-     "text": "Intention tremor Choice",
+     "text": "Intention tremor",
      "correct": false,
-     "explanation": "Intention tremor (worse on approaching a target) is a specific cerebellar sign. Explanation"
+     "explanation": "Intention tremor (worse on approaching a target) is a specific cerebellar sign."
     },
     {
      "label": "D",
-     "text": "Nystagmus ✗",
+     "text": "Nystagmus",
      "correct": false,
-     "explanation": "aze-evoked nystagmus is a recognised cerebellar sign."
+     "explanation": "Gaze-evoked nystagmus is a recognised cerebellar sign."
     }
    ],
    "keyPoint": "Hypotonia is non-specific; dysdiadochokinesis, intention tremor and nystagmus are specific cerebellar signs.",
@@ -3356,9 +3356,9 @@
     },
     {
      "label": "D",
-     "text": "Basal ganglia Choice",
+     "text": "Basal ganglia",
      "correct": false,
-     "explanation": "Basal ganglia lesions cause extrapyramidal signs (rigidity, movement disorders), not classic UMN signs. Explanation"
+     "explanation": "Basal ganglia lesions cause extrapyramidal signs (rigidity, movement disorders), not classic UMN signs."
     },
     {
      "label": "E",
@@ -3674,33 +3674,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Computed tomography (CT) ✗ of the brain",
+     "text": "Computed tomography (CT) of the brain",
      "correct": false,
-     "explanation": "T may be done later to look for a structural cause, but it is not the most useful mmediate test in a known epileptic with phenytoin."
+     "explanation": "CT may be done later to look for a structural cause, but it is not the most useful immediate test in a known epileptic with phenytoin."
     },
     {
      "label": "B",
-     "text": "Echocardiogram ✗",
+     "text": "Echocardiogram",
      "correct": false,
-     "explanation": "he murmur is incidental; echo does not address the cause of the status pilepticus now."
+     "explanation": "The murmur is incidental; echo does not address the cause of the status epilepticus now."
     },
     {
      "label": "C",
-     "text": "Electroencephalogram (EEG) ✗",
+     "text": "Electroencephalogram (EEG)",
      "correct": false,
-     "explanation": "EG is useful for non-convulsive status but is not the most immediately useful est here."
+     "explanation": "EEG is useful for non-convulsive status but is not the most immediately useful test here."
     },
     {
      "label": "D",
-     "text": "Magnetic resonance imaging ✗ (MRI) of the brain",
+     "text": "Magnetic resonance imaging (MRI) of the brain",
      "correct": false,
-     "explanation": "RI is impractical/slow in an actively fitting unstable patient."
+     "explanation": "MRI is impractical/slow in an actively fitting unstable patient."
     },
     {
      "label": "E",
-     "text": "Phenytoin levels ✓",
+     "text": "Phenytoin levels",
      "correct": true,
-     "explanation": "n a known epileptic carrying phenytoin who presents in status, UB-THERAPEUTIC PHENYTOIN LEVELS (poor compliance) is the most ikely precipitant, so measuring the phenytoin level is the most useful nvestigation at this stage."
+     "explanation": "In a known epileptic carrying phenytoin who presents in status, SUB-THERAPEUTIC PHENYTOIN LEVELS (poor compliance) is the most likely precipitant, so measuring the phenytoin level is the most useful investigation at this stage."
     }
    ],
    "keyPoint": "Known epileptic in status carrying phenytoin → check the (likely subtherapeutic) phenytoin level.",
@@ -3866,7 +3866,7 @@
     },
     {
      "label": "E",
-     "text": "Steroids, antiviral therapy and ✓ eye protection",
+     "text": "Steroids, antiviral therapy and eye protection",
      "correct": true,
      "explanation": "Bell's palsy (LMN VII palsy, forehead NOT spared) is best managed with early oral STEROIDS, consideration of ANTIVIRALS, and crucially EYE PROTECTION (lubricants/taping) to prevent exposure keratopathy from incomplete eye closure."
     }
@@ -4016,9 +4016,9 @@
     },
     {
      "label": "B",
-     "text": "Hallucinations Choice",
+     "text": "Hallucinations",
      "correct": false,
-     "explanation": "Hallucinations are a dopaminergic side effect but do not cause a postural blackout. Explanation"
+     "explanation": "Hallucinations are a dopaminergic side effect but do not cause a postural blackout."
     },
     {
      "label": "C",
@@ -4262,33 +4262,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Listeria meningitis ✗",
+     "text": "Listeria meningitis",
      "correct": false,
-     "explanation": "isteria is a concern at extremes of age, in pregnancy and immunocompromise; n a non-elderly adult the most common community pathogen is pneumococcus."
+     "explanation": "Listeria is a concern at extremes of age, in pregnancy and immunocompromise; in a non-elderly adult the most common community pathogen is pneumococcus."
     },
     {
      "label": "B",
-     "text": "Meningococcal meningitis ✗",
+     "text": "Meningococcal meningitis",
      "correct": false,
-     "explanation": "eningococcal disease classically has a non-blanching purpuric rash; possible, ut the most common cause of community bacterial meningitis in this adult is neumococcus."
+     "explanation": "Meningococcal disease classically has a non-blanching purpuric rash; possible, but the most common cause of community bacterial meningitis in this adult is pneumococcus."
     },
     {
      "label": "C",
-     "text": "Pneumococcal meningitis ✓",
+     "text": "Pneumococcal meningitis",
      "correct": true,
-     "explanation": "treptococcus pneumoniae is the MOST COMMON cause of ommunity-acquired bacterial meningitis in adults; alcohol excess immunocompromise) and a preceding respiratory illness further raise the risk. he acute picture with fever, photophobia, neck stiffness and reduced GCS fits acterial meningitis."
+     "explanation": "Streptococcus pneumoniae is the MOST COMMON cause of community-acquired bacterial meningitis in adults; alcohol excess (immunocompromise) and a preceding respiratory illness further raise the risk. The acute picture with fever, photophobia, neck stiffness and reduced GCS fits bacterial meningitis."
     },
     {
      "label": "D",
-     "text": "Tubercular meningitis ✗",
+     "text": "Tubercular meningitis",
      "correct": false,
-     "explanation": "B meningitis is more subacute/chronic with a slower course, not an 8-hour cute presentation."
+     "explanation": "TB meningitis is more subacute/chronic with a slower course, not an 8-hour acute presentation."
     },
     {
      "label": "E",
-     "text": "Viral meningitis ✗",
+     "text": "Viral meningitis",
      "correct": false,
-     "explanation": "iral meningitis is usually milder with preserved consciousness; reduced GCS, ypotension and tachycardia point to bacterial disease."
+     "explanation": "Viral meningitis is usually milder with preserved consciousness; reduced GCS, hypotension and tachycardia point to bacterial disease."
     }
    ],
    "keyPoint": "Pneumococcus is the commonest cause of community-acquired bacterial meningitis in adults; alcoholism increases risk.",
@@ -4364,15 +4364,15 @@
     },
     {
      "label": "D",
-     "text": "Valproate may cause gum hypertrophy Choice Ve",
+     "text": "Valproate may cause gum hypertrophy",
      "correct": true,
-     "explanation": "This is the UNTRUE statement. Gum (gingival) hypertrophy is a side effect of PHENYTOIN, not sodium valproate. Valproate causes weight gain, tremor, hair loss, hepatotoxicity and is teratogenic. planation"
+     "explanation": "This is the UNTRUE statement. Gum (gingival) hypertrophy is a side effect of PHENYTOIN, not sodium valproate. Valproate causes weight gain, tremor, hair loss, hepatotoxicity and is teratogenic."
     },
     {
      "label": "E",
-     "text": "Valproate may cause hair ✗ W loss",
+     "text": "Valproate may cause hair loss",
      "correct": false,
-     "explanation": "s is TRUE — alopecia/hair loss is a recognised valproate side effect."
+     "explanation": "This is TRUE — alopecia/hair loss is a recognised valproate side effect."
     }
    ],
    "keyPoint": "Gum hypertrophy = phenytoin; valproate causes weight gain, tremor, alopecia, hepatotoxicity, teratogenicity.",
@@ -4688,9 +4688,9 @@
     },
     {
      "label": "B",
-     "text": "Bradykinesia, micrographia, rigidity, and tremor ~3-4 Hz Choice",
+     "text": "Bradykinesia, micrographia, rigidity, and tremor ~3-4 Hz",
      "correct": false,
-     "explanation": "Micrographia is a manifestation, but the fourth cardinal sign is POSTURAL INSTABILITY, not micrographia. Explanation"
+     "explanation": "Micrographia is a manifestation, but the fourth cardinal sign is POSTURAL INSTABILITY, not micrographia."
     },
     {
      "label": "C",
@@ -5018,9 +5018,9 @@
    "choices": [
     {
      "label": "A",
-     "text": "Baclofen Choice",
+     "text": "Baclofen",
      "correct": true,
-     "explanation": "BACLOFEN, a GABA-B agonist, is a first-line antispasticity agent that reduces painful spasms and spasticity in MS (alternatives: tizanidine, gabapentin, botulinum toxin). Explanation"
+     "explanation": "BACLOFEN, a GABA-B agonist, is a first-line antispasticity agent that reduces painful spasms and spasticity in MS (alternatives: tizanidine, gabapentin, botulinum toxin)."
     },
     {
      "label": "B",
@@ -5270,33 +5270,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Corticobasal degeneration ✗",
+     "text": "Corticobasal degeneration",
      "correct": false,
-     "explanation": "orticobasal degeneration is a rarer Parkinson-plus syndrome; it is not the ommonest reason for misdiagnosis."
+     "explanation": "Corticobasal degeneration is a rarer Parkinson-plus syndrome; it is not the commonest reason for misdiagnosis."
     },
     {
      "label": "B",
-     "text": "Essential tremor/familial ✓ tremor",
+     "text": "Essential tremor/familial tremor",
      "correct": true,
-     "explanation": "SSENTIAL (familial) TREMOR is the most common condition misdiagnosed s Parkinson's. It is a POSTURAL/ACTION tremor (improves with alcohol, often ilateral, family history), in contrast to the asymmetric RESTING tremor of arkinson's."
+     "explanation": "ESSENTIAL (familial) TREMOR is the most common condition misdiagnosed as Parkinson's. It is a POSTURAL/ACTION tremor (improves with alcohol, often bilateral, family history), in contrast to the asymmetric RESTING tremor of Parkinson's."
     },
     {
      "label": "C",
-     "text": "Progressive supranuclear ✗ palsy",
+     "text": "Progressive supranuclear palsy",
      "correct": false,
-     "explanation": "SP (vertical gaze palsy, early falls) is a Parkinson-plus syndrome but less ommon as a misdiagnosis source than essential tremor."
+     "explanation": "PSP (vertical gaze palsy, early falls) is a Parkinson-plus syndrome but less common as a misdiagnosis source than essential tremor."
     },
     {
      "label": "D",
-     "text": "Pugilist encephalopathy ✗",
+     "text": "Pugilist encephalopathy",
      "correct": false,
-     "explanation": "hronic traumatic (boxer's) encephalopathy is uncommon and not the leading ause of misdiagnosis."
+     "explanation": "Chronic traumatic (boxer's) encephalopathy is uncommon and not the leading cause of misdiagnosis."
     },
     {
      "label": "E",
-     "text": "Wilson's disease ✗",
+     "text": "Wilson's disease",
      "correct": false,
-     "explanation": "ilson's is rare and affects the young with Kayser-Fleischer rings; not the ommonest misdiagnosis."
+     "explanation": "Wilson's is rare and affects the young with Kayser-Fleischer rings; not the commonest misdiagnosis."
     }
    ],
    "keyPoint": "Essential (action/postural) tremor is the commonest mimic of Parkinson's disease.",
@@ -5612,9 +5612,9 @@
     },
     {
      "label": "B",
-     "text": "III and V Choice",
+     "text": "III and V",
      "correct": false,
-     "explanation": "This omits IV and VI and overstates V (only V1 and V2 pass through). Explanation"
+     "explanation": "This omits IV and VI and overstates V (only V1 and V2 pass through)."
     },
     {
      "label": "C",
@@ -5942,33 +5942,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Jaw claudication ✗",
+     "text": "Jaw claudication",
      "correct": false,
-     "explanation": "aw claudication suggests giant cell arteritis, not raised ICP."
+     "explanation": "Jaw claudication suggests giant cell arteritis, not raised ICP."
     },
     {
      "label": "B",
-     "text": "Kernig's sign ✗",
+     "text": "Kernig's sign",
      "correct": false,
-     "explanation": "ernig's sign indicates meningeal irritation (meningitis/SAH), not raised ICP per e."
+     "explanation": "Kernig's sign indicates meningeal irritation (meningitis/SAH), not raised ICP per se."
     },
     {
      "label": "C",
-     "text": "Low opening pressure on ✗ lumbar puncture",
+     "text": "Low opening pressure on lumbar puncture",
      "correct": false,
-     "explanation": "aised ICP gives a HIGH opening pressure; low pressure suggests the pposite (e.g., CSF leak)."
+     "explanation": "Raised ICP gives a HIGH opening pressure; low pressure suggests the opposite (e.g., CSF leak)."
     },
     {
      "label": "D",
-     "text": "Relief of symptoms when ✗ lying down",
+     "text": "Relief of symptoms when lying down",
      "correct": false,
-     "explanation": "aised-ICP headache is WORSE on lying down/in the morning and on oughing/straining; relief on lying suggests low-pressure (CSF leak) headache."
+     "explanation": "Raised-ICP headache is WORSE on lying down/in the morning and on coughing/straining; relief on lying suggests low-pressure (CSF leak) headache."
     },
     {
      "label": "E",
-     "text": "Transient bilateral visual loss ✓",
+     "text": "Transient bilateral visual loss",
      "correct": true,
-     "explanation": "RANSIENT BILATERAL VISUAL LOSS (visual obscurations) from apilloedema, along with morning headache worse on coughing/straining, is a allmark of RAISED INTRACRANIAL PRESSURE."
+     "explanation": "TRANSIENT BILATERAL VISUAL LOSS (visual obscurations) from papilloedema, along with morning headache worse on coughing/straining, is a hallmark of RAISED INTRACRANIAL PRESSURE."
     }
    ],
    "keyPoint": "Transient visual obscurations + morning headache worse on straining = raised ICP (papilloedema).",
@@ -6284,27 +6284,27 @@
     },
     {
      "label": "B",
-     "text": "L2 Choice",
+     "text": "L2",
      "correct": false,
-     "explanation": "An L2 lesion gives a lower (groin) level and tends to cause LMN/cauda equina signs, not a T10 sensory level with UMN signs. planation"
+     "explanation": "An L2 lesion gives a lower (groin) level and tends to cause LMN/cauda equina signs, not a T10 sensory level with UMN signs."
     },
     {
      "label": "C",
-     "text": "T8 ✗",
+     "text": "T8",
      "correct": false,
-     "explanation": "corresponds to a level above the umbilicus (lower costal margin); the level e is precisely the umbilicus = T10."
+     "explanation": "T8 corresponds to a level above the umbilicus (lower costal margin); the level here is precisely the umbilicus = T10."
     },
     {
      "label": "D",
-     "text": "T10 ✓",
+     "text": "T10",
      "correct": true,
-     "explanation": "UMBILICUS is the T10 DERMATOME. A sensory level at the umbilicus h UMN leg signs (brisk reflexes, upgoing plantars) localises the d-compressing (metastatic) lesion to T10."
+     "explanation": "The UMBILICUS is the T10 DERMATOME. A sensory level at the umbilicus with UMN leg signs (brisk reflexes, upgoing plantars) localises the cord-compressing (metastatic) lesion to T10."
     },
     {
      "label": "E",
-     "text": "T12 ✗",
+     "text": "T12",
      "correct": false,
-     "explanation": "corresponds to a level just above the inguinal ligament, below the ilicus; the umbilical level is T10."
+     "explanation": "T12 corresponds to a level just above the inguinal ligament, below the umbilicus; the umbilical level is T10."
     }
    ],
    "keyPoint": "Sensory level at the umbilicus = T10 (nipple = T4, xiphisternum = T7).",
@@ -6614,33 +6614,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Hypertension ✓",
+     "text": "Hypertension",
      "correct": true,
-     "explanation": "YPERTENSION is the single most significant (and modifiable) risk factor for troke; the INTERSTROKE study showed it carries the largest opulation-attributable risk among the modifiable factors."
+     "explanation": "HYPERTENSION is the single most significant (and modifiable) risk factor for stroke; the INTERSTROKE study showed it carries the largest population-attributable risk among the modifiable factors."
     },
     {
      "label": "B",
-     "text": "Smoking ✗",
+     "text": "Smoking",
      "correct": false,
-     "explanation": "moking is an important risk factor but contributes less attributable stroke risk han hypertension."
+     "explanation": "Smoking is an important risk factor but contributes less attributable stroke risk than hypertension."
     },
     {
      "label": "C",
-     "text": "Family history ✗",
+     "text": "Family history",
      "correct": false,
-     "explanation": "amily history is non-modifiable and a weaker contributor than hypertension."
+     "explanation": "Family history is non-modifiable and a weaker contributor than hypertension."
     },
     {
      "label": "D",
-     "text": "Diabetes ✗",
+     "text": "Diabetes",
      "correct": false,
-     "explanation": "iabetes increases stroke risk but to a lesser degree than hypertension."
+     "explanation": "Diabetes increases stroke risk but to a lesser degree than hypertension."
     },
     {
      "label": "E",
-     "text": "Cholesterol ✗",
+     "text": "Cholesterol",
      "correct": false,
-     "explanation": "yslipidaemia contributes to atherosclerosis but is a less significant single risk actor than hypertension."
+     "explanation": "Dyslipidaemia contributes to atherosclerosis but is a less significant single risk factor than hypertension."
     }
    ],
    "keyPoint": "Hypertension is the most significant modifiable risk factor for stroke.",
@@ -6950,9 +6950,9 @@
    "choices": [
     {
      "label": "A",
-     "text": "Optic chiasm Choice",
+     "text": "Optic chiasm",
      "correct": false,
-     "explanation": "A chiasmal lesion causes a BITEMPORAL hemianopia, not an isolated right lower quadrantanopia. Explanation"
+     "explanation": "A chiasmal lesion causes a BITEMPORAL hemianopia, not an isolated right lower quadrantanopia."
     },
     {
      "label": "B",
@@ -7280,9 +7280,9 @@
    "choices": [
     {
      "label": "A",
-     "text": "Right cerebral hemisphere Choice",
+     "text": "Right cerebral hemisphere",
      "correct": false,
-     "explanation": "A single hemispheric lesion causes contralateral face AND limb weakness on the SAME side, not crossed (left face/right limb) findings. Explanation"
+     "explanation": "A single hemispheric lesion causes contralateral face AND limb weakness on the SAME side, not crossed (left face/right limb) findings."
     },
     {
      "label": "B",
@@ -7388,9 +7388,9 @@
     },
     {
      "label": "E",
-     "text": "Stroke due to carotid artery dissection Choice",
+     "text": "Stroke due to carotid artery dissection",
      "correct": false,
-     "explanation": "Dissection typically occurs in younger patients with neck pain/Horner's; not this small-vessel pure-motor picture. Explanation"
+     "explanation": "Dissection typically occurs in younger patients with neck pain/Horner's; not this small-vessel pure-motor picture."
     },
     {
      "label": "F",
@@ -7712,33 +7712,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Retinal vein thrombosis ✗",
+     "text": "Retinal vein thrombosis",
      "correct": false,
-     "explanation": "entral retinal vein occlusion causes PERSISTENT (not transient) visual loss ith retinal haemorrhages, not a transient 'curtain'."
+     "explanation": "Central retinal vein occlusion causes PERSISTENT (not transient) visual loss with retinal haemorrhages, not a transient 'curtain'."
     },
     {
      "label": "B",
-     "text": "Retinal artery occlusion ✗",
+     "text": "Retinal artery occlusion",
      "correct": false,
-     "explanation": "entral retinal artery occlusion causes SUDDEN PERMANENT monocular loss; maurosis fugax is the TRANSIENT, self-resolving form."
+     "explanation": "Central retinal artery occlusion causes SUDDEN PERMANENT monocular loss; amaurosis fugax is the TRANSIENT, self-resolving form."
     },
     {
      "label": "C",
-     "text": "Amaurosis fugax ✓",
+     "text": "Amaurosis fugax",
      "correct": true,
-     "explanation": "RANSIENT painless monocular visual loss ('a black curtain descending') asting about a minute with a CAROTID BRUIT is AMAUROSIS FUGAX — a ransient retinal ischaemic event usually from carotid atheroembolism (a form of IA)."
+     "explanation": "TRANSIENT painless monocular visual loss ('a black curtain descending') lasting about a minute with a CAROTID BRUIT is AMAUROSIS FUGAX — a transient retinal ischaemic event usually from carotid atheroembolism (a form of TIA)."
     },
     {
      "label": "D",
-     "text": "Optic neuritis ✗",
+     "text": "Optic neuritis",
      "correct": false,
-     "explanation": "ptic neuritis causes subacute PAINFUL visual loss over hours-days in younger atients, not a transient one-minute curtain."
+     "explanation": "Optic neuritis causes subacute PAINFUL visual loss over hours-days in younger patients, not a transient one-minute curtain."
     },
     {
      "label": "E",
-     "text": "Acute angle glaucoma ✗",
+     "text": "Acute angle glaucoma",
      "correct": false,
-     "explanation": "cute angle-closure glaucoma causes a PAINFUL red eye with halos and a ixed mid-dilated pupil, not painless transient loss."
+     "explanation": "Acute angle-closure glaucoma causes a PAINFUL red eye with halos and a fixed mid-dilated pupil, not painless transient loss."
     }
    ],
    "keyPoint": "Transient painless monocular 'curtain' visual loss + carotid bruit = amaurosis fugax (carotid emboli).",
@@ -8132,27 +8132,27 @@
    "choices": [
     {
      "label": "A",
-     "text": "Hemorrhagic transformation ✓",
+     "text": "Hemorrhagic transformation",
      "correct": true,
-     "explanation": "eurological DETERIORATION (worsening confusion, reduced esponsiveness) within 24-36 hours of an ischaemic stroke treated with LTEPLASE plus antiplatelet therapy is most likely HAEMORRHAGIC RANSFORMATION of the infarct — a recognised thrombolysis complication."
+     "explanation": "Neurological DETERIORATION (worsening confusion, reduced responsiveness) within 24-36 hours of an ischaemic stroke treated with ALTEPLASE plus antiplatelet therapy is most likely HAEMORRHAGIC TRANSFORMATION of the infarct — a recognised thrombolysis complication."
     },
     {
      "label": "B",
-     "text": "Cerebral vasospasm ✗",
+     "text": "Cerebral vasospasm",
      "correct": false,
-     "explanation": "asospasm is a complication of subarachnoid haemorrhage (days 4-14), not of treated ischaemic MCA stroke."
+     "explanation": "Vasospasm is a complication of subarachnoid haemorrhage (days 4-14), not of a treated ischaemic MCA stroke."
     },
     {
      "label": "C",
-     "text": "Recurrent ischemic stroke ✗",
+     "text": "Recurrent ischemic stroke",
      "correct": false,
-     "explanation": "ossible, but after thrombolysis + antiplatelets the more likely cause of acute eterioration is haemorrhagic transformation."
+     "explanation": "Possible, but after thrombolysis + antiplatelets the more likely cause of acute deterioration is haemorrhagic transformation."
     },
     {
      "label": "D",
-     "text": "Uncal herniation ✗",
+     "text": "Uncal herniation",
      "correct": false,
-     "explanation": "ncal herniation would cause a fixed, dilated (blown) pupil and a deteriorating CS; her pupils are equal and reactive."
+     "explanation": "Uncal herniation would cause a fixed, dilated (blown) pupil and a deteriorating GCS; her pupils are equal and reactive."
     }
    ],
    "keyPoint": "Deterioration after thrombolysis for ischaemic stroke = haemorrhagic transformation.",
@@ -8534,33 +8534,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "CT scan without contrast ✓",
+     "text": "CT scan without contrast",
      "correct": true,
-     "explanation": "xertional thunderclap headache ('worst of my life') with transient LOC and eck stiffness is SAH until proven otherwise. The best next step is a ON-CONTRAST CT OF THE HEAD, highly sensitive for acute subarachnoid lood (LP if CT negative)."
+     "explanation": "Exertional thunderclap headache ('worst of my life') with transient LOC and neck stiffness is SAH until proven otherwise. The best next step is a NON-CONTRAST CT OF THE HEAD, highly sensitive for acute subarachnoid blood (LP if CT negative)."
     },
     {
      "label": "B",
-     "text": "CT scan with contrast ✗",
+     "text": "CT scan with contrast",
      "correct": false,
-     "explanation": "ontrast is unnecessary and can obscure acute blood; a non-contrast CT is the orrect first test for suspected SAH."
+     "explanation": "Contrast is unnecessary and can obscure acute blood; a non-contrast CT is the correct first test for suspected SAH."
     },
     {
      "label": "C",
-     "text": "Cerebral angiogram ✗",
+     "text": "Cerebral angiogram",
      "correct": false,
-     "explanation": "ngiography localises an aneurysm AFTER SAH is confirmed; it is not the first tep."
+     "explanation": "Angiography localises an aneurysm AFTER SAH is confirmed; it is not the first step."
     },
     {
      "label": "D",
-     "text": "Holter monitor ✗",
+     "text": "Holter monitor",
      "correct": false,
-     "explanation": "Holter assesses arrhythmia and has no role in acute thunderclap headache valuation."
+     "explanation": "A Holter assesses arrhythmia and has no role in acute thunderclap headache evaluation."
     },
     {
      "label": "E",
-     "text": "Lumbar puncture ✗",
+     "text": "Lumbar puncture",
      "correct": false,
-     "explanation": "P is done only AFTER a negative CT; performing it first risks missing maging-detectable bleed and is hazardous if there is raised ICP/mass."
+     "explanation": "LP is done only AFTER a negative CT; performing it first risks missing imaging-detectable bleed and is hazardous if there is raised ICP/mass."
     }
    ],
    "keyPoint": "Worst-ever exertional headache + neck stiffness → non-contrast CT head first (LP only if CT negative).",
@@ -8624,9 +8624,9 @@
     },
     {
      "label": "B",
-     "text": "Anterior horn cell degeneration in the spinal cord Choice",
+     "text": "Anterior horn cell degeneration in the spinal cord",
      "correct": false,
-     "explanation": "This describes motor neuron disease (ALS), which causes asymmetric weakness with fasciculations and upper motor neuron signs (hyperreflexia), not symmetric proximal weakness with normal reflexes. Explanation"
+     "explanation": "This describes motor neuron disease (ALS), which causes asymmetric weakness with fasciculations and upper motor neuron signs (hyperreflexia), not symmetric proximal weakness with normal reflexes."
     },
     {
      "label": "C",
@@ -8714,13 +8714,13 @@
     },
     {
      "label": "C",
-     "text": "Perimysial inflammation with perivascular CD4+ T lymphocytic infiltration Choice",
+     "text": "Perimysial inflammation with perivascular CD4+ T lymphocytic infiltration",
      "correct": false,
-     "explanation": "This perimysial/perivascular CD4+ and B-cell pattern with perifascicular atrophy is dermatomyositis, which would have a skin rash. Explanation"
+     "explanation": "This perimysial/perivascular CD4+ and B-cell pattern with perifascicular atrophy is dermatomyositis, which would have a skin rash."
     },
     {
      "label": "D",
-     "text": "Muscle fiber necrosis with ✗ rare inflammatory cells",
+     "text": "Muscle fiber necrosis with rare inflammatory cells",
      "correct": false,
      "explanation": "Sparse inflammation with prominent necrosis suggests necrotizing autoimmune myopathy (e.g. statin- or anti-HMGCR-associated), not the dense endomysial CD8+ infiltrate of polymyositis."
     }
@@ -9416,33 +9416,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Thyrotoxicosis ✗",
+     "text": "Thyrotoxicosis",
      "correct": false,
-     "explanation": "hyrotoxicosis is associated with myasthenia gravis and thyroid eye disease, ot the facilitation pattern (improvement with repetition) of Lambert-Eaton yndrome."
+     "explanation": "Thyrotoxicosis is associated with myasthenia gravis and thyroid eye disease, not the facilitation pattern (improvement with repetition) of Lambert-Eaton syndrome."
     },
     {
      "label": "B",
-     "text": "Peptic ulcer ✗",
+     "text": "Peptic ulcer",
      "correct": false,
-     "explanation": "eptic ulcer disease has no association with Lambert-Eaton myasthenic yndrome."
+     "explanation": "Peptic ulcer disease has no association with Lambert-Eaton myasthenic syndrome."
     },
     {
      "label": "C",
-     "text": "Diabetes ✗",
+     "text": "Diabetes",
      "correct": false,
-     "explanation": "iabetes causes peripheral neuropathy but is not the paraneoplastic ssociation of LEMS."
+     "explanation": "Diabetes causes peripheral neuropathy but is not the paraneoplastic association of LEMS."
     },
     {
      "label": "D",
-     "text": "Stroke ✗",
+     "text": "Stroke",
      "correct": false,
-     "explanation": "troke causes focal upper-motor-neuron deficits, not a fluctuating atigable/facilitating weakness with absent reflexes."
+     "explanation": "Stroke causes focal upper-motor-neuron deficits, not a fluctuating fatigable/facilitating weakness with absent reflexes."
     },
     {
      "label": "E",
-     "text": "Lung cancer ✓",
+     "text": "Lung cancer",
      "correct": true,
-     "explanation": "eakness that IMPROVES with repeated testing (post-exercise facilitation), bsent/depressed reflexes and autonomic features indicate Lambert-Eaton yasthenic syndrome, caused by antibodies against presynaptic voltage-gated alcium channels. It is a paraneoplastic disorder most often associated with MALL-CELL LUNG CANCER, so the key association is lung cancer."
+     "explanation": "Weakness that IMPROVES with repeated testing (post-exercise facilitation), absent/depressed reflexes and autonomic features indicate Lambert-Eaton myasthenic syndrome, caused by antibodies against presynaptic voltage-gated calcium channels. It is a paraneoplastic disorder most often associated with SMALL-CELL LUNG CANCER, so the key association is lung cancer."
     }
    ],
    "keyPoint": "Weakness that IMPROVES with repetition + absent reflexes = Lambert-Eaton (anti-VGCC) = paraneoplastic with SMALL-CELL LUNG CANCER.",
@@ -9500,9 +9500,9 @@
    "choices": [
     {
      "label": "A",
-     "text": "Type II hypersensitivity reaction Choice",
+     "text": "Type II hypersensitivity reaction",
      "correct": true,
-     "explanation": "Fatigable ptosis and diplopia with proximal weakness that worsens on sustained effort and improves with rest, with normal reflexes and sensation, is myasthenia gravis. It is a TYPE II (antibody-mediated cytotoxic) hypersensitivity reaction: IgG autoantibodies against the postsynaptic nicotinic acetylcholine receptor cause complement-mediated receptor destruction and blockade, reducing functional receptors at the neuromuscular junction. Explanation"
+     "explanation": "Fatigable ptosis and diplopia with proximal weakness that worsens on sustained effort and improves with rest, with normal reflexes and sensation, is myasthenia gravis. It is a TYPE II (antibody-mediated cytotoxic) hypersensitivity reaction: IgG autoantibodies against the postsynaptic nicotinic acetylcholine receptor cause complement-mediated receptor destruction and blockade, reducing functional receptors at the neuromuscular junction."
     },
     {
      "label": "B",
@@ -9602,15 +9602,15 @@
     },
     {
      "label": "D",
-     "text": "Lambert-Eaton syndrome Choice V",
+     "text": "Lambert-Eaton syndrome",
      "correct": true,
-     "explanation": "Antibodies to presynaptic P/Q-type VOLTAGE-GATED CALCIUM CHANNELS reduce acetylcholine release. Hallmarks: proximal lower-limb weakness that IMPROVES WITH REPEATED ACTIVITY (post-exercise facilitation), hyporeflexia that recovers after exercise, AUTONOMIC features (dry mouth, sluggish pupils, impotence) and a strong association with SMALL-CELL LUNG CANCER (heavy smoker). A chest CT to look for malignancy is mandatory. Explanation"
+     "explanation": "Antibodies to presynaptic P/Q-type VOLTAGE-GATED CALCIUM CHANNELS reduce acetylcholine release. Hallmarks: proximal lower-limb weakness that IMPROVES WITH REPEATED ACTIVITY (post-exercise facilitation), hyporeflexia that recovers after exercise, AUTONOMIC features (dry mouth, sluggish pupils, impotence) and a strong association with SMALL-CELL LUNG CANCER (heavy smoker). A chest CT to look for malignancy is mandatory."
     },
     {
      "label": "E",
-     "text": "Dermatomyositis ✗",
+     "text": "Dermatomyositis",
      "correct": false,
-     "explanation": "ermatomyositis causes symmetrical proximal weakness with a heliotrope rash nd raised CK; no autonomic involvement and no facilitation phenomenon."
+     "explanation": "Dermatomyositis causes symmetrical proximal weakness with a heliotrope rash and raised CK; no autonomic involvement and no facilitation phenomenon."
     }
    ],
    "keyPoint": "Proximal weakness that IMPROVES with repeated effort + hyporeflexia + autonomic features + heavy smoker = Lambert-Eaton syndrome (anti-VGCC, paraneoplastic of SCLC).",
@@ -10004,33 +10004,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Serum ACTH and cortisol ✗ levels",
+     "text": "Serum ACTH and cortisol levels",
      "correct": false,
-     "explanation": "drenal function tests address Addison/Cushing disease, not fatigable euromuscular weakness."
+     "explanation": "Adrenal function tests address Addison/Cushing disease, not fatigable neuromuscular weakness."
     },
     {
      "label": "B",
-     "text": "Physiostigmine therapy ✗",
+     "text": "Physiostigmine therapy",
      "correct": false,
-     "explanation": "hysostigmine crosses the blood-brain barrier and is used for anticholinergic oxicity; the MG anticholinesterase is pyridostigmine, and the next step here is o CONFIRM the diagnosis first."
+     "explanation": "Physostigmine crosses the blood-brain barrier and is used for anticholinergic toxicity; the MG anticholinesterase is pyridostigmine, and the next step here is to CONFIRM the diagnosis first."
     },
     {
      "label": "C",
-     "text": "CT scan of the chest ✗",
+     "text": "CT scan of the chest",
      "correct": false,
-     "explanation": "T thorax screens for thymoma and is done AFTER MG is confirmed, not as he immediate confirmatory step."
+     "explanation": "CT thorax screens for thymoma and is done AFTER MG is confirmed, not as the immediate confirmatory step."
     },
     {
      "label": "D",
-     "text": "Acetylcholine Receptor ✓ (AChR) Antibodies testing",
+     "text": "Acetylcholine Receptor (AChR) Antibodies testing",
      "correct": true,
-     "explanation": "he decremental RNS response and fatigable ptosis confirm MYASTHENIA RAVIS clinically; the most appropriate confirmatory test is NTI-ACETYLCHOLINE RECEPTOR ANTIBODY testing, which is positive in 85% of generalised MG and is highly specific."
+     "explanation": "The decremental RNS response and fatigable ptosis confirm MYASTHENIA GRAVIS clinically; the most appropriate confirmatory test is ANTI-ACETYLCHOLINE RECEPTOR ANTIBODY testing, which is positive in ~85% of generalised MG and is highly specific."
     },
     {
      "label": "E",
-     "text": "Plasmapheresis ✗",
+     "text": "Plasmapheresis",
      "correct": false,
-     "explanation": "lasmapheresis is a treatment for crisis/refractory disease, not a diagnostic tep."
+     "explanation": "Plasmapheresis is a treatment for crisis/refractory disease, not a diagnostic step."
     }
    ],
    "keyPoint": "Anti-AChR antibody testing is the confirmatory investigation for myasthenia gravis.",
@@ -10100,9 +10100,9 @@
     },
     {
      "label": "C",
-     "text": "Aseptic meningitis Choice",
+     "text": "Aseptic meningitis",
      "correct": false,
-     "explanation": "Aseptic meningitis is essentially the same entity; the file's preferred single best answer is the more specific VIRAL meningitis given the lymphocytic, normal-glucose CSF. Explanation"
+     "explanation": "Aseptic meningitis is essentially the same entity; the file's preferred single best answer is the more specific VIRAL meningitis given the lymphocytic, normal-glucose CSF."
     },
     {
      "label": "D",
@@ -10178,7 +10178,7 @@
     },
     {
      "label": "B",
-     "text": "Rocky Mountain spotted fever ✗",
+     "text": "Rocky Mountain spotted fever",
      "correct": false,
      "explanation": "RMSF (Rickettsia rickettsii) gives a rash spreading from wrists/ankles with fever/headache but is not associated with a neutrophilic, low-glucose CSF or gram-negative diplococci."
     },
@@ -11516,33 +11516,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Carbamazepine ✗",
+     "text": "Carbamazepine",
      "correct": false,
-     "explanation": "arbamazepine can AGGRAVATE the myoclonic and absence seizures of JME nd is not appropriate first-line."
+     "explanation": "Carbamazepine can AGGRAVATE the myoclonic and absence seizures of JME and is not appropriate first-line."
     },
     {
      "label": "B",
-     "text": "Diazepam ✗",
+     "text": "Diazepam",
      "correct": false,
-     "explanation": "iazepam is a rescue/acute drug, not maintenance therapy for an epilepsy yndrome."
+     "explanation": "Diazepam is a rescue/acute drug, not maintenance therapy for an epilepsy syndrome."
     },
     {
      "label": "C",
-     "text": "Valproate ✓",
+     "text": "Valproate",
      "correct": true,
-     "explanation": "orning myoclonus + photosensitive GTCS + absences are classic JUVENILE YOCLONIC EPILEPSY. VALPROATE (sodium valproate) is the most ffective first-line agent for the multiple seizure types of JME (controls yoclonic, absence and GTCS); levetiracetam is an alternative, especially in omen of childbearing potential."
+     "explanation": "Morning myoclonus + photosensitive GTCS + absences are classic JUVENILE MYOCLONIC EPILEPSY. VALPROATE (sodium valproate) is the most effective first-line agent for the multiple seizure types of JME (controls myoclonic, absence and GTCS); levetiracetam is an alternative, especially in women of childbearing potential."
     },
     {
      "label": "D",
-     "text": "Ethosuximide ✗",
+     "text": "Ethosuximide",
      "correct": false,
-     "explanation": "thosuximide treats ABSENCE seizures only and does not control the yoclonic or tonic-clonic seizures of JME."
+     "explanation": "Ethosuximide treats ABSENCE seizures only and does not control the myoclonic or tonic-clonic seizures of JME."
     },
     {
      "label": "E",
-     "text": "Phenytoin ✗",
+     "text": "Phenytoin",
      "correct": false,
-     "explanation": "henytoin can worsen myoclonus and is not first-line for generalised epilepsy yndromes like JME."
+     "explanation": "Phenytoin can worsen myoclonus and is not first-line for generalised epilepsy syndromes like JME."
     }
    ],
    "keyPoint": "Valproate is first-line for juvenile myoclonic epilepsy (covers myoclonic, absence and GTCS).",
@@ -11618,15 +11618,15 @@
     },
     {
      "label": "D",
-     "text": "Generalized tonic-clonic seizure Choice Ve",
+     "text": "Generalized tonic-clonic seizure",
      "correct": false,
-     "explanation": "A primary GTCS has NO focal onset/aura; this seizure clearly started focally (aura + facial twitching) before generalising. planation"
+     "explanation": "A primary GTCS has NO focal onset/aura; this seizure clearly started focally (aura + facial twitching) before generalising."
     },
     {
      "label": "E",
-     "text": "Convulsive syncope ✗ W",
+     "text": "Convulsive syncope",
      "correct": false,
-     "explanation": "vulsive syncope has brief jerks after a faint with rapid recovery and no focal a or prolonged postictal confusion."
+     "explanation": "Convulsive syncope has brief jerks after a faint with rapid recovery and no focal aura or prolonged postictal confusion."
     }
    ],
    "keyPoint": "A focal aura/onset that then becomes a bilateral convulsion = focal to bilateral tonic-clonic seizure.",
@@ -11942,21 +11942,21 @@
     },
     {
      "label": "B",
-     "text": "Diabetic neuropathy Choice",
+     "text": "Diabetic neuropathy",
      "correct": false,
-     "explanation": "Diabetic polyneuropathy is chronic and slowly progressive; a rapidly evolving (1-week) ascending sensorimotor neuropathy with areflexia is GBS. planation"
+     "explanation": "Diabetic polyneuropathy is chronic and slowly progressive; a rapidly evolving (1-week) ascending sensorimotor neuropathy with areflexia is GBS."
     },
     {
      "label": "C",
-     "text": "Guillain-Barre syndrome ✓",
+     "text": "Guillain-Barre syndrome",
      "correct": true,
-     "explanation": "APIDLY PROGRESSIVE (1 week) symmetrical ascending SORIMOTOR neuropathy with STOCKING-GLOVE sensory loss and FLEXIA is GUILLAIN-BARRE SYNDROME. Normal ESR/CK/CXR exclude lammatory myopathy and other mimics; confirm with CSF albuminocytologic sociation and nerve conduction studies."
+     "explanation": "A RAPIDLY PROGRESSIVE (1 week) symmetrical ascending SENSORIMOTOR neuropathy with STOCKING-GLOVE sensory loss and AREFLEXIA is GUILLAIN-BARRE SYNDROME. Normal ESR/CK/CXR exclude inflammatory myopathy and other mimics; confirm with CSF albuminocytologic dissociation and nerve conduction studies."
     },
     {
      "label": "D",
-     "text": "Myelopathy ✗",
+     "text": "Myelopathy",
      "correct": false,
-     "explanation": "yelopathy (cord lesion) gives UMN signs (hyperreflexia, upgoing plantars) a sensory level, not the global areflexia and stocking-glove pattern seen e."
+     "explanation": "A myelopathy (cord lesion) gives UMN signs (hyperreflexia, upgoing plantars) and a sensory level, not the global areflexia and stocking-glove pattern seen here."
     }
    ],
    "keyPoint": "Rapid (days-weeks) ascending sensorimotor neuropathy with areflexia = Guillain-Barre syndrome.",
@@ -12620,7 +12620,7 @@
     },
     {
      "label": "C",
-     "text": "Neuronal degeneration due to ✓ alpha-synuclein protein misfolding",
+     "text": "Neuronal degeneration due to alpha-synuclein protein misfolding",
      "correct": true,
      "explanation": "This is Parkinson's disease. The pathological hallmark is degeneration of dopaminergic neurons in the substantia nigra with intracytoplasmic LEWY BODIES, which are aggregates of misfolded ALPHA-SYNUCLEIN protein. This causes the resting tremor, rigidity, bradykinesia, and shuffling gait."
     },
@@ -12938,33 +12938,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Clonazepam ✗",
+     "text": "Clonazepam",
      "correct": false,
-     "explanation": "benzodiazepine does not treat the bradykinesia/resting tremor of PD."
+     "explanation": "A benzodiazepine does not treat the bradykinesia/resting tremor of PD."
     },
     {
      "label": "B",
-     "text": "Methimazole ✗",
+     "text": "Methimazole",
      "correct": false,
-     "explanation": "ethimazole treats hyperthyroidism; irrelevant here."
+     "explanation": "Methimazole treats hyperthyroidism; irrelevant here."
     },
     {
      "label": "C",
-     "text": "Propranolol ✗",
+     "text": "Propranolol",
      "correct": false,
-     "explanation": "ropranolol treats essential (action) tremor, but this is a RESTING tremor of D, so it would not help."
+     "explanation": "Propranolol treats essential (action) tremor, but this is a RESTING tremor of PD, so it would not help."
     },
     {
      "label": "D",
-     "text": "Trihexyphenidyl ✗",
+     "text": "Trihexyphenidyl",
      "correct": false,
-     "explanation": "n anticholinergic can help PD tremor in younger patients but does not address radykinesia, and a non-ergot dopamine agonist is the typical first-line choice in atients under 65."
+     "explanation": "An anticholinergic can help PD tremor in younger patients but does not address bradykinesia, and a non-ergot dopamine agonist is the typical first-line choice in patients under 65."
     },
     {
      "label": "E",
-     "text": "Pramipexole ✓",
+     "text": "Pramipexole",
      "correct": true,
-     "explanation": "his is early Parkinson's disease (asymmetric resting tremor abolished by ction, bradykinesia) in a relatively YOUNG patient (<65). A NON-ERGOT OPAMINE AGONIST such as PRAMIPEXOLE (or ropinirole) is the typical irst-line treatment in younger patients to delay levodopa-related motor omplications."
+     "explanation": "This is early Parkinson's disease (asymmetric resting tremor abolished by action, bradykinesia) in a relatively YOUNG patient (<65). A NON-ERGOT DOPAMINE AGONIST such as PRAMIPEXOLE (or ropinirole) is the typical first-line treatment in younger patients to delay levodopa-related motor complications."
     }
    ],
    "keyPoint": "In younger PD patients (<65), a non-ergot dopamine agonist (pramipexole/ropinirole) is typical first-line to delay levodopa complications.",
@@ -13352,33 +13352,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Intravenous ✓ methylprednisolone 1 g daily for 3 days",
+     "text": "Intravenous methylprednisolone 1 g daily for 3 days",
      "correct": true,
-     "explanation": "or an ACUTE RELAPSE/active worsening of MS, the treatment is high-dose IV ORTICOSTEROIDS (methylprednisolone), which hasten recovery. Given ecent progressive weakness and optic neuritis, this is the best next step."
+     "explanation": "For an ACUTE RELAPSE/active worsening of MS, the treatment is high-dose IV CORTICOSTEROIDS (methylprednisolone), which hasten recovery. Given recent progressive weakness and optic neuritis, this is the best next step."
     },
     {
      "label": "B",
-     "text": "Oral cyclophosphamide ✗",
+     "text": "Oral cyclophosphamide",
      "correct": false,
-     "explanation": "yclophosphamide is not a standard first-line MS treatment; reserved for ggressive refractory cases."
+     "explanation": "Cyclophosphamide is not a standard first-line MS treatment; reserved for aggressive refractory cases."
     },
     {
      "label": "C",
-     "text": "Oral anticholinergics for the ✗ urinary incontinence and observation of the demyelinating process",
+     "text": "Oral anticholinergics for the urinary incontinence and observation of the demyelinating process",
      "correct": false,
-     "explanation": "nticholinergics treat the neurogenic bladder symptomatically but ignore the ctive demyelinating relapse that requires steroids."
+     "explanation": "Anticholinergics treat the neurogenic bladder symptomatically but ignore the active demyelinating relapse that requires steroids."
     },
     {
      "label": "D",
-     "text": "Interferon-beta ✗",
+     "text": "Interferon-beta",
      "correct": false,
-     "explanation": "nterferon-beta is disease-modifying (prevents future relapses) but does not reat the current acute relapse."
+     "explanation": "Interferon-beta is disease-modifying (prevents future relapses) but does not treat the current acute relapse."
     },
     {
      "label": "E",
-     "text": "Intravenous mitoxantrone ✗ every 3 months",
+     "text": "Intravenous mitoxantrone every 3 months",
      "correct": false,
-     "explanation": "itoxantrone is reserved for aggressive/worsening MS; not the immediate anagement of an acute relapse."
+     "explanation": "Mitoxantrone is reserved for aggressive/worsening MS; not the immediate management of an acute relapse."
     }
    ],
    "keyPoint": "Acute MS relapse with progressive deficit = IV methylprednisolone.",
@@ -13454,15 +13454,15 @@
     },
     {
      "label": "D",
-     "text": "Identification of gram-positive cocci in groups on blood culture Choice Ve",
+     "text": "Identification of gram-positive cocci in groups on blood culture",
      "correct": false,
-     "explanation": "Suggests staphylococcal infection/abscess, not MS. anation"
+     "explanation": "Suggests staphylococcal infection/abscess, not MS."
     },
     {
      "label": "E",
-     "text": "Detection of high-affinity ✗ W antibodies to dsDNA in serum",
+     "text": "Detection of high-affinity antibodies to dsDNA in serum",
      "correct": false,
-     "explanation": "dsDNA is specific for SLE; not MS."
+     "explanation": "Anti-dsDNA is specific for SLE; not MS."
     }
    ],
    "keyPoint": "CSF oligoclonal bands (intrathecal IgG) support a diagnosis of MS.",
@@ -13940,33 +13940,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Myasthenia gravis (MG) ✗",
+     "text": "Myasthenia gravis (MG)",
      "correct": false,
-     "explanation": "G can mimic ocular palsies but produces fatigable weakness; the specific INO attern (failure of adduction of one eye with abducting nystagmus of the other) ocalizes to the MLF, suggesting MS."
+     "explanation": "MG can mimic ocular palsies but produces fatigable weakness; the specific INO pattern (failure of adduction of one eye with abducting nystagmus of the other) localizes to the MLF, suggesting MS."
     },
     {
      "label": "B",
-     "text": "Vertigo ✗",
+     "text": "Vertigo",
      "correct": false,
-     "explanation": "ertigo is a symptom of imbalance, not a cause of an adduction deficit with bducting nystagmus."
+     "explanation": "Vertigo is a symptom of imbalance, not a cause of an adduction deficit with abducting nystagmus."
     },
     {
      "label": "C",
-     "text": "Cerebellar syndrome ✗",
+     "text": "Cerebellar syndrome",
      "correct": false,
-     "explanation": "erebellar disease causes ataxia and gaze-evoked nystagmus, not an isolated dduction failure (INO)."
+     "explanation": "Cerebellar disease causes ataxia and gaze-evoked nystagmus, not an isolated adduction failure (INO)."
     },
     {
      "label": "D",
-     "text": "MS ✓",
+     "text": "MS",
      "correct": true,
-     "explanation": "he described INTERNUCLEAR OPHTHALMOPLEGIA (failure of adduction of he left eye with abducting nystagmus of the right on right gaze) is due to an LF lesion. In a young patient this is classically caused by MULTIPLE CLEROSIS."
+     "explanation": "The described INTERNUCLEAR OPHTHALMOPLEGIA (failure of adduction of the left eye with abducting nystagmus of the right on right gaze) is due to an MLF lesion. In a young patient this is classically caused by MULTIPLE SCLEROSIS."
     },
     {
      "label": "E",
-     "text": "Peripheral neuropathy ✗",
+     "text": "Peripheral neuropathy",
      "correct": false,
-     "explanation": "eripheral neuropathy affects limbs, not the central MLF pathway controlling onjugate gaze."
+     "explanation": "Peripheral neuropathy affects limbs, not the central MLF pathway controlling conjugate gaze."
     }
    ],
    "keyPoint": "INO (adduction failure + abducting nystagmus) in a young patient = MS.",
@@ -14354,27 +14354,27 @@
    "choices": [
     {
      "label": "A",
-     "text": "Creatine kinase level ✗",
+     "text": "Creatine kinase level",
      "correct": false,
-     "explanation": "K assesses myopathy; this is a sensory neuropathy with normal strength, so K is not diagnostic."
+     "explanation": "CK assesses myopathy; this is a sensory neuropathy with normal strength, so CK is not diagnostic."
     },
     {
      "label": "B",
-     "text": "Fasting blood glucose level ✓",
+     "text": "Fasting blood glucose level",
      "correct": true,
-     "explanation": "he stocking-distribution sensory loss with fatigue, blurry vision, nocturia, and besity points to UNDIAGNOSED DIABETES MELLITUS causing a distal ymmetric sensory polyneuropathy. A FASTING BLOOD GLUCOSE stablishes the diagnosis."
+     "explanation": "The stocking-distribution sensory loss with fatigue, blurry vision, nocturia, and obesity points to UNDIAGNOSED DIABETES MELLITUS causing a distal symmetric sensory polyneuropathy. A FASTING BLOOD GLUCOSE establishes the diagnosis."
     },
     {
      "label": "C",
-     "text": "Lumbar puncture and ✗ cerebrospinal fluid analysis",
+     "text": "Lumbar puncture and cerebrospinal fluid analysis",
      "correct": false,
-     "explanation": "P is for CNS/inflammatory neuropathies (e.g., GBS); not indicated for a chronic istal diabetic-pattern neuropathy."
+     "explanation": "LP is for CNS/inflammatory neuropathies (e.g., GBS); not indicated for a chronic distal diabetic-pattern neuropathy."
     },
     {
      "label": "D",
-     "text": "Sural nerve biopsy ✗",
+     "text": "Sural nerve biopsy",
      "correct": false,
-     "explanation": "erve biopsy is reserved for atypical/vasculitic neuropathies; unnecessary hen diabetes is the obvious cause."
+     "explanation": "Nerve biopsy is reserved for atypical/vasculitic neuropathies; unnecessary when diabetes is the obvious cause."
     }
    ],
    "keyPoint": "Distal symmetric stocking-glove sensory neuropathy in an obese patient with polyuria/blurry vision = diabetes; check fasting glucose.",
@@ -14444,9 +14444,9 @@
     },
     {
      "label": "C",
-     "text": "Thiamine depletion from intravenous glucose administration Choice",
+     "text": "Thiamine depletion from intravenous glucose administration",
      "correct": false,
-     "explanation": "Thiamine deficiency causes Wernicke/wet beriberi, not this acute distal areflexic sensorimotor picture in the ICU. Explanation"
+     "explanation": "Thiamine deficiency causes Wernicke/wet beriberi, not this acute distal areflexic sensorimotor picture in the ICU."
     },
     {
      "label": "D",
@@ -14612,7 +14612,7 @@
     },
     {
      "label": "C",
-     "text": "Progressive muscular atrophy ✗ caused by spinal degeneration",
+     "text": "Progressive muscular atrophy caused by spinal degeneration",
      "correct": false,
      "explanation": "This describes a motor neuron disease variant, not an NMJ disorder with fatigability."
     },
@@ -14702,7 +14702,7 @@
     },
     {
      "label": "D",
-     "text": "Elevated creatine kinase (CK) ✗ WRO",
+     "text": "Elevated creatine kinase (CK)",
      "correct": false,
      "explanation": "Elevated CK indicates myopathy; GBS is a neuropathy with normal CK."
     },
@@ -14768,33 +14768,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Hyperglycemia ✓",
+     "text": "Hyperglycemia",
      "correct": true,
-     "explanation": "chronic, SYMMETRIC, distal STOCKING-GLOVE sensory polyneuropathy ith absent ankle reflexes in an elderly patient is most commonly DIABETIC. he expected lab abnormality is HYPERGLYCEMIA (undiagnosed diabetes ellitus, the most common cause of distal symmetric polyneuropathy)."
+     "explanation": "A chronic, SYMMETRIC, distal STOCKING-GLOVE sensory polyneuropathy with absent ankle reflexes in an elderly patient is most commonly DIABETIC. The expected lab abnormality is HYPERGLYCEMIA (undiagnosed diabetes mellitus, the most common cause of distal symmetric polyneuropathy)."
     },
     {
      "label": "B",
-     "text": "Macrocytic anemia with a low ✗ vitamin B12 level",
+     "text": "Macrocytic anemia with a low vitamin B12 level",
      "correct": false,
-     "explanation": "12 deficiency (subacute combined degeneration) typically impairs JOINT OSITION and VIBRATION sense (dorsal columns); here these are preserved, aking B12 less likely."
+     "explanation": "B12 deficiency (subacute combined degeneration) typically impairs JOINT POSITION and VIBRATION sense (dorsal columns); here these are preserved, making B12 less likely."
     },
     {
      "label": "C",
-     "text": "Oligoclonal bands on CSF ✗ analysis",
+     "text": "Oligoclonal bands on CSF analysis",
      "correct": false,
-     "explanation": "ligoclonal bands indicate MS, a CNS disease, not a length-dependent eripheral neuropathy."
+     "explanation": "Oligoclonal bands indicate MS, a CNS disease, not a length-dependent peripheral neuropathy."
     },
     {
      "label": "D",
-     "text": "Low T4, elevated TSH ✗",
+     "text": "Low T4, elevated TSH",
      "correct": false,
-     "explanation": "ypothyroid neuropathy is possible but far less common than diabetic europathy as the cause of distal symmetric polyneuropathy."
+     "explanation": "Hypothyroid neuropathy is possible but far less common than diabetic neuropathy as the cause of distal symmetric polyneuropathy."
     },
     {
      "label": "E",
-     "text": "Positive acetylcholine ✗ receptor antibody titers",
+     "text": "Positive acetylcholine receptor antibody titers",
      "correct": false,
-     "explanation": "nti-AChR indicates myasthenia gravis (fatigable weakness, no sensory loss), ot a sensory neuropathy."
+     "explanation": "Anti-AChR indicates myasthenia gravis (fatigable weakness, no sensory loss), not a sensory neuropathy."
     }
    ],
    "keyPoint": "Distal symmetric sensory polyneuropathy with preserved proprioception/vibration is most commonly diabetic - check glucose.",
@@ -14858,27 +14858,27 @@
     },
     {
      "label": "B",
-     "text": "Multiple small infarcts in the basal ganglia Choice V",
+     "text": "Multiple small infarcts in the basal ganglia",
      "correct": false,
-     "explanation": "Basal ganglia lacunes cause motor/sensory deficits, not isolated unilateral cerebellar signs; and the over-anticoagulation favours hemorrhage. planation"
+     "explanation": "Basal ganglia lacunes cause motor/sensory deficits, not isolated unilateral cerebellar signs; and the over-anticoagulation favours hemorrhage."
     },
     {
      "label": "C",
-     "text": "Cerebellar degeneration due ✗ to chronic alcohol abuse",
+     "text": "Cerebellar degeneration due to chronic alcohol abuse",
      "correct": false,
-     "explanation": "oholic cerebellar degeneration is chronic, symmetric (midline/gait), and gressive - not an acute unilateral onset over 3 days."
+     "explanation": "Alcoholic cerebellar degeneration is chronic, symmetric (midline/gait), and progressive - not an acute unilateral onset over 3 days."
     },
     {
      "label": "D",
-     "text": "Posterior column ✗ degeneration as a result of vitamin deficiency",
+     "text": "Posterior column degeneration as a result of vitamin deficiency",
      "correct": false,
-     "explanation": "ration/proprioception are NORMAL here, excluding posterior column ease."
+     "explanation": "Vibration/proprioception are NORMAL here, excluding posterior column disease."
     },
     {
      "label": "E",
-     "text": "Combined effects of ✗ oxycodone and ethanol",
+     "text": "Combined effects of oxycodone and ethanol",
      "correct": false,
-     "explanation": "ative effects cause global depression, not focal unilateral cerebellar signs."
+     "explanation": "Sedative effects cause global depression, not focal unilateral cerebellar signs."
     }
    ],
    "keyPoint": "Acute unilateral cerebellar signs in an over-anticoagulated patient (high INR) = cerebellar hemorrhage.",
@@ -15272,33 +15272,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Tensilon test ✓",
+     "text": "Tensilon test",
      "correct": true,
-     "explanation": "atigable weakness worse with exertion and later in the day, bulbar symptoms, nd improvement with the ICE-PACK TEST are typical of myasthenia gravis. he TENSILON (edrophonium) test - a short-acting acetylcholinesterase nhibitor that transiently improves strength - supports the diagnosis (anti-AChR ntibodies and repetitive nerve stimulation are confirmatory). Of the listed ptions, the Tensilon test is the bedside diagnostic test for MG."
+     "explanation": "Fatigable weakness worse with exertion and later in the day, bulbar symptoms, and improvement with the ICE-PACK TEST are typical of myasthenia gravis. The TENSILON (edrophonium) test - a short-acting acetylcholinesterase inhibitor that transiently improves strength - supports the diagnosis (anti-AChR antibodies and repetitive nerve stimulation are confirmatory). Of the listed options, the Tensilon test is the bedside diagnostic test for MG."
     },
     {
      "label": "B",
-     "text": "Serum CK ✗",
+     "text": "Serum CK",
      "correct": false,
-     "explanation": "reatine kinase reflects muscle-fibre damage in myopathies and is normal in yasthenia gravis, which is a neuromuscular-junction disorder."
+     "explanation": "Creatine kinase reflects muscle-fibre damage in myopathies and is normal in myasthenia gravis, which is a neuromuscular-junction disorder."
     },
     {
      "label": "C",
-     "text": "Nerve conduction study ✗",
+     "text": "Nerve conduction study",
      "correct": false,
-     "explanation": "tandard nerve conduction studies are usually normal in MG; it is REPETITIVE erve stimulation (showing a decremental response) or single-fibre EMG that elps, not a routine NCS."
+     "explanation": "Standard nerve conduction studies are usually normal in MG; it is REPETITIVE nerve stimulation (showing a decremental response) or single-fibre EMG that helps, not a routine NCS."
     },
     {
      "label": "D",
-     "text": "CSF analysis ✗",
+     "text": "CSF analysis",
      "correct": false,
-     "explanation": "SF analysis has no role in diagnosing myasthenia gravis."
+     "explanation": "CSF analysis has no role in diagnosing myasthenia gravis."
     },
     {
      "label": "E",
-     "text": "EEG ✗",
+     "text": "EEG",
      "correct": false,
-     "explanation": "EG evaluates cortical/seizure activity and is irrelevant to a euromuscular-junction disorder like MG."
+     "explanation": "EEG evaluates cortical/seizure activity and is irrelevant to a neuromuscular-junction disorder like MG."
     }
    ],
    "keyPoint": "Fatigable weakness + ice-pack test improvement = myasthenia gravis; Tensilon (edrophonium) test supports the diagnosis.",
@@ -15374,9 +15374,9 @@
     },
     {
      "label": "D",
-     "text": "IV carbamazepine Choice",
+     "text": "IV carbamazepine",
      "correct": false,
-     "explanation": "Carbamazepine is an oral maintenance antiepileptic with no IV formulation for aborting status epilepticus. Explanation"
+     "explanation": "Carbamazepine is an oral maintenance antiepileptic with no IV formulation for aborting status epilepticus."
     },
     {
      "label": "E",
@@ -15872,33 +15872,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Lumbar puncture (if CT is ✓ negative and high suspicion)",
+     "text": "Lumbar puncture (if CT is negative and high suspicion)",
      "correct": true,
-     "explanation": "thunderclap 'worst-ever' headache suggests subarachnoid haemorrhage. lthough this CT already shows blood in the basal cisterns, the principle being ested is the diagnostic pathway: if the non-contrast CT is NEGATIVE but linical suspicion remains high, the next step is LUMBAR PUNCTURE (after 12 hours) to look for xanthochromia/red cells. (When CT is positive, as here, ne proceeds directly to CT/catheter angiography to localise the aneurysm.) Of he listed options, LP is the recognised next diagnostic step for suspected SAH ith a negative CT."
+     "explanation": "A thunderclap 'worst-ever' headache suggests subarachnoid haemorrhage. Although this CT already shows blood in the basal cisterns, the principle being tested is the diagnostic pathway: if the non-contrast CT is NEGATIVE but clinical suspicion remains high, the next step is LUMBAR PUNCTURE (after ~12 hours) to look for xanthochromia/red cells. (When CT is positive, as here, one proceeds directly to CT/catheter angiography to localise the aneurysm.) Of the listed options, LP is the recognised next diagnostic step for suspected SAH with a negative CT."
     },
     {
      "label": "B",
-     "text": "Start aspirin ✗",
+     "text": "Start aspirin",
      "correct": false,
-     "explanation": "spirin is contraindicated in haemorrhagic stroke/SAH because it worsens leeding."
+     "explanation": "Aspirin is contraindicated in haemorrhagic stroke/SAH because it worsens bleeding."
     },
     {
      "label": "C",
-     "text": "Neurosurgical clipping ✗",
+     "text": "Neurosurgical clipping",
      "correct": false,
-     "explanation": "lipping is definitive treatment of the aneurysm but follows angiographic ocalisation; it is not the immediate next diagnostic step."
+     "explanation": "Clipping is definitive treatment of the aneurysm but follows angiographic localisation; it is not the immediate next diagnostic step."
     },
     {
      "label": "D",
-     "text": "MRI brain ✗",
+     "text": "MRI brain",
      "correct": false,
-     "explanation": "RI is less sensitive than CT for acute subarachnoid blood and is not the tandard next step; CT then LP/angiography is the pathway."
+     "explanation": "MRI is less sensitive than CT for acute subarachnoid blood and is not the standard next step; CT then LP/angiography is the pathway."
     },
     {
      "label": "E",
-     "text": "EEG ✗",
+     "text": "EEG",
      "correct": false,
-     "explanation": "EG has no role in the diagnosis of subarachnoid haemorrhage."
+     "explanation": "EEG has no role in the diagnosis of subarachnoid haemorrhage."
     }
    ],
    "keyPoint": "Suspected SAH with a NEGATIVE CT: do lumbar puncture (xanthochromia after ~12 h). If CT positive, proceed to angiography.",
@@ -16208,33 +16208,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Oral acyclovir alone ✗",
+     "text": "Oral acyclovir alone",
      "correct": false,
-     "explanation": "ntiviral alone is not first-line; corticosteroids are the key treatment, with ntivirals added only as adjunct in severe cases."
+     "explanation": "Antiviral alone is not first-line; corticosteroids are the key treatment, with antivirals added only as adjunct in severe cases."
     },
     {
      "label": "B",
-     "text": "High-dose oral prednisone +/- ✓ acyclovir",
+     "text": "High-dose oral prednisone +/- acyclovir",
      "correct": true,
-     "explanation": "cute unilateral LOWER-motor-neuron facial weakness with NO forehead paring and inability to close the eye, with no other neurological signs, is ELL'S PALSY (idiopathic facial nerve palsy). Best initial treatment is a course f HIGH-DOSE ORAL CORTICOSTEROIDS (prednisolone) started early within 72 hours), which improves recovery; an antiviral (aciclovir) may be dded in severe cases. Eye protection (lubrication, taping) is essential."
+     "explanation": "Acute unilateral LOWER-motor-neuron facial weakness with NO forehead sparing and inability to close the eye, with no other neurological signs, is BELL'S PALSY (idiopathic facial nerve palsy). Best initial treatment is a course of HIGH-DOSE ORAL CORTICOSTEROIDS (prednisolone) started early (within 72 hours), which improves recovery; an antiviral (aciclovir) may be added in severe cases. Eye protection (lubrication, taping) is essential."
     },
     {
      "label": "C",
-     "text": "MRI brain ✗",
+     "text": "MRI brain",
      "correct": false,
-     "explanation": "maging is reserved for atypical features or no recovery; classic Bell's palsy is a linical diagnosis and does not need urgent MRI before treatment."
+     "explanation": "Imaging is reserved for atypical features or no recovery; classic Bell's palsy is a clinical diagnosis and does not need urgent MRI before treatment."
     },
     {
      "label": "D",
-     "text": "Physical therapy only ✗",
+     "text": "Physical therapy only",
      "correct": false,
-     "explanation": "hysiotherapy/facial exercises are adjunctive; they do not replace early orticosteroids that improve outcome."
+     "explanation": "Physiotherapy/facial exercises are adjunctive; they do not replace early corticosteroids that improve outcome."
     },
     {
      "label": "E",
-     "text": "No treatment ✗",
+     "text": "No treatment",
      "correct": false,
-     "explanation": "lthough many recover, early steroids significantly improve the chance of omplete recovery, so 'no treatment' is suboptimal."
+     "explanation": "Although many recover, early steroids significantly improve the chance of complete recovery, so 'no treatment' is suboptimal."
     }
    ],
    "keyPoint": "Bell's palsy (LMN facial palsy, no forehead sparing): early high-dose oral corticosteroids (+/- antiviral) + eye protection.",
@@ -16310,15 +16310,15 @@
     },
     {
      "label": "D",
-     "text": "Sinus headache Choice",
+     "text": "Sinus headache",
      "correct": false,
-     "explanation": "Sinus headache features facial pressure/pain over the sinuses with nasal symptoms and is usually related to sinusitis, not a stress-related band-like headache. Explanation"
+     "explanation": "Sinus headache features facial pressure/pain over the sinuses with nasal symptoms and is usually related to sinusitis, not a stress-related band-like headache."
     },
     {
      "label": "E",
-     "text": "Temporal arteritis ✗",
+     "text": "Temporal arteritis",
      "correct": false,
-     "explanation": "emporal arteritis occurs in older patients with scalp tenderness, jaw laudication and raised ESR, not a young woman with a stress-related bilateral che."
+     "explanation": "Temporal arteritis occurs in older patients with scalp tenderness, jaw claudication and raised ESR, not a young woman with a stress-related bilateral ache."
     }
    ],
    "keyPoint": "Bilateral, band-like, non-pulsating headache without nausea/photophobia, worse with stress = tension-type headache.",
@@ -16640,33 +16640,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Migraine ✗",
+     "text": "Migraine",
      "correct": false,
-     "explanation": "igraine attacks last 4-72 hours, are throbbing with photophobia/nausea, and ack the strict autonomic features and daily clustering described here."
+     "explanation": "Migraine attacks last 4-72 hours, are throbbing with photophobia/nausea, and lack the strict autonomic features and daily clustering described here."
     },
     {
      "label": "B",
-     "text": "Cluster headache ✓",
+     "text": "Cluster headache",
      "correct": true,
-     "explanation": "evere strictly unilateral periorbital pain, short attacks (15 min-3h), occurring in aily clusters, with ipsilateral autonomic features (lacrimation, nasal congestion, tosis/miosis) is classic cluster headache. Acute treatment is high-flow oxygen nd subcutaneous sumatriptan."
+     "explanation": "Severe strictly unilateral periorbital pain, short attacks (15 min-3h), occurring in daily clusters, with ipsilateral autonomic features (lacrimation, nasal congestion, ptosis/miosis) is classic cluster headache. Acute treatment is high-flow oxygen and subcutaneous sumatriptan."
     },
     {
      "label": "C",
-     "text": "Sinusitis ✗",
+     "text": "Sinusitis",
      "correct": false,
-     "explanation": "inusitis causes facial pressure with purulent rhinorrhoea and fever, not iscrete severe daily attacks with cranial autonomic features."
+     "explanation": "Sinusitis causes facial pressure with purulent rhinorrhoea and fever, not discrete severe daily attacks with cranial autonomic features."
     },
     {
      "label": "D",
-     "text": "Temporal arteritis ✗",
+     "text": "Temporal arteritis",
      "correct": false,
-     "explanation": "emporal arteritis occurs in patients >50, with scalp tenderness, jaw laudication and raised ESR, not periorbital autonomic attacks."
+     "explanation": "Temporal arteritis occurs in patients >50, with scalp tenderness, jaw claudication and raised ESR, not periorbital autonomic attacks."
     },
     {
      "label": "E",
-     "text": "Tension headache ✗",
+     "text": "Tension headache",
      "correct": false,
-     "explanation": "ension headache is bilateral, band-like, mild-moderate, without autonomic eatures."
+     "explanation": "Tension headache is bilateral, band-like, mild-moderate, without autonomic features."
     }
    ],
    "keyPoint": "Cluster headache: severe unilateral periorbital pain in clusters with ipsilateral autonomic features (lacrimation, rhinorrhoea, ptosis). Treat acutely with 100% oxygen + SC sumatriptan.",
@@ -17168,33 +17168,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Lambert-Eaton syndrome ✗",
+     "text": "Lambert-Eaton syndrome",
      "correct": false,
-     "explanation": "EMS causes proximal weakness that IMPROVES with repeated effort, with utonomic features and association with small-cell lung cancer; ocular/bulbar atigability and a positive Tensilon test favour myasthenia."
+     "explanation": "LEMS causes proximal weakness that IMPROVES with repeated effort, with autonomic features and association with small-cell lung cancer; ocular/bulbar fatigability and a positive Tensilon test favour myasthenia."
     },
     {
      "label": "B",
-     "text": "Myasthenia gravis ✓",
+     "text": "Myasthenia gravis",
      "correct": true,
-     "explanation": "atigable weakness worse at end of day, bilateral ptosis, diplopia, bulbar chewing) weakness, and a positive edrophonium (Tensilon) test are classic for yasthenia gravis (anti-AChR antibodies, NMJ disorder). Confirm with nti-AChR antibodies and check for thymoma."
+     "explanation": "Fatigable weakness worse at end of day, bilateral ptosis, diplopia, bulbar (chewing) weakness, and a positive edrophonium (Tensilon) test are classic for myasthenia gravis (anti-AChR antibodies, NMJ disorder). Confirm with anti-AChR antibodies and check for thymoma."
     },
     {
      "label": "C",
-     "text": "Multiple sclerosis ✗",
+     "text": "Multiple sclerosis",
      "correct": false,
-     "explanation": "S causes CNS demyelination (optic neuritis, sensory/motor signs isseminated in space/time), not the fatigable NMJ pattern with a positive ensilon test."
+     "explanation": "MS causes CNS demyelination (optic neuritis, sensory/motor signs disseminated in space/time), not the fatigable NMJ pattern with a positive Tensilon test."
     },
     {
      "label": "D",
-     "text": "Guillain-Barre syndrome ✗",
+     "text": "Guillain-Barre syndrome",
      "correct": false,
-     "explanation": "BS is acute ascending areflexic paralysis post-infection, not chronic fatigable cular/bulbar weakness."
+     "explanation": "GBS is acute ascending areflexic paralysis post-infection, not chronic fatigable ocular/bulbar weakness."
     },
     {
      "label": "E",
-     "text": "Brain tumour ✗",
+     "text": "Brain tumour",
      "correct": false,
-     "explanation": "tumour would cause fixed/progressive focal deficits, not diurnally fluctuating atigable weakness with a positive Tensilon test."
+     "explanation": "A tumour would cause fixed/progressive focal deficits, not diurnally fluctuating fatigable weakness with a positive Tensilon test."
     }
    ],
    "keyPoint": "Fatigable ptosis/diplopia worse by evening + positive Tensilon test = myasthenia gravis (anti-AChR antibodies; screen for thymoma).",
@@ -17270,9 +17270,9 @@
     },
     {
      "label": "C",
-     "text": "Muscle biopsy Choice",
+     "text": "Muscle biopsy",
      "correct": false,
-     "explanation": "Muscle biopsy is for myopathies, not myasthenia (a neuromuscular junction disorder). Explanation"
+     "explanation": "Muscle biopsy is for myopathies, not myasthenia (a neuromuscular junction disorder)."
     },
     {
      "label": "D",
@@ -17708,33 +17708,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "IV ceftriaxone ✗",
+     "text": "IV ceftriaxone",
      "correct": false,
-     "explanation": "eftriaxone treats bacterial meningitis; it does not cover HSV. (It may be o-administered until bacterial cause excluded, but aciclovir is the key treatment ere.)"
+     "explanation": "Ceftriaxone treats bacterial meningitis; it does not cover HSV. (It may be co-administered until bacterial cause excluded, but aciclovir is the key treatment here.)"
     },
     {
      "label": "B",
-     "text": "IV acyclovir ✓",
+     "text": "IV acyclovir",
      "correct": true,
-     "explanation": "mpirical IV aciclovir must be started immediately in any suspected viral (HSV) ncephalitis because early treatment dramatically reduces mortality and orbidity; do not wait for PCR confirmation."
+     "explanation": "Empirical IV aciclovir must be started immediately in any suspected viral (HSV) encephalitis because early treatment dramatically reduces mortality and morbidity; do not wait for PCR confirmation."
     },
     {
      "label": "C",
-     "text": "Oral doxycycline ✗",
+     "text": "Oral doxycycline",
      "correct": false,
-     "explanation": "oxycycline is for rickettsial/atypical infections, not HSV encephalitis."
+     "explanation": "Doxycycline is for rickettsial/atypical infections, not HSV encephalitis."
     },
     {
      "label": "D",
-     "text": "IV steroids only ✗",
+     "text": "IV steroids only",
      "correct": false,
-     "explanation": "teroids alone do not treat the viral infection and are not the primary therapy."
+     "explanation": "Steroids alone do not treat the viral infection and are not the primary therapy."
     },
     {
      "label": "E",
-     "text": "Observation ✗",
+     "text": "Observation",
      "correct": false,
-     "explanation": "bservation is dangerous; untreated HSV encephalitis has very high mortality."
+     "explanation": "Observation is dangerous; untreated HSV encephalitis has very high mortality."
     }
    ],
    "keyPoint": "Suspected HSV encephalitis = start empirical IV aciclovir immediately.",
@@ -18338,9 +18338,9 @@
    "choices": [
     {
      "label": "A",
-     "text": "Interferon beta Choice",
+     "text": "Interferon beta",
      "correct": false,
-     "explanation": "Interferon-beta is a long-term disease-modifying therapy to reduce relapse frequency, not the treatment of an acute relapse. Explanation"
+     "explanation": "Interferon-beta is a long-term disease-modifying therapy to reduce relapse frequency, not the treatment of an acute relapse."
     },
     {
      "label": "B",
@@ -18446,9 +18446,9 @@
     },
     {
      "label": "D",
-     "text": "Epidural hematoma Choice",
+     "text": "Epidural hematoma",
      "correct": false,
-     "explanation": "Epidural haematoma is a biconvex extra-axial collection following temporal trauma/middle meningeal artery injury, with a lucid interval, not a hypertensive intraparenchymal bleed. Explanation"
+     "explanation": "Epidural haematoma is a biconvex extra-axial collection following temporal trauma/middle meningeal artery injury, with a lucid interval, not a hypertensive intraparenchymal bleed."
     },
     {
      "label": "E",
@@ -19418,33 +19418,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Hypertension ✓",
+     "text": "Hypertension",
      "correct": true,
-     "explanation": "ypertension is the single most important modifiable risk factor for stroke (both schaemic and haemorrhagic); it underlies both large-vessel/embolic and mall-vessel disease, and treating it gives the greatest reduction in stroke risk. The file ticks A.) Annotation reads 'embolic ... AF'; note that for embolic stroke pecifically AF is key, but the most significant overall risk factor remains ypertension."
+     "explanation": "Hypertension is the single most important modifiable risk factor for stroke (both ischaemic and haemorrhagic); it underlies both large-vessel/embolic and small-vessel disease, and treating it gives the greatest reduction in stroke risk. (The file ticks A.) Annotation reads 'embolic ... AF'; note that for embolic stroke specifically AF is key, but the most significant overall risk factor remains hypertension."
     },
     {
      "label": "B",
-     "text": "Smoking ✗",
+     "text": "Smoking",
      "correct": false,
-     "explanation": "moking is a significant modifiable risk factor but confers less attributable risk han hypertension."
+     "explanation": "Smoking is a significant modifiable risk factor but confers less attributable risk than hypertension."
     },
     {
      "label": "C",
-     "text": "Family history ✗",
+     "text": "Family history",
      "correct": false,
-     "explanation": "amily history is a non-modifiable contributor but far less significant than ypertension."
+     "explanation": "Family history is a non-modifiable contributor but far less significant than hypertension."
     },
     {
      "label": "D",
-     "text": "Diabetes ✗",
+     "text": "Diabetes",
      "correct": false,
-     "explanation": "iabetes raises stroke risk but is less significant overall than hypertension."
+     "explanation": "Diabetes raises stroke risk but is less significant overall than hypertension."
     },
     {
      "label": "E",
-     "text": "Cholesterol ✗",
+     "text": "Cholesterol",
      "correct": false,
-     "explanation": "yperlipidaemia contributes to atherosclerosis but is a weaker independent troke risk factor than hypertension."
+     "explanation": "Hyperlipidaemia contributes to atherosclerosis but is a weaker independent stroke risk factor than hypertension."
     }
    ],
    "keyPoint": "Hypertension is the most important (modifiable) risk factor for stroke overall; atrial fibrillation is the key risk factor specifically for cardioembolic stroke.",
@@ -19514,27 +19514,27 @@
     },
     {
      "label": "B",
-     "text": "Her initial presentation of ataxia Choice",
+     "text": "Her initial presentation of ataxia",
      "correct": false,
-     "explanation": "Cerebellar/brainstem and motor presentations carry a worse prognosis than sensory or optic presentations. Explanation"
+     "explanation": "Cerebellar/brainstem and motor presentations carry a worse prognosis than sensory or optic presentations."
     },
     {
      "label": "C",
      "text": "Her female gender",
      "correct": true,
-     "explanation": "emale sex is a recognised favourable prognostic factor in MS. Other ood-prognosis features include young age at onset, relapsing-remitting attern, sensory or optic neuritis presentation, complete recovery from attacks nd long inter-attack intervals. Women tend to have a more benign elapsing-remitting course than men, who more often follow a primary rogressive pattern."
+     "explanation": "Female sex is a recognised favourable prognostic factor in MS. Other good-prognosis features include young age at onset, relapsing-remitting pattern, sensory or optic neuritis presentation, complete recovery from attacks and long inter-attack intervals. Women tend to have a more benign relapsing-remitting course than men, who more often follow a primary progressive pattern."
     },
     {
      "label": "D",
      "text": "The interval between the two episodes of two months",
      "correct": false,
-     "explanation": "short interval between relapses indicates more active, aggressive disease nd a worse prognosis; long inter-attack intervals are favourable."
+     "explanation": "A short interval between relapses indicates more active, aggressive disease and a worse prognosis; long inter-attack intervals are favourable."
     },
     {
      "label": "E",
      "text": "Her MRI scan appearance",
      "correct": false,
-     "explanation": "high lesion load with multiple enhancing lesions on MRI predicts a worse, not ilder, course."
+     "explanation": "A high lesion load with multiple enhancing lesions on MRI predicts a worse, not milder, course."
     }
    ],
    "keyPoint": "Favourable MS prognostic factors: female sex, young onset age, sensory/optic neuritis onset, relapsing-remitting course, full recovery from attacks, long inter-relapse intervals.",
@@ -19598,9 +19598,9 @@
    "choices": [
     {
      "label": "A",
-     "text": "Vasovagal syncope Choice",
+     "text": "Vasovagal syncope",
      "correct": false,
-     "explanation": "Vasovagal (neurocardiogenic) syncope is typically provoked by prolonged standing, emotion, pain or heat with prodromal nausea/sweating, not by standing up from bed; the postural trigger here points elsewhere. Explanation"
+     "explanation": "Vasovagal (neurocardiogenic) syncope is typically provoked by prolonged standing, emotion, pain or heat with prodromal nausea/sweating, not by standing up from bed; the postural trigger here points elsewhere."
     },
     {
      "label": "B",
@@ -19700,9 +19700,9 @@
     },
     {
      "label": "D",
-     "text": "Migraine Choice",
+     "text": "Migraine",
      "correct": false,
-     "explanation": "Migraineurs typically prefer to lie still in a dark quiet room; the marked restlessness and pacing here are characteristic of cluster headache, not migraine. Explanation"
+     "explanation": "Migraineurs typically prefer to lie still in a dark quiet room; the marked restlessness and pacing here are characteristic of cluster headache, not migraine."
     },
     {
      "label": "E",
@@ -20366,33 +20366,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Lorazepam ✗",
+     "text": "Lorazepam",
      "correct": false,
-     "explanation": "he has already received two doses of a benzodiazepine (rectal diazepam). he status epilepticus protocol allows a maximum of two benzodiazepine oses; a third risks respiratory depression, so the next step is a second-line gent, not more benzodiazepine."
+     "explanation": "She has already received two doses of a benzodiazepine (rectal diazepam). The status epilepticus protocol allows a maximum of two benzodiazepine doses; a third risks respiratory depression, so the next step is a second-line agent, not more benzodiazepine."
     },
     {
      "label": "B",
-     "text": "Phenobarbital ✗",
+     "text": "Phenobarbital",
      "correct": false,
-     "explanation": "henobarbital is a later/alternative second-line agent but in standard UK rotocols IV phenytoin is the next step after benzodiazepines fail; phenobarbital s used if phenytoin is contraindicated or in specialist settings."
+     "explanation": "Phenobarbital is a later/alternative second-line agent but in standard UK protocols IV phenytoin is the next step after benzodiazepines fail; phenobarbital is used if phenytoin is contraindicated or in specialist settings."
     },
     {
      "label": "C",
-     "text": "Intubation ✗",
+     "text": "Intubation",
      "correct": false,
-     "explanation": "apid-sequence induction/intubation and general anaesthesia are reserved for efractory status after second-line treatment (phenytoin) has failed (usually after 30 min), not before trying phenytoin."
+     "explanation": "Rapid-sequence induction/intubation and general anaesthesia are reserved for refractory status after second-line treatment (phenytoin) has failed (usually after ~30 min), not before trying phenytoin."
     },
     {
      "label": "D",
-     "text": "Call ITU ✗",
+     "text": "Call ITU",
      "correct": false,
-     "explanation": "TU involvement is appropriate if seizures continue, but the immediate harmacological step now is to load with IV phenytoin while escalating."
+     "explanation": "ITU involvement is appropriate if seizures continue, but the immediate pharmacological step now is to load with IV phenytoin while escalating."
     },
     {
      "label": "E",
-     "text": "Phenytoin loading ✓",
+     "text": "Phenytoin loading",
      "correct": true,
-     "explanation": "his is established status epilepticus that has not responded to two doses of enzodiazepine. The next step per the status epilepticus protocol is a econd-line IV antiepileptic - IV phenytoin loading (~15-18 mg/kg with cardiac onitoring) (or levetiracetam/valproate in newer guidance). If this fails, proceed o RSI/anaesthesia and ITU."
+     "explanation": "This is established status epilepticus that has not responded to two doses of benzodiazepine. The next step per the status epilepticus protocol is a second-line IV antiepileptic - IV phenytoin loading (~15-18 mg/kg with cardiac monitoring) (or levetiracetam/valproate in newer guidance). If this fails, proceed to RSI/anaesthesia and ITU."
     }
    ],
    "keyPoint": "Status epilepticus: max TWO benzodiazepine doses, then IV phenytoin (second-line); if still fitting at ~30 min, RSI/anaesthesia and ITU.",
@@ -20456,9 +20456,9 @@
     },
     {
      "label": "B",
-     "text": "Ensure levels are not toxic Choice",
+     "text": "Ensure levels are not toxic",
      "correct": false,
-     "explanation": "He has no clinical features of toxicity (nystagmus, ataxia, dysarthria, drowsiness) and neuro exam is normal, so checking purely for toxicity is not the prime indication. Explanation"
+     "explanation": "He has no clinical features of toxicity (nystagmus, ataxia, dysarthria, drowsiness) and neuro exam is normal, so checking purely for toxicity is not the prime indication."
     },
     {
      "label": "C",
@@ -20552,9 +20552,9 @@
     },
     {
      "label": "D",
-     "text": "Complex partial Choice",
+     "text": "Complex partial",
      "correct": true,
-     "explanation": "Focal seizures with impaired awareness (complex partial), usually temporal lobe, present with altered awareness, automatisms (lip-smacking, picking at clothes, looking around, yawning) lasting around a minute, followed by post-ictal confusion/drowsiness. The unawareness plus automatisms plus post-ictal drowsiness are classic. Explanation"
+     "explanation": "Focal seizures with impaired awareness (complex partial), usually temporal lobe, present with altered awareness, automatisms (lip-smacking, picking at clothes, looking around, yawning) lasting around a minute, followed by post-ictal confusion/drowsiness. The unawareness plus automatisms plus post-ictal drowsiness are classic."
     },
     {
      "label": "E",
@@ -20786,33 +20786,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "C4 ✗",
+     "text": "C4",
      "correct": false,
-     "explanation": "4 supplies the shoulder/clavicle region; a C4 cord level would also affect the pper limbs, which are normal here."
+     "explanation": "C4 supplies the shoulder/clavicle region; a C4 cord level would also affect the upper limbs, which are normal here."
     },
     {
      "label": "B",
-     "text": "T4 ✗",
+     "text": "T4",
      "correct": false,
-     "explanation": "4 corresponds to the nipple line, which is above the umbilicus; the sensory evel here is at the umbilicus (T10)."
+     "explanation": "T4 corresponds to the nipple line, which is above the umbilicus; the sensory level here is at the umbilicus (T10)."
     },
     {
      "label": "C",
-     "text": "T10 ✓",
+     "text": "T10",
      "correct": true,
-     "explanation": "he UMBILICUS corresponds to the T10 dermatome, so a sensory level at the mbilicus localises the cord lesion to T10. The combination of normal arms, araplegia and a T10 sensory level confirms a thoracic cord lesion at this level."
+     "explanation": "The UMBILICUS corresponds to the T10 dermatome, so a sensory level at the umbilicus localises the cord lesion to T10. The combination of normal arms, paraplegia and a T10 sensory level confirms a thoracic cord lesion at this level."
     },
     {
      "label": "D",
-     "text": "L1 ✗",
+     "text": "L1",
      "correct": false,
-     "explanation": "1 corresponds to the inguinal/groin region (below the umbilicus), not the mbilical level."
+     "explanation": "L1 corresponds to the inguinal/groin region (below the umbilicus), not the umbilical level."
     },
     {
      "label": "E",
-     "text": "L3 ✗",
+     "text": "L3",
      "correct": false,
-     "explanation": "3 corresponds to the lower medial thigh/knee, well below the umbilicus."
+     "explanation": "L3 corresponds to the lower medial thigh/knee, well below the umbilicus."
     }
    ],
    "keyPoint": "Key sensory landmarks: T4 = nipple, T10 = umbilicus, L1 = inguinal ligament/groin.",
@@ -21290,33 +21290,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Myasthenia gravis (MG) ✗",
+     "text": "Myasthenia gravis (MG)",
      "correct": false,
-     "explanation": "yasthenia can mimic many ophthalmoplegias but the specific pattern escribed (failure of adduction of one eye with nystagmus of the abducting eye n lateral gaze) is the classic sign of an internuclear ophthalmoplegia from an LF lesion, characteristically MS."
+     "explanation": "Myasthenia can mimic many ophthalmoplegias but the specific pattern described (failure of adduction of one eye with nystagmus of the abducting eye on lateral gaze) is the classic sign of an internuclear ophthalmoplegia from an MLF lesion, characteristically MS."
     },
     {
      "label": "B",
-     "text": "Vertigo ✗",
+     "text": "Vertigo",
      "correct": false,
-     "explanation": "ertigo is a symptom of a spinning sensation, not an eye-movement disorder, nd does not explain the failure of adduction."
+     "explanation": "Vertigo is a symptom of a spinning sensation, not an eye-movement disorder, and does not explain the failure of adduction."
     },
     {
      "label": "C",
-     "text": "Cerebellar syndrome ✗",
+     "text": "Cerebellar syndrome",
      "correct": false,
-     "explanation": "erebellar disease causes gaze-evoked nystagmus and dysmetria but not the issociated adduction failure of internuclear ophthalmoplegia."
+     "explanation": "Cerebellar disease causes gaze-evoked nystagmus and dysmetria but not the dissociated adduction failure of internuclear ophthalmoplegia."
     },
     {
      "label": "D",
-     "text": "MS ✓",
+     "text": "MS",
      "correct": true,
-     "explanation": "his is an INTERNUCLEAR OPHTHALMOPLEGIA (INO): on looking to one ide the adducting eye fails to cross the midline while the abducting eye evelops nystagmus, due to a lesion of the MEDIAL LONGITUDINAL ASCICULUS. In a young woman, bilateral or unilateral INO is classically aused by MULTIPLE SCLEROSIS (the most common cause in the young)."
+     "explanation": "This is an INTERNUCLEAR OPHTHALMOPLEGIA (INO): on looking to one side the adducting eye fails to cross the midline while the abducting eye develops nystagmus, due to a lesion of the MEDIAL LONGITUDINAL FASCICULUS. In a young woman, bilateral or unilateral INO is classically caused by MULTIPLE SCLEROSIS (the most common cause in the young)."
     },
     {
      "label": "E",
-     "text": "Peripheral neuropathy ✗",
+     "text": "Peripheral neuropathy",
      "correct": false,
-     "explanation": "eripheral neuropathy affects limb sensation/motor function, not the central LF pathway responsible for conjugate gaze."
+     "explanation": "Peripheral neuropathy affects limb sensation/motor function, not the central MLF pathway responsible for conjugate gaze."
     }
    ],
    "keyPoint": "Internuclear ophthalmoplegia (failed adduction + nystagmus of abducting eye) from an MLF lesion is classically MS in a young patient.",
@@ -21794,33 +21794,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Brainstem stroke ✗",
+     "text": "Brainstem stroke",
      "correct": false,
-     "explanation": "brainstem stroke would usually produce additional neurological signs diplopia, dysarthria, ataxia, crossed sensory/motor signs) and persistent ymptoms, not brief positional vertigo that settles when still."
+     "explanation": "A brainstem stroke would usually produce additional neurological signs (diplopia, dysarthria, ataxia, crossed sensory/motor signs) and persistent symptoms, not brief positional vertigo that settles when still."
     },
     {
      "label": "B",
-     "text": "Benign paroxysmal positional ✓ vertigo",
+     "text": "Benign paroxysmal positional vertigo",
      "correct": true,
-     "explanation": "PPV gives brief episodes (seconds to a couple of minutes) of rotational vertigo RIGGERED BY HEAD MOVEMENT/POSITION CHANGE (sitting up, rolling ver), settling when still, with NO hearing loss or tinnitus. It is caused by isplaced otoconia in the semicircular canals and is confirmed by the ix-Hallpike manoeuvre and treated with the Epley manoeuvre."
+     "explanation": "BPPV gives brief episodes (seconds to a couple of minutes) of rotational vertigo TRIGGERED BY HEAD MOVEMENT/POSITION CHANGE (sitting up, rolling over), settling when still, with NO hearing loss or tinnitus. It is caused by displaced otoconia in the semicircular canals and is confirmed by the Dix-Hallpike manoeuvre and treated with the Epley manoeuvre."
     },
     {
      "label": "C",
-     "text": "Meniere's disease ✗",
+     "text": "Meniere's disease",
      "correct": false,
-     "explanation": "eniere's disease features the triad of vertigo, fluctuating sensorineural EARING LOSS and TINNITUS (with aural fullness), and attacks last longer minutes-hours); the absence of tinnitus/deafness makes it unlikely."
+     "explanation": "Meniere's disease features the triad of vertigo, fluctuating sensorineural HEARING LOSS and TINNITUS (with aural fullness), and attacks last longer (minutes-hours); the absence of tinnitus/deafness makes it unlikely."
     },
     {
      "label": "D",
-     "text": "Vestibular neuronitis ✗",
+     "text": "Vestibular neuronitis",
      "correct": false,
-     "explanation": "estibular neuronitis causes a single prolonged episode of CONSTANT vertigo asting days (often post-viral), not brief recurrent positional vertigo that settles hen still."
+     "explanation": "Vestibular neuronitis causes a single prolonged episode of CONSTANT vertigo lasting days (often post-viral), not brief recurrent positional vertigo that settles when still."
     },
     {
      "label": "E",
-     "text": "Migraine ✗",
+     "text": "Migraine",
      "correct": false,
-     "explanation": "estibular migraine causes vertigo with migrainous features but is not haracteristically triggered purely by positional change settling on keeping still; he positional pattern here is classic for BPPV."
+     "explanation": "Vestibular migraine causes vertigo with migrainous features but is not characteristically triggered purely by positional change settling on keeping still; the positional pattern here is classic for BPPV."
     }
    ],
    "keyPoint": "BPPV: brief positional vertigo on head movement, settles when still, NO hearing loss/tinnitus; diagnose with Dix-Hallpike, treat with Epley.",
@@ -21884,27 +21884,27 @@
     },
     {
      "label": "B",
-     "text": "Neurofibromatosis type II Choice",
+     "text": "Neurofibromatosis type II",
      "correct": false,
-     "explanation": "NF2 is dominated by BILATERAL VESTIBULAR SCHWANNOMAS (acoustic neuromas) and meningiomas with few skin lesions; the prominent cafe-au-lait spots, neurofibromas and axillary freckling here are typical of NF1, not NF2. Explanation"
+     "explanation": "NF2 is dominated by BILATERAL VESTIBULAR SCHWANNOMAS (acoustic neuromas) and meningiomas with few skin lesions; the prominent cafe-au-lait spots, neurofibromas and axillary freckling here are typical of NF1, not NF2."
     },
     {
      "label": "C",
      "text": "Tuberous sclerosis",
      "correct": false,
-     "explanation": "uberous sclerosis features adenoma sebaceum (facial angiofibromas), sh-leaf macules (hypopigmented), shagreen patches and epilepsy/learning ifficulty, not multiple neurofibromas with cafe-au-lait spots and axillary reckling."
+     "explanation": "Tuberous sclerosis features adenoma sebaceum (facial angiofibromas), ash-leaf macules (hypopigmented), shagreen patches and epilepsy/learning difficulty, not multiple neurofibromas with cafe-au-lait spots and axillary freckling."
     },
     {
      "label": "D",
      "text": "Hereditary haemorrhagic telangiectasia",
      "correct": false,
-     "explanation": "HT (Osler-Weber-Rendu) presents with mucocutaneous telangiectasia and ecurrent epistaxis/AVMs, not neurofibromas and cafe-au-lait macules."
+     "explanation": "HHT (Osler-Weber-Rendu) presents with mucocutaneous telangiectasia and recurrent epistaxis/AVMs, not neurofibromas and cafe-au-lait macules."
     },
     {
      "label": "E",
      "text": "Sturge-Weber syndrome",
      "correct": false,
-     "explanation": "turge-Weber features a facial port-wine stain (capillary malformation) in the rigeminal distribution with leptomeningeal angioma and seizures, not multiple eurofibromas and cafe-au-lait spots."
+     "explanation": "Sturge-Weber features a facial port-wine stain (capillary malformation) in the trigeminal distribution with leptomeningeal angioma and seizures, not multiple neurofibromas and cafe-au-lait spots."
     }
    ],
    "keyPoint": "Cafe-au-lait macules + cutaneous neurofibromas + axillary/inguinal freckling = neurofibromatosis type 1 (also Lisch nodules, optic glioma).",

@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 11,
+  "manifestVersion": 12,
   "updated": "2026-06-15",
   "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
   "packs": [
@@ -39,7 +39,7 @@
       "packId": "neurology-mcq",
       "title": "Neurology",
       "color": "#b58fce",
-      "version": 1,
+      "version": 2,
       "url": "neurology-mcq.json",
       "questionCount": 265
     },
