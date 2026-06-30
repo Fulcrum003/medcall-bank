@@ -1054,6 +1054,19 @@ function viewHome(){
     <div class="card"><div class="n green">${totalSeen}/${totalQ}</div><div class="l">Seen</div></div>
   </div>`;
 
+  // in-progress sessions — resume across subjects without losing progress
+  { const _sv=Object.values((DB.progress.sessions||{})).filter(x=>x&&x.ctx&&!x.ctx.smart&&poolFor(x.ctx).length).sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
+    if(_sv.length){
+      html+=`<div class="sectlabel">Continue studying</div>`;
+      _sv.forEach(x=>{ const _tot=x.total||poolFor(x.ctx).length, _k=esc(JSON.stringify(x.ctx));
+        html+=`<button class="card pad subj" data-action="resume-session" data-key="${_k}" style="width:100%;margin-bottom:8px;border-left:3px solid var(--teal)">
+          <div class="row between"><div class="row" style="gap:11px"><span style="font-size:17px;line-height:1;color:var(--teal)">\u25B6</span>
+          <div style="text-align:left"><div style="font-weight:700;font-size:14.5px">${esc(x.label||"Session")}</div>
+          <div class="faint" style="font-size:12.5px">Question ${(x.i||0)+1} of ${_tot}${x.answered?` \u00b7 ${x.correct}/${x.answered} right so far`:""}</div></div></div>
+          <span class="iconbtn" data-action="drop-session" data-key="${_k}" title="Remove" style="width:30px;height:30px;font-size:13px">\u2715</span></div></button>`;
+      });
+    }
+  }
   // suggestions — "what should I study?"
   const sugg=computeSuggestions();
   html+=`<div class="sectlabel">What should I study?</div>`;
@@ -1304,11 +1317,11 @@ function viewDuel(){
     <div class="stem serif" style="font-family:inherit">${esc(d.stem)}</div>
     <div class="optshdr">Which one fits — pick the stronger answer</div>
     <div class="choices">`;
-  ["a","b"].forEach(side=>{
+  (D.flip?["b","a"]:["a","b"]).forEach((side,_pos)=>{
     let cls="choice", vd="";
     if(D.revealed){ if(side===d.correct){ cls+=" correct"; vd=`<span class="vd">CORRECT</span>`; } else if(D.picked===side){ cls+=" wrong"; vd=`<span class="vd">YOUR PICK</span>`; } }
     else if(D.picked===side) cls+=" sel";
-    html+=`<button class="${cls}" ${D.revealed?'':`data-action="duel-pick" data-pick="${side}"`}><span class="lab">${side.toUpperCase()}</span><span>${esc(d[side])}</span>${vd}</button>`;
+    html+=`<button class="${cls}" ${D.revealed?'':`data-action="duel-pick" data-pick="${side}"`}><span class="lab">${_pos===0?"A":"B"}</span><span>${esc(d[side])}</span>${vd}</button>`;
   });
   html+=`</div>`;
   if(D.revealed) html+=`<div class="keydiff" style="margin-top:14px"><b>KEY DIFFERENTIATOR</b><br>${esc(d.why)}</div>`;
@@ -1417,11 +1430,17 @@ function viewMistakes(){
 }
 
 /* ---------- QUIZ (answer-then-reveal) ---------- */
+function sessKey(ctx){ return JSON.stringify(ctx); }
+function sessionsMap(){ if(!DB.progress.sessions) DB.progress.sessions={}; return DB.progress.sessions; }
+function saveSession(s){ if(!s||!s.ctx||s.ctx.smart) return; sessionsMap()[sessKey(s.ctx)]={ctx:s.ctx,i:s.i,label:s.label,total:s.pool.length,answered:s.answered,correct:s.correct,xp:s.xp,savedAt:Date.now()}; DB.progress.resume={ctx:s.ctx,i:s.i,label:s.label}; save.progress(); }
+function clearSession(ctx){ if(ctx&&!ctx.smart){ delete sessionsMap()[sessKey(ctx)]; if(DB.progress.resume&&DB.progress.resume.ctx&&sessKey(DB.progress.resume.ctx)===sessKey(ctx)) DB.progress.resume=null; save.progress(); } }
 export function startPracticeCtx(ctx, label, startIndex){
   const pool = ctx.smart ? smartPool() : poolFor(ctx);
   if(!pool.length){ toast(ctx.smart?"Nothing due — pick a topic":"No questions here yet"); return; }
-  App.practice={ctx,label,pool,i:startIndex||0,revealed:false,selected:null,answered:0,correct:0,xp:0};
-  if(!ctx.smart){ DB.progress.resume={ctx,i:App.practice.i,label}; save.progress(); }
+  const sv = ctx.smart ? null : sessionsMap()[sessKey(ctx)];
+  let i = (startIndex!=null) ? startIndex : (sv && sv.i<pool.length ? sv.i : 0); if(i>=pool.length) i=0;
+  App.practice={ctx,label,pool,i,revealed:false,selected:null,answered:(sv?sv.answered:0)||0,correct:(sv?sv.correct:0)||0,xp:(sv?sv.xp:0)||0};
+  if(!ctx.smart) saveSession(App.practice);
   App.screen="quiz"; render();
 }
 export function smartPool(){
@@ -1459,7 +1478,11 @@ function viewQuiz(){
         <svg class="i" viewBox="0 0 24 24" style="${marked?'fill:var(--amber)':''}"><path d="M5 3v18l7-5 7 5V3z"/></svg>
       </button>
     </div>
-    <div class="progressbar" style="margin-bottom:16px"><i style="width:${(s.i)/s.pool.length*100}%"></i></div>`;
+    <div class="progressbar" style="margin-bottom:12px"><i style="width:${(s.i)/s.pool.length*100}%"></i></div>
+    <div class="row between" style="margin-bottom:14px">
+      <button class="btn-sm btn-ghost" ${s.i>0?'':'disabled'} data-action="nav-q" data-dir="-1"><svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M15 18l-6-6 6-6"/></svg> Back</button>
+      <button class="btn-sm btn-ghost" ${s.i<s.pool.length-1?'':'disabled'} data-action="nav-q" data-dir="1">Skip <svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>`;
 
   html+=`<div class="qmeta">
     <span class="pill" style="color:${colorOf(q)}">${esc(qSys(q))}</span>
@@ -1604,14 +1627,14 @@ function renderReveal(q, chosen, opts={}){
 function advancePractice(){
   const s=App.practice;
   if(s.i+1>=s.pool.length){
-    DB.progress.resume=null; save.progress();
+    clearSession(s.ctx); DB.progress.resume=null; save.progress();
     App.lastSession={answered:s.answered, correct:s.correct, xp:s.xp, label:s.label};
     evaluateAchievements({perfectSet: s.answered>=10 && s.correct===s.answered});
     App.practice=null; App.screen="celebrate"; render(); confetti(); cue("done");
     return;
   }
   s.i++; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null;
-  if(s.ctx && !s.ctx.smart){ DB.progress.resume={ctx:s.ctx, i:s.i, label:s.label}; save.progress(); }
+  saveSession(s);
   render(); window.scrollTo({top:0,behavior:"instant"});
 }
 
@@ -1743,7 +1766,7 @@ async function fetchReports(){
   if(!ep){ App.inboxState="noendpoint"; render(); return; }
   App.inboxState="loading"; render();
   try{
-    const u=ep+(ep.indexOf("?")>=0?"&":"?")+"reports=1";
+    const u=ep+(ep.indexOf("?")>=0?"&":"?")+"reports=1&cb="+Date.now();
     const r=await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status);
     const data=await r.json();
     if(Array.isArray(data) && (data.length===0 || Array.isArray(data[0]))){ App.inboxRows=data; App.inboxState="ok"; }
@@ -1873,7 +1896,7 @@ async function syncBoard(){
   try{
     if(ep){
       await fetch(ep,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(myEntry())}).catch(()=>{});
-      const r=await fetch(ep,{cache:"no-store"}); if(r.ok){ App.board=await r.json(); }
+      const r=await fetch(ep+(ep.indexOf("?")>=0?"&":"?")+"cb="+Date.now(),{cache:"no-store"}); if(r.ok){ App.board=await r.json(); }
     } else if(DB.settings.lbRepo){
       if(ghToken) await ghPushScore();
       const b=await ghReadBoard(); if(b) App.board=b;
@@ -2445,9 +2468,9 @@ document.body.addEventListener("click", async e=>{
   if(a==="checklist-toggle"){ DB.progress.checklist=DB.progress.checklist||{}; const k=t.dataset.key; DB.progress.checklist[k]=!DB.progress.checklist[k]; save.progress(); render(); return; }
   if(a==="checklist-drill"){ const sys=t.dataset.sys, it=CHECKLISTS[sys][+t.dataset.idx]; const pool=checklistMatch(sys,it); if(!pool.length){ toast("No matching questions"); return; } startPracticeCtx({ids:pool}, it.t); return; }
   if(a==="open-duelpick"){ App.screen="duelpick"; render(); return; }
-  if(a==="start-duel"){ const cat=t.dataset.cat||null; const order=DUELS.map((d,i)=>i).filter(i=>!cat||DUELS[i].sys===cat); for(let i=order.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const x=order[i];order[i]=order[j];order[j]=x; } if(!order.length){ toast("No duels in this division"); return; } App.duel={order,i:0,score:0,picked:null,revealed:false,cat}; App.screen="duel"; render(); return; }
+  if(a==="start-duel"){ const cat=t.dataset.cat||null; const order=DUELS.map((d,i)=>i).filter(i=>!cat||DUELS[i].sys===cat); for(let i=order.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const x=order[i];order[i]=order[j];order[j]=x; } if(!order.length){ toast("No duels in this division"); return; } App.duel={order,i:0,score:0,picked:null,revealed:false,cat,flip:Math.random()<0.5}; App.screen="duel"; render(); return; }
   if(a==="duel-pick"){ duelPick(t.dataset.pick); return; }
-  if(a==="duel-next"){ App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
+  if(a==="duel-next"){ App.duel.i++; App.duel.picked=null; App.duel.revealed=false; App.duel.flip=Math.random()<0.5; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
   if(a==="duel-done"){ const sc=App.duel?App.duel.score:0, n=App.duel?App.duel.order.length:0; App.duel=null; App.screen="home"; render(); if(n) toast("Duel complete · "+sc+"/"+n); return; }
   if(a==="start-cram"){ const pool=cramPool(40); if(!pool.length){ toast("Study a little first — then cram"); return; } startPracticeCtx({ids:pool}, "Exam Tomorrow · cram"); return; }
   if(a==="open-timer"){ App.screen="timer"; render(); return; }
@@ -2473,6 +2496,9 @@ document.body.addEventListener("click", async e=>{
   if(a==="theme-pick"){ const i=t.dataset.i; if(App.theme.revealed[i]) return; App.theme.picks[i]=t.dataset.label; render(); return; }
   if(a==="theme-reveal"){ const i=t.dataset.i; if(App.theme.revealed[i]) return; const ids=poolFor({system:App.theme.sys,type:App.theme.ty,reference:App.theme.reference,topic:App.theme.topic}); const q=QMAP[ids[+i]]; const pick=App.theme.picks[i]; App.theme.revealed[i]=true; if(q&&pick){ const ok=correctLabel(q)===pick; recordAttempt(q,pick,ok?"good":"again"); cue(ok?"correct":"wrong"); } render(); return; }
   if(a==="resume"){ const r=DB.progress.resume; if(r&&r.ctx) startPracticeCtx(r.ctx, r.label, r.i); return; }
+  if(a==="resume-session"){ const x=(DB.progress.sessions||{})[t.dataset.key]; if(x&&x.ctx) startPracticeCtx(x.ctx, x.label, x.i); return; }
+  if(a==="drop-session"){ if(DB.progress.sessions) delete DB.progress.sessions[t.dataset.key]; save.progress(); render(); toast("Session removed"); return; }
+  if(a==="nav-q"){ const s=App.practice; if(!s) return; const ni=s.i+(+t.dataset.dir); if(ni<0||ni>=s.pool.length) return; s.i=ni; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null; saveSession(s); render(); window.scrollTo({top:0,behavior:"instant"}); return; }
 
   // quiz
   if(a==="select-choice"){ const s=App.practice; s.selected=t.dataset.label; const q=QMAP[s.pool[s.i]]; if(DB.settings.revealOnPick!==false && q.type!=="sa") s.revealed=true; render(); return; }
@@ -2484,7 +2510,7 @@ document.body.addEventListener("click", async e=>{
     const p=DB.progress.questions[q.id]||{seen:0,correct:0,history:[],marked:false,srs:null};
     p.marked=!p.marked; DB.progress.questions[q.id]=p; save.progress(); render();
     toast(p.marked?"Marked for review":"Unmarked"); return; }
-  if(a==="end-practice"){ const s=App.practice; if(s&&s.ctx&&!s.ctx.smart){ DB.progress.resume={ctx:s.ctx,i:s.i,label:s.label}; save.progress(); } App.practice=null; App.screen="home"; render(); return; }
+  if(a==="end-practice"){ const s=App.practice; if(s) saveSession(s); App.practice=null; App.screen="home"; render(); return; }
 
   // builder
   if(a==="exam-toggle-subject"){ const id=t.dataset.subject; App.builder.subjects.has(id)?App.builder.subjects.delete(id):App.builder.subjects.add(id);
@@ -2547,8 +2573,8 @@ document.addEventListener("keydown", e=>{
     return;
   }
   if(App.screen==="duel" && App.duel){
-    if(!App.duel.revealed){ if(k==="a"||k==="A"||k==="1"){ duelPick("a"); e.preventDefault(); } else if(k==="b"||k==="B"||k==="2"){ duelPick("b"); e.preventDefault(); } }
-    else if(k===" "||k==="Enter"){ if(App.duel.i+1>=App.duel.order.length){ App.duel=null; App.screen="home"; render(); } else { App.duel.i++; App.duel.picked=null; App.duel.revealed=false; render(); } e.preventDefault(); }
+    if(!App.duel.revealed){ if(k==="a"||k==="A"||k==="1"){ duelPick(App.duel.flip?"b":"a"); e.preventDefault(); } else if(k==="b"||k==="B"||k==="2"){ duelPick(App.duel.flip?"a":"b"); e.preventDefault(); } }
+    else if(k===" "||k==="Enter"){ if(App.duel.i+1>=App.duel.order.length){ App.duel=null; App.screen="home"; render(); } else { App.duel.i++; App.duel.picked=null; App.duel.revealed=false; App.duel.flip=Math.random()<0.5; render(); } e.preventDefault(); }
   }
 });
 function ankiField(s){ return String(s==null?"":s).replace(/\t/g," ").replace(/\r?\n/g,"<br>"); }
@@ -2747,8 +2773,6 @@ export function freshTopic(){
 }
 export function computeSuggestions(){
   const out=[];
-  if(DB.progress.resume && DB.progress.resume.ctx && poolFor(DB.progress.resume.ctx).length)
-    out.push({icon:"&#9654;", title:"Continue where you left off", sub:DB.progress.resume.label||"", action:"resume"});
   const due=dueCount();
   if(due>0) out.push({icon:"&#8635;", title:"Review "+due+" due now", sub:"Lock it in with spaced repetition", action:"start-smart"});
   const w=weakestTopic();
