@@ -1210,6 +1210,7 @@ function render(){
   else if(App.screen==="stats") a.innerHTML=viewStats();
   else if(App.screen==="settings") a.innerHTML=viewSettings();
   else if(App.screen==="repair") a.innerHTML=viewRepair();
+  else if(App.screen==="reportsinbox") a.innerHTML=viewReportsInbox();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
   if(App.screen==="leaderboard") startBoardPoll(); else stopBoardPoll();
   const _DASH=new Set(["home","system","type","reference","mistakes","disputed","redflag","checklist"]);
@@ -2069,6 +2070,50 @@ function postReport(rep,q){
     stem:(q&&q.stem)?String(q.stem).slice(0,400):""};
   try{ fetch(ep,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(()=>{}); return true; }catch(e){ return false; }
 }
+function fmtWhen(v){ try{ const d=new Date(v); if(!isNaN(d)) return d.toLocaleString("en",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}); }catch(e){} return String(v||""); }
+async function fetchReports(){
+  const ep=DB.settings.groupEndpoint;
+  if(!ep){ App.inboxState="noendpoint"; render(); return; }
+  App.inboxState="loading"; render();
+  try{
+    const u=ep+(ep.indexOf("?")>=0?"&":"?")+"reports=1";
+    const r=await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status);
+    const data=await r.json();
+    if(Array.isArray(data) && (data.length===0 || Array.isArray(data[0]))){ App.inboxRows=data; App.inboxState="ok"; }
+    else { App.inboxState="notupgraded"; }
+  }catch(e){ App.inboxState="error"; }
+  if(App.screen==="reportsinbox") render();
+}
+function viewReportsInbox(){
+  const st=App.inboxState||"loading";
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="settings" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Settings</button>
+    <div class="row between"><h2 class="serif" style="font-size:24px;font-weight:600">Reports inbox</h2>
+      <button class="iconbtn" data-action="refresh-reports-inbox" aria-label="Refresh"><svg class="i" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button></div>
+    <p class="muted" style="font-size:13px;margin-top:2px">Everyone's reports, pulled live from your group Script.</p>`;
+  if(st==="noendpoint") html+=`<div class="card pad"><div class="faint" style="font-size:13px;line-height:1.5">No group Script connected. Add your Apps Script URL via the manifest <span class="mono">leaderboard</span> field, then refresh.</div></div>`;
+  else if(st==="loading") html+=`<div class="empty">Loading reports…</div>`;
+  else if(st==="error") html+=`<div class="card pad"><div style="font-size:13px;line-height:1.5">Couldn't reach the Script. Check it's deployed with access set to <b>Anyone</b>, and the URL is correct.</div></div>`;
+  else if(st==="notupgraded") html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div style="font-size:13px;line-height:1.5">The Script returned leaderboard data, not reports. Add the <b>doGet <span class="mono">?reports=1</span></b> branch to your Apps Script (see setup) and redeploy a new version.</div></div>`;
+  else {
+    const data=(App.inboxRows||[]).slice(); if(data.length && Array.isArray(data[0]) && String(data[0][0]).toLowerCase().indexOf("when")>=0) data.shift();
+    if(!data.length){ html+=`<div class="empty">No reports yet. They'll appear here as your group submits them.</div>`; }
+    else{
+      html+=`<p class="muted" style="font-size:12.5px">${data.length} report${data.length>1?"s":""} · newest first</p>`;
+      data.reverse().forEach(r=>{
+        const issue=esc(String(r[5]||"Report")), subj=esc(String(r[2]||"")), topic=r[3]?" · "+esc(String(r[3])):"", who=esc(String(r[1]||"anon")), qid=esc(String(r[4]||"")), note=String(r[6]||""), stem=String(r[7]||"");
+        html+=`<div class="card pad" style="margin-bottom:8px;border-left:3px solid var(--amber)">
+          <div class="row between" style="font-size:12px"><span style="font-weight:700;color:var(--amber)">${issue}</span><span class="mono faint">${esc(fmtWhen(r[0]))}</span></div>
+          <div class="faint" style="font-size:12px;margin-top:2px">${subj}${topic}</div>
+          ${stem?`<div style="font-size:12.5px;margin-top:7px;font-style:italic;color:var(--muted)">${esc(stem)}</div>`:""}
+          ${note?`<div style="font-size:14px;margin-top:7px">${esc(note)}</div>`:`<div class="faint" style="font-size:13px;margin-top:7px">(no note added)</div>`}
+          <div class="row between" style="font-size:11.5px;margin-top:8px"><span class="faint">by ${who}</span><span class="mono faint">${qid}</span></div>
+        </div>`;
+      });
+    }
+  }
+  html+=`</div>`; return html;
+}
 function lbValue(e, view){
   if(view==="month") return (e.month===curMonth())? (e.xpMonth||0) : 0;
   if(view==="year")  return (e.year===curYear())?   (e.xpYear||0)  : 0;
@@ -2575,6 +2620,9 @@ function viewSettings(){
       <div style="height:8px"></div>
       <button class="btn btn-ghost" data-action="push-score">Post my score now</button>
     </div>
+    <div class="sectlabel">Reports inbox · maintainer</div>
+    <button class="btn btn-ghost" data-action="open-reports-inbox"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v11H6l-2 3V5z"/></svg> Open reports inbox</button>
+    <div class="faint" style="font-size:12px;margin-top:6px">Reads everyone's submitted reports from your Google Script (needs the doGet <span class="mono">?reports=1</span> branch added + redeploy).</div>
     <div style="height:10px"></div>
     <button class="btn btn-ghost" data-action="nav" data-screen="repair"><svg class="i" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Bank health check</button>
     <div style="height:10px"></div>
@@ -2739,6 +2787,8 @@ document.body.addEventListener("click", async e=>{
   if(a==="trk-day"){ App.trkSel=t.dataset.date; App.trkMonth=t.dataset.date.slice(0,7); render(); return; }
   if(a==="trk-month"){ const d=+t.dataset.delta, b=(App.trkMonth||today().slice(0,7))+"-01", dt=new Date(b+"T00:00:00"); dt.setMonth(dt.getMonth()+d); App.trkMonth=ymd(dt).slice(0,7); render(); return; }
   if(a==="trk-view"){ App.trkView=t.dataset.v; render(); return; }
+  if(a==="open-reports-inbox"){ App.screen="reportsinbox"; App.inboxState="loading"; App.inboxRows=[]; render(); fetchReports(); return; }
+  if(a==="refresh-reports-inbox"){ fetchReports(); return; }
   if(a==="start-timer"){ startTimer(); render(); return; }
   if(a==="stop-timer"){ stopTimer(); render(); const s=studyToday(); toast("Saved · "+fmtHM(s)+" today"); return; }
   if(a==="timer-subject"){ const cur=DB.progress.timer||{running:false,startedAt:null}; DB.progress.timer={...cur, subject:t.dataset.s}; save.progress(); render(); return; }
