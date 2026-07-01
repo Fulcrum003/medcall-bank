@@ -1787,7 +1787,8 @@ function smartPool(){
 }
 function gradeCurrent(g){
   const s=App.practice, q=QMAP[s.pool[s.i]];
-  const ok = q.type==="sa" ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
+  const single=(q.type!=="sa") && (q.choices||[]).length<2;
+  const ok = (q.type==="sa"||single) ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
   recordAttempt(q,s.selected,g,q.type==="sa"?ok:undefined, s.confidence);
   cue(ok?"correct":"wrong");
   s.answered++; if(ok)s.correct++; s.xp+=awardXP(ok?10:4);
@@ -1801,6 +1802,7 @@ function duelPick(side){
 }
 function viewQuiz(){
   const s=App.practice, q=QMAP[s.pool[s.i]];
+  const singleAnswer=(q.type!=="sa") && (q.choices||[]).length<2;
   const prog=DB.progress.questions[q.id];
   const marked=prog?.marked;
   let html=`<div class="fade">
@@ -1829,6 +1831,13 @@ function viewQuiz(){
   if(q.type==="sa"){
     if(!s.revealed) html+=`<div class="faint" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 8px">Your answer</div>
       <textarea id="saInput" class="sainput" placeholder="Write your answer, then reveal the model answer…">${esc(s.saText||"")}</textarea>`;
+  } else if(singleAnswer){
+    if(!s.revealed){
+      html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div class="faint" style="font-size:13px;line-height:1.55">⚑ <b>Recalled question</b> — the source preserved only the answer, not the full option list. Tap <b>Reveal answer</b> to see it.</div></div>`;
+    } else {
+      const a0=q.choices[0]||{};
+      html+=`<div class="choices"><div class="choice correct"><span class="lab"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M20 6L9 17l-5-5"/></svg></span><span>${esc(a0.t||"")}</span><span class="vd">ANSWER</span></div></div>`;
+    }
   } else {
     const _emqColl = (q.type==="emq") && s.optsCollapsed;
     if(q.type==="emq") html+=`<button class="optshdr" data-action="toggle-emq-opts" style="width:100%;background:none;border:none;color:inherit;font:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between"><span>Pick the single best option · ${q.choices.length} options</span><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;transition:transform .2s;transform:rotate(${_emqColl?'-90deg':'0deg'})"><path d="M6 9l6 6 6-6"/></svg></button>`;
@@ -1862,7 +1871,7 @@ function viewQuiz(){
   // footer
   let foot;
   if(!s.revealed){
-    foot=`<button class="btn btn-primary" data-action="reveal" ${(q.type==="sa"||s.selected)?'':'disabled'}>Reveal answer</button>`;
+    foot=`<button class="btn btn-primary" data-action="reveal" ${(q.type==="sa"||s.selected||singleAnswer)?'':'disabled'}>Reveal answer</button>`;
   } else {
     foot=`<div style="width:100%">
       <div class="faint" style="font-size:11px;text-align:center;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">How well did you recall it?</div>

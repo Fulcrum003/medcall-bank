@@ -87,7 +87,7 @@
     },
     {
      "label": "D",
-     "text": "Fistula test | High-Yield Medica almology — Complete",
+     "text": "Fistula test",
      "correct": false,
      "explanation": "Tests for perilymphatic fistula (pressure-induced vertigo). Not for BPPV. Page 2 University of Kufa, College of Medicine"
     },
@@ -228,7 +228,7 @@
     },
     {
      "label": "D",
-     "text": "Levator function test e | High-Yield Medica halmology — Complete",
+     "text": "Levator function test",
      "correct": false,
      "explanation": "Measures levator muscle EXCURSION (downgaze to upgaze). Normal >12 mm. Used to choose surgical technique, NOT to grade severity. MRD = severity; LF = surgical planning. Page 4 | University of Kufa, College of Medicine"
     }
@@ -345,7 +345,7 @@
     },
     {
      "label": "B",
-     "text": "CSOM-tubotym panic type e | High-Yield Medica halmology — Complete",
+     "text": "CSOM-tubotym panic type",
      "correct": true,
      "explanation": "CSOM TUBOTYMPANIC (MUCOSAL/SAFE) TYPE: Chronic middle ear infection → CENTRAL (pars tensa) perforation + MUCOPURULENT (non-offensive) discharge + conductive hearing loss. \"Safe\" = fewer intracranial complications than squamous type. Page 6 University of Kufa, College of Medicine"
     },
@@ -480,7 +480,7 @@
     },
     {
      "label": "B",
-     "text": "Otitic hydrocephalus | High-Yield Medical lmology — Complete MC",
+     "text": "Otitic hydrocephalus",
      "correct": false,
      "explanation": "INTRACRANIAL complication (not intra-temporal) from lateral sinus thrombosis. Page 8 University of Kufa, College of Medicine"
     },
@@ -811,7 +811,7 @@
     },
     {
      "label": "E",
-     "text": "Acute anterior uveitis e | High-Yield Medica halmology — Complete",
+     "text": "Acute anterior uveitis",
      "correct": false,
      "explanation": "AAU: SMALL (MIOTIC) pupil from ciliary spasm + cells and flare in AC + perilimbal injection. KEY DIFFERENTIATOR: AACG = MID-DILATED pupil; AAU = CONSTRICTED pupil. Page 13 University of Kufa, College of Medicine"
     }
@@ -1007,7 +1007,7 @@
     },
     {
      "label": "E",
-     "text": "Local vasoconstrictors e | High-Yield Medica halmology — Complete",
+     "text": "Local vasoconstrictors",
      "correct": false,
      "explanation": "Decongestants reduce mucosal congestion. Cannot drain a haematoma. Page 16 | University of Kufa, College of Medicine"
     }
@@ -1142,7 +1142,7 @@
     },
     {
      "label": "D",
-     "text": "Absent of laryngeal crepitus | High-Yield Medica almology — Complete",
+     "text": "Absent of laryngeal crepitus",
      "correct": true,
      "explanation": "ABSENT LARYNGEAL CREPITUS (Jackson sign): Normal larynx moves side-to-side over the pre-vertebral spine (crunching sensation = laryngeal crepitus). When hypopharyngeal tumour INVADES the pre-vertebral fascia, the larynx is FIXED → crepitus ABSENT. Absent crepitus = INOPERABLE DISEASE (T4b — invasion of pre-vertebral fascia). Page 18 University of Kufa, College of Medicine"
     },
@@ -1283,7 +1283,7 @@
     },
     {
      "label": "C",
-     "text": "Posterior e | High-Yield Medica halmology — Complete",
+     "text": "Posterior",
      "correct": false,
      "explanation": "Orbital apex is deep and rarely fractured in blowout injuries. Page 20 | University of Kufa, College of Medicine"
     },
@@ -1424,7 +1424,7 @@
     },
     {
      "label": "B",
-     "text": "Pus in the posterior chamber e | High-Yield Medica halmology — Complete",
+     "text": "Pus in the posterior chamber",
      "correct": false,
      "explanation": "Pus in posterior chamber = severe endophthalmitis. Page 22 University of Kufa, College of Medicine"
     },
@@ -1614,7 +1614,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "Autosomal dominant e | High-Yield Medica halmology — Complete",
+     "text": "Autosomal dominant",
      "correct": false,
      "explanation": "Standard teaching: familial retinoblastoma is inherited as AD (germline Rb1 mutation). However, file marks Autosomal Recessive as correct — see FLAG below. Page 25 University of Kufa, College of Medicine"
     },
@@ -1681,7 +1681,7 @@
     },
     {
      "label": "D",
-     "text": "Systemic chemotherapy e | High-Yield Medica halmology — Complete",
+     "text": "Systemic chemotherapy",
      "correct": true,
      "explanation": "SYSTEMIC CHEMOTHERAPY (chemoreduction) = cornerstone of bilateral retinoblastoma treatment. Common regimen: CARBOPLATIN + VINCRISTINE + ETOPOSIDE (CVE). Reduces tumour for subsequent focal treatments (laser, cryo, brachytherapy). Enucleation for advanced unilateral disease. AVOID external beam radiation in Rb1 carriers (secondary malignancy risk — osteosarcoma). Page 26 University of Kufa, College of Medicine"
     },
@@ -2049,7 +2049,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "Vagus nerve | High-Yield Medica almology — Complete",
+     "text": "Vagus nerv",
      "correct": false,
      "explanation": "CN X carries laryngeal sensation (recurrent + superior laryngeal nerves) and via Arnold's nerve refers ear pain from the larynx/subglottis. Also a correct answer in broader context but file answer is CN IX. Page 32 | University of Kufa, College of Medicine"
     },
@@ -2245,7 +2245,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "Acute suppurative otitis media e | High-Yield Medica halmology — Complete",
+     "text": "Acute suppurative otitis media",
      "correct": false,
      "explanation": "ASOM: ear pain + PURULENT discharge + FEVER + bulging TM before perforation. This patient has NO fever, NO pus, and the perforation is from DIRECT TRAUMA. Page 35 | University of Kufa, College of Medicine"
     },
@@ -2318,7 +2318,7 @@
     },
     {
      "label": "E",
-     "text": "Mixed hearing loss e | High-Yield Medica halmology — Complete",
+     "text": "Mixed hearing loss",
      "correct": false,
      "explanation": "Mixed = BOTH conductive and SNHL components → air-bone gap present BUT BC also reduced. Not the pattern here. Page 36 | University of Kufa, College of Medicine"
     }
@@ -2502,7 +2502,7 @@
     },
     {
      "label": "C",
-     "text": "Foreign body of the tonsil e | High-Yield Medica halmology — Complete",
+     "text": "Foreign body of the tonsil",
      "correct": false,
      "explanation": "Foreign body in tonsil can usually be removed without tonsillectomy. Not an absolute indication. Page 39 University of Kufa, College of Medicine"
     },
@@ -2557,7 +2557,7 @@
     },
     {
      "label": "D",
-     "text": "Profuse mucous discharge in the squamous type e | High-Yield Medica halmology — Complete",
+     "text": "Profuse mucous discharge in the squamous type",
      "correct": false,
      "explanation": "Squamous type (cholesteatoma) = SCANTY, FOUL-SMELLING discharge. MUCOSAL type = PROFUSE mucopurulent discharge. Page 40 | University of Kufa, College of Medicine"
     },
@@ -2606,7 +2606,7 @@
     },
     {
      "label": "D",
-     "text": "Squamous cell carcinoma is the most common type of malignancy e | High-Yield Medica halmology — Complete",
+     "text": "Squamous cell carcinoma is the most common type of malignancy",
      "correct": false,
      "explanation": "SCC is the MOST COMMON MALIGNANCY of the tonsil (most common oropharyngeal malignancy overall). Associated with smoking, alcohol, and HPV-16. File shows D as correct. Page 41 | University of Kufa, College of Medicine"
     },
@@ -2655,7 +2655,7 @@
     },
     {
      "label": "D",
-     "text": "Transcutaneous drainage e | High-Yield Medica halmology — Complete",
+     "text": "Transcutaneous drainage",
      "correct": false,
      "explanation": "Transcutaneous drainage alone WITHOUT IV antibiotics is incomplete — infection will persist. Both drainage AND IV antibiotics required, especially in a diabetic. Page 42 | University of Kufa, College of Medicine"
     },
@@ -3004,7 +3004,7 @@
     },
     {
      "label": "E",
-     "text": "Bell's palsy e | High-Yield Medica halmology — Complete",
+     "text": "Bell's palsy",
      "correct": false,
      "explanation": "Bell's palsy = idiopathic CN VII palsy → facial weakness. Not associated with hearing loss (though the facial nerve travels close to CN VIII, Bell's palsy does NOT cause hearing loss). Page 48 University of Kufa, College of Medicine"
     }
@@ -3421,7 +3421,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "Foramen rotundum e | High-Yield Medica halmology — Complete",
+     "text": "Foramen rotundum",
      "correct": false,
      "explanation": "Foramen rotundum = V2 (maxillary division of trigeminal nerve). Not for vascular supply. Page 54 University of Kufa, College of Medicine"
     },
@@ -3641,7 +3641,7 @@
     },
     {
      "label": "E",
-     "text": "Increased production with dependent head position e | High-Yield Medica halmology — Complete",
+     "text": "Increased production with dependent head position",
      "correct": false,
      "explanation": "Increased discharge with head down (Valsalva) suggests CSF leak clinically but is not a definitive confirmatory test. Page 57 | University of Kufa, College of Medicine"
     }
@@ -3770,7 +3770,7 @@
     },
     {
      "label": "B",
-     "text": "Septoplasty e | High-Yield Medica halmology — Complete",
+     "text": "Septoplasty",
      "correct": true,
      "explanation": "SEPTOPLASTY (Cottle's operation) is the MODERN procedure for DNS correction. It involves precise mobilisation, reshaping, and repositioning of deviated cartilage with PRESERVATION of the structural cartilage. Only the deviated portions are removed/reshaped. Preferred over SMR because it preserves the nasal dorsal and caudal struts → prevents saddle-nose. Page 59 University of Kufa, College of Medicine"
     },
@@ -3917,7 +3917,7 @@
     },
     {
      "label": "B",
-     "text": "It is best diagnosed by CT scanning e | High-Yield Medica halmology — Complete",
+     "text": "It is best diagnosed by CT scanning",
      "correct": false,
      "explanation": "CT can show extent. Best DIAGNOSED by BIOPSY (nasal/lung/kidney) + c-ANCA titre. Page 61 University of Kufa, College of Medicine"
     },
@@ -4119,7 +4119,7 @@
     },
     {
      "label": "C",
-     "text": "Ligation of the external carotid artery ABOVE the origin of the lingual artery e | High-Yield Medical halmology — Complete M",
+     "text": "Ligation of the external carotid artery ABOVE the origin of the lingual artery",
      "correct": true,
      "explanation": "In life-threatening posterior epistaxis uncontrolled by packing and embolisation: EXTERNAL CAROTID ARTERY LIGATION above the lingual artery origin ligates branches (including facial, internal maxillary) supplying the nose while preserving the lingual branch below (to avoid tongue ischaemia). Modern preference: ENDOSCOPIC SPHENOPALATINE ARTERY LIGATION (ESAL). Page 64 | University of Kufa, College of Medicine"
     },
@@ -4456,7 +4456,7 @@
     },
     {
      "label": "B",
-     "text": "Pseudomonas aeruginosa High-Yield Medical Ed mology — Complete MCQ",
+     "text": "Pseudomonas aeruginosa",
      "correct": false,
      "explanation": "Pseudomonas is common in chronic sinusitis (especially in CF and immunocompromised patients). Not the most common in acute community-acquired sinusitis. Page 69 iversity of Kufa, College of Medicine"
     },
@@ -4658,7 +4658,7 @@
     },
     {
      "label": "C",
-     "text": "Missed diagnosis is common in nasal tumours given the non-specific symptoms e | High-Yield Medica halmology — Complete",
+     "text": "Missed diagnosis is common in nasal tumours given the non-specific symptoms",
      "correct": true,
      "explanation": "TRUE: Nasal malignancies often present with non-specific symptoms (nasal obstruction, discharge, epistaxis) → frequently misdiagnosed as chronic sinusitis or polyps → DELAYED DIAGNOSIS is common. Any unilateral nasal symptoms + failure to respond to standard treatment → urgent investigation. Page 72 University of Kufa, College of Medicine"
     },
@@ -4952,7 +4952,7 @@
     },
     {
      "label": "C",
-     "text": "Petrotympanic fissure e | High-Yield Medica halmology — Complete",
+     "text": "Petrotympanic fissure",
      "correct": false,
      "explanation": "The chorda tympani nerve exits through the petrotympanic fissure (the thin branch of CN VII carrying taste from ant. 2/3 tongue + parasympathetic to submandibular gland). Not the main CN VII. Page 77 University of Kufa, College of Medicine"
     },
@@ -5007,7 +5007,7 @@
     },
     {
      "label": "D",
-     "text": "It contains both endolymph and perilymph, which are NOT in communication with CSF e | High-Yield Medica halmology — Complete",
+     "text": "It contains both endolymph and perilymph, which are NOT in communication with CSF",
      "correct": false,
      "explanation": "Perilymph DOES communicate with CSF. Page 78 | University of Kufa, College of Medicine"
     },
@@ -5252,7 +5252,7 @@
     },
     {
      "label": "D",
-     "text": "It should be treated with incision and drainage e | High-Yield Medica halmology — Complete",
+     "text": "It should be treated with incision and drainage",
      "correct": true,
      "explanation": "I&D; = definitive treatment for auricular haematoma. Incision → evacuate clot → suture → PRESSURE DRESSING (bolster/through-and-through sutures) to prevent re-accumulation. This prevents the cartilage from developing avascular necrosis. Page 82 University of Kufa, College of Medicine"
     },
@@ -5307,7 +5307,7 @@
     },
     {
      "label": "E",
-     "text": "It should not be treated with steroids due to risk of overwhelming sepsis e | High-Yield Medical halmology — Complete M",
+     "text": "It should not be treated with steroids due to risk of overwhelming sepsis",
      "correct": false,
      "explanation": "Topical steroids in OE do not cause systemic sepsis — the amount absorbed is negligible. Page 83 | University of Kufa, College of Medicine"
     }
@@ -5479,7 +5479,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "It is most common in adults e | High-Yield Medica halmology — Complete",
+     "text": "It is most common in adults",
      "correct": false,
      "explanation": "ASOM is most common in CHILDREN (peak age 6-18 months). Shorter, more horizontal Eustachian tube → easier bacterial ascent. Page 86 University of Kufa, College of Medicine"
     },
@@ -5546,7 +5546,7 @@
     },
     {
      "label": "D",
-     "text": "It is due to Eustachian tube dysfunction e | High-Yield Medica halmology — Complete",
+     "text": "It is due to Eustachian tube dysfunction",
      "correct": true,
      "explanation": "TRUE: OME (GLUE EAR) is caused by EUSTACHIAN TUBE DYSFUNCTION → negative middle ear pressure → serous/mucous effusion accumulates. ET dysfunction: adenoid hypertrophy (most common in children), allergy, cleft palate (most severe ET dysfunction). Causes conductive HL. Page 87 University of Kufa, College of Medicine"
     },
@@ -5595,7 +5595,7 @@
     },
     {
      "label": "D",
-     "text": "Following grommet insertion, children should not swim for around 1 year e | High-Yield Medica halmology — Complete",
+     "text": "Following grommet insertion, children should not swim for around 1 year",
      "correct": false,
      "explanation": "Swimming RESTRICTIONS after grommet insertion are DEBATED. Most evidence suggests SURFACE SWIMMING is acceptable. Diving/submersion is avoided. Page 88 University of Kufa, College of Medicine"
     },
@@ -5791,7 +5791,7 @@
     },
     {
      "label": "D",
-     "text": "Extradural abscess e | High-Yield Medica halmology — Complete",
+     "text": "Extradural abscess",
      "correct": false,
      "explanation": "Extradural abscess IS an intracranial complication of CSOM. Page 91 University of Kufa, College of Medicine"
     },
@@ -6177,7 +6177,7 @@
     },
     {
      "label": "C",
-     "text": "It lasts for seconds to minutes | High-Yield Medica almology — Complete",
+     "text": "It lasts for seconds to minutes",
      "correct": false,
      "explanation": "Seconds to minutes = BPPV. Meniere's = minutes to hours. Page 98 University of Kufa, College of Medicine"
     },
@@ -6232,7 +6232,7 @@
     },
     {
      "label": "D",
-     "text": "Patients should be warned that recovery is unlikely | High-Yield Medica almology — Complete",
+     "text": "Patients should be warned that recovery is unlikely",
      "correct": false,
      "explanation": "Bell's palsy has good prognosis: >80% recover completely with steroid treatment. Only ~5% have severe permanent deficit. Page 99 University of Kufa, College of Medicine"
     },
@@ -6281,7 +6281,7 @@
     },
     {
      "label": "D",
-     "text": "CT scanning is the investigation of choice | High-Yield Medica almology — Complete",
+     "text": "CT scanning is the investigation of choic",
      "correct": false,
      "explanation": "MRI (gadolinium-enhanced) is the GOLD STANDARD for acoustic neuroma detection and assessment, not CT. Page 100 University of Kufa, College of Medicine"
     },
@@ -6422,7 +6422,7 @@
     },
     {
      "label": "C",
-     "text": "Tenth (CN X) e | High-Yield Medica halmology — Complete",
+     "text": "Tenth (CN X)",
      "correct": true,
      "explanation": "Both SUPERIOR LARYNGEAL NERVE and RECURRENT LARYNGEAL NERVE are branches of the VAGUS NERVE (CN X). SLN: internal branch (sensation above vocal cords) + external branch (motor to cricothyroid). RLN: motor to all intrinsic laryngeal muscles (except cricothyroid) + sensation below vocal cords. Page 102 University of Kufa, College of Medicine"
     },
@@ -6759,7 +6759,7 @@
     },
     {
      "label": "B",
-     "text": "Under local anaesthetic with the patient supine e | High-Yield Medica halmology — Complete",
+     "text": "Under local anaesthetic with the patient supine",
      "correct": false,
      "explanation": "LA insufficient and aspiration risk. Page 107 University of Kufa, College of Medicine"
     },
@@ -6820,7 +6820,7 @@
     },
     {
      "label": "D",
-     "text": "Created following tonsillectomy | High-Yield Medica almology — Complete",
+     "text": "Created following tonsillectomy",
      "correct": false,
      "explanation": "Not created by tonsillectomy. Page 108 | University of Kufa, College of Medicine"
     },
@@ -6998,7 +6998,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "Acute upper airway obstruction e | High-Yield Medica halmology — Complete",
+     "text": "Acute upper airway obstruction",
      "correct": false,
      "explanation": "Acute UAO IS an indication for tracheostomy/cricothyroidotomy. Page 111 | University of Kufa, College of Medicine"
     },
@@ -7071,7 +7071,7 @@
     },
     {
      "label": "E",
-     "text": "Reduction of anatomical dead space e | High-Yield Medica halmology — Complete",
+     "text": "Reduction of anatomical dead space",
      "correct": true,
      "explanation": "TRUE: TRACHEOSTOMY REDUCES ANATOMICAL DEAD SPACE by ~50% (bypasses the nasopharynx, oropharynx, larynx = dead space). This improves alveolar ventilation efficiency, reduces work of breathing, and facilitates weaning from ventilator. Page 112 | University of Kufa, College of Medicine"
     }
@@ -7445,7 +7445,7 @@
     },
     {
      "label": "B",
-     "text": "They are brilliantly translucent | High-Yield Medical almology — Complete M",
+     "text": "They are brilliantly translucent",
      "correct": true,
      "explanation": "TRUE: CYSTIC HYGROMA is BRILLIANTLY TRANSLUCENT (transilluminates brightly). This is pathognomonic — the large spaces filled with clear lymph fluid transmit light beautifully. Page 118 University of Kufa, College of Medicine"
     },
@@ -7512,7 +7512,7 @@
     },
     {
      "label": "E",
-     "text": "The track of the thyroid from the tongue base to the neck | High-Yield Medica almology — Complete",
+     "text": "The track of the thyroid from the tongue base to the neck",
      "correct": true,
      "explanation": "THYROGLOSSAL DUCT CYST = remnant of the THYROGLOSSAL DUCT — the tract along which the thyroid gland descends from the FORAMEN CAECUM (at the base of the tongue) to its final position in the anterior neck (pre-tracheal). This duct normally obliterates by the 10th week. Persistence → thyroglossal duct cysts along the tract (can be in tongue, suprahyoid, infrahyoid = most common). Page 119 niversity of Kufa, College of Medicine"
     }
@@ -7733,7 +7733,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "A radical neck dissection | High-Yield Medica almology — Complete",
+     "text": "A radical neck dissection",
      "correct": false,
      "explanation": "RADICAL neck dissection removes ALL LN (I-V) + SCM + IJV + CN XI. Most disfiguring. Page 123 University of Kufa, College of Medicine"
     },
@@ -7800,7 +7800,7 @@
     },
     {
      "label": "D",
-     "text": "Perform nasal packing e | High-Yield Medica halmology — Complete",
+     "text": "Perform nasal packing",
      "correct": false,
      "explanation": "Packing is for epistaxis control. Page 124 University of Kufa, College of Medicine"
     },
@@ -7990,7 +7990,7 @@
     },
     {
      "label": "C",
-     "text": "Osler-Weber-Re ndu syndrome e | High-Yield Medica halmology — Complete",
+     "text": "Osler-Weber-Re ndu syndrome",
      "correct": true,
      "explanation": "HHT (Hereditary Haemorrhagic Telangiectasia) = autosomal dominant. Classic features: (1) MUCOCUTANEOUS TELANGIECTASIA (visible around nose + lips + fingertips), (2) RECURRENT EPISTAXIS, (3) FAMILY HISTORY (AD inheritance), (4) Visceral AVMs (pulmonary, hepatic, cerebral). Diagnosis: Curaçao criteria (3/4 = definite HHT). Page 127 | University of Kufa, College of Medicine"
     },
@@ -8174,7 +8174,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "Delayed onset (a few seconds) torsional nystagmus on descent FACING BOTH SIDES e | High-Yield Medica halmology — Complete",
+     "text": "Delayed onset (a few seconds) torsional nystagmus on descent FACING BOTH SIDES",
      "correct": false,
      "explanation": "Bilateral nystagmus on Dix-Hallpike suggests central pathology (cerebellar disease). BPPV = UNILATERAL (one side only — the affected ear). Page 130 University of Kufa, College of Medicine"
     },
@@ -8229,7 +8229,7 @@
     },
     {
      "label": "B",
-     "text": "Chronic lymphocytic leukaemia e | High-Yield Medica halmology — Complete",
+     "text": "Chronic lymphocytic leukaemia",
      "correct": false,
      "explanation": "CLL: lymphocytosis, lymphadenopathy, hepatosplenomegaly. Not this triad. Page 131 University of Kufa, College of Medicine"
     },
@@ -8480,7 +8480,7 @@
     },
     {
      "label": "C",
-     "text": "Mycobacterium tuberculosis | High-Yield Medica almology — Complete",
+     "text": "Mycobacterium tuberculosis",
      "correct": false,
      "explanation": "TB otitis media is extremely rare (atypical presentation). Page 135 University of Kufa, College of Medicine"
     },
@@ -8682,7 +8682,7 @@
     },
     {
      "label": "D",
-     "text": "Mastoidectomy should be performed as soon as possible e | High-Yield Medica halmology — Complete",
+     "text": "Mastoidectomy should be performed as soon as possible",
      "correct": false,
      "explanation": "Mastoidectomy is indicated for confirmed coalescent mastoiditis with bone destruction — not immediately without IV antibiotics trial and investigation. Page 138 | University of Kufa, College of Medicine"
     },
@@ -8811,7 +8811,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "Otosclerosis e | High-Yield Medica halmology — Complete",
+     "text": "Otosclerosis",
      "correct": false,
      "explanation": "Otosclerosis: Rinne NEGATIVE (conductive). This patient has Rinne POSITIVE bilaterally = not otosclerosis. Page 140 University of Kufa, College of Medicine"
     },
@@ -9068,7 +9068,7 @@
     },
     {
      "label": "C",
-     "text": "Trauma to Little's area | High-Yield Medica almology — Complete",
+     "text": "Trauma to Little's area",
      "correct": false,
      "explanation": "Trauma to Little's area = minor anterior epistaxis, not hospitalisation-level recurrence. Page 144 University of Kufa, College of Medicine"
     },
@@ -9299,7 +9299,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "OCT is a valuable imaging tool e | High-Yield Medica halmology — Complete",
+     "text": "OCT is a valuable imaging tool",
      "correct": false,
      "explanation": "TRUE — OCT is valuable for RNFL (retinal nerve fibre layer) assessment in glaucoma. Page 148 | University of Kufa, College of Medicine"
     },
@@ -9611,7 +9611,7 @@
     },
     {
      "label": "D",
-     "text": "Unilateral lateral rectus recession e | High-Yield Medica halmology — Complete",
+     "text": "Unilateral lateral rectus recession",
      "correct": false,
      "explanation": "Incorrect muscle — lateral rectus recession would worsen convergence. Page 153 University of Kufa, College of Medicine"
     },
@@ -9862,7 +9862,7 @@
     },
     {
      "label": "E",
-     "text": "Staphylococcal conjunctivitis e | High-Yield Medica halmology — Complete",
+     "text": "Staphylococcal conjunctivitis",
      "correct": false,
      "explanation": "Staphylococcal: mucopurulent discharge + lid margin crusting. No follicles or preauricular LN. Page 157 University of Kufa, College of Medicine"
     }
@@ -10132,7 +10132,7 @@
     },
     {
      "label": "D",
-     "text": "Medial rectus — cranial nerve VI e | High-Yield Medica halmology — Complete",
+     "text": "Medial rectus — cranial nerve VI",
      "correct": false,
      "explanation": "Medial rectus = CN III. CN VI = lateral rectus. Page 161 University of Kufa, College of Medicine"
     },
@@ -10469,7 +10469,7 @@
     },
     {
      "label": "C",
-     "text": "Optic neuritis e | High-Yield Medica halmology — Complete",
+     "text": "Optic neuritis",
      "correct": false,
      "explanation": "Optic neuritis is related to demyelinating disease (MS) and is not associated with myopia. Page 166 University of Kufa, College of Medicine"
     },
@@ -10610,7 +10610,7 @@
     },
     {
      "label": "B",
-     "text": "Retinal vein occlusion | High-Yield Medica almology — Complete",
+     "text": "Retinal vein occlusion",
      "correct": true,
      "explanation": "CENTRAL RETINAL VEIN OCCLUSION (CRVO) and BRANCH RETINAL VEIN OCCLUSION (BRVO) = ACUTE (or rapid) visual loss. CRVO: sudden painless visual loss + flame haemorrhages in all 4 quadrants + disc swelling + \"stormy sunset\" fundus. Page 168 University of Kufa, College of Medicine"
     },
@@ -10965,7 +10965,7 @@
     },
     {
      "label": "D",
-     "text": "Glasses e | High-Yield Medica halmology — Complete",
+     "text": "Glasses",
      "correct": false,
      "explanation": "Glasses cannot correct vision through an opaque cataractous lens. Page 173 | University of Kufa, College of Medicine"
     },
@@ -11155,7 +11155,7 @@
     },
     {
      "label": "C",
-     "text": "The redness is due to a microbial infection e | High-Yield Medica halmology — Complete",
+     "text": "The redness is due to a microbial infection",
      "correct": false,
      "explanation": "Anterior uveitis in AS is AUTOIMMUNE/INFLAMMATORY, not primarily microbial. Page 176 | University of Kufa, College of Medicine"
     },
@@ -11204,7 +11204,7 @@
     },
     {
      "label": "C",
-     "text": "Pregnant women with proliferative DR do poorly without treatment, but those who had prior panretinal photocoagulatio n re e | High-Yield Medica halmology — Complete",
+     "text": "Pregnant women with proliferative DR do poorly without treatment, but those who had prior panretinal photocoagulatio n re",
      "correct": true,
      "explanation": "FALSE STATEMENT (the answer): Prior PRP does provide SOME protection during pregnancy, but does NOT guarantee stability. PDR can STILL WORSEN during pregnancy despite prior PRP. This overstatement makes it the false answer. Page 177 University of Kufa, College of Medicine"
     },
@@ -11400,7 +11400,7 @@
     },
     {
      "label": "C",
-     "text": "B-scan: Metastatic Tumor has HIGH internal reflectivity; choroidal melanoma has LOW e | High-Yield Medica halmology — Complete",
+     "text": "B-scan: Metastatic Tumor has HIGH internal reflectivity; choroidal melanoma has LOW",
      "correct": false,
      "explanation": "TRUE — choroidal MELANOMA has LOW internal reflectivity on B-scan (characteristic). METASTATIC tumour has HIGH internal reflectivity (from tissue disorganisation). Page 180 University of Kufa, College of Medicine"
     },
@@ -11461,7 +11461,7 @@
     },
     {
      "label": "E",
-     "text": "Mostly in infants and children e | High-Yield Medica halmology — Complete",
+     "text": "Mostly in infants and children",
      "correct": true,
      "explanation": "ACUTE MASTOIDITIS: predominantly a disease of INFANTS AND CHILDREN (following ASOM). Peak age 2 years. Can also occur in adults but less commonly. Post-auricular swelling + auricle displaced anteroinferiorly. Page 181 University of Kufa, College of Medicine"
     }
@@ -11596,7 +11596,7 @@
     },
     {
      "label": "C",
-     "text": "Carbon dioxide laser e | High-Yield Medica halmology — Complete",
+     "text": "Carbon dioxide laser",
      "correct": false,
      "explanation": "CO2 laser = dermatology (warts, skin resurfacing), ENT (removal of papillomata). NOT for corneal refractive surgery. Page 183 University of Kufa, College of Medicine"
     },
@@ -11780,7 +11780,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Chloroquine e",
+     "text": "a) Chloroquine",
      "correct": true,
      "explanation": "CHLOROQUINE/hydroxychloroquine → RETINAL TOXICITY (bull's eye maculopathy). Dose-dependent. Monitor: annual OCT + Humphrey visual field (10-2). Gentamicin → SNHL (ototoxic not vision). Bendroflumethiazide, metformin, atorvastatin → not primarily visual impairment. Distractor."
     }
@@ -11838,7 +11838,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "e) Hypermetropia is a cause of childhood squint e | High-Yield Medica halmology — Complete e",
+     "text": "e) Hypermetropia is a cause of childhood squint",
      "correct": true,
      "explanation": "Hypermetropia → accommodative esotropia (most common childhood squint type). Myopia treated with CONCAVE (diverging) lenses. Astigmatism IS correctable with cylindrical lenses. Presbyopia = progressive LOSS of accommodation with age (not short-sightedness). Page 187 University of Kufa, College of Medicine istractor."
     }
@@ -11867,7 +11867,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "d) Diabetes mellitus e",
+     "text": "d) Diabetes mellitus",
      "correct": true,
      "explanation": "POAG risk factors: RAISED IOP (most important modifiable), age >40, family history, Afro-Caribbean ethnicity, myopia, DIABETES MELLITUS, thin cornea (central corneal thickness <555 µm). Hypermetropia = risk for ANGLE-CLOSURE glaucoma (not POAG). Caucasian origin = lower risk. Distractor."
     }
@@ -11896,7 +11896,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "e) Macular degeneration e",
+     "text": "e) Macular degeneration",
      "correct": true,
      "explanation": "Gradual visual loss: cataract, ARMD, glaucoma, diabetic maculopathy, chronic retinal detachment. ACUTE visual loss: CRAO, CRVO, optic neuritis, GCA, vitreous haemorrhage, acute retinal detachment. Retinal artery embolism/GCA = ACUTE not gradual. Distractor."
     }
@@ -11925,7 +11925,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) β-blocker eye drops e",
+     "text": "c) β-blocker eye drops",
      "correct": true,
      "explanation": "POAG treatment STEPLADDER: 1st: PROSTAGLANDIN ANALOGUES (latanoprost — most effective, once daily, no systemic effects). 2nd: BETA-BLOCKERS (timolol — reduces aqueous production). 3rd: CAI (dorzolamide, acetazolamide). Steroid drops → RAISE IOP (contraindicated). Tropicamide → mydriatic (contraindicated in AACG). Distractor."
     }
@@ -11954,7 +11954,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) Macula — central scotoma e",
+     "text": "c) Macula — central scotoma",
      "correct": true,
      "explanation": "Visual field defects: left optic nerve = LEFT monocular blindness; optic chiasm = BITEMPORAL hemianopia; left optic tract = RIGHT homonymous hemianopia; macula = CENTRAL SCOTOMA (e.g., ARMD, optic neuritis). Occipital cortex = homonymous hemianopia WITH macular sparing. Distractor."
     }
@@ -11983,7 +11983,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "d) Papilloedema e",
+     "text": "d) Papilloedema",
      "correct": true,
      "explanation": "HYPERTENSIVE RETINOPATHY GRADES: 1=arterial narrowing; 2=AV nipping; 3=flame haemorrhages + cotton wool spots + hard exudates; 4=PAPILLOEDEMA (swollen optic disc). Grade 4 = MALIGNANT HYPERTENSION (diastolic >120 + papilloedema). Medical emergency. Distractor."
     }
@@ -12012,7 +12012,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Retinal detachment e",
+     "text": "a) Retinal detachment",
      "correct": true,
      "explanation": "Myopia (especially high myopia >-6D) → elongated globe → peripheral retinal thinning/lattice degeneration → retinal tears → RHEGMATOGENOUS RETINAL DETACHMENT. Also risk for: POAG (not AACG), early cataract. AACG risk = hypermetropia (shallow anterior chamber). Distractor."
     }
@@ -12041,7 +12041,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Systemic corticosteroids e",
+     "text": "a) Systemic corticosteroids",
      "correct": true,
      "explanation": "Corticosteroids → POSTERIOR SUBCAPSULAR CATARACT (PSC). Also form PSC: topical steroid eye drops, Cushing's syndrome, radiation. Nuclear sclerotic cataract = age (most common). Cortical cataract = diabetes. Other cataract causes: trauma, uveitis, congenital (TORCH infections). Distractor."
     }
@@ -12070,7 +12070,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Brain death e",
+     "text": "b) Brain death",
      "correct": true,
      "explanation": "Brain death → bilateral fixed DILATED pupils (loss of CN III function + sympathetic activity, no light reflex). Opioid overdose → MIOSIS (constricted). Horner syndrome → miosis. Pontine haemorrhage → pinpoint pupils. Pilocarpine → constricts (miotic drop). Distractor."
     }
@@ -12099,7 +12099,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Retinal vein occlusion e | High-Yield Medica halmology — Complete e",
+     "text": "b) Retinal vein occlusion",
      "correct": true,
      "explanation": "Acute visual loss: CRAO (painless, sudden, cherry-red spot), CRVO (sudden blurred vision, flame haemorrhages), optic neuritis, GCA (amaurosis fugax → sudden permanent loss), retinal detachment (curtain). Keratoconjunctivitis sicca, cataract, ARMD = GRADUAL visual loss. Page 192 University of Kufa, College of Medicine istractor."
     }
@@ -12128,7 +12128,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Cranial nerve VI palsy e",
+     "text": "b) Cranial nerve VI palsy",
      "correct": true,
      "explanation": "Diabetic ocular complications: Retinopathy (most important), Cataract (earlier onset), CN III palsy (pupil-sparing — diabetic mononeuropathy), Rubeosis iridis (neovascularisation iris from PDR → AACG). CN VI palsy is NOT typically a diabetic ocular complication (CN III is the classic diabetic CN palsy). Distractor."
     }
@@ -12157,7 +12157,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) Age-related macular degeneration e",
+     "text": "c) Age-related macular degeneration",
      "correct": true,
      "explanation": "Papilloedema causes: RAISED ICP (SOL, hydrocephalus, idiopathic IH, venous sinus thrombosis), ACCELERATED HYPERTENSION, optic neuritis (pseudo-papilloedema). ARMD = macular disease → central scotoma. Does NOT cause papilloedema. Cavernous sinus thrombosis can cause it via raised ICP. Distractor."
     }
@@ -12186,7 +12186,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) Closed-angle glaucoma e",
+     "text": "c) Closed-angle glaucoma",
      "correct": true,
      "explanation": "Acute red eye causes (UCAKIE): Uveitis, Conjunctivitis, Acute glaucoma (AACG), Keratitis, Iritis, Episcleritis. Macular degeneration and astigmatism do NOT cause red eye. Diabetic maculopathy = no red eye. Distractor."
     }
@@ -12215,7 +12215,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Botulism e",
+     "text": "a) Botulism",
      "correct": true,
      "explanation": "Ptosis causes: CN III palsy, Horner syndrome, myasthenia gravis, myotonic dystrophy, botulism (Clostridium botulinum blocks ACh release → all cholinergic function affected → ptosis + ophthalmoplegia). Facial nerve palsy = ECTROPION (not ptosis). Cataract = no ptosis. Presbyopia = no ptosis. Distractor."
     }
@@ -12244,7 +12244,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Blot haemorrhages e",
+     "text": "b) Blot haemorrhages",
      "correct": true,
      "explanation": "Background DR: MICROANEURYSMS (earliest) + DOT/BLOT haemorrhages (intraretinal) + HARD EXUDATES (yellow, waxy lipoprotein deposits) + COTTON WOOL SPOTS (ischaemic nerve fibre layer). Vitreous haemorrhage + new vessel formation = PROLIFERATIVE DR (not background). Retinal neovascularisation = PDR. Distractor."
     }
@@ -12334,7 +12334,7 @@
     },
     {
      "label": "C",
-     "text": "Choice C e | High-Yield Medica halmology — Complete",
+     "text": "Choice C",
      "correct": false,
      "explanation": "Distractor. Page 196 | University of Kufa, College of Medicine"
     },
@@ -12775,7 +12775,7 @@
     },
     {
      "label": "C",
-     "text": "Choice C e | High-Yield Medica halmology — Complete",
+     "text": "Choice C",
      "correct": false,
      "explanation": "Distractor. Page 201 University of Kufa, College of Medicine"
     },
@@ -13032,7 +13032,7 @@
     },
     {
      "label": "E",
-     "text": "Choice E e | High-Yield Medica halmology — Complete",
+     "text": "Choice E",
      "correct": false,
      "explanation": "Distractor. Page 204 | University of Kufa, College of Medicine"
     }
@@ -13118,7 +13118,7 @@
     },
     {
      "label": "C",
-     "text": "Choice C e | High-Yield Medica halmology — Complete",
+     "text": "Choice C",
      "correct": false,
      "explanation": "Distractor. Page 205 | University of Kufa, College of Medicine"
     },
@@ -13363,7 +13363,7 @@
     },
     {
      "label": "C",
-     "text": "C e | High-Yield Medica halmology — Complete",
+     "text": "C",
      "correct": false,
      "explanation": "Distractor. Page 208 University of Kufa, College of Medicine"
     },
@@ -13602,7 +13602,7 @@
     },
     {
      "label": "B",
-     "text": "B e | High-Yield Medica halmology — Complete",
+     "text": "B",
      "correct": false,
      "explanation": "Distractor. Page 211 | University of Kufa, College of Medicine"
     },
@@ -13841,7 +13841,7 @@
    "choices": [
     {
      "label": "A",
-     "text": "A e | High-Yield Medica halmology — Complete",
+     "text": "A",
      "correct": false,
      "explanation": "Distractor. Page 214 | University of Kufa, College of Medicine"
     },
@@ -14012,7 +14012,7 @@
     },
     {
      "label": "E",
-     "text": "E e | High-Yield Medica halmology — Complete",
+     "text": "E",
      "correct": false,
      "explanation": "Distractor. Page 216 University of Kufa, College of Medicine"
     }
@@ -14257,7 +14257,7 @@
     },
     {
      "label": "E",
-     "text": "Choice E e | High-Yield Medica halmology — Complete",
+     "text": "Choice E",
      "correct": false,
      "explanation": "Distractor. Page 219 | University of Kufa, College of Medicine"
     }
@@ -14490,7 +14490,7 @@
     },
     {
      "label": "C",
-     "text": "Choice C e | High-Yield Medica halmology — Complete",
+     "text": "Choice C",
      "correct": false,
      "explanation": "Distractor. Page 222 | University of Kufa, College of Medicine"
     },
@@ -14747,7 +14747,7 @@
     },
     {
      "label": "E",
-     "text": "Choice E e | High-Yield Medica halmology — Complete",
+     "text": "Choice E",
      "correct": false,
      "explanation": "Distractor. Page 225 University of Kufa, College of Medicine"
     }
@@ -14986,7 +14986,7 @@
     },
     {
      "label": "D",
-     "text": "E) None of the above e | High-Yield Medica halmology — Complete",
+     "text": "E) None of the above",
      "correct": true,
      "explanation": "BITEMPORAL HEMIANOPIA = OPTIC CHIASM LESION (most common: PITUITARY ADENOMA). Best investigation = MRI PITUITARY/HEAD. The listed options (fundoscopy, TSH, angiogram, skull X-ray) are NOT the best. File answer = 'None of the above' = MRI is the correct answer but not in the listed choices. Page 228 University of Kufa, College of Medicine"
     },
