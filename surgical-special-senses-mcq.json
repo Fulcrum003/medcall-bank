@@ -9112,8 +9112,8 @@
     {
      "label": "B",
      "text": "Aspiration of abscess in the emergency department",
-     "correct": false,
-     "explanation": "While needle aspiration is an alternative to I&D; for smaller abscesses, this case has classic features of peritonsillar abscess with trismus — I&D; or surgical drainage is more definitive."
+     "correct": true,
+     "explanation": "BEST AVAILABLE ANSWER. Quinsy (peritonsillar abscess) is treated by DRAINAGE plus antibiotics. Needle aspiration in the ED is a recognised first-line drainage method — less invasive than transoral incision & drainage, done under local anaesthetic — and is the only drainage option offered, so it is the best of A–D. The fully ideal answer (transoral incision & drainage AND IV antibiotics, since the patient cannot swallow) is not listed as a single option. See flag. Ref: Bailey & Love; ENT UK peritonsillar abscess guidance."
     },
     {
      "label": "C",
@@ -9128,12 +9128,12 @@
      "explanation": "Peritonsillar abscess needs drainage + parenteral antibiotics. Discharge is inappropriate."
     }
    ],
-   "keyPoint": "PERITONSILLAR ABSCESS (Quinsy): Uvula deviation to OPPOSITE side + trismus + peritonsillar bulge. Treatment = TRANSORAL I&D; + IV ANTIBIOTICS (not oral amoxicillin — patient cannot swallow effectively). All listed options A-D are inadequate as sole management.",
+   "keyPoint": "PERITONSILLAR ABSCESS (Quinsy): Uvula deviation to OPPOSITE side + trismus + peritonsillar bulge. Treatment = TRANSORAL I&D; + IV ANTIBIOTICS (not oral amoxicillin — patient cannot swallow effectively). Of the options given, drainage (needle aspiration — option B) is the best answer; ideally combined with IV antibiotics.",
    "keyDifferentiator": null,
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "Flawed option set: the ideal management (transoral I&D + IV antibiotics) is not offered as a single option. Best available answer marked = B (aspiration/drainage in ED). Ref: Bailey & Love; ENT UK.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
    "references": null

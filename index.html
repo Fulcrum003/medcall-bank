@@ -308,7 +308,7 @@
       <div class="brand">
         <span class="dot"></span>
         <h1>MedCall</h1>
-        <small>v1.0</small>
+        <small>v1.1</small>
       </div>
       <div class="iconrow">
         <button class="iconbtn" data-action="nav" data-screen="search" title="Search">
@@ -370,7 +370,7 @@ let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
   exams:[],
   reports:[],
-  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true }
+  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
 };
 async function loadDB(){
   const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
@@ -1345,6 +1345,7 @@ function viewTimer(){
   return html;
 }
 /* ---------- HOME ---------- */
+function notifPromptDue(){ const N=notifCfg(); return notifSupported() && notifPermission()==="default" && !N.enabled && !N.prompted; }
 function viewHome(){
   const totalQ=Object.keys(QMAP).length;
   const totalSeen=Object.keys(DB.progress.questions).length;
@@ -1365,6 +1366,23 @@ function viewHome(){
     </div>
     <div class="progressbar" style="margin-top:11px"><i style="width:${inLvl/200*100}%"></i></div>
   </div>`;
+
+  // first-run reminders prompt (dismissible)
+  if(notifPromptDue()){
+    html+=`<div class="card pad" style="margin-bottom:14px;border-left:3px solid var(--teal)">
+      <div class="row" style="gap:11px;align-items:flex-start">
+        <span style="font-size:20px;line-height:1">&#128276;</span>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:15px">Turn on study reminders?</div>
+          <div class="faint" style="font-size:12.5px;margin-top:2px">A gentle daily nudge so due cards and your streak don't slip. Fine-tune what and when in Settings.</div>
+          <div class="row" style="gap:8px;margin-top:10px">
+            <button class="btn-sm btn-primary" data-action="notif-prompt-enable">Turn on</button>
+            <button class="btn-sm btn-ghost" data-action="notif-prompt-dismiss">Not now</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
 
   // D-day countdown + study-timer entry (YPT)
   { const _dd=dDay(), _st=studyToday();
@@ -1832,8 +1850,11 @@ function viewQuiz(){
     if(!s.revealed) html+=`<div class="faint" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 8px">Your answer</div>
       <textarea id="saInput" class="sainput" placeholder="Write your answer, then reveal the model answer…">${esc(s.saText||"")}</textarea>`;
   } else if(singleAnswer){
+    const noOpts=(q.choices||[]).length===0;
     if(!s.revealed){
-      html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div class="faint" style="font-size:13px;line-height:1.55">⚑ <b>Recalled question</b> — the source preserved only the answer, not the full option list. Tap <b>Reveal answer</b> to see it.</div></div>`;
+      html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div class="faint" style="font-size:13px;line-height:1.55">⚑ <b>Recalled question</b> — ${noOpts?"the source did not preserve the options or a marked answer for this item. Tap <b>Reveal</b> to study the concept below, then grade your recall.":"the source preserved only the answer, not the full option list. Tap <b>Reveal answer</b> to see it."}</div></div>`;
+    } else if(noOpts){
+      html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div class="faint" style="font-size:13px;line-height:1.55">No answer options were captured for this recalled question — study the key point and summary below.</div></div>`;
     } else {
       const a0=q.choices[0]||{};
       html+=`<div class="choices"><div class="choice correct"><span class="lab"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M20 6L9 17l-5-5"/></svg></span><span>${esc(a0.t||"")}</span><span class="vd">ANSWER</span></div></div>`;
@@ -2601,6 +2622,34 @@ function viewSettings(){
       <button class="switch ${DB.settings.revealOnPick!==false?'on':''}" data-action="set-revealonpick" aria-label="Toggle reveal on pick"><span class="knob"></span></button>
     </div>
 
+    <div class="sectlabel">Study reminders</div>
+    ${(function(){
+      const N=notifCfg(), sup=notifSupported(), perm=notifPermission(), trig=triggersSupported();
+      let status;
+      if(!sup) status="Open the app from its web link (https) to use reminders — they're unavailable on a downloaded file.";
+      else if(perm==="denied") status="Notifications are blocked. Allow them for this site in your browser settings, then re-enable.";
+      else if(N.enabled && perm==="granted") status = trig ? "On — scheduled reminders fire even when the app is closed." : "On — this browser (e.g. iOS) nudges you only while the app is open.";
+      else status="Get a gentle nudge to keep up your reviews, streak and exam countdown.";
+      let h=`<div class="row between card pad">
+        <div><b>Enable reminders</b><div class="faint" style="font-size:12.5px">${esc(status)}</div></div>
+        <button class="switch ${N.enabled&&perm==="granted"?"on":""}" data-action="notif-enable" aria-label="Toggle reminders"><span class="knob"></span></button>
+      </div>`;
+      if(N.enabled && perm==="granted"){
+        h+=`<div class="row between card pad" style="margin-top:8px">
+          <div><b>Daily reminder time</b><div class="faint" style="font-size:12.5px">When to send the daily nudge</div></div>
+          <div class="row" style="gap:8px"><input type="time" id="notiftime" class="inp" value="${esc(N.time||"19:00")}" style="width:auto;padding:7px 9px"><button class="btn-sm btn-primary" data-action="notif-time">Set</button></div>
+        </div>`;
+        [["daily","Daily study reminder","A nudge at your set time each day"],["due","Cards due for review","Tells you when reviews are waiting"],["streak","Streak saver","Evening reminder if you haven't studied yet"],["exam","Exam countdown","D-day nudge as your exam approaches"]].forEach(function(r){
+          h+=`<div class="row between card pad" style="margin-top:8px">
+            <div><b>${r[1]}</b><div class="faint" style="font-size:12.5px">${r[2]}</div></div>
+            <button class="switch ${N[r[0]]!==false?"on":""}" data-action="notif-toggle" data-k="${r[0]}" aria-label="Toggle ${r[1]}"><span class="knob"></span></button>
+          </div>`;
+        });
+        h+=`<div style="height:8px"></div><button class="btn btn-ghost" data-action="notif-test">Send a test reminder</button>`;
+      }
+      return h;
+    })()}
+
     <div class="sectlabel">Appearance</div>
     <div class="row between card pad" style="margin-bottom:8px">
       <div><b>Theme</b><div class="faint" style="font-size:12.5px">Light or dark — your choice</div></div>
@@ -2672,7 +2721,7 @@ function viewSettings(){
     <div class="sectlabel">Danger zone</div>
     <button class="btn btn-ghost" data-action="reset" style="border-color:#6e2b30;color:var(--red)">Reset all progress</button>
 
-    <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v1.0<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
+    <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v1.1<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
   </div>`;
   return html;
 }
@@ -2826,6 +2875,12 @@ document.body.addEventListener("click", async e=>{
   if(a==="timer-subject"){ const cur=DB.progress.timer||{running:false,startedAt:null}; DB.progress.timer={...cur, subject:t.dataset.s}; save.progress(); render(); return; }
   if(a==="timer-toggle"){ const sub=t.dataset.s, cur=DB.progress.timer||{}; if(cur.running && cur.subject===sub){ stopTimer(); } else { if(cur.running) stopTimer(); DB.progress.timer={running:true,startedAt:Date.now(),subject:sub}; save.progress(); } if(DB.settings.groupEndpoint||DB.settings.lbRepo) syncBoard(); render(); return; }
   if(a==="set-examdate"){ const v=($("examdate")?.value||"").trim(); DB.settings.examDate=v; save.settings(); render(); toast(v?"Exam date set":"Exam date cleared"); return; }
+  if(a==="notif-enable"){ const N=notifCfg(); if(N.enabled && notifPermission()==="granted"){ disableNotifs(); } else { enableNotifs(); } return; }
+  if(a==="notif-toggle"){ const N=notifCfg(); N[t.dataset.k]=(N[t.dataset.k]===false); save.settings(); scheduleReminders(); render(); return; }
+  if(a==="notif-time"){ const v=(($("notiftime")||{}).value||"").trim(); if(v){ notifCfg().time=v; save.settings(); scheduleReminders(); render(); toast("Reminder time set to "+v); } return; }
+  if(a==="notif-prompt-enable"){ notifCfg().prompted=true; save.settings(); enableNotifs(); return; }
+  if(a==="notif-prompt-dismiss"){ notifCfg().prompted=true; save.settings(); render(); toast("You can turn reminders on any time in Settings"); return; }
+  if(a==="notif-test"){ (async function(){ if(notifPermission()!=="granted"){ toast("Enable reminders first"); return; } try{ const reg=await navigator.serviceWorker.ready; await reg.showNotification("MedCall", {body:"This is a test reminder — you're all set.", tag:"medcall-test", data:{url:"./"}}); toast("Test sent"); }catch(e){ toast("Could not send test"); } })(); return; }
   if(a==="study-one"){ const id=t.dataset.id; startPracticeCtx({ids:[id]}, (QMAP[id]||{}).topic||"Question"); return; }
   if(a==="open-type"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:null}; App.screen="type"; render(); return; }
   if(a==="open-reference"){ App.nav={system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}; App.screen="reference"; render(); return; }
@@ -2852,7 +2907,7 @@ document.body.addEventListener("click", async e=>{
     const p=DB.progress.questions[q.id]||{seen:0,correct:0,history:[],marked:false,srs:null};
     p.marked=!p.marked; DB.progress.questions[q.id]=p; save.progress(); render();
     toast(p.marked?"Marked for review":"Unmarked"); return; }
-  if(a==="end-practice"){ const s=App.practice; if(s) saveSession(s); App.practice=null; App.screen="home"; render(); return; }
+  if(a==="end-practice"){ const s=App.practice; if(s) saveSession(s); App.practice=null; App.screen="home"; render(); scheduleReminders(); return; }
 
   // builder
   if(a==="exam-toggle-subject"){ const id=t.dataset.subject; App.builder.subjects.has(id)?App.builder.subjects.delete(id):App.builder.subjects.add(id);
@@ -3126,6 +3181,89 @@ function computeSuggestions(){
 }
 
 /* ============================================================
+   STUDY REMINDERS  (local notifications; design doc §12)
+   Uses the Notification Triggers API (TimestampTrigger) so reminders
+   fire even when the app is CLOSED on Chromium/Android. Browsers without
+   triggers (iOS Safari, Firefox) fall back to an in-app catch-up nudge.
+   ============================================================ */
+function notifDefaults(){ return { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} }; }
+function notifCfg(){ DB.settings.notif = Object.assign(notifDefaults(), DB.settings.notif||{}); return DB.settings.notif; }
+function notifSupported(){ return (typeof Notification!=="undefined") && ("serviceWorker" in navigator) && (location.protocol==="https:"||location.protocol==="http:"); }
+function notifPermission(){ return (typeof Notification!=="undefined") ? Notification.permission : "unsupported"; }
+function triggersSupported(){ return (typeof window!=="undefined") && ("TimestampTrigger" in window); }
+function examDaysFrom(when){ const ex=DB.settings.examDate; if(!ex) return null; const e=new Date(ex+"T00:00:00"); const d0=new Date(when); d0.setHours(0,0,0,0); return Math.round((e-d0)/86400000); }
+function notifHour(){ const tp=(notifCfg().time||"19:00").split(":"); return [Math.min(23,Math.max(0,parseInt(tp[0],10)||19)), Math.min(59,Math.max(0,parseInt(tp[1],10)||0))]; }
+
+async function enableNotifs(){
+  const N=notifCfg();
+  if(!notifSupported()){ toast("Reminders need the online app (open it from the web link, not a downloaded file)"); return; }
+  let perm=Notification.permission;
+  if(perm==="default"){ try{ perm=await Notification.requestPermission(); }catch(e){ perm=Notification.permission; } }
+  if(perm!=="granted"){ N.enabled=false; save.settings(); render(); toast(perm==="denied"?"Notifications are blocked in your browser settings":"Notifications not allowed"); return; }
+  N.enabled=true; save.settings();
+  await scheduleReminders();
+  render();
+  toast(triggersSupported()?("Reminders on — you'll be nudged at "+N.time):"Reminders on (this browser nudges only while the app is open)");
+}
+async function disableNotifs(){ const N=notifCfg(); N.enabled=false; save.settings(); await cancelScheduledReminders(); render(); toast("Reminders off"); }
+
+async function cancelScheduledReminders(){
+  try{ const reg=await navigator.serviceWorker.ready; const ns=await reg.getNotifications({includeTriggered:false}); ns.forEach(n=>{ if((n.tag||"").indexOf("medcall-")===0) n.close(); }); }catch(e){}
+}
+
+// (Re)arm scheduled reminders that fire even when the app is closed (Chromium/Android).
+async function scheduleReminders(){
+  const N=notifCfg();
+  if(!notifSupported() || !N.enabled || notifPermission()!=="granted") return;
+  if(!triggersSupported()) return;              // no scheduled-while-closed here; inAppNotifyCheck() covers it
+  let reg; try{ reg=await navigator.serviceWorker.ready; }catch(e){ return; }
+  try{ const ex=await reg.getNotifications({includeTriggered:false}); ex.forEach(n=>{ if((n.tag||"").indexOf("medcall-")===0) n.close(); }); }catch(e){}
+  const now=Date.now(), hm=notifHour(), hh=hm[0], mm=hm[1];
+  // Daily nudge (folds in due + exam), next 7 days
+  for(let d=0; d<7; d++){
+    if(N.daily===false && N.due===false && N.exam===false) break;
+    const when=new Date(); when.setDate(when.getDate()+d); when.setHours(hh,mm,0,0);
+    if(when.getTime()<=now+60000) continue;
+    const parts=[];
+    if(N.daily!==false) parts.push("Time to study");
+    if(N.exam!==false){ const dd=examDaysFrom(when); if(dd!==null && dd>=0 && dd<=21) parts.push(dd===0?"exam is TODAY":("D-"+dd+" to your exam")); }
+    let body=parts.join(" · ");
+    if(N.due!==false){ body = body ? (body+" — review your due cards") : "Your spaced-repetition cards are due for review"; }
+    if(!body) continue;
+    try{ await reg.showNotification("MedCall", { body, tag:"medcall-daily-"+d, showTrigger:new TimestampTrigger(when.getTime()), data:{url:"./"} }); }catch(e){}
+  }
+  // Streak saver: today + tomorrow, evening, only if not yet studied that day
+  if(N.streak!==false){
+    for(let d=0; d<2; d++){
+      if(d===0 && (studyToday()>0 || dailyCount()>0)) continue;   // already studied today
+      const when=new Date(); when.setDate(when.getDate()+d); when.setHours(Math.max(hh,20),0,0,0);
+      if(when.getTime()<=now+60000) continue;
+      const sd=studyStreakDays();
+      try{ await reg.showNotification("MedCall", { body: sd>0 ? ("Don't break your "+sd+"-day streak — a few cards keeps it alive.") : "A few cards today keeps your streak going.", tag:"medcall-streak-"+d, showTrigger:new TimestampTrigger(when.getTime()), data:{url:"./"} }); }catch(e){}
+    }
+  }
+}
+
+// Fallback for browsers without triggers (iOS Safari, Firefox): nudge when the app opens.
+async function inAppNotifyCheck(){
+  const N=notifCfg();
+  if(!notifSupported() || !N.enabled || notifPermission()!=="granted") return;
+  if(triggersSupported()) return;               // scheduled path already covers these browsers
+  const hm=notifHour(), mark=new Date(); mark.setHours(hm[0],hm[1],0,0);
+  if(new Date()<mark) return;                    // not yet reminder time today
+  const t=today();
+  if(N.lastFired && N.lastFired.day===t) return; // already nudged today
+  const due=dueCount(), studied=(studyToday()>0||dailyCount()>0);
+  let body=null;
+  if(N.due!==false && due>0) body=due+" card"+(due===1?"":"s")+" due for review";
+  else if(N.daily!==false && !studied) body="Time for today's study";
+  else if(N.streak!==false && !studied && studyStreakDays()>0) body="Keep your "+studyStreakDays()+"-day streak alive";
+  if(N.exam!==false){ const dd=dDay(); if(dd!==null && dd>=0 && dd<=21) body=(body?body+" · ":"")+(dd===0?"exam is TODAY":"D-"+dd+" to exam"); }
+  if(!body) return;
+  try{ const reg=await navigator.serviceWorker.ready; await reg.showNotification("MedCall", { body, tag:"medcall-catchup", data:{url:"./"} }); N.lastFired={day:t}; save.settings(); }catch(e){}
+}
+
+/* ============================================================
    BOOT
    ============================================================ */
 // Where the question bank + leaderboard live. Used when the app runs as a
@@ -3145,6 +3283,7 @@ function defaultBase(){
 if("serviceWorker" in navigator && (location.protocol==="https:"||location.protocol==="http:")){
   window.addEventListener("load", ()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 }
+if(typeof document!=="undefined"){ document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) scheduleReminders(); }); }
 
 async function boot(){
   await loadDB();
@@ -3163,6 +3302,7 @@ async function boot(){
   if(base){ try{ await syncBank(base); if(App.screen==="home") render(); }catch(e){ /* offline → keep cached/bundled bank */ } }
   // keep the group board fresh (posts your score + pulls others) once the endpoint is known
   if(DB.settings.groupEndpoint || DB.settings.lbRepo){ syncBoard(); }
+  notifCfg(); scheduleReminders(); inAppNotifyCheck();
 }
 
 // Auto-start in browser only (guard prevents running in test environment)
@@ -3174,7 +3314,7 @@ function resetDB() {
   DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {}, timeLog: {}, timer: null };
   DB.exams = [];
   DB.reports = [];
-  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true };
+  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
 
 </script>
