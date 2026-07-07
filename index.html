@@ -308,7 +308,7 @@
       <div class="brand">
         <span class="dot"></span>
         <h1>MedCall</h1>
-        <small>v1.1</small>
+        <small>v1.2</small>
       </div>
       <div class="iconrow">
         <button class="iconbtn" data-action="nav" data-screen="search" title="Search">
@@ -1600,7 +1600,10 @@ function viewTheme(){
   const T=App.theme;
   const ids=poolFor({system:T.sys, type:T.ty, reference:T.reference, topic:T.topic});
   const cases=ids.map(id=>QMAP[id]).filter(Boolean);
-  const back=`<button class="btn-sm btn-ghost" data-action="open-reference" data-system="${esc(T.sys)}" data-type="${esc(T.ty)}" data-reference="${esc(T.reference)}" style="margin-bottom:12px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(T.reference)}</button>`;
+  const fp=!!T.fromPractice;
+  const back = fp
+    ? `<button class="btn-sm btn-ghost" data-action="end-practice" style="margin-bottom:12px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Exit</button>`
+    : `<button class="btn-sm btn-ghost" data-action="open-reference" data-system="${esc(T.sys)}" data-type="${esc(T.ty)}" data-reference="${esc(T.reference)}" style="margin-bottom:12px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(T.reference)}</button>`;
   if(!cases.length) return `<div class="fade">${back}<div class="empty">No cases in this theme.</div></div>`;
   const opts=cases[0].choices||[]; const oc=T.optsCollapsed;
   const done=cases.filter((q,i)=>T.revealed[i]).length;
@@ -1608,10 +1611,8 @@ function viewTheme(){
     <div class="faint mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">${esc(T.sys)} · EMQ theme</div>
     <h2 class="serif" style="font-size:21px;font-weight:600;margin-top:2px">${esc(T.topic)}</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">${cases.length} cases · pick from the shared list · ${done}/${cases.length} revealed</p>
-    <button class="optshdr" data-action="theme-toggle-opts" style="width:100%;background:none;border:none;color:inherit;font:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-top:6px"><span>Option list · ${opts.length} options</span><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;transition:transform .2s;transform:rotate(${oc?'-90deg':'0deg'})"><path d="M6 9l6 6 6-6"/></svg></button>`;
-  if(!oc){ html+=`<div class="card pad" style="margin-bottom:14px;border-left:3px solid var(--teal)">`;
-    opts.forEach(o=>{ html+=`<div style="padding:4px 0;font-size:13.5px"><b style="color:var(--teal)">${o.l}.</b> ${esc(o.t)}</div>`; });
-    html+=`</div>`; }
+    <button class="optshdr" data-action="theme-toggle-opts" style="width:100%;background:none;border:none;color:inherit;font:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-top:6px"><span>Option list · ${opts.length} options</span><svg class="chev i" viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;transition:transform .2s;transform:rotate(${oc?'-90deg':'0deg'})"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div id="themeOptsBox" style="overflow:hidden;transition:max-height .3s ease;max-height:${oc?'0':'2000px'}"><div class="card pad" style="margin:6px 0 14px;border-left:3px solid var(--teal)">${opts.map(o=>`<div style="padding:4px 0;font-size:13.5px"><b style="color:var(--teal)">${o.l}.</b> ${esc(o.t)}</div>`).join("")}</div></div>`;
   const chipS=(state)=>{ let bg="var(--surface-2)",bd="var(--line)",co="inherit";
     if(state==="ok"){bg="var(--green)";co="#04211e";bd="var(--green)";}
     else if(state==="bad"){bg="var(--red-deep,#3a1f24)";co="var(--red)";bd="#6e2b30";}
@@ -1638,6 +1639,7 @@ function viewTheme(){
     }
     html+=`</div>`;
   });
+  if(T.fromPractice) html+=`<button class="btn btn-primary" data-action="theme-continue" style="width:100%;margin-top:4px">Continue &rarr;</button>`;
   html+=`</div>`; return html;
 }
 function viewDuelPick(){
@@ -1792,7 +1794,21 @@ function startPracticeCtx(ctx, label, startIndex){
   let i = (startIndex!=null) ? startIndex : (sv && sv.i<pool.length ? sv.i : 0); if(i>=pool.length) i=0;
   App.practice={ctx,label,pool,i,revealed:false,selected:null,answered:(sv?sv.answered:0)||0,correct:(sv?sv.correct:0)||0,xp:(sv?sv.xp:0)||0};
   if(!ctx.smart) saveSession(App.practice);
-  App.screen="quiz"; render();
+  practiceRoute();
+}
+function setupPracticeTheme(q){
+  const key=qSys(q)+"|"+qRef(q)+"|"+(q.topic||"General");
+  if(!(App.theme && App.theme.fromPractice && App.theme._key===key)){
+    App.theme={ _key:key, sys:qSys(q), ty:"EMQs", reference:qRef(q), topic:q.topic, revealed:{}, picks:{}, optsCollapsed:false, fromPractice:true };
+  }
+}
+function practiceRoute(){
+  const s=App.practice;
+  if(!s){ App.screen="home"; render(); return; }
+  const q=QMAP[s.pool[s.i]];
+  if(q && q.type==="emq"){ setupPracticeTheme(q); App.screen="theme"; }
+  else App.screen="quiz";
+  render(); window.scrollTo({top:0,behavior:"instant"});
 }
 function smartPool(){
   const t=today(), due=[], fresh=[];
@@ -1998,7 +2014,7 @@ function advancePractice(){
   }
   s.i++; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null;
   saveSession(s);
-  render(); window.scrollTo({top:0,behavior:"instant"});
+  practiceRoute();
 }
 
 /* ---------- SESSION CELEBRATION ---------- */
@@ -2721,7 +2737,7 @@ function viewSettings(){
     <div class="sectlabel">Danger zone</div>
     <button class="btn btn-ghost" data-action="reset" style="border-color:#6e2b30;color:var(--red)">Reset all progress</button>
 
-    <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v1.1<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
+    <div class="empty" style="padding-top:24px" data-action="maint-tap">MedCall · v1.2<br>Storage: ${STORE.kind==='local'?'saved on this device':STORE.kind==='artifact'?'saved (preview)':'this session only'}.</div>
   </div>`;
   return html;
 }
@@ -2889,13 +2905,19 @@ document.body.addEventListener("click", async e=>{
   if(a==="study-reference"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference}, t.dataset.reference); return; }
   if(a==="study-topic"){ startPracticeCtx({system:t.dataset.system, type:t.dataset.type, reference:t.dataset.reference, topic:t.dataset.topic}, t.dataset.topic); return; }
   if(a==="open-theme"){ App.theme={sys:t.dataset.system, ty:t.dataset.type, reference:t.dataset.reference, topic:t.dataset.topic, revealed:{}, picks:{}, optsCollapsed:false}; App.screen="theme"; render(); return; }
-  if(a==="theme-toggle-opts"){ App.theme.optsCollapsed=!App.theme.optsCollapsed; render(); return; }
+  if(a==="theme-toggle-opts"){ App.theme.optsCollapsed=!App.theme.optsCollapsed; const box=$("themeOptsBox"); if(box){ const col=App.theme.optsCollapsed, chev=t.querySelector&&t.querySelector(".chev"); box.style.maxHeight=box.scrollHeight+"px"; if(col){ requestAnimationFrame(function(){ box.style.maxHeight="0"; }); } if(chev) chev.style.transform=col?"rotate(-90deg)":"rotate(0deg)"; } else { render(); } return; }
   if(a==="theme-pick"){ const i=t.dataset.i; if(App.theme.revealed[i]) return; App.theme.picks[i]=t.dataset.label; render(); return; }
-  if(a==="theme-reveal"){ const i=t.dataset.i; if(App.theme.revealed[i]) return; const ids=poolFor({system:App.theme.sys,type:App.theme.ty,reference:App.theme.reference,topic:App.theme.topic}); const q=QMAP[ids[+i]]; const pick=App.theme.picks[i]; App.theme.revealed[i]=true; if(q&&pick){ const ok=correctLabel(q)===pick; recordAttempt(q,pick,ok?"good":"again"); cue(ok?"correct":"wrong"); } render(); return; }
+  if(a==="theme-continue"){ const s=App.practice; if(!s){ App.screen="home"; render(); return; }
+    const ids=poolFor({system:App.theme.sys,type:App.theme.ty,reference:App.theme.reference,topic:App.theme.topic});
+    s.consumed=s.consumed||{}; ids.forEach(function(x){ s.consumed[x]=1; });
+    let k=s.i+1; while(k<s.pool.length && s.consumed[s.pool[k]]) k++;
+    if(k>=s.pool.length){ clearSession(s.ctx); DB.progress.resume=null; save.progress(); App.lastSession={answered:s.answered,correct:s.correct,xp:s.xp,label:s.label}; evaluateAchievements({perfectSet: s.answered>=10 && s.correct===s.answered}); App.practice=null; App.screen="celebrate"; render(); confetti(); cue("done"); return; }
+    s.i=k; saveSession(s); practiceRoute(); return; }
+  if(a==="theme-reveal"){ const i=t.dataset.i; if(App.theme.revealed[i]) return; const ids=poolFor({system:App.theme.sys,type:App.theme.ty,reference:App.theme.reference,topic:App.theme.topic}); const q=QMAP[ids[+i]]; const pick=App.theme.picks[i]; App.theme.revealed[i]=true; if(q&&pick){ const ok=correctLabel(q)===pick; recordAttempt(q,pick,ok?"good":"again"); cue(ok?"correct":"wrong"); if(App.theme.fromPractice&&App.practice){ App.practice.answered++; if(ok)App.practice.correct++; App.practice.xp+=awardXP(ok?10:4); evaluateAchievements(); } } render(); return; }
   if(a==="resume"){ const r=DB.progress.resume; if(r&&r.ctx) startPracticeCtx(r.ctx, r.label, r.i); return; }
   if(a==="resume-session"){ const x=(DB.progress.sessions||{})[t.dataset.key]; if(x&&x.ctx) startPracticeCtx(x.ctx, x.label, x.i); return; }
   if(a==="drop-session"){ if(DB.progress.sessions) delete DB.progress.sessions[t.dataset.key]; save.progress(); render(); toast("Session removed"); return; }
-  if(a==="nav-q"){ const s=App.practice; if(!s) return; const ni=s.i+(+t.dataset.dir); if(ni<0||ni>=s.pool.length) return; s.i=ni; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null; saveSession(s); render(); window.scrollTo({top:0,behavior:"instant"}); return; }
+  if(a==="nav-q"){ const s=App.practice; if(!s) return; const ni=s.i+(+t.dataset.dir); if(ni<0||ni>=s.pool.length) return; s.i=ni; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null; saveSession(s); practiceRoute(); return; }
 
   // quiz
   if(a==="select-choice"){ const s=App.practice; s.selected=t.dataset.label; const q=QMAP[s.pool[s.i]]; if(DB.settings.revealOnPick!==false && q.type!=="sa") s.revealed=true; render(); return; }
