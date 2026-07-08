@@ -3,7 +3,7 @@
    so the full bank is available offline even right after a version bump or an
    iOS storage eviction. Same-origin = network-first (fresh when online, cached
    when offline); cross-origin (fonts) = cache-first. */
-const CACHE = "medrecall-v9";
+const CACHE = "medrecall-v10";
 const SHELL = ["./", "./index.html", "./manifest.json", "./sw.js"];
 
 self.addEventListener("install", (e) => {
@@ -32,9 +32,10 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
   const url = (e.notification.data && e.notification.data.url) || "./";
+  const wantReports = (e.notification.tag === "medcall-report");
   e.waitUntil((async () => {
     const all = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
-    for (const c of all) { if ("focus" in c) { try { await c.focus(); return; } catch (err) {} } }
+    for (const c of all) { if ("focus" in c) { try { await c.focus(); if (wantReports && c.postMessage) c.postMessage("open-reports"); return; } catch (err) {} } }
     if (self.clients.openWindow) await self.clients.openWindow(url);
   })());
 });
