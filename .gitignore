@@ -3,4 +3,5 @@ extract.py
 coverage/
 .nyc_output/
 _*.mjs
+_*.js
 _*.txt

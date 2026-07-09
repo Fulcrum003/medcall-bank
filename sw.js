@@ -3,7 +3,7 @@
    so the full bank is available offline even right after a version bump or an
    iOS storage eviction. Same-origin = network-first (fresh when online, cached
    when offline); cross-origin (fonts) = cache-first. */
-const CACHE = "medrecall-v11";
+const CACHE = "medrecall-v12";
 const SHELL = ["./", "./index.html", "./manifest.json", "./sw.js"];
 
 self.addEventListener("install", (e) => {

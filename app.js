@@ -1045,202 +1045,112 @@ function viewHome(){
   const totalSeen=Object.keys(DB.progress.questions).length;
   const allDue=dueCount();
   const streak=DB.progress.streak?.current||0;
+  const newAvail=totalQ-totalSeen;
+  const greet=(function(){ const h=new Date().getHours(); return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; })();
+  const flame=`<svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`;
+  const arrow=`<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>`;
   let html=`<div class="fade">`;
 
-  // maintainer fix announcement — shared to everyone via the edits feed
-  if(App.fixAlert && App.fixAlert.ids && App.fixAlert.ids.length){
-    const _fn=App.fixAlert.ids.length;
-    html+=`<div class="card pad" style="margin-bottom:14px;border:1px solid var(--green);background:var(--green-deep)">
-      <div class="row" style="gap:11px;align-items:flex-start"><span style="font-size:20px;line-height:1">\u{1F527}</span>
-      <div style="flex:1"><div style="font-weight:700;font-size:15px;color:var(--green)">${_fn} reported question${_fn>1?'s':''} just fixed</div>
-      <div class="faint" style="font-size:12.5px;margin-top:2px">The answer key was updated to match standard teaching — see what changed.</div>
-      <div class="row" style="gap:8px;margin-top:11px">
-        <button class="btn-sm btn-primary" data-action="view-fixes" style="width:auto">Review ${_fn>1?'them':'it'}</button>
-        <button class="btn-sm btn-ghost" data-action="dismiss-fixes" style="width:auto">Dismiss</button>
-      </div></div></div>
-    </div>`;
+  // maintainer fix announcement (shared to everyone via the edits feed)
+  if(App.fixAlert && App.fixAlert.ids && App.fixAlert.ids.length){ const _fn=App.fixAlert.ids.length;
+    html+=`<div class="railcard" style="margin-bottom:16px;border-color:var(--green);background:var(--green-deep)"><div class="row" style="gap:11px;align-items:flex-start"><span style="font-size:19px;line-height:1">🔧</span><div style="flex:1"><div style="font-weight:700;font-size:14.5px;color:var(--green)">${_fn} reported question${_fn>1?'s':''} just fixed</div><div class="faint" style="font-size:12.5px;margin-top:2px">The answer key was updated to match standard teaching.</div><div class="row" style="gap:8px;margin-top:11px"><button class="btn-sm btn-primary" data-action="view-fixes" style="width:auto">Review ${_fn>1?'them':'it'}</button><button class="btn-sm btn-ghost" data-action="dismiss-fixes" style="width:auto">Dismiss</button></div></div></div></div>`;
+  }
+  if(notifPromptDue()){
+    html+=`<div class="railcard" style="margin-bottom:16px"><div class="row" style="gap:11px;align-items:flex-start"><span style="font-size:19px;line-height:1">&#128276;</span><div style="flex:1"><div style="font-weight:700;font-size:14.5px">Turn on study reminders?</div><div class="faint" style="font-size:12.5px;margin-top:2px">A gentle daily nudge so due cards and your streak don't slip.</div><div class="row" style="gap:8px;margin-top:10px"><button class="btn-sm btn-primary" data-action="notif-prompt-enable">Turn on</button><button class="btn-sm btn-ghost" data-action="notif-prompt-dismiss">Not now</button></div></div></div></div>`;
+  }
+  if(DB.settings.maintainer && unreadReports()>0){
+    html+=`<button class="rowlink" data-action="open-reports-inbox" style="margin-bottom:16px;background:var(--amber-deep);border:1px solid var(--amber);border-radius:14px"><span style="font-size:18px">&#128681;</span><div class="grow"><div class="rn" style="color:var(--amber)">${unreadReports()} new report${unreadReports()>1?'s':''}</div><div class="rs">tap to review &amp; fix questions</div></div>${arrow}</button>`;
   }
 
-  // level + streak banner
-  const xp=DB.progress.xp||0, lvl=levelOf(xp), inLvl=xpInLevel(xp);
-  const flame=`<svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`;
-  html+=`<div class="levelcard">
-    <div class="row between">
-      <div class="row" style="gap:11px">
-        <div class="lvlbadge">${lvl}</div>
-        <div><div style="font-weight:700;font-size:15px">Level ${lvl}</div><div class="faint" style="font-size:12px">${inLvl} / 200 XP</div></div>
-      </div>
-      <div class="streakpill">${flame}${streak}</div>
-    </div>
-    <div class="progressbar" style="margin-top:11px"><i style="width:${inLvl/200*100}%"></i></div>
+  // greeting
+  html+=`<div class="row between" style="margin-bottom:18px;align-items:center;gap:12px">
+    <div style="min-width:0"><div class="hgreet">${greet}</div><div class="hsub">${allDue>0?`You have <b style="color:var(--text)">${allDue}</b> card${allDue>1?'s':''} due today.`:"You're all caught up — time to learn something new."}</div></div>
+    <span class="streakpill" title="${streak}-day streak">${flame}${streak}</span>
   </div>`;
 
-  // mobile-only quick nav to the desktop-sidebar destinations
-  html+=`<div class="mobonly" style="display:flex;gap:8px;margin-bottom:14px">
+  // mobile-only nav to sidebar destinations
+  html+=`<div class="mobonly" style="display:flex;gap:8px;margin-bottom:16px">
     <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="bank" style="flex:1">Question bank</button>
     <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="progress" style="flex:1">Progress</button>
     <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="saved" style="flex:1">Saved</button>
   </div>`;
 
-  // first-run reminders prompt (dismissible)
-  if(notifPromptDue()){
-    html+=`<div class="card pad" style="margin-bottom:14px;border-left:3px solid var(--teal)">
-      <div class="row" style="gap:11px;align-items:flex-start">
-        <span style="font-size:20px;line-height:1">&#128276;</span>
-        <div style="flex:1">
-          <div style="font-weight:700;font-size:15px">Turn on study reminders?</div>
-          <div class="faint" style="font-size:12.5px;margin-top:2px">A gentle daily nudge so due cards and your streak don't slip. Fine-tune what and when in Settings.</div>
-          <div class="row" style="gap:8px;margin-top:10px">
-            <button class="btn-sm btn-primary" data-action="notif-prompt-enable">Turn on</button>
-            <button class="btn-sm btn-ghost" data-action="notif-prompt-dismiss">Not now</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }
+  html+=`<div class="homegrid"><div class="hmain">`;
 
-  if(DB.settings.maintainer && unreadReports()>0){
-    html+=`<button class="card pad subj" data-action="open-reports-inbox" style="width:100%;margin-bottom:14px;border-left:3px solid var(--amber)">
-      <div class="row between"><div class="row" style="gap:11px"><span style="font-size:20px;line-height:1">&#128681;</span>
-      <div style="text-align:left"><div style="font-weight:700;font-size:15px">${unreadReports()} new report${unreadReports()>1?'s':''}</div><div class="faint" style="font-size:12.5px">tap to review &amp; fix questions</div></div></div>
-      <svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--amber)"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
-  }
-  // D-day countdown + study-timer entry (YPT)
-  { const _dd=dDay(), _st=studyToday();
-    html+=`<button class="card pad subj" data-action="open-timer" style="width:100%;margin-bottom:14px;border-left:3px solid var(--amber)">
-      <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⏱️</span>
-      <div style="text-align:left">${_dd!=null?`<div style="font-weight:700;font-size:15px">${_dd>0?"D-"+_dd:_dd===0?"D-Day — exam today!":"exam "+(-_dd)+"d ago"}</div><div class="faint" style="font-size:12.5px">${_dd>0?"days to your exam · tap to study":_dd===0?"good luck!":"set a new exam date in settings"}</div>`:`<div style="font-weight:700;font-size:15px">Study timer</div><div class="faint" style="font-size:12.5px">track real study time · set an exam date for a D-day</div>`}</div></div>
-      <div class="mono" style="color:var(--teal);text-align:right">${_st>0?fmtHM(_st):"⏱️"}<div class="faint" style="font-size:10px;font-weight:600">${_st>0?"today":"start"}</div></div></div>
-    </button>`; }
+  // hero — Smart Review (primary daily action)
+  html+=`<button class="hero" data-action="start-smart">
+    <div class="row between" style="align-items:flex-start;gap:12px">
+      <div><div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);font-weight:800">Today's session</div>
+        <div class="serif" style="font-size:24px;font-weight:600;margin-top:5px">Smart Review</div>
+        <div class="muted" style="font-size:13.5px;margin-top:3px">${allDue} due + up to ${Math.min(DB.settings.newPerDay,newAvail)} new, interleaved for long-term recall.</div></div>
+      <span style="width:44px;height:44px;border-radius:12px;background:var(--coral);color:#fff;display:grid;place-items:center;flex:none;box-shadow:0 8px 18px -12px rgba(244,104,79,.6)"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#fff"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </div>
+  </button>`;
 
-  // daily goal ring
-  const dc=dailyCount(), goal=DB.settings.dailyGoal||20, dpct=goal?dc/goal:0, done=dc>=goal;
-  html+=`<div class="card pad" style="margin-bottom:14px"><div class="row" style="gap:14px">
-    ${ringSVG(dpct, done?'var(--green)':'var(--teal)')}
-    <div style="flex:1"><div style="font-weight:700;font-size:15px">Daily goal</div><div class="faint" style="font-size:12.5px;margin-top:1px">${dc} / ${goal} today${done?' · reached!':''}</div></div>
-  </div></div>`;
-
-  html+=`<div class="stat3 stagger">
-    <div class="card"><div class="n teal">${allDue}</div><div class="l">Due today</div></div>
-    <div class="card"><div class="n amber">${streak}</div><div class="l">Day streak</div></div>
-    <div class="card"><div class="n green">${totalSeen}/${totalQ}</div><div class="l">Seen</div></div>
-  </div>`;
-
-  // in-progress sessions — resume across subjects without losing progress
+  // continue studying
   { const _sv=Object.values((DB.progress.sessions||{})).filter(x=>x&&x.ctx&&!x.ctx.smart&&poolFor(x.ctx).length).sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
     if(_sv.length){
-      html+=`<div class="sectlabel">Continue studying</div>`;
+      html+=`<div class="sectlabel">Continue studying</div><div class="rowlist">`;
       _sv.forEach(x=>{ const _tot=x.total||poolFor(x.ctx).length, _k=esc(JSON.stringify(x.ctx));
-        html+=`<button class="card pad subj" data-action="resume-session" data-key="${_k}" style="width:100%;margin-bottom:8px;border-left:3px solid var(--teal)">
-          <div class="row between"><div class="row" style="gap:11px"><span style="font-size:17px;line-height:1;color:var(--teal)">\u25B6</span>
-          <div style="text-align:left"><div style="font-weight:700;font-size:14.5px">${esc(x.label||"Session")}</div>
-          <div class="faint" style="font-size:12.5px">Question ${(x.i||0)+1} of ${_tot}${x.answered?` \u00b7 ${x.correct}/${x.answered} right so far`:""}</div></div></div>
-          <span class="iconbtn" data-action="drop-session" data-key="${_k}" title="Remove" style="width:30px;height:30px;font-size:13px">\u2715</span></div></button>`;
+        html+=`<button class="rowlink" data-action="resume-session" data-key="${_k}"><span style="color:var(--coral);font-size:14px">▶</span><div class="grow"><div class="rn">${esc(x.label||"Session")}</div><div class="rs">Question ${(x.i||0)+1} of ${_tot}${x.answered?` · ${x.correct}/${x.answered} right`:""}</div></div><span class="iconbtn" data-action="drop-session" data-key="${_k}" title="Remove" style="width:28px;height:28px;font-size:12px">✕</span></button>`;
       });
+      html+=`</div>`;
     }
   }
-  // suggestions — "what should I study?"
-  const sugg=computeSuggestions();
-  html+=`<div class="sectlabel">What should I study?</div>`;
-  sugg.forEach(s=>{
-    const act = s.action==="topic"
-      ? `data-action="study-topic" data-system="${esc(s.data.system)}" data-reference="${esc(s.data.reference)}" data-topic="${esc(s.data.topic)}"`
-      : s.action==="none" ? '' : `data-action="${s.action}"`;
-    const tag = s.action==="none" ? "div" : "button";
-    html+=`<${tag} class="card pad sugg" ${act} style="margin-bottom:9px;width:100%;text-align:left">
-      <div class="row" style="gap:12px">
-        <span class="suggicon">${s.icon}</span>
-        <div style="flex:1"><div style="font-weight:700;font-size:14.5px">${esc(s.title)}</div>${s.sub?`<div class="faint" style="font-size:12.5px;margin-top:1px">${esc(s.sub)}</div>`:''}</div>
-        ${s.action!=="none"?`<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--teal)"><path d="M9 6l6 6-6 6"/></svg>`:''}
-      </div>
-    </${tag}>`;
-  });
 
-  const newAvail=totalQ-totalSeen;
-  const _mc=mistakeIds().length;
-  if(_mc>0) html+=`<button class="card pad subj" data-action="open-mistakes" style="width:100%;margin-bottom:11px;border-left:3px solid var(--red)">
-    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">\u{1F525}</span>
-    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Fix my mistakes</div>
-    <div class="faint" style="font-size:12.5px">${_mc} question${_mc>1?'s':''} you've missed · tap to drill</div></div></div>
-    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--red);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
-  const _dc=disputedIds().length;
-  if(_dc>0) html+=`<button class="card pad subj" data-action="open-disputed" style="width:100%;margin-bottom:11px;border-left:3px solid var(--amber)">
-    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⚖️</span>
-    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Disputed answers</div>
-    <div class="faint" style="font-size:12.5px">${_dc} flagged · file answer vs standard teaching</div></div></div>
-    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--amber);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
-  const _rf=redFlagIds().length;
-  if(_rf>0) html+=`<button class="card pad subj" data-action="open-redflag" style="width:100%;margin-bottom:11px;border-left:3px solid var(--red)">
-    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">\u{1F6A8}</span>
-    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Red-flag drills</div>
-    <div class="faint" style="font-size:12.5px">${_rf} can't-miss emergencies · missing these changes management</div></div></div>
-    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--red);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
-  html+=`<button class="card pad subj" data-action="open-checklist" style="width:100%;margin-bottom:11px;border-left:3px solid var(--teal)">
-    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">\u{1F4CB}</span>
-    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Before-exam checklist</div>
-    <div class="faint" style="font-size:12.5px">Must-know patterns per subject · tick &amp; drill</div></div></div>
-    <svg class="i" viewBox="0 0 24 24" style="stroke:var(--teal);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
-  html+=`<button class="card pad subj" data-action="open-duelpick" style="width:100%;margin-bottom:11px;border-left:3px solid var(--purple, #b58fce)">
-    <div class="row between"><div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⚔️</span>
-    <div style="text-align:left"><div style="font-weight:700;font-size:15px">Wrong Answer Duel</div>
-    <div class="faint" style="font-size:12.5px">${DUELS.length} confused pairs · by division · pick the stronger answer</div></div></div>
-    <svg class="i" viewBox="0 0 24 24" style="stroke:#b58fce;width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg></div></button>`;
-  html+=`<div class="sectlabel">Recall</div>
-  <button class="card pad subj" data-action="start-smart" style="width:100%">
-    <div class="row between">
-      <div><h3 style="font-size:18px">Smart Review</h3>
-      <div class="muted" style="font-size:13.5px;margin-top:2px">${allDue} due + up to ${Math.min(DB.settings.newPerDay,newAvail)} new · interleaved</div></div>
-      <svg class="i" viewBox="0 0 24 24" style="stroke:var(--teal);width:24px;height:24px"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>
+  // suggestions
+  const sugg=computeSuggestions();
+  if(sugg.length){
+    html+=`<div class="sectlabel">What should I study?</div><div class="rowlist">`;
+    sugg.forEach(s=>{
+      const act = s.action==="topic" ? `data-action="study-topic" data-system="${esc(s.data.system)}" data-reference="${esc(s.data.reference)}" data-topic="${esc(s.data.topic)}"` : s.action==="none" ? '' : `data-action="${s.action}"`;
+      const tag = s.action==="none" ? "div" : "button";
+      html+=`<${tag} class="rowlink" ${act}><span class="suggicon" style="width:32px;height:32px;font-size:15px">${s.icon}</span><div class="grow"><div class="rn">${esc(s.title)}</div>${s.sub?`<div class="rs">${esc(s.sub)}</div>`:''}</div>${s.action!=="none"?arrow:''}</${tag}>`;
+    });
+    html+=`</div>`;
+  }
+
+  // focus areas — compact tile grid (was a stack of full-width cards)
+  const _mc=mistakeIds().length, _dc=disputedIds().length, _rf=redFlagIds().length;
+  html+=`<div class="sectlabel">Focus areas</div><div class="tilegrid">`;
+  if(_mc>0) html+=`<button class="tile" data-action="open-mistakes"><span class="ti" style="background:var(--red-deep);color:var(--red)">🔥</span><div class="grow"><div class="tn">Fix my mistakes</div><div class="ts">${_mc} missed</div></div></button>`;
+  if(_dc>0) html+=`<button class="tile" data-action="open-disputed"><span class="ti" style="background:var(--amber-deep);color:var(--amber)">⚖️</span><div class="grow"><div class="tn">Disputed answers</div><div class="ts">${_dc} flagged</div></div></button>`;
+  if(_rf>0) html+=`<button class="tile" data-action="open-redflag"><span class="ti" style="background:var(--red-deep);color:var(--red)">🚨</span><div class="grow"><div class="tn">Red-flag drills</div><div class="ts">${_rf} emergencies</div></div></button>`;
+  html+=`<button class="tile" data-action="open-checklist"><span class="ti" style="background:var(--coral-tint);color:var(--coral)">📋</span><div class="grow"><div class="tn">Exam checklist</div><div class="ts">must-know patterns</div></div></button>`;
+  html+=`<button class="tile" data-action="open-duelpick"><span class="ti" style="background:rgba(181,143,206,.18);color:#b58fce">⚔️</span><div class="grow"><div class="tn">Answer Duel</div><div class="ts">${DUELS.length} pairs</div></div></button>`;
+  html+=`<button class="tile" data-action="start-cram"><span class="ti" style="background:var(--amber-deep);color:var(--amber)">⏰</span><div class="grow"><div class="tn">Cram mode</div><div class="ts">exam tomorrow?</div></div></button>`;
+  html+=`</div>`;
+
+  html+=`</div><div class="hrail">`; // ===== SIDE RAIL =====
+
+  // progress snapshot
+  const xp=DB.progress.xp||0, lvl=levelOf(xp), inLvl=xpInLevel(xp);
+  html+=`<div class="railcard" style="margin-bottom:14px">
+    <div class="row" style="gap:11px"><div class="lvlbadge">${lvl}</div><div><div style="font-weight:700;font-size:14.5px">Level ${lvl}</div><div class="faint" style="font-size:12px">${inLvl} / 200 XP</div></div></div>
+    <div class="progressbar" style="margin-top:12px"><i style="width:${inLvl/200*100}%"></i></div>
+    <div class="row" style="margin-top:16px;text-align:center">
+      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:800;color:var(--coral)">${allDue}</div><div class="faint" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">Due</div></div>
+      <div style="flex:1;border-left:1px solid var(--line-soft);border-right:1px solid var(--line-soft)"><div class="mono" style="font-size:20px;font-weight:800">${streak}</div><div class="faint" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">Streak</div></div>
+      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:800;color:var(--green)">${totalSeen}</div><div class="faint" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">Seen</div></div>
     </div>
-  </button>
-  <div style="height:10px"></div>
-  <button class="card pad subj" data-action="start-cram" style="width:100%;border-left:3px solid var(--amber)">
-    <div class="row between">
-      <div class="row" style="gap:11px"><span style="font-size:21px;line-height:1">⏰</span>
-      <div style="text-align:left"><div style="font-weight:700;font-size:15px">Exam tomorrow?</div>
-      <div class="faint" style="font-size:12.5px">Cram mode — your highest-yield questions, hardest first</div></div></div>
-      <svg class="i" viewBox="0 0 24 24" style="stroke:var(--amber);width:22px;height:22px"><path d="M9 6l6 6-6 6"/></svg>
-    </div>
-  </button>
-  <div style="height:10px"></div>
-  <button class="btn btn-ghost" data-action="nav" data-screen="exam-builder">
-    <svg class="i" viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg> Exam Simulation
-  </button>
-  <div class="row" style="gap:10px;margin-top:10px">
-    <button class="btn btn-ghost" data-action="nav" data-screen="trophies" style="flex:1"><svg class="i" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg> Achievements</button>
-    <button class="btn btn-ghost" data-action="nav" data-screen="leaderboard" style="flex:1"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg> Leaderboard</button>
   </div>`;
 
-  // browse by stage -> subject
-  const EMOJI={"Ophthalmology":"\u{1F441}️","ENT":"\u{1F442}","Dermatology":"\u{1F9F4}","Haematology & Oncology":"\u{1FA78}","Neurology":"\u{1F9E0}","Psychiatry":"\u{1F6CB}️","Obstetrics & Gynaecology":"\u{1F930}","Paediatrics":"\u{1F9D2}"};
-  const sys=listSystems();
-  if(!sys.length) html+=`<div class="empty">No questions loaded yet — pull to sync.</div>`;
-  const stageMap={};
-  sys.forEach(s=>{ const q=allQs().find(x=>qSys(x)===s.name); const st=q?qStage(q):"5th Stage"; (stageMap[st]=stageMap[st]||[]).push(s); });
-  Object.keys(stageMap).sort().forEach(stage=>{
-    const list=stageMap[stage], tot=list.reduce((n,s)=>n+s.total,0);
-    const collapsed=App.collapsedStages[stage]!==false;
-    html+=`<button class="stagebar" data-action="toggle-stage" data-stage="${esc(stage)}" style="width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;color:inherit;text-align:left;padding:14px 16px;margin:22px 0 12px;cursor:pointer;box-shadow:var(--shadow)">
-      <div class="row" style="gap:11px;margin:0">
-      <span style="font-size:23px;line-height:1">\u{1F393}</span>
-      <div style="flex:1"><div class="serif" style="font-size:20px;font-weight:600">${esc(stage)}</div>
-      <div class="faint" style="font-size:11.5px;margin-top:1px">${list.length} subjects · ${tot} questions · ${collapsed?'tap to expand':"let's get you through finals"}</div></div>
-      <svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;flex:none;transition:transform .2s;transform:rotate(${collapsed?'-90deg':'0deg'})"><path d="M6 9l6 6 6-6"/></svg>
-    </div></button>`;
-    if(!collapsed) list.forEach(s=>{
-      const pct=s.total?Math.round(s.seen/s.total*100):0, em=EMOJI[s.name]||"\u{1F4D8}";
-      html+=`<button class="card pad subj" data-action="open-system" data-system="${esc(s.name)}" style="margin-bottom:10px;border-left:3px solid ${s.color}">
-        <div class="row between">
-          <div class="row" style="gap:10px"><span style="font-size:21px;line-height:1">${em}</span><h3 style="color:${s.color}">${esc(s.name)}</h3></div>
-          ${s.due>0?`<span class="badge due">${s.due} due</span>`:`<span class="badge zero">${s.seen}/${s.total}</span>`}
-        </div>
-        <div class="row" style="gap:10px;margin-top:8px;font-size:12.5px;color:var(--faint)">
-          <span>${s.total} questions</span><span>·</span><span>${listTypes(s.name).map(t=>t.name).join(' + ')}</span>
-        </div>
-        <div class="progressbar"><i style="width:${pct}%"></i></div>
-      </button>`;
-    });
-  });
+  // daily goal ring
+  const dc=dailyCount(), goal=DB.settings.dailyGoal||20, dpct=goal?dc/goal:0, dgDone=dc>=goal;
+  html+=`<div class="railcard" style="margin-bottom:14px"><div class="row" style="gap:14px">${ringSVG(dpct, dgDone?'var(--green)':'var(--coral)')}<div style="flex:1"><div style="font-weight:700;font-size:14.5px">Daily goal</div><div class="faint" style="font-size:12.5px;margin-top:1px">${dc} / ${goal} today${dgDone?' · reached!':''}</div></div></div></div>`;
+
+  // study timer / D-day
+  { const _dd=dDay(), _st=studyToday();
+    html+=`<button class="railcard" data-action="open-timer" style="margin-bottom:14px;width:100%;text-align:left;cursor:pointer;color:inherit;display:block"><div class="row between"><div class="row" style="gap:11px"><span style="font-size:19px">⏱️</span><div>${_dd!=null?`<div style="font-weight:700;font-size:14.5px">${_dd>0?"D-"+_dd:_dd===0?"Exam today!":"exam "+(-_dd)+"d ago"}</div><div class="faint" style="font-size:12px">${_dd>0?"to your exam":_dd===0?"good luck!":"set a new date"}</div>`:`<div style="font-weight:700;font-size:14.5px">Study timer</div><div class="faint" style="font-size:12px">track real study time</div>`}</div></div><div class="mono" style="color:var(--coral);text-align:right;font-weight:700">${_st>0?fmtHM(_st):"start"}<div class="faint" style="font-size:10px;font-weight:600">${_st>0?"today":""}</div></div></div></button>`; }
+
+  // quick links
+  html+=`<div class="rowlist">
+    <button class="rowlink" data-action="nav" data-screen="exam-builder"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg><div class="grow"><div class="rn">Exam Simulation</div></div>${arrow}</button>
+    <button class="rowlink" data-action="nav" data-screen="trophies"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg><div class="grow"><div class="rn">Achievements</div></div>${arrow}</button>
+    <button class="rowlink" data-action="nav" data-screen="leaderboard"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8"/></svg><div class="grow"><div class="rn">Leaderboard</div></div>${arrow}</button>
+  </div>`;
+
+  html+=`</div></div>`; // close hrail + homegrid
   html+=`</div>`;
   return html;
 }
@@ -1711,6 +1621,7 @@ function gradeCurrent(g){
   const ok = (q.type==="sa"||single) ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
   recordAttempt(q,s.selected,g,q.type==="sa"?ok:undefined, s.confidence);
   cue(ok?"correct":"wrong");
+  s.results=s.results||{}; s.results[s.i]=ok?'ok':'no';
   s.answered++; if(ok)s.correct++; s.xp+=awardXP(ok?10:4);
   evaluateAchievements(); advancePractice();
 }
@@ -1725,27 +1636,27 @@ function viewQuiz(){
   const singleAnswer=(q.type!=="sa") && (q.choices||[]).length<2;
   const prog=DB.progress.questions[q.id];
   const marked=prog?.marked;
+  s.results=s.results||{};
+  let _strip=`<div class="qstrip">`;
+  s.pool.forEach((qid,idx)=>{ const r=s.results[idx]; const cls=idx===s.i?"cur":(r==="ok"?"ok":r==="no"?"no":""); _strip+=`<button class="${cls}" data-action="jump-q" data-i="${idx}">${idx+1}</button>`; });
+  _strip+=`</div>`;
   let html=`<div class="fade">
-    <div class="row between" style="margin-bottom:6px">
+    <div class="row between" style="margin-bottom:10px;align-items:flex-start">
       <button class="btn-sm btn-ghost" data-action="end-practice"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Exit</button>
-      <span class="mono faint" style="font-size:13px">${s.i+1} / ${s.pool.length}</span>
-      <button class="iconbtn" data-action="toggle-mark" title="Mark for review" style="${marked?'color:var(--amber);border-color:#6b541f':''}">
-        <svg class="i" viewBox="0 0 24 24" style="${marked?'fill:var(--amber)':''}"><path d="M5 3v18l7-5 7 5V3z"/></svg>
-      </button>
+      <div style="text-align:right;min-width:0;margin-left:12px">
+        <div class="faint mono" style="font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw">${esc(qSys(q))}${q.reference?` · ${esc(q.reference)}`:''}</div>
+        <div class="faint" style="font-size:11px">Question ${s.i+1} of ${s.pool.length}</div>
+      </div>
     </div>
-    <div class="progressbar" style="margin-bottom:12px"><i style="width:${(s.i)/s.pool.length*100}%"></i></div>
-    <div class="row between" style="margin-bottom:14px">
-      <button class="btn-sm btn-ghost" ${s.i>0?'':'disabled'} data-action="nav-q" data-dir="-1"><svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M15 18l-6-6 6-6"/></svg> Back</button>
-      <button class="btn-sm btn-ghost" ${s.i<s.pool.length-1?'':'disabled'} data-action="nav-q" data-dir="1">Skip <svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M9 6l6 6-6 6"/></svg></button>
-    </div>`;
-
-  html+=`<div class="qmeta">
-    <span class="pill" style="color:${colorOf(q)}">${esc(qSys(q))}</span>
-    <span class="pill">${esc(q.topic)}</span>
-    ${q.type==="emq"?'<span class="pill emqtag">EMQ</span>':q.type==="sa"?'<span class="pill emqtag">Short answer</span>':''}
-  </div>
-  ${q.type==="emq"&&q.optionsTitle?`<div class="optstitle">${esc(q.optionsTitle)}</div>`:''}
-  <div class="stem serif" style="font-family:inherit">${s.revealed ? q.stem : stripBold(q.stem)}</div>`;
+    ${_strip}
+    <div class="qreader"><div class="qpane">
+    <div class="qmeta">
+      <span class="pill" style="color:${colorOf(q)}">${esc(qSys(q))}</span>
+      <span class="pill">${esc(q.topic)}</span>
+      ${q.type==="emq"?'<span class="pill emqtag">EMQ</span>':q.type==="sa"?'<span class="pill emqtag">Short answer</span>':''}
+    </div>
+    ${q.type==="emq"&&q.optionsTitle?`<div class="optstitle">${esc(q.optionsTitle)}</div>`:''}
+    <div class="stem serif" style="font-family:inherit">${s.revealed ? q.stem : stripBold(q.stem)}</div>`;
 
   // answer area (type-aware)
   if(q.type==="sa"){
@@ -1780,8 +1691,7 @@ function viewQuiz(){
     html+=`</div>`; }
   }
 
-  // reveal block
-  if(s.revealed) html+=renderReveal(q,s.selected,{saText:s.saText});
+  // confidence (stays in the question pane, before reveal)
   if(!s.revealed && (s.selected || q.type==="sa")){
     html+=`<div class="row" style="gap:8px;justify-content:center;align-items:center;margin-top:16px">
       <span class="faint" style="font-size:12px">How sure?</span>
@@ -1789,12 +1699,29 @@ function viewQuiz(){
       <button class="chip ${s.confidence==='unsure'?'on':''}" data-action="confidence" data-c="unsure">\u{1F914} Not sure</button>
     </div>`;
   }
-  html+=`<div style="text-align:center;margin-top:20px"><button class="reportlink" data-action="report-open" data-qid="${q.id}">⚑ Report an issue with this question</button></div>`;
+  html+=`<div style="text-align:center;margin-top:18px"><button class="reportlink" data-action="report-open" data-qid="${q.id}">⚑ Report an issue with this question</button></div>`;
+  html+=`</div>`; // close .qpane
 
-  // footer
+  // right pane: explanation, or a placeholder before reveal (desktop)
+  html+=`<div class="rpane">`;
+  if(s.revealed){
+    if(q.type!=="sa" && !singleAnswer && correctLabel(q)){ const _cl=correctLabel(q), _isC=s.selected===_cl;
+      html+=`<div class="verdict ${_isC?'ok':'no'}"><span class="vi">${_isC?'✓':'✗'}</span><div><div class="vt">${_isC?'Correct':'Incorrect'} — the answer is ${_cl}</div><div class="vs">${q.flag?'MedCall sides with standard teaching':'Standard teaching'}</div></div></div>`;
+    }
+    html+=renderReveal(q,s.selected,{saText:s.saText});
+  } else {
+    html+=`<div class="rpane-empty">${q.type==="sa"?"Write your answer":"Pick an answer"}, then <b>Reveal</b> — the explanation, disputed-answer flags and key point appear here.</div>`;
+  }
+  html+=`</div></div>`; // close .rpane + .qreader
+
+  // footer / action bar
   let foot;
   if(!s.revealed){
-    foot=`<button class="btn btn-primary" data-action="reveal" ${(q.type==="sa"||s.selected||singleAnswer)?'':'disabled'}>Reveal answer</button>`;
+    const _cr=(q.type==="sa"||s.selected||singleAnswer);
+    foot=`<button class="btn btn-ghost btn-sm" ${s.i>0?'':'disabled'} data-action="nav-q" data-dir="-1" style="flex:none;width:auto"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="btn btn-ghost btn-sm" data-action="toggle-mark" style="flex:none;width:auto;${marked?'color:var(--amber);border-color:#6b541f':''}">${marked?'♥ Saved':'♡ Save'}</button>
+      <button class="btn btn-ghost btn-sm" ${s.i<s.pool.length-1?'':'disabled'} data-action="nav-q" data-dir="1" style="flex:none;width:auto">Skip</button>
+      <button class="btn btn-primary" data-action="reveal" ${_cr?'':'disabled'} style="flex:1">${_cr?'Reveal answer':'Select an answer'}</button>`;
   } else {
     foot=`<div style="width:100%">
       <div class="faint" style="font-size:11px;text-align:center;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">How well did you recall it?</div>
@@ -1805,7 +1732,6 @@ function viewQuiz(){
         <button class="grade easy" data-action="grade" data-grade="easy"><div class="gl">Easy</div><div class="gi">${schedDays(q,'easy')}d</div></button>
       </div></div>`;
   }
-  html+=`</div>`;
   setFoot(foot);
   return html;
 }
@@ -2761,6 +2687,7 @@ document.body.addEventListener("click", async e=>{
     const uniq=[...new Set(ids)]; if(!uniq.length){ toast("No questions in the selected sessions"); return; }
     startPracticeCtx({ids:uniq}, bp.system+" · "+bp.refs.size+" session"+(bp.refs.size>1?"s":"")); return; }
   if(a==="study-saved"){ const pool=Object.keys(DB.progress.questions).filter(id=>DB.progress.questions[id].marked && QMAP[id]); if(!pool.length){ toast("No saved questions"); return; } startPracticeCtx({ids:pool}, "Saved questions"); return; }
+  if(a==="jump-q"){ const s=App.practice; if(!s) return; const ni=+t.dataset.i; if(ni<0||ni>=s.pool.length||ni===s.i) return; s.i=ni; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null; saveSession(s); practiceRoute(); return; }
   if(a==="view-fixes"){ const ids=((App.fixAlert&&App.fixAlert.ids)||[]).slice(); markFixesSeen(); if(!ids.length){ render(); return; } App.fixReview=ids; App.screen="fixes"; render(); return; }
   if(a==="dismiss-fixes"){ markFixesSeen(); render(); return; }
   if(a==="study-fixes"){ const ids=(App.fixReview||[]).filter(id=>QMAP[id]); if(!ids.length){ toast("Nothing to study"); return; } startPracticeCtx({ids}, "Recently fixed"); return; }
@@ -3358,7 +3285,9 @@ function defaultBase(){
 
 // offline app shell
 if("serviceWorker" in navigator && (location.protocol==="https:"||location.protocol==="http:")){
-  window.addEventListener("load", ()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+  const _hadSW=!!navigator.serviceWorker.controller; let _swReloaded=false;
+  navigator.serviceWorker.addEventListener("controllerchange", ()=>{ if(_swReloaded||!_hadSW) return; _swReloaded=true; try{ location.reload(); }catch(e){} });
+  window.addEventListener("load", ()=>{ navigator.serviceWorker.register("sw.js").then(reg=>{ try{ reg.update(); }catch(e){} }).catch(()=>{}); });
 }
 if(typeof navigator!=="undefined" && "serviceWorker" in navigator && navigator.serviceWorker.addEventListener){ navigator.serviceWorker.addEventListener("message", (e)=>{ if(e.data==="open-reports"){ App.screen="reportsinbox"; App.inboxState="loading"; render(); fetchReports(); } }); }
 if(typeof document!=="undefined"){ document.addEventListener("visibilitychange", ()=>{ if(!document.hidden){ scheduleReminders(); if(DB.settings.maintainer) checkNewReports(); } }); }
@@ -3397,4 +3326,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v1.4 */
+/* clinic-v1.5 */
