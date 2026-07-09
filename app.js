@@ -856,6 +856,11 @@ export function render(){
   const a=$("app");
   let foot=$("foot"); if(foot) foot.remove();
   if(App.screen==="home") a.innerHTML=viewHome();
+  else if(App.screen==="bank") a.innerHTML=viewBank();
+  else if(App.screen==="banksys") a.innerHTML=viewBankSystem();
+  else if(App.screen==="progress") a.innerHTML=viewProgress();
+  else if(App.screen==="saved") a.innerHTML=viewSaved();
+  else if(App.screen==="fixes") a.innerHTML=viewFixes();
   else if(App.screen==="system") a.innerHTML=viewSystem();
   else if(App.screen==="type") a.innerHTML=viewType();
   else if(App.screen==="reference") a.innerHTML=viewReference();
@@ -882,11 +887,31 @@ export function render(){
   else if(App.screen==="qedit") a.innerHTML=viewQEditor();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
   if(App.screen==="leaderboard") startBoardPoll(); else stopBoardPoll();
-  const _DASH=new Set(["home","system","type","reference","mistakes","disputed","redflag","checklist"]);
+  const _DASH=new Set(["home","bank","banksys","progress","saved","fixes","system","type","reference","mistakes","disputed","redflag","checklist"]);
   document.body.classList.toggle("dash", _DASH.has(App.screen));
   document.body.classList.toggle("read", !_DASH.has(App.screen));
+  document.body.dataset.screen=App.screen;
+  syncSidebar();
   if(App.screen!==render._last){ window.scrollTo({top:0,behavior:"instant"}); render._last=App.screen; }
 }
+/* keep the desktop sidebar's live bits (disputed count, profile) in sync each render */
+function syncSidebar(){
+  const dn=document.getElementById("sideDispN"); if(dn) dn.textContent=disputedIds().length;
+  const nm=(DB.settings.displayName||"Medical student");
+  const sn=document.getElementById("sideName"); if(sn) sn.textContent=nm;
+  const av=document.getElementById("sideAv"); if(av) av.textContent=(nm.trim()[0]||"M").toUpperCase();
+}
+/* 2-letter specialty code for the question-bank grid chips */
+function codeOf(name){
+  const M={"Surgical Special Senses":"SS","ENT & Ophthalmology":"EO","Obstetrics & Gynaecology":"OG","Haematology & Oncology":"HO","Psychiatry":"Ps","Neurology":"Ne","Dermatology":"De","Paediatrics":"Pa","Batch 37 Final":"37"};
+  if(M[name]) return M[name];
+  const w=String(name||"").replace(/&/g,"").split(/\s+/).filter(Boolean);
+  return (((w[0]||"")[0]||"")+((w[1]||w[0]||"")[0]||"")).replace(/(.)(.)/,(m,a,b)=>a.toUpperCase()+b.toLowerCase())||"Qb";
+}
+/* weekly study-time bars (today highlighted) for the Progress page */
+function weekBarsInner(){ const w=weekTime(),max=Math.max(1,...w.map(x=>x.sec)),DOW=["S","M","T","W","T","F","S"];
+  return `<div style="display:flex;align-items:flex-end;gap:10px;height:132px">${w.map(x=>{const h=Math.round(x.sec/max*100),dt=new Date(x.d+"T00:00:00"),it=x.d===today();
+    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end"><div class="faint" style="font-size:9px">${x.sec?fmtHM(x.sec):""}</div><div style="width:100%;height:${Math.max(3,h)}%;min-height:4px;border-radius:7px 7px 0 0;background:${it?'var(--coral)':'var(--surface-3)'}"></div><div class="faint" style="font-size:11px;${it?'color:var(--coral);font-weight:700':''}">${DOW[dt.getDay()]}</div></div>`;}).join("")}</div>`; }
 
 /* ---------- STUDY TIME TRACKING (YPT-style) ---------- */
 let _timerTick=null;
@@ -1022,6 +1047,20 @@ function viewHome(){
   const streak=DB.progress.streak?.current||0;
   let html=`<div class="fade">`;
 
+  // maintainer fix announcement — shared to everyone via the edits feed
+  if(App.fixAlert && App.fixAlert.ids && App.fixAlert.ids.length){
+    const _fn=App.fixAlert.ids.length;
+    html+=`<div class="card pad" style="margin-bottom:14px;border:1px solid var(--green);background:var(--green-deep)">
+      <div class="row" style="gap:11px;align-items:flex-start"><span style="font-size:20px;line-height:1">\u{1F527}</span>
+      <div style="flex:1"><div style="font-weight:700;font-size:15px;color:var(--green)">${_fn} reported question${_fn>1?'s':''} just fixed</div>
+      <div class="faint" style="font-size:12.5px;margin-top:2px">The answer key was updated to match standard teaching — see what changed.</div>
+      <div class="row" style="gap:8px;margin-top:11px">
+        <button class="btn-sm btn-primary" data-action="view-fixes" style="width:auto">Review ${_fn>1?'them':'it'}</button>
+        <button class="btn-sm btn-ghost" data-action="dismiss-fixes" style="width:auto">Dismiss</button>
+      </div></div></div>
+    </div>`;
+  }
+
   // level + streak banner
   const xp=DB.progress.xp||0, lvl=levelOf(xp), inLvl=xpInLevel(xp);
   const flame=`<svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`;
@@ -1034,6 +1073,13 @@ function viewHome(){
       <div class="streakpill">${flame}${streak}</div>
     </div>
     <div class="progressbar" style="margin-top:11px"><i style="width:${inLvl/200*100}%"></i></div>
+  </div>`;
+
+  // mobile-only quick nav to the desktop-sidebar destinations
+  html+=`<div class="mobonly" style="display:flex;gap:8px;margin-bottom:14px">
+    <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="bank" style="flex:1">Question bank</button>
+    <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="progress" style="flex:1">Progress</button>
+    <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="saved" style="flex:1">Saved</button>
   </div>`;
 
   // first-run reminders prompt (dismissible)
@@ -1457,6 +1503,171 @@ function viewMistakes(){
   html+=`</div>`; return html;
 }
 
+/* mark the currently-announced fixes as seen so they don't re-announce */
+function markFixesSeen(){ const a=App.fixAlert&&App.fixAlert.ids; if(a&&a.length){ const s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; DB.settings.fixSeen=[...new Set([...s,...a])]; save.settings(); } App.fixAlert=null; }
+/* the pristine (pre-fix) version of a question — BANK is never mutated by edits */
+function origQ(qid){ for(const p of BANK){ const q=(p.questions||[]).find(x=>x.id===qid); if(q) return q; } return null; }
+/* "Recently fixed" — shows OLD → NEW answer for each maintainer fix */
+function viewFixes(){
+  const ids=(App.fixReview||[]).filter(id=>QMAP[id]);
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--green)">\u{1F527} Recently fixed</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} question${ids.length!==1?'s':''} updated to match standard teaching — here's exactly what changed.</p>`;
+  if(!ids.length){ html+=`<div class="empty">Nothing to review right now.</div></div>`; return html; }
+  html+=`<div style="height:8px"></div><button class="btn btn-primary" data-action="study-fixes">Drill all ${ids.length}</button>`;
+  ids.forEach(id=>{
+    const nu=QMAP[id], og=origQ(id);
+    const nc=(nu.choices||[]).find(c=>c.correct), oc=og&&(og.choices||[]).find(c=>c.correct);
+    const changed = nc&&oc&&nc.l!==oc.l;
+    html+=`<div class="card pad" style="margin-bottom:10px;border-left:3px solid var(--green)">
+      <div class="row between"><span style="font-weight:700;font-size:14px">${esc(nu.topic||'General')}</span><span class="pill" style="color:var(--green);border-color:var(--green)">updated</span></div>
+      <div class="faint" style="font-size:12px;margin-top:6px;line-height:1.45">${esc(stripBold(nu.stem||'').replace(/<[^>]+>/g,'').slice(0,140))}…</div>`;
+    if(changed){
+      html+=`<div style="margin-top:10px;font-size:13.5px;line-height:1.5">
+        <div style="color:var(--red)"><b>Was:</b> ${oc.l}. ${esc(oc.t)}</div>
+        <div style="color:var(--green);margin-top:3px"><b>Now:</b> ${nc.l}. ${esc(nc.t)}</div></div>`;
+    } else {
+      html+=`<div style="margin-top:10px;font-size:13px;color:var(--muted)">Answer unchanged — the explanation / key point was refined.${nc?` <b>Correct: ${nc.l}. ${esc(nc.t)}</b>`:''}</div>`;
+    }
+    const note = nu.flag && nu.flag.note;
+    if(note) html+=`<div class="exp" style="margin-top:8px">${esc(note)}</div>`;
+    html+=`<div style="margin-top:11px"><button class="btn-sm btn-ghost" data-action="study-one" data-id="${esc(id)}" style="width:auto">Study this question →</button></div>`;
+    html+=`</div>`;
+  });
+  html+=`</div>`; return html;
+}
+/* ---------- QUESTION BANK (specialty grid → multi-select sessions) ---------- */
+function viewBank(){
+  const sysList=listSystems();
+  const totalQ=Object.keys(QMAP).length, totalSeen=Object.keys(DB.progress.questions).length;
+  const dc=disputedIds().length, rf=redFlagIds().length;
+  let html=`<div class="fade">
+    <div class="mobonly" style="margin-bottom:10px"><button class="btn-sm btn-ghost" data-action="nav" data-screen="home"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button></div>
+    <h2 class="serif" style="font-size:26px;font-weight:600">Question bank</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:3px">Pick a specialty, then choose sessions to quiz. <b>${totalQ}</b> questions · <b>${totalSeen}</b> seen.</p>
+    <div style="height:12px"></div>
+    <div class="modegrid">
+      <button class="modecard disp" data-action="open-disputed"><span class="mi">⚖️</span><div><div class="n">${dc}</div><div class="l">Disputed answers</div></div></button>
+      <button class="modecard rf" data-action="open-redflag"><span class="mi">\u{1F6A8}</span><div><div class="n">${rf}</div><div class="l">Red-flag drills</div></div></button>
+    </div>
+    <div class="sectlabel">All specialties</div>
+    <div class="qgrid">`;
+  if(!sysList.length) html+=`</div><div class="empty">No questions loaded yet — pull to sync.</div>`;
+  sysList.forEach(s=>{
+    const pct=s.total?Math.round(s.seen/s.total*100):0;
+    html+=`<button class="scard" data-action="open-bank-system" data-system="${esc(s.name)}">
+      <div class="row between">
+        <span class="code" style="background:${s.color}">${esc(codeOf(s.name))}</span>
+        ${s.due>0?`<span class="badge due">${s.due} due</span>`:``}
+      </div>
+      <h3>${esc(s.name)}</h3>
+      <div class="meta"><span class="faint mono">${s.seen}/${s.total}</span><span style="font-weight:700;color:${pct?'var(--coral)':'var(--faint)'}">${pct}%</span></div>
+      <div class="progressbar" style="margin-top:8px"><i style="width:${pct}%"></i></div>
+    </button>`;
+  });
+  html+=`</div></div>`;
+  return html;
+}
+function bankPickSet(sys){ if(!App.bankPick||App.bankPick.system!==sys) App.bankPick={system:sys,refs:new Set()}; return App.bankPick.refs; }
+function viewBankSystem(){
+  const sys=App.nav.system;
+  const refs=groupCounts(q=>qSys(q)===sys, qRef);
+  const sel=bankPickSet(sys);
+  const col=(listSystems().find(s=>s.name===sys)||{}).color||"var(--coral)";
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="bank" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Question bank</button>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:${col}">${esc(sys)}</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${refs.length} source${refs.length!==1?'s':''} · tick the sessions you want, then start one combined quiz.</p>
+    <div style="height:8px"></div>`;
+  refs.forEach(r=>{
+    const pct=r.total?Math.round(r.seen/r.total*100):0, on=sel.has(r.name);
+    const status=r.seen===0?"Not started":(r.seen>=r.total?"Completed":"In progress");
+    html+=`<button class="card pad subj${on?' picked':''}" data-action="bank-pick" data-ref="${esc(r.name)}" style="width:100%;margin-bottom:9px">
+      <div class="row between">
+        <div style="text-align:left;min-width:0;flex:1">
+          <div style="font-weight:700;font-size:14.5px">${esc(r.name)}</div>
+          <div class="faint" style="font-size:12px;margin-top:1px">${status} · ${r.total} Q${r.due>0?` · ${r.due} due`:''}</div>
+          <div class="progressbar" style="margin-top:8px"><i style="width:${pct}%"></i></div>
+        </div>
+        <span class="tick">${on?'<svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none"><path d="M20 6 9 17l-5-5"/></svg>':''}</span>
+      </div>
+    </button>`;
+  });
+  html+=`</div>`;
+  if(sel.size){
+    let n=0; sel.forEach(r=>{ n+=poolFor({system:sys,reference:r}).length; });
+    html+=`<div class="selbar"><div class="selbar-in">
+      <div style="flex:1"><b>${sel.size}</b> session${sel.size>1?'s':''} · ${n} question${n!==1?'s':''} selected</div>
+      <button class="btn btn-primary" data-action="bank-start" style="width:auto">Select sessions to start</button>
+    </div></div>`;
+  }
+  return html;
+}
+/* ---------- PROGRESS ---------- */
+function viewProgress(){
+  const qs=DB.progress.questions, ids=Object.keys(qs);
+  let att=0,corr=0; ids.forEach(id=>{att+=qs[id].seen;corr+=qs[id].correct;});
+  const acc=att?Math.round(corr/att*100):0;
+  const wk=weekTime(), wkSec=wk.reduce((a,b)=>a+b.sec,0);
+  const L=timeLog(); let prev=0; for(let i=7;i<14;i++){ const d=addDays(today(),-i); prev+=(L[d]?L[d].total:0); }
+  const delta = prev? Math.round((wkSec-prev)/prev*100) : (wkSec?100:0);
+  let html=`<div class="fade">
+    <div class="mobonly" style="margin-bottom:10px"><button class="btn-sm btn-ghost" data-action="nav" data-screen="home"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button></div>
+    <h2 class="serif" style="font-size:26px;font-weight:600">Progress</h2>
+    <div style="height:14px"></div>
+    <div class="card pad">
+      <div class="row between" style="align-items:flex-start">
+        <div><div class="mono" style="font-size:34px;font-weight:800;line-height:1">${wkSec?fmtHM(wkSec):"0m"}</div>
+        <div class="faint" style="font-size:12px;margin-top:4px">this week · ${delta>=0?`<span style="color:var(--green);font-weight:700">▲ ${delta}%</span>`:`<span style="color:var(--red);font-weight:700">▼ ${-delta}%</span>`} vs last</div></div>
+        <div class="row" style="gap:16px">
+          <div style="text-align:center"><div class="mono" style="font-size:23px;font-weight:800;color:var(--coral)">${acc}%</div><div class="faint" style="font-size:11px">Accuracy</div></div>
+          <div style="text-align:center"><div class="mono" style="font-size:23px;font-weight:800">${DB.progress.streak?.current||0}</div><div class="faint" style="font-size:11px">Streak</div></div>
+        </div>
+      </div>
+      <div style="margin-top:16px">${weekBarsInner()}</div>
+    </div>
+    <div class="sectlabel">By specialty</div><div class="card pad" style="padding:4px 15px">`;
+  const sl=listSystems();
+  if(!sl.length) html+=`<div class="empty" style="padding:16px 0">No specialties loaded yet.</div>`;
+  sl.forEach((s,idx)=>{ const pct=s.total?Math.round(s.seen/s.total*100):0;
+    html+=`<div style="padding:13px 0;${idx?'border-top:1px solid var(--line-soft)':''}">
+      <div class="row between" style="font-size:14px;margin-bottom:7px"><span style="color:${s.color};font-weight:600">${esc(s.name)}</span><span class="mono faint" style="font-size:12px">${s.seen}/${s.total} · ${pct}%</span></div>
+      <div class="progressbar" style="margin:0"><i style="width:${pct}%"></i></div></div>`;
+  });
+  html+=`</div>
+    <button class="btn btn-ghost" data-action="nav" data-screen="stats" style="margin-top:14px"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg> Full stats, calibration & forecast</button>
+    <div style="height:9px"></div>
+    <button class="btn btn-ghost" data-action="open-timer">⏱️ Study timer & focus calendar</button>
+  </div>`;
+  return html;
+}
+/* ---------- SAVED (bookmarks + shortcuts) ---------- */
+function viewSaved(){
+  const qs=DB.progress.questions, ids=Object.keys(qs);
+  const marked=ids.filter(id=>qs[id].marked && QMAP[id]);
+  const mis=mistakeIds();
+  let html=`<div class="fade">
+    <div class="mobonly" style="margin-bottom:10px"><button class="btn-sm btn-ghost" data-action="nav" data-screen="home"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button></div>
+    <h2 class="serif" style="font-size:26px;font-weight:600">Saved</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:3px">${marked.length} bookmarked · ${mis.length} in your mistake notebook.</p>
+    <div style="height:12px"></div>
+    <div class="modegrid">
+      <button class="modecard" style="border-color:var(--line);background:var(--surface)" data-action="open-mistakes"><span class="mi" style="background:var(--red-deep);color:var(--red)">\u{1F525}</span><div><div class="n">${mis.length}</div><div class="l">Mistakes</div></div></button>
+      <button class="modecard" style="border-color:var(--line);background:var(--surface)" data-action="open-disputed"><span class="mi" style="background:var(--amber-deep);color:var(--amber)">⚖️</span><div><div class="n">${disputedIds().length}</div><div class="l">Disputed</div></div></button>
+    </div>`;
+  if(!marked.length){ html+=`<div class="empty">No bookmarks yet — tap the flag on any question while studying to save it here for later.</div></div>`; return html; }
+  html+=`<div style="height:4px"></div><button class="btn btn-primary" data-action="study-saved">Drill all ${marked.length} saved</button>`;
+  const groups={}; marked.forEach(id=>{const q=QMAP[id];(groups[qSys(q)]=groups[qSys(q)]||[]).push(id);});
+  Object.keys(groups).sort().forEach(sys=>{ html+=`<div class="sectlabel">${esc(sys)} · ${groups[sys].length}</div>`;
+    groups[sys].forEach(id=>{const q=QMAP[id];
+      html+=`<button class="card pad subj" data-action="study-one" data-id="${esc(id)}" style="margin-bottom:8px;border-left:3px solid var(--amber)">
+        <div class="row between"><span style="font-weight:600;font-size:14px">${esc(q.topic||'General')}</span><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px;fill:var(--amber);stroke:var(--amber)"><path d="M5 3v18l7-5 7 5V3z"/></svg></div>
+        <div class="faint" style="font-size:12px;margin-top:4px;line-height:1.4">${esc(stripBold(q.stem||'').replace(/<[^>]+>/g,'').slice(0,92))}…</div></button>`;
+    });
+  });
+  html+=`</div>`; return html;
+}
 /* ---------- QUIZ (answer-then-reveal) ---------- */
 function sessKey(ctx){ return JSON.stringify(ctx); }
 function sessionsMap(){ if(!DB.progress.sessions) DB.progress.sessions={}; return DB.progress.sessions; }
@@ -2542,6 +2753,17 @@ document.body.addEventListener("click", async e=>{
   // home / browse
   if(a==="start-smart"){ startPracticeCtx({smart:true}, "Smart Review"); return; }
   if(a==="open-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="system"; render(); return; }
+  // question-bank grid → per-specialty multi-select session picker
+  if(a==="open-bank-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.bankPick={system:t.dataset.system, refs:new Set()}; App.screen="banksys"; render(); return; }
+  if(a==="bank-pick"){ const r=t.dataset.ref, refs=bankPickSet(App.nav.system); if(refs.has(r)) refs.delete(r); else refs.add(r); render(); return; }
+  if(a==="bank-start"){ const bp=App.bankPick; if(!bp||!bp.refs.size){ toast("Tick at least one session"); return; }
+    const ids=[]; bp.refs.forEach(r=>poolFor({system:bp.system,reference:r}).forEach(id=>ids.push(id)));
+    const uniq=[...new Set(ids)]; if(!uniq.length){ toast("No questions in the selected sessions"); return; }
+    startPracticeCtx({ids:uniq}, bp.system+" · "+bp.refs.size+" session"+(bp.refs.size>1?"s":"")); return; }
+  if(a==="study-saved"){ const pool=Object.keys(DB.progress.questions).filter(id=>DB.progress.questions[id].marked && QMAP[id]); if(!pool.length){ toast("No saved questions"); return; } startPracticeCtx({ids:pool}, "Saved questions"); return; }
+  if(a==="view-fixes"){ const ids=((App.fixAlert&&App.fixAlert.ids)||[]).slice(); markFixesSeen(); if(!ids.length){ render(); return; } App.fixReview=ids; App.screen="fixes"; render(); return; }
+  if(a==="dismiss-fixes"){ markFixesSeen(); render(); return; }
+  if(a==="study-fixes"){ const ids=(App.fixReview||[]).filter(id=>QMAP[id]); if(!ids.length){ toast("Nothing to study"); return; } startPracticeCtx({ids}, "Recently fixed"); return; }
   if(a==="toggle-stage"){ const st=t.dataset.stage; App.collapsedStages[st]=(App.collapsedStages[st]===false); render(); return; }
   if(a==="open-mistakes"){ App.screen="mistakes"; render(); return; }
   if(a==="start-mistakes"){ const pool=mistakePool(); if(!pool.length){ toast("No mistakes yet"); return; } startPracticeCtx({ids:pool}, "Fix my mistakes"); return; }
@@ -2568,7 +2790,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="qedit-correct"){ qeSyncDraft(); const i=+t.dataset.i, d=App.qedit.draft; d.choices.forEach((c,k)=>c.correct=(k===i)); render(); return; }
   if(a==="qedit-delchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.splice(+t.dataset.i,1); reLetter(d.choices); render(); return; }
   if(a==="qedit-addchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.push({l:String.fromCharCode(65+d.choices.length), t:"", correct:false, e:""}); render(); return; }
-  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=patch; save.settings(); buildIndex(); postEdit(App.qedit.qid, patch); qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & shared to group":"Fix saved on this device"); return; }
+  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=patch; save.settings(); buildIndex(); postEdit(App.qedit.qid, patch); { const _s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; if(!_s.includes(App.qedit.qid)){ _s.push(App.qedit.qid); DB.settings.fixSeen=_s; save.settings(); } } qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & announced to everyone ✓":"Fix saved on this device"); return; }
   if(a==="qedit-copy"){ qeSyncDraft(); const d=App.qedit.draft, q=QMAP[App.qedit.qid]; reLetter(d.choices); const src={ id:App.qedit.qid, type:q.type, system:q.system, reference:q.reference, topic:q.topic, stem:d.stem, choices:d.choices.map(c=>({label:c.l,text:c.t,correct:!!c.correct,explanation:c.e||undefined})), keyPoint:d.keyPoint||undefined, flag:d.flagSev?{severity:d.flagSev,note:d.flagNote,source:"maintainer edit"}:undefined }; copyText(JSON.stringify(src,null,2), "Corrected JSON copied", src, App.qedit.qid+".json"); return; }
   if(a==="qedit-revert"){ if(DB.settings.qedits) delete DB.settings.qedits[App.qedit.qid]; save.settings(); buildIndex(); qeInit(App.qedit.qid); render(); toast("Your edit was reverted"); return; }
   if(a==="notif-reports"){ DB.settings.notifyReports=(DB.settings.notifyReports===false); save.settings(); if(DB.settings.notifyReports){ (async()=>{ if(notifSupported()&&notifPermission()==="default"){ try{ await Notification.requestPermission(); }catch(e){} } checkNewReports(); })(); } render(); return; }
@@ -2734,12 +2956,12 @@ function applyTheme(){
   document.documentElement.setAttribute("data-theme", DB.settings.theme==="light"?"light":"dark");
 }
 const WALLPAPERS = {
-  ink:      {name:"Ink",       dark:"radial-gradient(900px 500px at 80% -10%, rgba(63,182,168,.10), transparent 60%), radial-gradient(700px 400px at -10% 0%, rgba(44,62,80,.35), transparent 55%), #0d1318", light:"radial-gradient(900px 500px at 80% -10%, rgba(63,182,168,.10), transparent 60%), radial-gradient(700px 400px at -10% 0%, rgba(120,150,200,.16), transparent 55%), #eef1f6"},
-  midnight: {name:"Midnight",  dark:"linear-gradient(160deg,#0b1622,#0d1318)", light:"linear-gradient(160deg,#e6eef7,#eef1f6)"},
-  teal:     {name:"Deep Teal", dark:"linear-gradient(160deg,#08201e,#0d1318)", light:"linear-gradient(160deg,#dbefeb,#eef1f6)"},
-  charcoal: {name:"Charcoal",  dark:"#15171a", light:"#e9ecef"},
-  plum:     {name:"Plum",      dark:"linear-gradient(160deg,#1a1020,#0d1318)", light:"linear-gradient(160deg,#f0e7f4,#eef1f6)"},
-  aurora:   {name:"Aurora",    dark:"radial-gradient(700px 380px at 90% -5%, rgba(126,159,209,.18), transparent), radial-gradient(700px 380px at -5% 10%, rgba(63,182,168,.16), transparent), #0b1016", light:"radial-gradient(700px 380px at 90% -5%, rgba(126,159,209,.22), transparent), radial-gradient(700px 380px at -5% 10%, rgba(63,182,168,.20), transparent), #eaf0f6"}
+  ink:      {name:"Clinic",    dark:"radial-gradient(900px 520px at 82% -12%, rgba(244,104,79,.10), transparent 60%), radial-gradient(760px 420px at -12% 0%, rgba(150,110,70,.16), transparent 55%), #1a1714", light:"radial-gradient(900px 520px at 82% -12%, rgba(244,104,79,.08), transparent 60%), radial-gradient(760px 420px at -12% 0%, rgba(210,180,150,.20), transparent 55%), #faf6f1"},
+  midnight: {name:"Espresso",  dark:"linear-gradient(160deg,#201a15,#14110e)", light:"linear-gradient(160deg,#f3ece2,#faf6f1)"},
+  teal:     {name:"Sage",      dark:"linear-gradient(160deg,#16211c,#161310)", light:"linear-gradient(160deg,#e6efe4,#faf6f1)"},
+  charcoal: {name:"Warm Coal", dark:"#191512", light:"#eee7dd"},
+  plum:     {name:"Mulberry",  dark:"linear-gradient(160deg,#211621,#161210)", light:"linear-gradient(160deg,#f2e8ee,#faf6f1)"},
+  aurora:   {name:"Sunset",    dark:"radial-gradient(700px 380px at 90% -5%, rgba(244,104,79,.16), transparent), radial-gradient(700px 380px at -5% 10%, rgba(240,166,62,.14), transparent), #171310", light:"radial-gradient(700px 380px at 90% -5%, rgba(244,104,79,.16), transparent), radial-gradient(700px 380px at -5% 10%, rgba(240,166,62,.18), transparent), #f9f4ee"}
 };
 function wallTheme(){ return DB.settings.theme==="light"?"light":"dark"; }
 let wallImg=null;
@@ -3016,6 +3238,11 @@ async function fetchEdits(){
       if(qid && patch) map[qid]=patch;   // later rows win (sheet append order)
     }
     REMOTE_EDITS=map;
+    // announce newly-shared fixes to everyone (first sync sets a silent baseline)
+    { const _cur=Object.keys(map), _seen=DB.settings.fixSeen;
+      if(!Array.isArray(_seen)){ DB.settings.fixSeen=_cur; save.settings(); }
+      else { const _fresh=_cur.filter(id=>!_seen.includes(id) && QMAP[id]);
+        if(_fresh.length){ App.fixAlert={ids:_fresh}; toast("\u{1F527} "+_fresh.length+" reported question"+(_fresh.length>1?"s":"")+" just fixed"); } } }
     try{ wsSet("medrecall:remoteedits:v1", REMOTE_EDITS); }catch(e){}
     buildIndex();                        // rebuild + reapply (buildIndex calls applyEdits)
     if(App.screen==="home"||App.screen==="qedit") render();
@@ -3170,3 +3397,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
+/* clinic-v1.4 */
