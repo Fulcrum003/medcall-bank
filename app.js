@@ -1011,7 +1011,7 @@ function viewTimer(){
   const subjSec=sub=>(bySys[sub]||0)+(running&&t.subject===sub?sessionElapsed():0);
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
-    <h2 class="serif" style="font-size:24px;font-weight:600">⏱️ Study timer</h2>
+    <h2 class="serif" style="font-size:24px;font-weight:600"><i class=ti-clock aria-hidden=true></i> Study timer</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">${dd!=null?`Exam in <b>${dd>0?dd:0}</b> day${dd===1?"":"s"} · `:""}tap a subject to start the clock.</p>
     <div class="card pad" style="text-align:center;padding:24px 16px;margin-top:10px;${running?"border:1px solid var(--teal-dim)":""}">
       <div class="faint" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase">${running?("Studying · "+esc(t.subject||"General")):"Total studied today"}</div>
@@ -1023,7 +1023,7 @@ function viewTimer(){
     const isRun=running&&t.subject===sub, sec=subjSec(sub);
     html+=`<button class="card pad subj" data-action="timer-toggle" data-s="${esc(sub)}" style="width:100%;margin-bottom:8px;${isRun?"border-left:3px solid var(--teal);background:var(--teal-deep)":""}">
       <div class="row between">
-        <div class="row" style="gap:11px"><span style="font-size:16px;line-height:1">${isRun?"⏸️":"▶️"}</span><span style="font-weight:600;font-size:14.5px">${esc(sub)}</span></div>
+        <div class="row" style="gap:11px"><span style="font-size:16px;line-height:1">${isRun?"<i class=ti-player-pause aria-hidden=true></i>":"<i class=ti-player-play aria-hidden=true></i>"}</span><span style="font-weight:600;font-size:14.5px">${esc(sub)}</span></div>
         <span class="mono" style="font-size:14px;${isRun?"color:var(--teal);font-weight:700":"color:var(--faint)"}">${sec?fmtHM(sec):"—"}</span>
       </div>
     </button>`;
@@ -1266,10 +1266,10 @@ function viewDuelPick(){
   const cats=Object.keys(counts).sort();
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
-    <h2 class="serif" style="font-size:24px;font-weight:600">⚔️ Wrong Answer Duel</h2>
+    <h2 class="serif" style="font-size:24px;font-weight:600"><i class=ti-swords aria-hidden=true></i> Wrong Answer Duel</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">Pick the stronger answer between two commonly-confused options. Choose a division, or duel them all.</p>
     <button class="card pad subj" data-action="start-duel" style="width:100%;margin:10px 0;border-left:3px solid #b58fce">
-      <div class="row between"><div class="row" style="gap:11px"><span style="font-size:20px">🎲</span><div style="text-align:left"><div style="font-weight:700;font-size:15px">All divisions</div><div class="faint" style="font-size:12.5px">${DUELS.length} pairs · shuffled</div></div></div>
+      <div class="row between"><div class="row" style="gap:11px"><span style="font-size:20px"><i class=ti-dice aria-hidden=true></i></span><div style="text-align:left"><div style="font-weight:700;font-size:15px">All divisions</div><div class="faint" style="font-size:12.5px">${DUELS.length} pairs · shuffled</div></div></div>
       <svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#b58fce"><path d="M9 6l6 6-6 6"/></svg></div></button>
     <div class="sectlabel">Divisions</div>`;
   cats.forEach(c=>{ html+=`<button class="card pad subj" data-action="start-duel" data-cat="${esc(c)}" style="width:100%;margin-bottom:8px">
@@ -1282,7 +1282,7 @@ function viewDuel(){
     <div class="row between" style="margin-bottom:6px">
       <button class="btn-sm btn-ghost" data-action="duel-done"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Exit</button>
       <span class="mono faint" style="font-size:13px">${D.i+1} / ${D.order.length}</span>
-      <span class="streakpill">⚔️ ${D.score}</span>
+      <span class="streakpill"><i class=ti-swords aria-hidden=true></i> ${D.score}</span>
     </div>
     <div class="progressbar" style="margin-bottom:16px"><i style="width:${D.i/D.order.length*100}%"></i></div>
     <div class="qmeta"><span class="pill">${esc(d.sys)}</span><span class="pill emqtag">Duel</span></div>
@@ -1315,7 +1315,7 @@ function viewChecklist(){
   const doneN=items.filter((it,i)=>DB.progress.checklist[sub+"|"+i]).length;
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
-    <h2 class="serif" style="font-size:24px;font-weight:600">\u{1F4CB} Before-exam checklist</h2>
+    <h2 class="serif" style="font-size:24px;font-weight:600"><i class=ti-checklist aria-hidden=true></i> Before-exam checklist</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">Must-know patterns per subject — tick what you've nailed, tap a row to drill its questions.</p>
     <div class="wrapflex" style="margin:12px 0 6px">`;
   subs.forEach(x=>{ html+=`<button class="btn-ghost btn-sm ${x===sub?'on':''}" data-action="checklist-subject" data-subject="${esc(x)}">${esc(x)}</button>`; });
@@ -1337,7 +1337,7 @@ function viewDisputed(){
   const ids=disputedIds();
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
-    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--amber)">⚖️ Disputed answers</h2>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--amber)"><i class=ti-scale aria-hidden=true></i> Disputed answers</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} question${ids.length!==1?'s':''} where the source answer is flagged against standard teaching</p>`;
   if(!ids.length){ html+=`<div class="empty">No flagged questions in the loaded bank.</div></div>`; return html; }
   html+=`<div style="height:10px"></div><button class="btn btn-primary" data-action="start-disputed">Drill all ${ids.length}</button>`;
@@ -1359,7 +1359,7 @@ function viewRedflag(){
   const ids=redFlagIds();
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
-    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--red)">\u{1F6A8} Red-flag drills</h2>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--red)"><i class=ti-alert-triangle aria-hidden=true></i> Red-flag drills</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} can't-miss / emergency question${ids.length!==1?'s':''} — missing these changes management</p>`;
   if(!ids.length){ html+=`<div class="empty">No red-flag questions matched in the loaded bank.</div></div>`; return html; }
   html+=`<div style="height:10px"></div><button class="btn btn-primary" data-action="start-redflag">Drill all ${ids.length}</button>`;
@@ -1369,7 +1369,7 @@ function viewRedflag(){
     html+=`<div class="sectlabel">${esc(sys)} · ${groups[sys].length}</div>`;
     groups[sys].forEach(id=>{ const q=QMAP[id];
       html+=`<button class="card pad subj" data-action="study-one" data-id="${esc(id)}" style="margin-bottom:8px;border-left:3px solid var(--red)">
-        <div class="row between"><span style="font-weight:600;font-size:14px">${esc(q.topic||"General")}</span><span class="pill" style="color:var(--red)">⚠️</span></div>
+        <div class="row between"><span style="font-weight:600;font-size:14px">${esc(q.topic||"General")}</span><span class="pill" style="color:var(--red)"><i class=ti-alert-triangle aria-hidden=true></i></span></div>
         <div class="faint" style="font-size:12px;margin-top:4px;line-height:1.4">${esc((q.stem||"").slice(0,95))}…</div>
       </button>`;
     });
@@ -1380,7 +1380,7 @@ function viewMistakes(){
   const ids=mistakeIds();
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
-    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--red)">\u{1F525} Mistake notebook</h2>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--red)"><i class=ti-flame aria-hidden=true></i> Mistake notebook</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} question${ids.length!==1?'s':''} you've missed at least once</p>`;
   if(!ids.length){ html+=`<div class="empty">No mistakes yet — the questions you get wrong collect here automatically.</div></div>`; return html; }
   html+=`<div style="height:10px"></div><button class="btn btn-primary" data-action="start-mistakes">Drill all ${ids.length} mistakes</button>`;
@@ -1410,7 +1410,7 @@ function viewFixes(){
   const ids=(App.fixReview||[]).filter(id=>QMAP[id]);
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button>
-    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--green)">\u{1F527} Recently fixed</h2>
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:var(--green)"><i class=ti-tool aria-hidden=true></i> Recently fixed</h2>
     <p class="muted" style="font-size:13.5px;margin-top:2px">${ids.length} question${ids.length!==1?'s':''} updated to match standard teaching — here's exactly what changed.</p>`;
   if(!ids.length){ html+=`<div class="empty">Nothing to review right now.</div></div>`; return html; }
   html+=`<div style="height:8px"></div><button class="btn btn-primary" data-action="study-fixes">Drill all ${ids.length}</button>`;
@@ -1446,8 +1446,8 @@ function viewBank(){
     <p class="muted" style="font-size:13.5px;margin-top:3px">Pick a specialty, then choose sessions to quiz. <b>${totalQ}</b> questions · <b>${totalSeen}</b> seen.</p>
     <div style="height:12px"></div>
     <div class="modegrid">
-      <button class="modecard disp" data-action="open-disputed"><span class="mi">⚖️</span><div><div class="n">${dc}</div><div class="l">Disputed answers</div></div></button>
-      <button class="modecard rf" data-action="open-redflag"><span class="mi">\u{1F6A8}</span><div><div class="n">${rf}</div><div class="l">Red-flag drills</div></div></button>
+      <button class="modecard disp" data-action="open-disputed"><span class="mi"><i class=ti-scale aria-hidden=true></i></span><div><div class="n">${dc}</div><div class="l">Disputed answers</div></div></button>
+      <button class="modecard rf" data-action="open-redflag"><span class="mi"><i class=ti-alert-triangle aria-hidden=true></i></span><div><div class="n">${rf}</div><div class="l">Red-flag drills</div></div></button>
     </div>
     <div class="sectlabel">All specialties</div>
     <div class="qgrid">`;
@@ -1536,7 +1536,7 @@ function viewProgress(){
   html+=`</div>
     <button class="btn btn-ghost" data-action="nav" data-screen="stats" style="margin-top:14px"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg> Full stats, calibration & forecast</button>
     <div style="height:9px"></div>
-    <button class="btn btn-ghost" data-action="open-timer">⏱️ Study timer & focus calendar</button>
+    <button class="btn btn-ghost" data-action="open-timer"><i class=ti-clock aria-hidden=true></i> Study timer & focus calendar</button>
   </div>`;
   return html;
 }
@@ -1551,8 +1551,8 @@ function viewSaved(){
     <p class="muted" style="font-size:13.5px;margin-top:3px">${marked.length} bookmarked · ${mis.length} in your mistake notebook.</p>
     <div style="height:12px"></div>
     <div class="modegrid">
-      <button class="modecard" style="border-color:var(--line);background:var(--surface)" data-action="open-mistakes"><span class="mi" style="background:var(--red-deep);color:var(--red)">\u{1F525}</span><div><div class="n">${mis.length}</div><div class="l">Mistakes</div></div></button>
-      <button class="modecard" style="border-color:var(--line);background:var(--surface)" data-action="open-disputed"><span class="mi" style="background:var(--amber-deep);color:var(--amber)">⚖️</span><div><div class="n">${disputedIds().length}</div><div class="l">Disputed</div></div></button>
+      <button class="modecard" style="border-color:var(--line);background:var(--surface)" data-action="open-mistakes"><span class="mi" style="background:var(--red-deep);color:var(--red)"><i class=ti-flame aria-hidden=true></i></span><div><div class="n">${mis.length}</div><div class="l">Mistakes</div></div></button>
+      <button class="modecard" style="border-color:var(--line);background:var(--surface)" data-action="open-disputed"><span class="mi" style="background:var(--amber-deep);color:var(--amber)"><i class=ti-scale aria-hidden=true></i></span><div><div class="n">${disputedIds().length}</div><div class="l">Disputed</div></div></button>
     </div>`;
   if(!marked.length){ html+=`<div class="empty">No bookmarks yet — tap the flag on any question while studying to save it here for later.</div></div>`; return html; }
   html+=`<div style="height:4px"></div><button class="btn btn-primary" data-action="study-saved">Drill all ${marked.length} saved</button>`;
@@ -1683,8 +1683,8 @@ function viewQuiz(){
   if(!s.revealed && (s.selected || q.type==="sa")){
     html+=`<div class="row" style="gap:8px;justify-content:center;align-items:center;margin-top:16px">
       <span class="faint" style="font-size:12px">How sure?</span>
-      <button class="chip ${s.confidence==='sure'?'on':''}" data-action="confidence" data-c="sure">\u{1F44D} Confident</button>
-      <button class="chip ${s.confidence==='unsure'?'on':''}" data-action="confidence" data-c="unsure">\u{1F914} Not sure</button>
+      <button class="chip ${s.confidence==='sure'?'on':''}" data-action="confidence" data-c="sure"><i class=ti-thumb-up aria-hidden=true></i> Confident</button>
+      <button class="chip ${s.confidence==='unsure'?'on':''}" data-action="confidence" data-c="unsure"><i class=ti-help aria-hidden=true></i> Not sure</button>
     </div>`;
   }
   html+=`<div style="text-align:center;margin-top:18px"><button class="reportlink" data-action="report-open" data-qid="${q.id}">⚑ Report an issue with this question</button></div>`;
@@ -1707,7 +1707,7 @@ function viewQuiz(){
   if(!s.revealed){
     const _cr=(q.type==="sa"||s.selected||singleAnswer);
     foot=`<button class="btn btn-ghost btn-sm" ${s.i>0?'':'disabled'} data-action="nav-q" data-dir="-1" style="flex:none;width:auto"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <button class="btn btn-ghost btn-sm" data-action="toggle-mark" style="flex:none;width:auto;${marked?'color:var(--amber);border-color:#6b541f':''}">${marked?'♥ Saved':'♡ Save'}</button>
+      <button class="btn btn-ghost btn-sm" data-action="toggle-mark" style="flex:none;width:auto;${marked?'color:var(--amber);border-color:#6b541f':''}">${marked?'<i class=ti-heart aria-hidden=true></i> Saved':'<i class=ti-heart aria-hidden=true></i> Save'}</button>
       <button class="btn btn-ghost btn-sm" ${s.i<s.pool.length-1?'':'disabled'} data-action="nav-q" data-dir="1" style="flex:none;width:auto">Skip</button>
       <button class="btn btn-primary" data-action="reveal" ${_cr?'':'disabled'} style="flex:1">${_cr?'Reveal answer':'Select an answer'}</button>`;
   } else {
@@ -1728,7 +1728,7 @@ function schedDays(q,grade){ const cur=DB.progress.questions[q.id]?.srs; return 
 function reviewStatusBadge(q){
   const p=DB.progress.questions[q.id];
   const box=inner=>`<div style="display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-size:12px;color:var(--faint);background:var(--surface-2);border:1px solid var(--line-soft);border-radius:10px;padding:8px 11px;margin-bottom:12px">${inner}</div>`;
-  if(!p || !p.seen){ return box(`<span style="font-weight:700;color:var(--teal)">\u{1F195} First time</span><span>this one enters your review schedule now</span>`); }
+  if(!p || !p.seen){ return box(`<span style="font-weight:700;color:var(--teal)"><i class=ti-sparkles aria-hidden=true></i> First time</span><span>this one enters your review schedule now</span>`); }
   const acc=Math.round(p.correct/p.seen*100);
   const accCol = acc>=70?'var(--green)':acc>=40?'var(--amber)':'var(--red)';
   let last=''; if(p.lastResult==='correct') last=`<span style="color:var(--green)">last: correct</span>`; else if(p.lastResult==='wrong') last=`<span style="color:var(--red)">last: missed</span>`;
@@ -2015,7 +2015,7 @@ function viewLeaderboard(){
     </div>`;
   }
   const _liveN=board.filter(e=>e.studyingNow).length;
-  if(_liveN>0) html+=`<div class="card pad" style="margin-bottom:10px;border-left:3px solid var(--green)"><span style="color:var(--green);font-weight:700">\u{1F7E2} ${_liveN} studying right now</span></div>`;
+  if(_liveN>0) html+=`<div class="card pad" style="margin-bottom:10px;border-left:3px solid var(--green)"><span style="color:var(--green);font-weight:700"><i class=ti-circle-check aria-hidden=true></i> ${_liveN} studying right now</span></div>`;
   if(!board.length){ html+=`<div class="empty">No one studying ${esc(subj||"")} yet.</div>`; }
   board.forEach((e,i)=>{
     const you=e.id===me.id, val=lbValue(e,view), medal=i===0?"#d9a441":i===1?"#9fb0c0":i===2?"#c08457":null;
@@ -2024,9 +2024,9 @@ function viewLeaderboard(){
       <div class="row" style="gap:13px">
         <div class="rank" ${medal?`style="background:${medal}22;color:${medal}"`:''}>${i+1}</div>
         <div style="flex:1">
-          <div class="row" style="gap:7px;align-items:center;flex-wrap:wrap"><span style="font-weight:700;font-size:14.5px">${esc(e.name||"Anon")}${you?' · you':''}</span>${onFire?`<span class="firebadge">🔥 ${e.week}d this week</span>`:''}${e.studyingNow?`<span class="firebadge" style="color:var(--green)">\u{1F7E2} studying${e.studyingSubject?" · "+esc(e.studyingSubject):""}</span>`:''}</div>
+          <div class="row" style="gap:7px;align-items:center;flex-wrap:wrap"><span style="font-weight:700;font-size:14.5px">${esc(e.name||"Anon")}${you?' · you':''}</span>${onFire?`<span class="firebadge"><i class=ti-flame aria-hidden=true></i> ${e.week}d this week</span>`:''}${e.studyingNow?`<span class="firebadge" style="color:var(--green)"><i class=ti-circle-check aria-hidden=true></i> studying${e.studyingSubject?" · "+esc(e.studyingSubject):""}</span>`:''}</div>
           <div class="row" style="gap:8px;margin-top:3px;flex-wrap:wrap">
-            <span class="faint" style="font-size:12px">Lv ${e.level||1} · ${e.streak||0}🔥 streak</span>
+            <span class="faint" style="font-size:12px">Lv ${e.level||1} · ${e.streak||0}<i class=ti-flame aria-hidden=true></i> streak</span>
             ${e.subject&&e.subject!=="—"?`<span class="subjtag">${esc(e.subject)}</span>`:''}
           </div>
         </div>
@@ -2037,7 +2037,7 @@ function viewLeaderboard(){
   if(!DB.settings.groupEndpoint && !DB.settings.lbRepo){
     html+=`<div class="card pad" style="margin-top:6px"><div class="faint" style="font-size:13px;line-height:1.5">Right now this shows just you. Connect your group endpoint (Settings → maintainer → Leaderboard, or via the manifest) and everyone syncs automatically.</div></div>`;
   } else {
-    html+=`<div class="faint" style="font-size:11.5px;text-align:center;margin-top:6px">Daily board resets at midnight · 🔥 = studied 3+ days this week · names are anonymous</div>`;
+    html+=`<div class="faint" style="font-size:11.5px;text-align:center;margin-top:6px">Daily board resets at midnight · <i class=ti-flame aria-hidden=true></i> = studied 3+ days this week · names are anonymous</div>`;
   }
   html+=`</div>`;
   return html;
@@ -2232,7 +2232,7 @@ function viewResults(){
   const r=App.examResult;
   if(App.examReview) return viewExamReview();
   let html=`<div class="fade" style="text-align:center;padding-top:8px">
-    ${r.auto?'<span class="pill amber" style="margin-bottom:14px;display:inline-block">⏱ Time expired — auto-submitted</span>':''}
+    ${r.auto?'<span class="pill amber" style="margin-bottom:14px;display:inline-block"><i class=ti-clock aria-hidden=true></i> Time expired — auto-submitted</span>':''}
     <div class="ring" style="--p:${r.percent}">
       <div class="in"><div><div class="scorebig" style="color:${r.passed?'var(--green)':'var(--red)'}">${r.percent}%</div></div></div>
     </div>
@@ -2300,7 +2300,7 @@ function viewStats(){
   if(_st+_ut>0){ html+=`<div class="sectlabel">Confidence calibration</div><div class="card pad">
     <div class="row between" style="font-size:13.5px"><span>When you felt <b style="color:var(--green)">confident</b></span><span class="mono">${_st?Math.round(_sc/_st*100):0}% right · ${_st}</span></div>
     <div class="row between" style="font-size:13.5px;margin-top:8px"><span>When <b style="color:var(--amber)">not sure</b></span><span class="mono">${_ut?Math.round(_uc/_ut*100):0}% right · ${_ut}</span></div>
-    ${_cw>0?`<div class="row between" style="font-size:13.5px;margin-top:8px"><span style="color:var(--red)">⚠️ Confidently wrong</span><span class="mono" style="color:var(--red)">${_cw}</span></div>`:''}
+    ${_cw>0?`<div class="row between" style="font-size:13.5px;margin-top:8px"><span style="color:var(--red)"><i class=ti-alert-triangle aria-hidden=true></i> Confidently wrong</span><span class="mono" style="color:var(--red)">${_cw}</span></div>`:''}
     <div class="faint" style="font-size:11.5px;margin-top:10px">"Confidently wrong" = you were sure but missed it — the highest-value gaps to review.</div>
   </div>`; }
   html+=`<div class="sectlabel">Mastery by subject</div><div class="card pad" style="padding:6px 14px">`;
@@ -2832,7 +2832,7 @@ function exportAnki(ids,name){
     const wn=(q.choices||[]).filter(c=>!c.correct && c.e).slice(0,3);
     if(wn.length) back+="<br><br><i>Why not:</i><br>"+wn.map(c=>"• "+c.l+". "+ankiField(c.t)+" — "+ankiField(c.e)).join("<br>");
     if(q.keyPoint) back+="<br><br><i>Key point:</i> "+ankiField(q.keyPoint);
-    if(q.flag && q.flag.note) back+="<br><br>⚠ "+ankiField(q.flag.note);
+    if(q.flag && q.flag.note) back+="<br><br><i class=ti-alert-triangle aria-hidden=true></i> "+ankiField(q.flag.note);
     rows.push(front+"\t"+back); n++;
   });
   if(!n){ toast("Nothing to export"); return; }
@@ -3157,7 +3157,7 @@ async function fetchEdits(){
     { const _cur=Object.keys(map), _seen=DB.settings.fixSeen;
       if(!Array.isArray(_seen)){ DB.settings.fixSeen=_cur; save.settings(); }
       else { const _fresh=_cur.filter(id=>!_seen.includes(id) && QMAP[id]);
-        if(_fresh.length){ App.fixAlert={ids:_fresh}; toast("\u{1F527} "+_fresh.length+" reported question"+(_fresh.length>1?"s":"")+" just fixed"); } } }
+        if(_fresh.length){ App.fixAlert={ids:_fresh}; toast(""+_fresh.length+" reported question"+(_fresh.length>1?"s":"")+" just fixed"); } } }
     try{ wsSet("medrecall:remoteedits:v1", REMOTE_EDITS); }catch(e){}
     buildIndex();                        // rebuild + reapply (buildIndex calls applyEdits)
     if(App.screen==="home"||App.screen==="qedit") render();
@@ -3314,4 +3314,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v1.6 */
+/* clinic-v1.7 */
