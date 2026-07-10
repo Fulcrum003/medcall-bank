@@ -1047,29 +1047,25 @@ function viewHome(){
   const streak=DB.progress.streak?.current||0;
   const newAvail=totalQ-totalSeen;
   const greet=(function(){ const h=new Date().getHours(); return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; })();
-  const flame=`<svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`;
-  const arrow=`<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>`;
+  const chev=`<i class="ti ti-chevron-right" style="font-size:17px;color:var(--faint)" aria-hidden="true"></i>`;
   let html=`<div class="fade">`;
 
-  // maintainer fix announcement (shared to everyone via the edits feed)
   if(App.fixAlert && App.fixAlert.ids && App.fixAlert.ids.length){ const _fn=App.fixAlert.ids.length;
-    html+=`<div class="railcard" style="margin-bottom:16px;border-color:var(--green);background:var(--green-deep)"><div class="row" style="gap:11px;align-items:flex-start"><span style="font-size:19px;line-height:1">🔧</span><div style="flex:1"><div style="font-weight:700;font-size:14.5px;color:var(--green)">${_fn} reported question${_fn>1?'s':''} just fixed</div><div class="faint" style="font-size:12.5px;margin-top:2px">The answer key was updated to match standard teaching.</div><div class="row" style="gap:8px;margin-top:11px"><button class="btn-sm btn-primary" data-action="view-fixes" style="width:auto">Review ${_fn>1?'them':'it'}</button><button class="btn-sm btn-ghost" data-action="dismiss-fixes" style="width:auto">Dismiss</button></div></div></div></div>`;
+    html+=`<div class="railcard" style="margin-bottom:16px;border-color:var(--green)"><div class="row" style="gap:12px;align-items:flex-start"><i class="ti ti-tool" style="font-size:19px;color:var(--green)" aria-hidden="true"></i><div style="flex:1"><div style="font-weight:600;font-size:14.5px">${_fn} reported question${_fn>1?'s':''} just fixed</div><div class="faint" style="font-size:13px;margin-top:2px">The answer key was updated to match standard teaching.</div><div class="row" style="gap:8px;margin-top:11px"><button class="btn-sm btn-primary" data-action="view-fixes" style="width:auto">Review ${_fn>1?'them':'it'}</button><button class="btn-sm btn-ghost" data-action="dismiss-fixes" style="width:auto">Dismiss</button></div></div></div></div>`;
   }
   if(notifPromptDue()){
-    html+=`<div class="railcard" style="margin-bottom:16px"><div class="row" style="gap:11px;align-items:flex-start"><span style="font-size:19px;line-height:1">&#128276;</span><div style="flex:1"><div style="font-weight:700;font-size:14.5px">Turn on study reminders?</div><div class="faint" style="font-size:12.5px;margin-top:2px">A gentle daily nudge so due cards and your streak don't slip.</div><div class="row" style="gap:8px;margin-top:10px"><button class="btn-sm btn-primary" data-action="notif-prompt-enable">Turn on</button><button class="btn-sm btn-ghost" data-action="notif-prompt-dismiss">Not now</button></div></div></div></div>`;
+    html+=`<div class="railcard" style="margin-bottom:16px"><div class="row" style="gap:12px;align-items:flex-start"><i class="ti ti-bell" style="font-size:19px;color:var(--muted)" aria-hidden="true"></i><div style="flex:1"><div style="font-weight:600;font-size:14.5px">Turn on study reminders</div><div class="faint" style="font-size:13px;margin-top:2px">A daily nudge so due cards and your streak don't slip.</div><div class="row" style="gap:8px;margin-top:10px"><button class="btn-sm btn-primary" data-action="notif-prompt-enable">Turn on</button><button class="btn-sm btn-ghost" data-action="notif-prompt-dismiss">Not now</button></div></div></div></div>`;
   }
   if(DB.settings.maintainer && unreadReports()>0){
-    html+=`<button class="rowlink" data-action="open-reports-inbox" style="margin-bottom:16px;background:var(--amber-deep);border:1px solid var(--amber);border-radius:14px"><span style="font-size:18px">&#128681;</span><div class="grow"><div class="rn" style="color:var(--amber)">${unreadReports()} new report${unreadReports()>1?'s':''}</div><div class="rs">tap to review &amp; fix questions</div></div>${arrow}</button>`;
+    html+=`<button class="rowlink" data-action="open-reports-inbox" style="margin-bottom:16px;border:1px solid var(--line);border-radius:12px"><i class="ti ti-flag" style="font-size:19px;color:var(--amber)" aria-hidden="true"></i><div class="grow"><div class="rn">${unreadReports()} new report${unreadReports()>1?'s':''}</div><div class="rs">tap to review and fix questions</div></div>${chev}</button>`;
   }
 
-  // greeting
-  html+=`<div class="row between" style="margin-bottom:18px;align-items:center;gap:12px">
-    <div style="min-width:0"><div class="hgreet">${greet}</div><div class="hsub">${allDue>0?`You have <b style="color:var(--text)">${allDue}</b> card${allDue>1?'s':''} due today.`:"You're all caught up — time to learn something new."}</div></div>
-    <span class="streakpill" title="${streak}-day streak">${flame}${streak}</span>
+  html+=`<div class="row between" style="margin-bottom:20px;align-items:center;gap:12px">
+    <div style="min-width:0"><div class="hgreet">${greet}</div><div class="hsub">${allDue>0?`You have <b style="color:var(--text);font-weight:600">${allDue}</b> card${allDue>1?'s':''} due today.`:"You're all caught up."}</div></div>
+    <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;white-space:nowrap"><i class="ti ti-flame" style="font-size:16px;color:var(--coral)" aria-hidden="true"></i><b style="color:var(--text);font-weight:600">${streak}</b> day streak</span>
   </div>`;
 
-  // mobile-only nav to sidebar destinations
-  html+=`<div class="mobonly" style="display:flex;gap:8px;margin-bottom:16px">
+  html+=`<div class="mobonly" style="display:flex;gap:8px;margin-bottom:18px">
     <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="bank" style="flex:1">Question bank</button>
     <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="progress" style="flex:1">Progress</button>
     <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="saved" style="flex:1">Saved</button>
@@ -1077,80 +1073,72 @@ function viewHome(){
 
   html+=`<div class="homegrid"><div class="hmain">`;
 
-  // hero — Smart Review (primary daily action)
   html+=`<button class="hero" data-action="start-smart">
-    <div class="row between" style="align-items:flex-start;gap:12px">
-      <div><div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);font-weight:800">Today's session</div>
-        <div class="serif" style="font-size:24px;font-weight:600;margin-top:5px">Smart Review</div>
-        <div class="muted" style="font-size:13.5px;margin-top:3px">${allDue} due + up to ${Math.min(DB.settings.newPerDay,newAvail)} new, interleaved for long-term recall.</div></div>
-      <span style="width:44px;height:44px;border-radius:12px;background:var(--coral);color:#fff;display:grid;place-items:center;flex:none;box-shadow:0 8px 18px -12px rgba(244,104,79,.6)"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#fff"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="width:42px;height:42px;border-radius:10px;background:var(--coral-tint);display:flex;align-items:center;justify-content:center;flex:none"><i class="ti ti-player-play" style="font-size:20px;color:var(--coral)" aria-hidden="true"></i></span>
+      <div style="flex:1;min-width:0"><div style="font-size:12px;color:var(--faint)">Today's session</div><div style="font-size:17px;font-weight:600;margin-top:1px">Smart review</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${allDue} due, ${Math.min(DB.settings.newPerDay,newAvail)} new — interleaved for recall</div></div>
+      <i class="ti ti-arrow-right" style="font-size:20px;color:var(--faint)" aria-hidden="true"></i>
     </div>
   </button>`;
 
-  // continue studying
   { const _sv=Object.values((DB.progress.sessions||{})).filter(x=>x&&x.ctx&&!x.ctx.smart&&poolFor(x.ctx).length).sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
     if(_sv.length){
       html+=`<div class="sectlabel">Continue studying</div><div class="rowlist">`;
       _sv.forEach(x=>{ const _tot=x.total||poolFor(x.ctx).length, _k=esc(JSON.stringify(x.ctx));
-        html+=`<button class="rowlink" data-action="resume-session" data-key="${_k}"><span style="color:var(--coral);font-size:14px">▶</span><div class="grow"><div class="rn">${esc(x.label||"Session")}</div><div class="rs">Question ${(x.i||0)+1} of ${_tot}${x.answered?` · ${x.correct}/${x.answered} right`:""}</div></div><span class="iconbtn" data-action="drop-session" data-key="${_k}" title="Remove" style="width:28px;height:28px;font-size:12px">✕</span></button>`;
+        html+=`<button class="rowlink" data-action="resume-session" data-key="${_k}"><i class="ti ti-player-play" style="font-size:18px;color:var(--coral)" aria-hidden="true"></i><div class="grow"><div class="rn">${esc(x.label||"Session")}</div><div class="rs">Question ${(x.i||0)+1} of ${_tot}${x.answered?` · ${x.correct}/${x.answered} right`:""}</div></div><span class="iconbtn" data-action="drop-session" data-key="${_k}" title="Remove" style="width:28px;height:28px"><i class="ti ti-x" style="font-size:14px" aria-hidden="true"></i></span></button>`;
       });
       html+=`</div>`;
     }
   }
 
-  // suggestions
   const sugg=computeSuggestions();
   if(sugg.length){
     html+=`<div class="sectlabel">What should I study?</div><div class="rowlist">`;
     sugg.forEach(s=>{
       const act = s.action==="topic" ? `data-action="study-topic" data-system="${esc(s.data.system)}" data-reference="${esc(s.data.reference)}" data-topic="${esc(s.data.topic)}"` : s.action==="none" ? '' : `data-action="${s.action}"`;
       const tag = s.action==="none" ? "div" : "button";
-      html+=`<${tag} class="rowlink" ${act}><span class="suggicon" style="width:32px;height:32px;font-size:15px">${s.icon}</span><div class="grow"><div class="rn">${esc(s.title)}</div>${s.sub?`<div class="rs">${esc(s.sub)}</div>`:''}</div>${s.action!=="none"?arrow:''}</${tag}>`;
+      html+=`<${tag} class="rowlink" ${act}><i class="ti ti-bulb" style="font-size:19px;color:var(--muted);width:20px" aria-hidden="true"></i><div class="grow"><div class="rn">${esc(s.title)}</div>${s.sub?`<div class="rs">${esc(s.sub)}</div>`:''}</div>${s.action!=="none"?chev:''}</${tag}>`;
     });
     html+=`</div>`;
   }
 
-  // focus areas — compact tile grid (was a stack of full-width cards)
   const _mc=mistakeIds().length, _dc=disputedIds().length, _rf=redFlagIds().length;
-  html+=`<div class="sectlabel">Focus areas</div><div class="tilegrid">`;
-  if(_mc>0) html+=`<button class="tile" data-action="open-mistakes"><span class="ti" style="background:var(--red-deep);color:var(--red)">🔥</span><div class="grow"><div class="tn">Fix my mistakes</div><div class="ts">${_mc} missed</div></div></button>`;
-  if(_dc>0) html+=`<button class="tile" data-action="open-disputed"><span class="ti" style="background:var(--amber-deep);color:var(--amber)">⚖️</span><div class="grow"><div class="tn">Disputed answers</div><div class="ts">${_dc} flagged</div></div></button>`;
-  if(_rf>0) html+=`<button class="tile" data-action="open-redflag"><span class="ti" style="background:var(--red-deep);color:var(--red)">🚨</span><div class="grow"><div class="tn">Red-flag drills</div><div class="ts">${_rf} emergencies</div></div></button>`;
-  html+=`<button class="tile" data-action="open-checklist"><span class="ti" style="background:var(--coral-tint);color:var(--coral)">📋</span><div class="grow"><div class="tn">Exam checklist</div><div class="ts">must-know patterns</div></div></button>`;
-  html+=`<button class="tile" data-action="open-duelpick"><span class="ti" style="background:rgba(181,143,206,.18);color:#b58fce">⚔️</span><div class="grow"><div class="tn">Answer Duel</div><div class="ts">${DUELS.length} pairs</div></div></button>`;
-  html+=`<button class="tile" data-action="start-cram"><span class="ti" style="background:var(--amber-deep);color:var(--amber)">⏰</span><div class="grow"><div class="tn">Cram mode</div><div class="ts">exam tomorrow?</div></div></button>`;
+  const frow=(action,icon,label,count)=>`<button class="rowlink" data-action="${action}"><i class="ti ${icon}" style="font-size:19px;color:var(--muted);width:20px" aria-hidden="true"></i><div class="grow"><div class="rn">${label}</div></div>${count!=null?`<span class="rs" style="margin:0">${count}</span>`:''}${chev}</button>`;
+  html+=`<div class="sectlabel">Focus</div><div class="rowlist">`;
+  if(_mc>0) html+=frow("open-mistakes","ti-flame","Fix my mistakes",_mc);
+  if(_dc>0) html+=frow("open-disputed","ti-scale","Disputed answers",_dc);
+  if(_rf>0) html+=frow("open-redflag","ti-alert-triangle","Red-flag drills",_rf);
+  html+=frow("open-checklist","ti-checklist","Before-exam checklist",null);
+  html+=frow("open-duelpick","ti-swords","Wrong-answer duel",DUELS.length);
+  html+=frow("start-cram","ti-clock","Cram mode",null);
   html+=`</div>`;
 
-  html+=`</div><div class="hrail">`; // ===== SIDE RAIL =====
+  html+=`</div><div class="hrail">`;
 
-  // progress snapshot
   const xp=DB.progress.xp||0, lvl=levelOf(xp), inLvl=xpInLevel(xp);
   html+=`<div class="railcard" style="margin-bottom:14px">
-    <div class="row" style="gap:11px"><div class="lvlbadge">${lvl}</div><div><div style="font-weight:700;font-size:14.5px">Level ${lvl}</div><div class="faint" style="font-size:12px">${inLvl} / 200 XP</div></div></div>
+    <div class="row" style="gap:11px"><div class="lvlbadge">${lvl}</div><div><div style="font-weight:600;font-size:14.5px">Level ${lvl}</div><div class="faint" style="font-size:12px">${inLvl} / 200 XP</div></div></div>
     <div class="progressbar" style="margin-top:12px"><i style="width:${inLvl/200*100}%"></i></div>
     <div class="row" style="margin-top:16px;text-align:center">
-      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:800;color:var(--coral)">${allDue}</div><div class="faint" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">Due</div></div>
-      <div style="flex:1;border-left:1px solid var(--line-soft);border-right:1px solid var(--line-soft)"><div class="mono" style="font-size:20px;font-weight:800">${streak}</div><div class="faint" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">Streak</div></div>
-      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:800;color:var(--green)">${totalSeen}</div><div class="faint" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">Seen</div></div>
+      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:600;color:var(--coral)">${allDue}</div><div class="faint" style="font-size:11px">Due</div></div>
+      <div style="flex:1;border-left:1px solid var(--line);border-right:1px solid var(--line)"><div class="mono" style="font-size:20px;font-weight:600">${streak}</div><div class="faint" style="font-size:11px">Streak</div></div>
+      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:600;color:var(--green)">${totalSeen}</div><div class="faint" style="font-size:11px">Seen</div></div>
     </div>
   </div>`;
 
-  // daily goal ring
   const dc=dailyCount(), goal=DB.settings.dailyGoal||20, dpct=goal?dc/goal:0, dgDone=dc>=goal;
-  html+=`<div class="railcard" style="margin-bottom:14px"><div class="row" style="gap:14px">${ringSVG(dpct, dgDone?'var(--green)':'var(--coral)')}<div style="flex:1"><div style="font-weight:700;font-size:14.5px">Daily goal</div><div class="faint" style="font-size:12.5px;margin-top:1px">${dc} / ${goal} today${dgDone?' · reached!':''}</div></div></div></div>`;
+  html+=`<div class="railcard" style="margin-bottom:14px"><div class="row" style="gap:14px">${ringSVG(dpct, dgDone?'var(--green)':'var(--coral)')}<div style="flex:1"><div style="font-weight:600;font-size:14.5px">Daily goal</div><div class="faint" style="font-size:12.5px;margin-top:1px">${dc} / ${goal} today${dgDone?' · reached':''}</div></div></div></div>`;
 
-  // study timer / D-day
   { const _dd=dDay(), _st=studyToday();
-    html+=`<button class="railcard" data-action="open-timer" style="margin-bottom:14px;width:100%;text-align:left;cursor:pointer;color:inherit;display:block"><div class="row between"><div class="row" style="gap:11px"><span style="font-size:19px">⏱️</span><div>${_dd!=null?`<div style="font-weight:700;font-size:14.5px">${_dd>0?"D-"+_dd:_dd===0?"Exam today!":"exam "+(-_dd)+"d ago"}</div><div class="faint" style="font-size:12px">${_dd>0?"to your exam":_dd===0?"good luck!":"set a new date"}</div>`:`<div style="font-weight:700;font-size:14.5px">Study timer</div><div class="faint" style="font-size:12px">track real study time</div>`}</div></div><div class="mono" style="color:var(--coral);text-align:right;font-weight:700">${_st>0?fmtHM(_st):"start"}<div class="faint" style="font-size:10px;font-weight:600">${_st>0?"today":""}</div></div></div></button>`; }
+    html+=`<button class="railcard" data-action="open-timer" style="margin-bottom:14px;width:100%;text-align:left;cursor:pointer;color:inherit;display:block"><div class="row between"><div class="row" style="gap:11px"><i class="ti ti-clock" style="font-size:19px;color:var(--muted)" aria-hidden="true"></i><div>${_dd!=null?`<div style="font-weight:600;font-size:14.5px">${_dd>0?"D-"+_dd:_dd===0?"Exam today":"exam "+(-_dd)+"d ago"}</div><div class="faint" style="font-size:12px">${_dd>0?"to your exam":_dd===0?"good luck":"set a new date"}</div>`:`<div style="font-weight:600;font-size:14.5px">Study timer</div><div class="faint" style="font-size:12px">track real study time</div>`}</div></div><div class="mono" style="color:var(--coral);text-align:right;font-weight:600">${_st>0?fmtHM(_st):"start"}</div></div></button>`; }
 
-  // quick links
   html+=`<div class="rowlist">
-    <button class="rowlink" data-action="nav" data-screen="exam-builder"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg><div class="grow"><div class="rn">Exam Simulation</div></div>${arrow}</button>
-    <button class="rowlink" data-action="nav" data-screen="trophies"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg><div class="grow"><div class="rn">Achievements</div></div>${arrow}</button>
-    <button class="rowlink" data-action="nav" data-screen="leaderboard"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8"/></svg><div class="grow"><div class="rn">Leaderboard</div></div>${arrow}</button>
+    <button class="rowlink" data-action="nav" data-screen="exam-builder"><i class="ti ti-clipboard-list" style="font-size:19px;color:var(--muted);width:20px" aria-hidden="true"></i><div class="grow"><div class="rn">Exam simulation</div></div>${chev}</button>
+    <button class="rowlink" data-action="nav" data-screen="trophies"><i class="ti ti-trophy" style="font-size:19px;color:var(--muted);width:20px" aria-hidden="true"></i><div class="grow"><div class="rn">Achievements</div></div>${chev}</button>
+    <button class="rowlink" data-action="nav" data-screen="leaderboard"><i class="ti ti-users" style="font-size:19px;color:var(--muted);width:20px" aria-hidden="true"></i><div class="grow"><div class="rn">Leaderboard</div></div>${chev}</button>
   </div>`;
 
-  html+=`</div></div>`; // close hrail + homegrid
+  html+=`</div></div>`;
   html+=`</div>`;
   return html;
 }
@@ -3326,4 +3314,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v1.5 */
+/* clinic-v1.6 */
