@@ -51,6 +51,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
+  html{background:var(--ink);overscroll-behavior:none}
   body{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{
     background:var(--ink);
@@ -60,7 +61,7 @@
     -webkit-font-smoothing:antialiased;
     background-image:radial-gradient(900px 520px at 82% -12%, rgba(244,104,79,.09), transparent 60%),
                      radial-gradient(760px 420px at -12% 0%, rgba(150,110,70,.14), transparent 55%);
-    background-attachment:fixed;
+    overscroll-behavior:none;
   }
   .wrap{max-width:620px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right)) 120px max(16px,env(safe-area-inset-left));min-height:100%;min-height:100dvh}
   .serif{font-family:'Newsreader',Georgia,serif;letter-spacing:0}
@@ -441,7 +442,7 @@
       <div class="brand" data-action="nav" data-screen="home" style="cursor:pointer" title="Home">
         <span class="dot"></span>
         <h1>MedCall</h1>
-        <small>v1.7</small>
+        <small>v1.8</small>
       </div>
       <div class="iconrow">
         <button class="iconbtn" data-action="nav" data-screen="search" title="Search">
@@ -3354,7 +3355,7 @@ function applyWallpaper(){
     css=`linear-gradient(${ov}), url('${wallImg}') center/cover no-repeat`;
   } else { const wp=WALLPAPERS[w]||WALLPAPERS.ink; css=wp[th]; }
   document.body.style.background=css;
-  document.body.style.backgroundAttachment="fixed";
+  document.body.style.backgroundAttachment="scroll";
 }
 function handleWallpaperFile(file){
   if(!file) return;
@@ -3780,7 +3781,7 @@ function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v1.7 */
+/* clinic-v1.8 */
 
 </script>
 <!-- APP:END -->

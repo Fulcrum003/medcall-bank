@@ -2888,7 +2888,7 @@ function applyWallpaper(){
     css=`linear-gradient(${ov}), url('${wallImg}') center/cover no-repeat`;
   } else { const wp=WALLPAPERS[w]||WALLPAPERS.ink; css=wp[th]; }
   document.body.style.background=css;
-  document.body.style.backgroundAttachment="fixed";
+  document.body.style.backgroundAttachment="scroll";
 }
 function handleWallpaperFile(file){
   if(!file) return;
@@ -3314,4 +3314,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v1.7 */
+/* clinic-v1.8 */
