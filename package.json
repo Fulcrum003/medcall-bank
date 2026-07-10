@@ -3,9 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "validate": "node validate.mjs",
+    "prebuild": "node validate.mjs",
+    "build": "node build.mjs",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "build": "node build.js"
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "vitest": "^2.0.0",

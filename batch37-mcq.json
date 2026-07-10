@@ -1,0 +1,4531 @@
+{
+ "packId": "batch37-mcq",
+ "title": "Batch 37 Final",
+ "color": "#cf9b6b",
+ "version": 4,
+ "updated": "2026-06-15",
+ "questionCount": 91,
+ "questions": [
+  {
+   "id": "b37_q1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 1",
+   "topic": "Depigmented Patch",
+   "stem": "A 12-YEAR-OLD BOY with a well-defined NON-SCALY, DEPIGMENTED patch on the DORSUM OF HIS RIGHT FOREARM ONLY. No lesions elsewhere on body.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Pityriasis alba",
+     "correct": false,
+     "explanation": "HYPOPIGMENTED (not fully depigmented), slightly scaly, ill-defined. Common on cheeks in children. NOT complete depigmentation as seen here."
+    },
+    {
+     "label": "B",
+     "text": "Segmental vitiligo",
+     "correct": true,
+     "explanation": "SEGMENTAL VITILIGO: complete chalk-white depigmentation, well-defined, unilateral, dermatomal. Common in young patients. Stabilises earlier than non-segmental. KEY: well-defined + complete depigmentation + single segment = segmental vitiligo."
+    },
+    {
+     "label": "C",
+     "text": "Pityriasis versicolor",
+     "correct": false,
+     "explanation": "Malassezia furfur infection → HYPOPIGMENTED/hyperpigmented SCALY patches. KOH: spaghetti-and-meatball hyphae. Usually on trunk, not forearm."
+    },
+    {
+     "label": "D",
+     "text": "Tuberculoid leprosy",
+     "correct": false,
+     "explanation": "Single HYPOPIGMENTED patches with SENSORY LOSS and thickened peripheral nerves. Not completely depigmented."
+    },
+    {
+     "label": "E",
+     "text": "Melasma",
+     "correct": false,
+     "explanation": "HYPERPIGMENTED (brown). Face only. Pregnancy/OCP-associated. Cannot be depigmented patch on forearm of a 12yo boy."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 1",
+   "topic": "Best Treatment if Widespread",
+   "stem": "Same case. If lesion were WIDESPREAD involving a wide area of the body — best treatment?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Topical steroid",
+     "correct": false,
+     "explanation": "First-line for LOCALISED (<10% BSA). Not appropriate for widespread (systemic absorption risk, atrophy, striae)."
+    },
+    {
+     "label": "B",
+     "text": "Systemic steroid",
+     "correct": false,
+     "explanation": "May halt progression temporarily but does NOT repigment skin. Unacceptable side-effect profile long-term."
+    },
+    {
+     "label": "C",
+     "text": "Topical tacrolimus",
+     "correct": false,
+     "explanation": "Excellent for localised vitiligo (especially face/neck, sensitive areas). Not suitable for widespread disease."
+    },
+    {
+     "label": "D",
+     "text": "Phototherapy (NBUVB)",
+     "correct": true,
+     "explanation": "NARROW-BAND UVB = GOLD STANDARD for widespread vitiligo. Stimulates follicular melanocytes → perifollicular repigmentation. 2-3 sessions/week. Safer than PUVA (no psoralen needed). Most effective on face/trunk."
+    },
+    {
+     "label": "E",
+     "text": "Diode laser",
+     "correct": false,
+     "explanation": "Targeted for localised, resistant patches. Not for widespread disease."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 1",
+   "topic": "Source of Repigmentation",
+   "stem": "What is the SOURCE OF REPIGMENTATION in vitiligo?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Follicular melanocyte",
+     "correct": true,
+     "explanation": "FOLLICULAR MELANOCYTES (hair follicle bulge) = primary source. NBUVB stimulates them → proliferate and migrate outward → perifollicular dots. LEUKOTRICHIA (white hair) = follicular melanocytes destroyed = POOR repigmentation prognosis."
+    },
+    {
+     "label": "B",
+     "text": "Epidermal melanocyte",
+     "correct": false,
+     "explanation": "Epidermal melanocytes are DESTROYED in vitiligo. Cannot serve as repigmentation source."
+    },
+    {
+     "label": "C",
+     "text": "Tattoo stain",
+     "correct": false,
+     "explanation": "Cosmetic camouflage only. Not biological repigmentation."
+    },
+    {
+     "label": "D",
+     "text": "Transplant melanocyte",
+     "correct": false,
+     "explanation": "Surgical treatment option but NOT the spontaneous physiological source."
+    },
+    {
+     "label": "E",
+     "text": "Post-inflammatory hyperpigmentation",
+     "correct": false,
+     "explanation": "PIH = HYPERPIGMENTATION after inflammation. Different condition entirely."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q4",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 1",
+   "topic": "Cholinergic Urticaria",
+   "stem": "Q117: Young adult male with PRICKING SENSATION + ITCHING exacerbated by ANXIETY and EMOTIONAL STRESS. What is the diagnosis? Q118: Which mediator is responsible?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Cholinergic Urticaria | Q118: Histamine (primary mast cell mediator)",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q1: Diagnosis",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Schizophrenia",
+     "correct": false,
+     "explanation": "Schizophrenia = flat/inappropriate mood, NOT elated. Mood elevation is not a feature. ≥6 months required."
+    },
+    {
+     "label": "B",
+     "text": "Personality disorders",
+     "correct": false,
+     "explanation": "Lifelong pervasive patterns. NOT episodic psychosis with elated mood and grandiose delusions."
+    },
+    {
+     "label": "C",
+     "text": "Bipolar disorder",
+     "correct": true,
+     "explanation": "BIPOLAR I = ≥1 manic episode. This patient: elated mood + grandiose delusion (can fly) + hallucinations + impulsive suicidal attempts = MANIC EPISODE WITH PSYCHOTIC FEATURES. Mood-congruent psychosis = bipolar."
+    },
+    {
+     "label": "D",
+     "text": "Major depressive disorder",
+     "correct": false,
+     "explanation": "MDD = LOW/sad mood. This patient has ELEVATED mood."
+    },
+    {
+     "label": "E",
+     "text": "Anxiety disorders",
+     "correct": false,
+     "explanation": "No psychosis, no elated mood in anxiety disorders."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q2: Treatment of Choice",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Antipsychotics",
+     "correct": false,
+     "explanation": "Adjunct for acute psychosis. NOT definitive treatment for bipolar."
+    },
+    {
+     "label": "B",
+     "text": "Lithium",
+     "correct": true,
+     "explanation": "LITHIUM = GOLD STANDARD for bipolar disorder. Modulates inositol phosphate. Effective for mania AND maintenance. ONLY drug proven to reduce suicidality. Monitor: levels 0.6-1.2 mEq/L + TSH + U&E; every 3-6 months."
+    },
+    {
+     "label": "C",
+     "text": "Antidepressants",
+     "correct": false,
+     "explanation": "DANGEROUS as monotherapy → triggers manic switch/rapid cycling. NEVER give antidepressants alone in bipolar."
+    },
+    {
+     "label": "D",
+     "text": "ECT",
+     "correct": false,
+     "explanation": "Treatment-resistant cases only. Not first-line."
+    },
+    {
+     "label": "E",
+     "text": "Antianxiety",
+     "correct": false,
+     "explanation": "Symptomatic agitation only. Not mood stabilizers."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q3: Risk of Suicide",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Severe (Two Actual Attempts + Active Psychosis)",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_4",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q4: Maintenance",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Lithium (Long-term Maintenance)",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q5_5",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 2",
+   "topic": "Q1-5 | Bipolar Disorder — Manic Episode with Psychosis",
+   "stem": "16-YEAR-OLD MALE: Caught by police before jumping from bridge. Believes he CAN FLY. Assessment: DELUSIONS + HALLUCINATIONS + ELATED MOOD + 2 SUICIDAL ATTEMPTS. — Q5: Management Place",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Inpatient (Mandatory)",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q6",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 3",
+   "topic": "GDM Screening in Future Pregnancies",
+   "stem": "Mother had GDM (diet-controlled) in previous pregnancy. How to screen for GDM in FUTURE pregnancies?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Screen only if symptoms",
+     "correct": false,
+     "explanation": "GDM is often ASYMPTOMATIC. Prior GDM = 50-70% recurrence. Universal early screening required."
+    },
+    {
+     "label": "B",
+     "text": "FBG at 24-28 weeks only",
+     "correct": false,
+     "explanation": "HIGH-RISK women (prior GDM) need screening EARLIER — at first visit, not only at 24-28 weeks."
+    },
+    {
+     "label": "C",
+     "text": "OGTT first visit; repeat 24-28 weeks",
+     "correct": true,
+     "explanation": "ACOG/NICE: prior GDM → OGTT at FIRST prenatal visit (early screening) + if normal → rescreen 24-28 weeks. 50-70% recurrence justifies early diagnosis and intervention."
+    },
+    {
+     "label": "D",
+     "text": "HbA1C first visit only",
+     "correct": false,
+     "explanation": "HbA1C detects PRE-EXISTING T2DM, not GDM. Affected by physiological anaemia of pregnancy."
+    },
+    {
+     "label": "E",
+     "text": "No screening unless risk factors develop",
+     "correct": false,
+     "explanation": "Previous GDM IS the major risk factor. Waiting = missed diagnosis."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q7",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 3",
+   "topic": "Q12 GDM Screening + Q13-16 VSD in Neonate",
+   "stem": "2-WEEK-OLD FEMALE: Poor feeding + sweating during feeds + tachypnea. FTT. PR 160, RR 60. PALPABLE THRILL at left sternal border. HARSH HOLOSYSTOLIC MURMUR at LEFT LOWER STERNAL BORDER.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "VSD | Q14: B. Echocardiogram | Q15: A. Pulmonary HTN | Q16: C.",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q8",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 4",
+   "topic": "Q101-103 | Ischaemic Stroke — Left MCA Territory",
+   "stem": "76-YEAR-OLD MALE | DM + HTN | Sudden RIGHT-SIDED WEAKNESS + DYSPHASIA starting 6 HOURS AGO. BP 160/90. No meningism. Mild headache.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Ischaemic Stroke Left MCA | Q102: B. Mechanical Thrombectomy |",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": null,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q9",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 5",
+   "topic": "Q9-10 ABO Incompatibility + Secondary Syphilis",
+   "stem": "3-DAY-OLD MALE NEONATE: Jaundice. Blood group A. Mother blood group O. Breastfeeding. Wet bedding + increased urine output.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "ABO Incompatibility | Q10: D. Coombs' Test Positive (Direct Antiglobulin",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q10",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 5",
+   "topic": "Secondary Syphilis (Dermatology)",
+   "stem": "25-YEAR-OLD UNMARRIED MALE: 3 weeks of GENERALISED PAPULOSQUAMOUS RASH. NON-PRURITIC. Involves PALMS AND SOLES. GENERALISED LYMPHADENOPATHY.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Mycosis fungoides",
+     "correct": false,
+     "explanation": "Cutaneous T-cell lymphoma. PRURITIC. Chronic progressive patches. Does not characteristically involve palms/soles."
+    },
+    {
+     "label": "B",
+     "text": "Psoriasis vulgaris",
+     "correct": false,
+     "explanation": "Silvery scaly plaques on extensor surfaces. Usually pruritic. No generalised lymphadenopathy. Palmoplantar psoriasis exists but no lymphadenopathy."
+    },
+    {
+     "label": "C",
+     "text": "Secondary syphilis",
+     "correct": true,
+     "explanation": "CLASSIC: NON-PRURITIC papulosquamous rash on PALMS AND SOLES (pathognomonic) + GENERALISED RUBBERY LYMPHADENOPATHY. 6-12 weeks after primary chancre. Treponema pallidum. Sexually active unmarried male = STI context."
+    },
+    {
+     "label": "D",
+     "text": "Pityriasis rosea",
+     "correct": false,
+     "explanation": "Herald patch → Christmas tree trunk rash. Mildly pruritic. DOES NOT involve palms/soles. No lymphadenopathy. Self-limiting."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q11",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 6",
+   "topic": "Q21 PPROM at 33 Weeks + Q77 PE in Cancer Patient",
+   "stem": "28-YEAR-OLD G1P0 at 33 WEEKS: Watery vaginal leak. No contractions. Maternal temp 37.5°C. Pooling + FERN + NITRAZINE positive → PPROM confirmed.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "3. Give Antibiotics (erythromycin) AND Corticosteroids",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q12",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 6",
+   "topic": "Cancer Patient on Chemo + Sudden Dyspnoea",
+   "stem": "Pancreatic adenocarcinoma, 4th cycle chemo: Sudden SHORTNESS OF BREATH. O2 saturation dropped. What is the next step?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "CXR",
+     "correct": false,
+     "explanation": "CXR cannot diagnose PE (often normal in PE). CTPA required."
+    },
+    {
+     "label": "B",
+     "text": "CT angiography (CTPA) ■ EC",
+     "correct": true,
+     "explanation": "ANCER + CHEMO + SUDDEN DYSPNOEA = PE FIRST. Pancreatic Ca = very HIGH TE risk (Trousseau's syndrome = migratory thrombophlebitis). CTPA = gold standard. f PE confirmed → LMWH (preferred over warfarin in cancer — CLOT trial)."
+    },
+    {
+     "label": "C",
+     "text": "Blood culture ■ WR",
+     "correct": false,
+     "explanation": "epsis less likely with abrupt sudden onset dyspnoea. PE far more likely in cancer ontext."
+    },
+    {
+     "label": "D",
+     "text": "Continue chemotherapy ■ WR",
+     "correct": false,
+     "explanation": "EVER continue chemo with acute dyspnoea and desaturation. Medical emergency equiring investigation."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q13",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 7",
+   "topic": "Psychology Case 1 | Schizoaffective Disorder",
+   "stem": "PSYCHOLOGY CASE 1: 30-YEAR-OLD FEMALE. 2 months auditory hallucinations + persecutory delusions → followed by MDD (resolved with treatment). Psychosis PERSISTS 1 MORE MONTH after depression resolved, then resolved.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Schizoaffective Disorder | Q2: E. PTSD Flashbacks (NOT psychotic) |",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q14",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 8",
+   "topic": "Q33-34 | Imperforate Hymen",
+   "stem": "15-YEAR-OLD GIRL: 6 months cyclic lower abdominal pain (CRYPTOMENORRHOEA). No menarche (PRIMARY AMENORRHOEA). Examination: BLUISH BULGING MEMBRANE at VAGINAL INTROITUS.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Q33 Imperforate hymen",
+     "correct": false,
+     "explanation": "pain and NO bluish membrane. HAEMATOCOLPOS: menstrual blood retained behind imperforate hymen → BLUISH"
+    },
+    {
+     "label": "B",
+     "text": "Q33 Müllerian agenesis",
+     "correct": true,
+     "explanation": "BULGING MEMBRANE (distended with blood). Cyclic pain = cyclical menstruation with NO outlet. Primary amenorrhoea despite normal hormonal function. Treatment: CRUCIATE INCISION → drain haematocolpos. No uterus → no cyclic pain, no bulge. Similar to MRKH."
+    },
+    {
+     "label": "C",
+     "text": "Q34 Failure of canalization of",
+     "correct": false,
+     "explanation": "Sinovaginal bulbs (endodermal outgrowths from urogenital sinus) form lower vagina and"
+    },
+    {
+     "label": "D",
+     "text": "sinovaginal bulbs",
+     "correct": false,
+     "explanation": "hymen. Failure of central perforation → imperforate hymen. Müllerian duct fusion failure → uterine anomalies (not hymen)."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q15",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 9",
+   "topic": "Q71-75 Blowout Fracture + Nuclear Cataract + Q79-80 Hyphema/Keratoconus",
+   "stem": "26-YEAR-OLD RUGBY PLAYER: Left eye pain + blurring after knee injury. Eyelid ecchymosis, subconjunctival haemorrhage, proptosis, raised IOP, RAPD, VA 6/60. BLOWOUT FRACTURE suspected. No surgery within 24 hours.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Orbital Floor | Q72: D. Inferior Rectus | Q73: B. CT Scan | Q74: C.",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q16",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 9",
+   "topic": "Additional Blowout Fracture Questions (File Annotations)",
+   "stem": "ADDITIONAL QUESTIONS FROM PAGE 9 FILE ANNOTATIONS: Q-A: Vertical Diplopia Question — File notes: \"■■■ ■■■■ vertical diplopia ■ ■■■■ ■■ ■■■■■\" (There was a question about vertical diplopia and asking the specialist) Q-B: Imaging + OCT — File notes: \"■■■ ■■ imaging ■■■■ OCT\" (Same imaging but adding OCT) Q-C: \"What is true\" MCQ — File notes: \"■■■ ■■■■■■ ■■■ what is true ■■ ■■■ ■■■ .. ■ ■■■■ ■■■■ ■■ ■■■■■■ ■■ ■■■■■ ask patient not to blow his nose\" (A what-is-true MCQ — many points including: ask patient not to blow his nose) Q-D: Surgery timing — \"Surgery should be done within 24 [hours]\" and \"Late treatment can lead to permanent damage?\" ■■ FILE ANSWER vs STANDARD TEACHING INCOMPLETE SOURCE: These questions were noted as annotations in the file but without complete option lists or clear answer keys. They are part of the blowout fracture case (Q71-75) and the nuclear cataract case. Full content not extractable from source. Q-A: Vertical Diplopia in Blowout Fracture",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Vertical Diplopia = Inferior Rectus Entrapment in Orbital Floor → Upgaze",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q17",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 10",
+   "topic": "MDD Risk Factors MCQ",
+   "stem": "Psychology case: Major Depressive Disorder. Which of the following is NOT a risk factor? Options: hearing impairment · concurrent infection · dehydration · family history · hypoxia",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Concurrent Infection (Primary DELIRIUM risk factor, not specifically MDD)",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q18",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 11",
+   "topic": "Psychology Case 3 | Cotard & Capgras Syndrome",
+   "stem": "~40-YEAR-OLD MALE with schizophrenia: Nihilistic delusion — \"my heart and intestines aren't present.\" States: \"WHICH WORLD? THERE IS NO WORLD.\" Also states: \"ALIEN ROBOTS SEEM IDENTICAL TO HIS PARENTS.\"",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Cotard Syndrome (Nihilistic Delusion) | Q2: A. Capgras Syndrome",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": null,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q19",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 12",
+   "topic": "Q54-57 | Peritonsillar Abscess (Quinsy)",
+   "stem": "37-YEAR-OLD MALE: Severe left ear pain 1 day. Odynophagia. TRISMUS (difficulty opening mouth). LEFT PALATE: swelling + erythema + bulging. UVULA DEVIATED TO THE RIGHT.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Peritonsillar Abscess (Quinsy) | Q55: D. Surgical Incision + IV",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q20",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 13",
+   "topic": "Paediatric CAP Case + Deferasirox Monitoring (Haematology)",
+   "stem": "2-YEAR-OLD CHILD (CASE 1): 3 days fever + cough + difficulty breathing. Lethargic. Temp 38.5°C, RR 50/min, O2 sat 88%. Wheeze + crackles lower right lung. CXR: FOCAL CONSOLIDATION right lower lobe.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Q1 Organism: Strep pneumoniae | Q2 Management: O2 + IV Antibiotics | Q3",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q21",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 13",
+   "topic": "Paediatric CAP Case + Deferasirox Monitoring (Haematology)",
+   "stem": "Patient given oral DEFERASIROX (iron chelating agent). What should you MONITOR for when using this drug?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "2. LFT and RFT (Liver + Renal Function — Primary Monthly Monitoring)",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q22",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 14",
+   "topic": "Psychology Case 4 | Autism Spectrum Disorder",
+   "stem": "30-MONTH-OLD FEMALE: Poor eye contact, REPETITIVE MOVEMENTS, no peer communication, does not play with brother. STRICT ROUTINE — upset if disturbed. Focuses on coloured pens (restricted interest). Physically normal.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Autism | Q2: A. Speech at Age 5 | Q3: A. Intellectual Disability | Q4: A.",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q23",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 15",
+   "topic": "Paeds Gastroenteritis + Dermatology Cases",
+   "stem": "25-YEAR-OLD FEMALE: Painful blisters over body. Multiple FLACCID BULLAE involving body and ORAL CAVITY. Yellow crusted eroded lesions.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Bullous pemphigoid",
+     "correct": false,
+     "explanation": "TENSE bullae + NO mucosal involvement + elderly. Anti-BP180/230. KEY DIFFERENTIATOR: TENSE + NO MUCOSA = Pemphigoid."
+    },
+    {
+     "label": "B",
+     "text": "Pemphigus vulgaris",
+     "correct": true,
+     "explanation": "FLACCID bullae + ORAL MUCOSA (50-70% first site) + Nikolsky sign positive + young-middle age. Anti-Dsg3 (mucosa) + Anti-Dsg1 (skin). Suprabasal intraepidermal split."
+    },
+    {
+     "label": "C",
+     "text": "Pemphigoid foliaceus",
+     "correct": false,
+     "explanation": "Superficial variant. SKIN ONLY — no mucosal involvement. Anti-Dsg1 only (Dsg3 = mucosal protection; Dsg1 = skin)."
+    },
+    {
+     "label": "D",
+     "text": "Epidermolysis bullosa Biop Acantholysis sy",
+     "correct": false,
+     "explanation": "Genetic, from birth. Not an acquired autoimmune disease. Loss of keratinocyte cohesion (anti-desmoglein destroys desmosomes). TOMBSTONE APPEARANCE of basal cells. DIF: IgG intercellular \"CHICKEN WIRE\" pattern."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q24",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 15",
+   "topic": "Dermatology Case 1: Contact Dermatitis (Investigation + Treatment)",
+   "stem": "DERMATOLOGY CASE 1: [File page 15 — App-based. Vignette not fully visible in source; case is labelled \"E. Contact dermatitis\" as the established diagnosis.] Q: Best Investigation? A. KOH | B. WOOD's lamp | C. TPHA | D. VDLR | E. ?? (incomplete in source) Q: Treatment? A. Benzathine pencillin | B. Systemic steroid | C. Topical steroid | D. Systemic antifungal | E. ?? (incomplete in source) ■■ FILE ANSWER vs STANDARD TEACHING OPTION COMPLETENESS: Options E for both Investigation and Treatment are INCOMPLETE in the source file (marked \"??\"). Best investigation for contact dermatitis = PATCH TEST, which would logically be Option E (not visible). Treatment E also not visible — likely a specific allergen avoidance option.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "KOH preparation",
+     "correct": false,
+     "explanation": "KOH (potassium hydroxide) = used to detect FUNGAL infections (tinea, candida). Dissolves keratin, leaving fungal hyphae visible. NOT for contact dermatitis. Would be correct for: tinea corporis, tinea pedis, candidiasis."
+    },
+    {
+     "label": "B",
+     "text": "WOOD's lamp",
+     "correct": false,
+     "explanation": "Wood's lamp (UV light) = screens for: fungal scalp infections (green fluorescence), vitiligo (bright white), pityriasis versicolor (yellow-gold), erythrasma (coral-red). NOT the investigation for contact dermatitis."
+    },
+    {
+     "label": "C",
+     "text": "TPHA (Treponema Pallidum Haemagglutination)",
+     "correct": false,
+     "explanation": "TPHA = confirmatory TREPONEMAL test for SYPHILIS. Completely unrelated to contact dermatitis. Would be correct if diagnosis were secondary syphilis (palms/soles non-pruritic rash)."
+    },
+    {
+     "label": "D",
+     "text": "VDLR (Venereal Disease Research Laboratory)",
+     "correct": false,
+     "explanation": "VDRL = non-treponemal screening test for SYPHILIS. Used for syphilis screening and monitoring treatment response. Completely unrelated to contact dermatitis."
+    },
+    {
+     "label": "E",
+     "text": "Patch test (incomplete in file) Treatment — Choice Analysis:",
+     "correct": true,
+     "explanation": "PATCH TEST = GOLD STANDARD for ALLERGIC CONTACT DERMATITIS. Suspected allergen panels applied to back under occlusive tape for 48h → read at 48h and 96h. Identifies specific allergen causing type IV hypersensitivity reaction. Standard panel = TRUE test (nickel, fragrance, rubber, etc.). IRRITANT contact dermatitis = does NOT require patch test (clinical diagnosis)."
+    },
+    {
+     "label": "F",
+     "text": "Benzathine pencillin",
+     "correct": false,
+     "explanation": "Benzathine penicillin G = treatment for SYPHILIS (2.4 MU IM single dose for primary/secondary). Completely inappropriate for contact dermatitis. This option is a distractor testing knowledge of STI treatment."
+    },
+    {
+     "label": "G",
+     "text": "Systemic steroid",
+     "correct": false,
+     "explanation": "Systemic steroids (prednisolone 0.5-1mg/kg) = used for SEVERE or widespread contact dermatitis that cannot be managed topically. Short course (5-7 days). NOT first-line for localised contact dermatitis."
+    },
+    {
+     "label": "H",
+     "text": "Topical steroid",
+     "correct": false,
+     "explanation": "TOPICAL CORTICOSTEROIDS = first-line treatment for localised allergic/irritant contact dermatitis. Potency depends on site: face/flexures = mild (1% hydrocortisone); body = moderate-potent (betamethasone valerate); palms/soles = potent (clobetasol propionate). Plus: ALLERGEN AVOIDANCE (most important step)."
+    },
+    {
+     "label": "I",
+     "text": "Systemic antifungal",
+     "correct": false,
+     "explanation": "Antifungals (fluconazole, terbinafine, itraconazole) = for fungal infections (tinea, candida). Not for contact dermatitis."
+    },
+    {
+     "label": "J",
+     "text": "?? (incomplete in source)",
+     "correct": false,
+     "explanation": "Option E text not visible in file. Likely relates to allergen avoidance or emollients/barrier creams."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q25",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 16",
+   "topic": "Psychology Case 5 | Delirium in Elderly",
+   "stem": "70-YEAR-OLD MALE: Admitted for CAP + dehydration. Untidy, abnormal sleep, no food 2 days, angry. DROWSY, DISORIENTED (to person only). NO prior psychiatric history. NO family psychiatric history.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Delirium | Q2: E. Treat Underlying Cause | Q3: C. Haloperidol (if",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q26",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 17",
+   "topic": "OB-GYN: PCOS Treatment + Imperforate Hymen (Repeat)",
+   "stem": "PCOS CASE: Confirmed PCOS. HIRSUTISM + weight gain 8 kg. Q1: Best treatment combination? Q2: PCOS increases risk of which cancer?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Laser + Anti-androgen + Metformin | Q2: A. Endometrial Cancer",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q27",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 18",
+   "topic": "Neurology Case 2 | Guillain-Barré Syndrome (GBS)",
+   "stem": "YOUNG ADULT FEMALE: Sudden lower limb weakness preceded by FEBRILE INFECTION 2 WEEKS AGO. Examination: FLACCID + AREFLEXIA (LMN pattern) + reduced sensation + POSTURAL HYPOTENSION (autonomic dysfunction).",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Diagnosis: A. GBS | Investigation: A. NCS/EMG (+LP) | Treatment: B. Plasma",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q28",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 19",
+   "topic": "Neurology Case 3 — Spinal Cord Injury + Bartholin Abscess",
+   "stem": "NEUROLOGY CASE 3: YOUNG MALE — lower limb weakness + SUDDEN URINE RETENTION after MISSILE TRAUMA. Examination: FLACCID (acute spinal shock phase), AREFLEXIA, SENSORY LEVEL AT T10. OB-GYN CASE: PAINFUL, FLUCTUATING VAGINAL SWELLING at 5-7 O'CLOCK POSITION. Question: diagnosis + cause? Spinal Cord Injury — Lesion Location",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Brain stem",
+     "correct": false,
+     "explanation": "Brainstem lesion: cranial nerve palsies + crossed sensory deficits + respiratory compromise. No sensory level at T10."
+    },
+    {
+     "label": "B",
+     "text": "Lower motor neuron",
+     "correct": false,
+     "explanation": "Pure LMN = peripheral nerve/anterior horn. Focal weakness, no sensory level. The sensory level at T10 indicates CORD, not peripheral nerve."
+    },
+    {
+     "label": "C",
+     "text": "Spinal myelopathy",
+     "correct": true,
+     "explanation": "SPINAL CORD INJURY AT T10 LEVEL: (1) FLACCID + AREFLEXIA = SPINAL SHOCK (acute phase, first 24-72h) (2) After spinal shock resolves → UMN signs return (spasticity, hyperreflexia, clonus, Babinski) (3) SENSORY LEVEL at T10 = umbilicus level (4) URINE RETENTION = neurogenic bladder (detrusor areflexia in spinal shock) Thoracic cord = paraplegia (legs affected, arms intact)."
+    },
+    {
+     "label": "D",
+     "text": "Peripheral nerve",
+     "correct": false,
+     "explanation": "Peripheral nerve injury: focal, no sensory level, no bladder involvement typically. Multiple nerve territories would need to be affected."
+    },
+    {
+     "label": "E",
+     "text": "Cauda equina Best Investigation",
+     "correct": false,
+     "explanation": "Cauda equina syndrome: below L2, saddle anaesthesia, flaccid bladder/bowel, LMN signs in legs. NO definite sensory level at T10 — that implies cord, not cauda equina (cauda equina = below cord end at L1-L2)."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q29",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 19",
+   "topic": "Bartholin Abscess (OB-GYN)",
+   "stem": "OB-GYN CASE: Painful, FLUCTUATING vaginal swelling at 5-7 O'CLOCK POSITION. File confirms this is a Bartholin gland case. Q1: Diagnosis? Q2: Cause?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Bartholin abscess — Bartholin CYST (not abscess)",
+     "correct": false,
+     "explanation": "BARTHOLIN GLANDS: located at 4-8 o'clock positions (bilateral) at vaginal introitus. Provide lubrication during arousal. BARTHOLIN ABSCESS: blocked duct → infection → fluctuant, TENDER swelling. Unilateral, red, warm, extremely tender. Treatment: MARSUPIALIZATION or Word catheter insertion (not simple I&D; = recurs). Bartholin CYST = non-infected, smooth, non-tender swelling from ductal obstruction. Bartholin ABSCESS = infected, fluctuant, painful, red, warm. This patient has PAINFUL FLUCTUATING = ABSCESS."
+    },
+    {
+     "label": "B",
+     "text": "Obstructed Bartholin duct",
+     "correct": false,
+     "explanation": "Ductal obstruction causes CYST (non-infected, not painful, not fluctuant). The abscess develops when the CYST becomes INFECTED. Obstruction is the predisposing factor, not the direct cause of the abscess."
+    },
+    {
+     "label": "C",
+     "text": "Congenital",
+     "correct": false,
+     "explanation": "Bartholin abscesses are not congenital. They are acquired."
+    },
+    {
+     "label": "D",
+     "text": "Bacterial infection",
+     "correct": true,
+     "explanation": "BARTHOLIN ABSCESS CAUSE = bacterial infection (POLYMICROBIAL): (1) Skin commensals: E. coli, Staphylococcus, anaerobes (2) STIs: Neisseria gonorrhoeae, Chlamydia trachomatis (especially in sexually active women) Treatment: (1) MARSUPIALIZATION = gold standard (creates permanent drainage opening) (2) Word catheter balloon = good alternative for acute abscess (3) Antibiotics (cover STIs + anaerobes) ALWAYS exclude malignancy in women >40y (Bartholin gland carcinoma rare but exists)."
+    },
+    {
+     "label": "E",
+     "text": "Viral infection",
+     "correct": false,
+     "explanation": "Viral infections do not cause classic Bartholin abscess. HSV can cause vulvar ulcers/vesicles but NOT a fluctuant Bartholin abscess."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q30_1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 20",
+   "topic": "Paediatrics | Febrile Seizure",
+   "stem": "PAEDIATRICS CASE: Infant/child with HIGH GRADE FEVER and GENERALISED TONIC-CLONIC SEIZURE. NO signs of neurological deficit. [Note: file states \"age >5yrs\" which is atypical for febrile seizures — this may be a typo; standard febrile seizure age = 6mo-5yrs.] — Q1: Most Likely Diagnosis",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Febrile seizure",
+     "correct": true,
+     "explanation": "FEBRILE SEIZURE: occurs 6mo-5yrs (classic range). SIMPLE: <15 min, generalised, single episode in 24h, no postictal deficit. COMPLEX: >15 min, focal, recurs within 24h — higher epilepsy risk. High fever + GTC + no neurological deficit = simple febrile seizure. Most benign, resolves spontaneously."
+    },
+    {
+     "label": "B",
+     "text": "Generalised epilepsy",
+     "correct": false,
+     "explanation": "Epilepsy: recurrent seizures WITHOUT fever trigger. No fever noted as causative. First febrile seizure → do NOT diagnose epilepsy."
+    },
+    {
+     "label": "C",
+     "text": "Focal seizure",
+     "correct": false,
+     "explanation": "This is a GENERALISED tonic-clonic, not focal. Focal seizures: one body part, preserved or impaired awareness."
+    },
+    {
+     "label": "D",
+     "text": "Meningitis",
+     "correct": false,
+     "explanation": "CRITICAL EXCLUSION: always exclude meningitis (fever + seizure in child). Meningitis: meningism, photophobia, petechiae, bulging fontanelle. LP if meningitis suspected. This case: no neurological deficit described."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q30_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 20",
+   "topic": "Paediatrics | Febrile Seizure",
+   "stem": "PAEDIATRICS CASE: Infant/child with HIGH GRADE FEVER and GENERALISED TONIC-CLONIC SEIZURE. NO signs of neurological deficit. [Note: file states \"age >5yrs\" which is atypical for febrile seizures — this may be a typo; standard febrile seizure age = 6mo-5yrs.] — Q2: Initial Management",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Paracetamol/Ibuprofen (antipyretics)",
+     "correct": true,
+     "explanation": "First-line: control temperature. PARACETAMOL 15mg/kg OR IBUPROFEN 10mg/kg orally. Does NOT prevent recurrence but treats discomfort."
+    },
+    {
+     "label": "B",
+     "text": "Reassure parents",
+     "correct": false,
+     "explanation": "Parent education is ESSENTIAL. Most febrile seizures are BENIGN and self-limiting. Explain: not brain damage, excellent prognosis, low risk of epilepsy (<2% in simple febrile seizure)."
+    },
+    {
+     "label": "C",
+     "text": "Ensure hydration and monitor",
+     "correct": false,
+     "explanation": "Hydration treats the febrile illness. Monitor for seizure recurrence, duration, postictal state."
+    },
+    {
+     "label": "D",
+     "text": "IV lorazepam",
+     "correct": false,
+     "explanation": "IV lorazepam = for ACTIVE PROLONGED SEIZURE (>5 min) or STATUS EPILEPTICUS. If seizure has ALREADY STOPPED by arrival → NOT indicated. itial Benzodiazepine first-line if seizure ongoing: rectal diazepam/buccal midazolam. m e d"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Source marks more than one option correct (A, B, C). Best single answer selected; review all marked options.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q30_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 20",
+   "topic": "Paediatrics | Febrile Seizure",
+   "stem": "PAEDIATRICS CASE: Infant/child with HIGH GRADE FEVER and GENERALISED TONIC-CLONIC SEIZURE. NO signs of neurological deficit. [Note: file states \"age >5yrs\" which is atypical for febrile seizures — this may be a typo; standard febrile seizure age = 6mo-5yrs.] — Q3: Risk Factor for RECURRENT Febrile Seizure",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Fever persists >24h",
+     "correct": false,
+     "explanation": "Duration of fever is not an established risk factor specifically for RECURRENT seizures."
+    },
+    {
+     "label": "B",
+     "text": "Complex febrile seizure",
+     "correct": true,
+     "explanation": "COMPLEX FEBRILE SEIZURE features = HIGHER RECURRENCE + epilepsy risk: (1) Duration >15 minutes (2) Focal onset (3) Multiple episodes in 24h Risk of epilepsy: simple FS = <2%; complex FS = up to 10%."
+    },
+    {
+     "label": "C",
+     "text": ">5 years",
+     "correct": false,
+     "explanation": "Age >5 years = actually a feature that suggests alternative diagnosis to febrile seizure. Younger age (<18 months) at first FS = higher recurrence risk."
+    },
+    {
+     "label": "D",
+     "text": "Male sex",
+     "correct": false,
+     "explanation": "Male sex is NOT a significant risk factor for febrile seizure recurrence."
+    },
+    {
+     "label": "E",
+     "text": "Family history of epilepsy",
+     "correct": false,
+     "explanation": "Positive family history of epilepsy = risk factor for progression to epilepsy after febrile seizures."
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Source marks more than one option correct (B, E). Best single answer selected; review all marked options.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q31_1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 21",
+   "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q1: Most Common Cause of his Disease",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Senile",
+     "correct": true,
+     "explanation": "SENILE (AGE-RELATED) CATARACT = most common cause of cataract globally (90%+). Caused by: protein aggregation in lens → opacity → yellowing/browning. Subtypes: NUCLEAR (most common in elderly), posterior subcapsular, cortical. Nuclear cataract: hardened nucleus → amber/brown colour → myopic shift."
+    },
+    {
+     "label": "B",
+     "text": "Idiopathic",
+     "correct": false,
+     "explanation": "In elderly, cataract is age-related (not truly idiopathic). Idiopathic applies when no cause identified in younger patients."
+    },
+    {
+     "label": "C",
+     "text": "Congenital",
+     "correct": false,
+     "explanation": "Congenital cataracts: present at birth. Rubella, Toxoplasma, galactosaemia, Down syndrome. Not the cause in an elderly patient."
+    },
+    {
+     "label": "D",
+     "text": "Secondary",
+     "correct": false,
+     "explanation": "Secondary cataracts: from DM (snowflake/subcapsular), steroids (PSC), uveitis, trauma. No such history given here."
+    },
+    {
+     "label": "E",
+     "text": "Metabolic",
+     "correct": false,
+     "explanation": "Metabolic cataracts: DM most common cause. \"Snowflake cataract\" in DM. Not the most common overall."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q31_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 21",
+   "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q2: Cause of Near Vision Improvement (Myopic Shift)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Myopic shift due to nuclear cataract",
+     "correct": true,
+     "explanation": "NUCLEAR CATARACT → increased refractive index of hardened/sclerosed nucleus → lens becomes MORE CONVERGING (stronger positive power) → MYOPIC SHIFT → previously presbyopic patient can now read WITHOUT reading glasses. Called \"SECOND SIGHT OF THE AGED\" — temporary improvement before vision worsens. Eventually: opacity increases → vision deteriorates regardless of myopic shift."
+    },
+    {
+     "label": "B",
+     "text": "Hyperopic shift during anterior/posterior subcapsular",
+     "correct": false,
+     "explanation": "Posterior subcapsular cataract: no myopic shift. Causes glare, near vision difficulty. Hyperopic shift would make near vision WORSE not better."
+    },
+    {
+     "label": "C",
+     "text": "Presbyopia",
+     "correct": false,
+     "explanation": "Presbyopia = AGE-RELATED LOSS OF ACCOMMODATION (rigid lens, not cloudy). Presbyopia makes near vision WORSE. This patient has IMPROVED near vision = opposite."
+    },
+    {
+     "label": "D",
+     "text": "Astigmatism shift due to nuclear cataract",
+     "correct": false,
+     "explanation": "Nuclear cataract causes myopic shift, not primarily astigmatic shift. Corneal astigmatism is separate."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q31_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 21",
+   "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q3: Which Treatment is Useful?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "No medical treatment",
+     "correct": true,
+     "explanation": "ATARACT HAS NO MEDICAL TREATMENT. No eye drops, no vitamins, no edications can reverse or halt cataract formation. ONLY treatment: surgical removal = HACOEMULSIFICATION + IOL implantation. The options B (carbonic anhydrase), C alpha agonist), D (beta blocker) are all GLAUCOMA medications — NOT cataract reatments."
+    },
+    {
+     "label": "B",
+     "text": "Carbonic anhydrase",
+     "correct": false,
+     "explanation": "arbonic anhydrase inhibitors (dorzolamide, brinzolamide) = reduce IOP in glaucoma. o role in cataract treatment."
+    },
+    {
+     "label": "C",
+     "text": "Alpha agonist",
+     "correct": false,
+     "explanation": "lpha agonists (brimonidine) = reduce aqueous production in glaucoma. No cataract reatment role."
+    },
+    {
+     "label": "D",
+     "text": "Beta blocker",
+     "correct": false,
+     "explanation": "eta blockers (timolol) = reduce aqueous production in glaucoma. No cataract reatment role."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q31_4",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 21",
+   "topic": "Ophthalmology | Nuclear Cataract — Elderly Patient",
+   "stem": "ELDERLY PATIENT: DECREASED NIGHT VISION but paradoxically notices IMPROVED NEAR VISION while reading his favourite book. — Q4: Investigation Required for Lens Choice (IOL Calculation)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Visual acuity",
+     "correct": false,
+     "explanation": "VA assessment is important to assess degree of visual impairment and indicate surgery, but does NOT help calculate IOL power."
+    },
+    {
+     "label": "B",
+     "text": "Biometry",
+     "correct": true,
+     "explanation": "BIOMETRY (A-scan ultrasound or IOL MASTER optical biometry): Measures: axial length + anterior chamber depth + corneal curvature (keratometry) Uses these to calculate the CORRECT IOL POWER needed to achieve target refraction IOL Master = gold standard (non-contact optical biometry, more accurate). Incorrect biometry = wrong IOL power = residual refractive error after surgery."
+    },
+    {
+     "label": "C",
+     "text": "Perimetry",
+     "correct": false,
+     "explanation": "Perimetry = visual field test. Used for glaucoma/neurological visual field assessment. Not for IOL calculation."
+    },
+    {
+     "label": "D",
+     "text": "Tonometry",
+     "correct": false,
+     "explanation": "Tonometry = IOP measurement. Used for glaucoma screening. Not for IOL power calculation."
+    },
+    {
+     "label": "E",
+     "text": "Topography",
+     "correct": false,
+     "explanation": "Corneal topography = maps corneal curvature. Useful for planning toric IOL (for astigmatism) but not the primary investigation for standard IOL calculation."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q32_1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 22",
+   "topic": "Oncology Case | Pancreatic Cancer Workup",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q1: First Investigation to Send",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Abdominal ultrasound",
+     "correct": true,
+     "explanation": "ABDOMINAL USS = appropriate FIRST-LINE imaging: (1) Non-invasive, no radiation, cheap, widely available (2) Can identify: pancreatic mass, biliary dilation (obstructive jaundice), liver metastases, ascites (3) If suspicious → CT pancreas protocol for staging (4) Liver metastasis: hypoechoic lesions After USS: CECT abdomen/pelvis (staging) + CA 19-9 + biopsy confirmation."
+    },
+    {
+     "label": "B",
+     "text": "Start chemotherapy",
+     "correct": false,
+     "explanation": "Never start chemotherapy without confirmed histological diagnosis. Chemotherapy without tissue diagnosis is inappropriate and potentially harmful."
+    },
+    {
+     "label": "C",
+     "text": "Surgical consultation",
+     "correct": false,
+     "explanation": "Surgical consultation comes AFTER imaging confirms resectability. Only 15-20% of pancreatic cancers are resectable at diagnosis. First: image, then assess resectability."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q32_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 22",
+   "topic": "Oncology Case | Pancreatic Cancer Workup",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q2: Tumour Marker for Pancreatic Cancer Follow-Up",
+   "choices": [
+    {
+     "label": "A",
+     "text": "AFP",
+     "correct": false,
+     "explanation": "AFP = hepatocellular carcinoma + testicular germ cell tumours. Not pancreatic cancer marker."
+    },
+    {
+     "label": "B",
+     "text": "CA 19-9",
+     "correct": true,
+     "explanation": "CA 19-9 (Carbohydrate Antigen 19-9) = PRIMARY TUMOUR MARKER for pancreatic adenocarcinoma. Used for: MONITORING TREATMENT RESPONSE + detecting recurrence NOT for SCREENING (poor sensitivity/specificity for early disease) IMPORTANT: CA 19-9 unreliable in Lewis antigen-negative patients (5-10% of population) Elevated also in: cholangiocarcinoma, gastric, ovarian cancer, and benign biliary disease."
+    },
+    {
+     "label": "C",
+     "text": "CA 15-3",
+     "correct": false,
+     "explanation": "CA 15-3 = breast cancer marker (monitoring treatment). Not pancreatic cancer."
+    },
+    {
+     "label": "D",
+     "text": "ADH",
+     "correct": false,
+     "explanation": "ADH = antidiuretic hormone. Not a tumour marker."
+    },
+    {
+     "label": "E",
+     "text": "CA 125",
+     "correct": false,
+     "explanation": "CA 125 = ovarian cancer. Not pancreatic."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q32_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 22",
+   "topic": "Oncology Case | Pancreatic Cancer Workup",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q3: Which Gene Mutation to Check? (Family History of Breast Cancer + Pancreatic Ca)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "VHL",
+     "correct": false,
+     "explanation": "VHL (Von Hippel-Lindau): associated with clear cell RENAL cell carcinoma, haemangioblastomas, phaeochromocytoma, pancreatic cysts. NOT primarily breast + pancreatic cancer association."
+    },
+    {
+     "label": "B",
+     "text": "BRCA2",
+     "correct": true,
+     "explanation": "BRCA2 MUTATION: (1) BREAST cancer: 45-85% lifetime risk (2) OVARIAN cancer: 10-20% lifetime risk (3) PANCREATIC cancer: 3-7% lifetime risk (5x normal population) (4) Also: prostate cancer, male breast cancer Family history of breast cancer + pancreatic cancer = strong indicator for BRCA2 testing. BRCA1 is less strongly associated with pancreatic cancer compared to BRCA2."
+    },
+    {
+     "label": "C",
+     "text": "p25",
+     "correct": false,
+     "explanation": "p53 (not p25) is a tumour suppressor. Mutation = multiple cancers. Not the specific genetic link between breast and pancreatic cancer."
+    },
+    {
+     "label": "D",
+     "text": "KRAS",
+     "correct": false,
+     "explanation": "KRAS mutations (G12D most common) = present in >90% of pancreatic cancers but are SOMATIC (acquired), not germline. Not the inherited gene tested in family cancer risk assessment."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q32_4",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 22",
+   "topic": "Oncology Case | Pancreatic Cancer Workup",
+   "stem": "ONCOLOGY CASE: MIDDLE-AGED FEMALE presents with ABDOMINAL PAIN + WEIGHT LOSS 10 KG. FAMILY HISTORY OF BREAST CANCER. Investigation confirms PANCREATIC ADENOCARCINOMA and LIVER METASTASIS. — Q4: Class of 5-Fluorouracil (5-FU)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Alkylating agent",
+     "correct": false,
+     "explanation": "Alkylating agents: cyclophosphamide, cisplatin, chlorambucil. Mechanism: cross-link DNA strands. 5-FU does NOT alkylate."
+    },
+    {
+     "label": "B",
+     "text": "Antibiotic (antitumour)",
+     "correct": false,
+     "explanation": "Antitumour antibiotics: doxorubicin (anthracycline), bleomycin, mitomycin. 5-FU is not an antibiotic."
+    },
+    {
+     "label": "C",
+     "text": "Microtubule inhibitor",
+     "correct": false,
+     "explanation": "Microtubule inhibitors: vincristine (vinca alkaloids), paclitaxel (taxanes). Mechanism: prevent spindle formation. Not 5-FU."
+    },
+    {
+     "label": "D",
+     "text": "Antimetabolite",
+     "correct": true,
+     "explanation": "5-FLUOROURACIL (5-FU) = FLUOROPYRIMIDINE ANTIMETABOLITE: Mechanism: (1) Inhibits THYMIDYLATE SYNTHASE → blocks dTMP synthesis → no DNA synthesis (S-phase specific) (2) Incorporated into RNA → disrupts RNA processing Used in: colorectal cancer (FOLFOX), pancreatic cancer (FOLFIRINOX), head/neck, breast, gastric cancers. Side effects: myelosuppression, mucositis, hand-foot syndrome (with capecitabine). DPD deficiency → 5-FU toxicity (screen before treatment)."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q33_1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 23",
+   "topic": "ENT Case 1 | Anterior Epistaxis Management",
+   "stem": "ENT CASE 1: YOUNG MALE with ANTERIOR EPISTAXIS. BLEEDING CONTROLLED BY NASAL PINCH. — Q1: Next Step After Bleeding Controlled by Nasal Pinch",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Localise bleeding point",
+     "correct": true,
+     "explanation": "Once bleeding is CONTROLLED by nasal pinch (first aid measure), next step: ANTERIOR RHINOSCOPY → identify bleeding point (usually LITTLE'S AREA = Kiesselbach's plexus on anterior nasal septum). Little's area = anastomosis of: anterior ethmoidal, sphenopalatine, superior labial, greater palatine arteries. After identifying: SILVER NITRATE CAUTERY if vessel visible. If not controllable → anterior nasal packing."
+    },
+    {
+     "label": "B",
+     "text": "Bilateral anterior packing",
+     "correct": false,
+     "explanation": "Bilateral anterior packing = for bilateral or uncontrolled anterior epistaxis. Not the FIRST step after successful nasal pinch. Try to identify and cauterise first."
+    },
+    {
+     "label": "C",
+     "text": "Posterior packing",
+     "correct": false,
+     "explanation": "Posterior packing = for POSTERIOR EPISTAXIS (blood seen in posterior pharynx, elderly, hypertensive, no visible anterior bleeding point). This is ANTERIOR epistaxis controlled by pinch."
+    },
+    {
+     "label": "D",
+     "text": "Cautery",
+     "correct": false,
+     "explanation": "Cautery is appropriate but requires FIRST identifying the bleeding point. Cannot cauterise without knowing WHERE to cauterise."
+    },
+    {
+     "label": "E",
+     "text": "Ligation",
+     "correct": false,
+     "explanation": "Ligation = last resort for recurrent/severe uncontrolled epistaxis. Not appropriate as first step after simple nasal pinch control."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q33_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 23",
+   "topic": "ENT Case 1 | Anterior Epistaxis Management",
+   "stem": "ENT CASE 1: YOUNG MALE with ANTERIOR EPISTAXIS. BLEEDING CONTROLLED BY NASAL PINCH. — Q2: Which Artery is Usually Ligated?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Sphenopalatine artery",
+     "correct": true,
+     "explanation": "SPHENOPALATINE ARTERY (SPA) = terminal branch of maxillary artery. Enters nasal cavity through sphenopalatine foramen. Supplies POSTERIOR nasal cavity + lateral nasal wall. SPA LIGATION (endoscopic) = gold standard for recurrent/severe epistaxis that does not respond to packing. Most commonly ligated artery. Success rate: 80-90%."
+    },
+    {
+     "label": "B",
+     "text": "Superior labial artery",
+     "correct": false,
+     "explanation": "Superior labial artery contributes to anterior septum (Kiesselbach's plexus). Rarely ligated for epistaxis (anterior epistaxis controlled more easily by cautery/packing)."
+    },
+    {
+     "label": "C",
+     "text": "Anterior ethmoidal artery",
+     "correct": false,
+     "explanation": "Anterior ethmoidal artery: supplies roof of nasal cavity + upper septum. External ligation via orbital approach occasionally used for high anterior epistaxis not responsive to SPA ligation. Less commonly ligated than SPA."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q33_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 23",
+   "topic": "ENT Case 1 | Anterior Epistaxis Management",
+   "stem": "ENT CASE 1: YOUNG MALE with ANTERIOR EPISTAXIS. BLEEDING CONTROLLED BY NASAL PINCH. — Q3: After Ligation, Bleeding Recurs — Next Step?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Posterior packing",
+     "correct": false,
+     "explanation": "osterior packing was presumably already tried before ligation. After failed ligation, epeat packing is unlikely to control the bleeding. Embolisation is the next step."
+    },
+    {
+     "label": "B",
+     "text": "Embolisation",
+     "correct": true,
+     "explanation": "NTERVENTIONAL RADIOLOGY EMBOLISATION: (1) Performed after FAILED"
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q34_1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 24",
+   "topic": "ENT Case 2 | Laryngeal Carcinoma",
+   "stem": "ENT CASE 2: ELDERLY MALE with PERSISTENT COUGH + HOARSENESS + STRIDOR. — Q1: Investigation for Diagnosis",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Direct laryngoscopy with biopsy",
+     "correct": true,
+     "explanation": "DIRECT LARYNGOSCOPY (under GA) + BIOPSY = gold standard for laryngeal pathology. Allows: direct visualisation of larynx + representative biopsy for histology. Histology: squamous cell carcinoma (>95% of laryngeal cancers). Also: assess subglottic extension, cord mobility, arytenoid fixation. Supports staging and surgical planning."
+    },
+    {
+     "label": "B",
+     "text": "CXR to exclude pulmonary cause",
+     "correct": false,
+     "explanation": "CXR may be done to exclude synchronous lung malignancy but is NOT diagnostic for laryngeal cancer. Persistent hoarseness in elderly male → must visualise larynx."
+    },
+    {
+     "label": "C",
+     "text": "Resolves with rest",
+     "correct": false,
+     "explanation": "NEVER assume persistent hoarseness (>3 weeks in adult) will self-resolve. REFER URGENTLY for laryngoscopy. Hoarseness >3 weeks in adult = red flag = 2-week wait urgent referral in UK (NICE 2015)."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q34_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 24",
+   "topic": "ENT Case 2 | Laryngeal Carcinoma",
+   "stem": "ENT CASE 2: ELDERLY MALE with PERSISTENT COUGH + HOARSENESS + STRIDOR. — Q2: Voice-Preserving Treatment for Glottic T1N0M0",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Chemoradiotherapy",
+     "correct": false,
+     "explanation": "Chemoradiotherapy = for advanced laryngeal CA (T3/T4 or N+) where organ preservation is attempted instead of total laryngectomy. Not needed for T1N0M0 (early disease — RT alone is curative)."
+    },
+    {
+     "label": "B",
+     "text": "Partial laryngectomy",
+     "correct": false,
+     "explanation": "Partial laryngectomy (supraglottic, hemilaryngectomy) = surgical voice-preserving option but has morbidity (swallowing difficulties). RT preferred for T1N0M0 as it preserves voice quality better."
+    },
+    {
+     "label": "C",
+     "text": "Total laryngectomy",
+     "correct": false,
+     "explanation": "Total laryngectomy = for T4 disease or RT failure. Destroys voice permanently (requires tracheo-oesophageal puncture for voice prosthesis or electronic larynx). NOT appropriate for early T1N0M0."
+    },
+    {
+     "label": "D",
+     "text": "External beam radiation",
+     "correct": true,
+     "explanation": "RADICAL RADIOTHERAPY for GLOTTIC T1N0M0: (1) CURE RATE: 85-95% for T1 glottic cancer (2) VOICE PRESERVATION: excellent (voice quality often better than surgery) (3) Daily fractions over 3-6 weeks (4) Side effects: mucositis, xerostomia, skin reaction GOLD STANDARD for T1N0M0 glottic laryngeal cancer in most guidelines."
+    },
+    {
+     "label": "E",
+     "text": "Neck dissection + chemotherapy",
+     "correct": false,
+     "explanation": "N+ disease (lymph node metastasis) would require neck dissection. This patient is N0. Chemotherapy added for advanced disease. Neither indicated for T1N0M0."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q34_3",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 24",
+   "topic": "ENT Case 2 | Laryngeal Carcinoma",
+   "stem": "ENT CASE 2: ELDERLY MALE with PERSISTENT COUGH + HOARSENESS + STRIDOR. — Q3: Most Recognised Risk Factor for Laryngeal Cancer",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Alcohol + tobacco",
+     "correct": true,
+     "explanation": "YNERGISTIC EFFECT: tobacco + alcohol together = much greater risk than either lone. TOBACCO = strongest single risk factor (95% of laryngeal Ca patients are/were mokers). ALCOHOL alone: independent risk factor (especially for supraglottic > lottic). COMBINED = multiplicative risk increase. Also: HPV (especially supraglottic), ERD (chronic), radiation exposure."
+    },
+    {
+     "label": "B",
+     "text": "Being a lawyer",
+     "correct": false,
+     "explanation": "awyer = voice overuse → benign vocal cord pathology (nodules, polyps). NOT a ecognised risk factor for laryngeal CARCINOMA."
+    },
+    {
+     "label": "C",
+     "text": "Chronic GERD",
+     "correct": false,
+     "explanation": "ERD is a recognised risk factor for LARYNGOPHARYNGEAL REFLUX → posterior aryngitis → but is a MUCH WEAKER risk factor than tobacco + alcohol."
+    },
+    {
+     "label": "D",
+     "text": "Allergen exposure",
+     "correct": false,
+     "explanation": "llergen exposure → laryngitis, allergic rhinitis. Not a carcinogenic risk factor."
+    },
+    {
+     "label": "E",
+     "text": "Inhaled corticosteroids",
+     "correct": false,
+     "explanation": "nhaled corticosteroids → candidal laryngitis, dysphonia from steroid deposition. Not a isk factor for laryngeal carcinoma."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q35",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 25",
+   "topic": "Pemphigus Vulgaris (Repeat Case)",
+   "stem": "27-YEAR-OLD FEMALE: Generalised blisters STARTING FROM LIPS then distributing to neck, chest, back. Examination: CRUSTATION present. ■ CROSS-REFERENCE: This case mirrors Dermatology Case 4 from Page 15 (pemphigus vulgaris). See full discussion under Page 15. Brief answer below for completeness.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "1. Pemphigus Vulgaris | Histology: 1. Acantholysis",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q36",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 25",
+   "topic": "DVT in Pregnancy (Physiological Cause)",
+   "stem": "PREGNANT PATIENT: PITTING OEDEMA + WARM extremity. Confirmed DVT. Q: What is the physiological cause?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "1. Hypercoagulation (↑ Clotting Factors) + Decreased Protein C (Virchow's",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q37",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 25",
+   "topic": "Haematology MCQ: Low Platelets — Least Likely Diagnosis",
+   "stem": "MCQ: Low platelet level. Which of the following is the LEAST LIKELY diagnosis? A. ITP | B. TTP | C. VWD | D. Haemophilia A | E. Antiphospholipid syndrome",
+   "choices": [
+    {
+     "label": "A",
+     "text": "ITP",
+     "correct": false,
+     "explanation": "Immune Thrombocytopenic Purpura = autoimmune destruction of platelets by anti-platelet antibodies (anti-GPIIb/IIIa). Classic cause of isolated thrombocytopenia."
+    },
+    {
+     "label": "B",
+     "text": "TTP",
+     "correct": false,
+     "explanation": "Thrombotic Thrombocytopenic Purpura = ADAMTS13 deficiency → microthrombi → platelet consumption → thrombocytopenia. Pentad: MAHA + thrombocytopenia + neurological + renal + fever."
+    },
+    {
+     "label": "C",
+     "text": "VWD",
+     "correct": false,
+     "explanation": "Von Willebrand Disease Type 2B = enhanced binding of abnormal vWF to platelets → platelet clearance → THROMBOCYTOPENIA (can occur). Most VWD types: normal platelet count; Type 2B = exception."
+    },
+    {
+     "label": "D",
+     "text": "Haemophilia A",
+     "correct": true,
+     "explanation": "HAEMOPHILIA A = Factor VIII deficiency. PLATELET COUNT = NORMAL in haemophilia. Haemophilia = COAGULATION CASCADE disorder (intrinsic pathway). aPTT prolonged, PT normal, platelets normal. Bleeding: deep haemarthroses, muscle bleeds (not petechiae). KEY: Haemophilia ≠ thrombocytopenia."
+    },
+    {
+     "label": "E",
+     "text": "Antiphospholipid syndrome",
+     "correct": false,
+     "explanation": "APS = antiphospholipid antibodies → THROMBOSIS + obstetric morbidity + THROMBOCYTOPENIA (antibodies also bind platelet phospholipids → destruction)."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q38",
+   "type": "emq",
+   "reference": "Batch 37 — Page 26",
+   "topic": "Psychiatric Disorders in Children",
+   "optionsTitle": "Psychiatric Disorders in Children",
+   "stem": "Difficult to manage at home AND school. Runs around classroom, cannot stay seated, frequent accidents + cuts/bruises. Cannot focus, easily distracted. Cannot wait his turn, intrudes during conversations.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Asperger's syndrome",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Autism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Conduct disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Generalised anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Hyperkinetic disorder (ADHD)",
+     "correct": true,
+     "explanation": "ADHD DIAGNOSIS (DSM-5): (1) INATTENTION (≥6/9 symptoms): cannot focus, easily distracted, accident-prone (2) HYPERACTIVITY/IMPULSIVITY (≥6/9): runs around, cannot sit still, intrudes, cannot wait turn (3) In MULTIPLE SETTINGS (home AND school) — required for diagnosis (4) BOYS > girls (3:1). Age: <12y for symptom onset. Treatment: Methylphenidate (first-line), behavioural therapy."
+    },
+    {
+     "label": "F",
+     "text": "Manic episode",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OCD",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Oppositional defiant disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Separation anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "J",
+     "text": "Tourette's syndrome",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q39",
+   "type": "emq",
+   "reference": "Batch 37 — Page 26",
+   "topic": "Psychiatric Disorders in Children",
+   "optionsTitle": "Psychiatric Disorders in Children",
+   "stem": "Limited vocabulary. No interest in other children. Plays alone. Little eye contact. Does not initiate conversation. Strict BEDTIME RITUAL, angry if disrupted. Tantrums if BEDROOM LAYOUT altered.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Asperger's syndrome",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Autism",
+     "correct": true,
+     "explanation": "ASD FEATURES: (1) SOCIAL COMMUNICATION DEFICIT: little eye contact, no peer interaction, no conversation initiation (2) RESTRICTED/REPETITIVE BEHAVIOURS: strict routine (bedtime ritual), insistence on sameness (bedroom layout) (3) Onset: before age 3 Note: If Hayder has GOOD language + near-normal social interaction → Asperger's syndrome. But limited vocabulary → ASD."
+    },
+    {
+     "label": "C",
+     "text": "Conduct disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Generalised anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Hyperkinetic disorder (ADHD)",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Manic episode",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OCD",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Oppositional defiant disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Separation anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "J",
+     "text": "Tourette's syndrome",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q40",
+   "type": "emq",
+   "reference": "Batch 37 — Page 26",
+   "topic": "Psychiatric Disorders in Children",
+   "optionsTitle": "Psychiatric Disorders in Children",
+   "stem": "Stomach aches during school days. REFUSES SCHOOL. Cries if mother tries to leave. CANNOT SLEEP without mother. WORRIED MOTHER WILL DIE. Symptoms started when PARENTS DIVORCED 6 months ago.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Asperger's syndrome",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Autism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Conduct disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Generalised anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Hyperkinetic disorder (ADHD)",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Manic episode",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OCD",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Oppositional defiant disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Separation anxiety disorder",
+     "correct": true,
+     "explanation": "SEPARATION ANXIETY DISORDER: (1) EXCESSIVE FEAR of separation from attachment figure (2) Somatic complaints (stomach aches) = somatised anxiety during school (3) School refusal + sleep difficulty without attachment figure (4) Separation anxiety TRIGGERED by parental divorce (stressor) (5) Persistent worry about harm coming to attachment figure (mother dying) Normal up to age 3 — pathological after age 6."
+    },
+    {
+     "label": "J",
+     "text": "Tourette's syndrome",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q41",
+   "type": "emq",
+   "reference": "Batch 37 — Page 26",
+   "topic": "Psychiatric Disorders in Children",
+   "optionsTitle": "Psychiatric Disorders in Children",
+   "stem": "3 hours each evening CHECKING locks, taps, light switches. REARRANGES FURNITURE. Must perform strict WASHING RITUAL. FEARS parents will come to harm if rituals not performed.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Asperger's syndrome",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Autism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Conduct disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Generalised anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Hyperkinetic disorder (ADHD)",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Manic episode",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OCD",
+     "correct": true,
+     "explanation": "OCD FEATURES: (1) OBSESSIONS: intrusive fear that parents will be harmed (harm obsession) (2) COMPULSIONS: checking rituals (locks/taps/lights) + washing + rearranging (3) Time-consuming (>1 hour/day = diagnostic threshold) (4) Ego-dystonic (knows it's excessive but can't stop) Treatment: SSRI (fluvoxamine/sertraline) + CBT with ERP."
+    },
+    {
+     "label": "H",
+     "text": "Oppositional defiant disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Separation anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "J",
+     "text": "Tourette's syndrome",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q42",
+   "type": "emq",
+   "reference": "Batch 37 — Page 26",
+   "topic": "Psychiatric Disorders in Children",
+   "optionsTitle": "Psychiatric Disorders in Children",
+   "stem": "FREQUENTLY RUDE + ARGUMENTATIVE toward teachers. EASILY ANNOYED. DISRUPTIVE, DISOBEYS classroom rules. NOT aggressive toward children. Has a few friends. NO PROBLEMS AT HOME.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Asperger's syndrome",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Autism",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Conduct disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Generalised anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Hyperkinetic disorder (ADHD)",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Manic episode",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OCD",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Oppositional defiant disorder",
+     "correct": true,
+     "explanation": "ODD FEATURES: (1) Angry/irritable mood: easily annoyed (2) Argumentative/defiant: toward AUTHORITY (teachers), disobeys rules (3) NOT conduct disorder (no aggression, destruction, or theft) (4) Has friends (social not impaired) (5) School-specific (not home) — note: ODD usually pervasive (this may suggest he has a specific school issue) KEY DIFFERENTIATOR from Conduct disorder: ODD = no aggression/violation of rights."
+    },
+    {
+     "label": "I",
+     "text": "Separation anxiety disorder",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "J",
+     "text": "Tourette's syndrome",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q43",
+   "type": "emq",
+   "reference": "Batch 37 — Page 27",
+   "topic": "Preconception Counselling for Maternal Medical Conditions",
+   "optionsTitle": "Preconception Counselling for Maternal Medical Conditions",
+   "stem": "29-year-old female with EPILEPSY on SODIUM VALPROATE for 3 years. Seizure-free for 2 years. Attending for preconception counselling. Concerned about medication effects on future pregnancy. Currently taking folic acid supplementation.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Beta blockers + diuretics for symptom control",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Folic acid 400 micrograms daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Postpone pregnancy to prevent further renal decline",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Switch to lamotrigine monotherapy",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Continue sodium valproate same dose",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Parental checking + 5mg folic acid daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Can proceed — risks are low",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Avoid pregnancy due to high maternal mortality",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Regular renal function monitoring + ACE inhibitors for BP control",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q44",
+   "type": "emq",
+   "reference": "Batch 37 — Page 27",
+   "topic": "Preconception Counselling for Maternal Medical Conditions",
+   "optionsTitle": "Preconception Counselling for Maternal Medical Conditions",
+   "stem": "30-year-old female with SICKLE CELL ANAEMIA. Recurrent pain crises. Multiple blood transfusions. Haemoglobin 8 g/dL. Concerned about effects of disease on future pregnancy.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Beta blockers + diuretics for symptom control",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Folic acid 400 micrograms daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Postpone pregnancy to prevent further renal decline",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Switch to lamotrigine monotherapy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Continue sodium valproate same dose",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Parental checking + 5mg folic acid daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Can proceed — risks are low",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Avoid pregnancy due to high maternal mortality",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Regular renal function monitoring + ACE inhibitors for BP control",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q45",
+   "type": "emq",
+   "reference": "Batch 37 — Page 27",
+   "topic": "Preconception Counselling for Maternal Medical Conditions",
+   "optionsTitle": "Preconception Counselling for Maternal Medical Conditions",
+   "stem": "32-year-old female with SEVERE PULMONARY HYPERTENSION (PAH). Asymptomatic at rest but has PAH. Concerned about pregnancy risks.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Beta blockers + diuretics for symptom control",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Folic acid 400 micrograms daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Postpone pregnancy to prevent further renal decline",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Switch to lamotrigine monotherapy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Continue sodium valproate same dose",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Parental checking + 5mg folic acid daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Can proceed — risks are low",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Avoid pregnancy due to high maternal mortality",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Regular renal function monitoring + ACE inhibitors for BP control",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q46",
+   "type": "emq",
+   "reference": "Batch 37 — Page 27",
+   "topic": "Preconception Counselling for Maternal Medical Conditions",
+   "optionsTitle": "Preconception Counselling for Maternal Medical Conditions",
+   "stem": "28-year-old female with CHRONIC KIDNEY DISEASE (CKD). Blood pressure 150/90 mmHg. Baseline creatinine 2.2 mg/dL. Has not yet attempted pregnancy but concerned about the risk.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Beta blockers + diuretics for symptom control",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Folic acid 400 micrograms daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Postpone pregnancy to prevent further renal decline",
+     "correct": true,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Switch to lamotrigine monotherapy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Continue sodium valproate same dose",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Parental checking + 5mg folic acid daily",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Can proceed — risks are low",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Avoid pregnancy due to high maternal mortality",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "Regular renal function monitoring + ACE inhibitors for BP control",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q47",
+   "type": "emq",
+   "reference": "Batch 37 — Page 28",
+   "topic": "Ear Discharge",
+   "optionsTitle": "Ear Discharge",
+   "stem": "Child with BLOODY DISCHARGE from ear + NASAL OBSTRUCTION after period of RESTLESSNESS and FEVER overnight.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Basal skull fracture",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Infected tympanostomy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Perforated tympanic membrane",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ASOM",
+     "correct": true,
+     "explanation": "AOM (ASOM): fever + earache + BLOODY/PURULENT DISCHARGE (when TM perforates). Preceded by restlessness and fever = prodromal otitis media. Nasal obstruction: concurrent URTI (congestion) → Eustachian tube dysfunction. Treatment: amoxicillin (if >2 years or severe); watchful waiting (mild, >2yrs)."
+    },
+    {
+     "label": "E",
+     "text": "Cholesteatoma",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemotympanum",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OME",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Otitis Externa",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q48",
+   "type": "emq",
+   "reference": "Batch 37 — Page 28",
+   "topic": "Ear Discharge",
+   "optionsTitle": "Ear Discharge",
+   "stem": "FARMER with BAD SMELLING (OFFENSIVE) ear discharge + VERTIGO on sneezing or coughing.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Basal skull fracture",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Infected tympanostomy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Perforated tympanic membrane",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ASOM",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Cholesteatoma",
+     "correct": true,
+     "explanation": "CHOLESTEATOMA = keratinising stratified squamous epithelium in middle ear. Features: OFFENSIVE discharge + CONDUCTIVE HEARING LOSS. VERTIGO on sneezing/coughing = FISTULA SIGN (cholesteatoma eroding lateral semicircular canal → perilymph fistula → pneumatic pressure → vertigo). UNSAFE CSOM: offensive + superior/posterior perforation + cholesteatoma. Treatment: MASTOIDECTOMY (surgical excision). Never conservative."
+    },
+    {
+     "label": "F",
+     "text": "Haemotympanum",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OME",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Otitis Externa",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q49",
+   "type": "emq",
+   "reference": "Batch 37 — Page 28",
+   "topic": "Ear Discharge",
+   "optionsTitle": "Ear Discharge",
+   "stem": "Patient had SURGERY FOR OME. 17 days post-surgery, develops YELLOW DISCHARGE from ear.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Basal skull fracture",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Infected tympanostomy",
+     "correct": true,
+     "explanation": "GROMMET INSERTION (tympanostomy tube) = treatment for OME. YELLOW DISCHARGE 17 days post-op = OTORRHOEA THROUGH GROMMET = infected tube. Caused by: water entry, Pseudomonas, Staph aureus. Treatment: topical antibiotic ear drops (ciprofloxacin drops). Grommets fall out spontaneously in 6-12 months."
+    },
+    {
+     "label": "C",
+     "text": "Perforated tympanic membrane",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ASOM",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Cholesteatoma",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemotympanum",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OME",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Otitis Externa",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q50",
+   "type": "emq",
+   "reference": "Batch 37 — Page 28",
+   "topic": "Ear Discharge",
+   "optionsTitle": "Ear Discharge",
+   "stem": "Patient with SEROPURULENT DISCHARGE from ear. NORMAL TYMPANIC MEMBRANE, NO PERFORATION.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Basal skull fracture",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Infected tympanostomy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Perforated tympanic membrane",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ASOM",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Cholesteatoma",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemotympanum",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OME",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Otitis Externa",
+     "correct": true,
+     "explanation": "OTITIS EXTERNA = infection of EXTERNAL EAR CANAL. KEY: NORMAL TM (no middle ear involvement). Discharge from external canal (not through TM perforation). Organisms: Pseudomonas aeruginosa, Staph aureus. Treatment: topical antibiotic drops (ciprofloxacin) + steroid. MALIGNANT OE: DM + Pseudomonas + granulation tissue → IV cipro 6-8 weeks."
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q51",
+   "type": "emq",
+   "reference": "Batch 37 — Page 28",
+   "topic": "Ear Discharge",
+   "optionsTitle": "Ear Discharge",
+   "stem": "YOUNG PATIENT had RTA. After 4 DAYS regains consciousness. WATERY DISCHARGE from BOTH EARS.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Basal skull fracture",
+     "correct": true,
+     "explanation": "CSF OTORRHOEA: watery discharge from ears after HEAD TRAUMA = BASAL SKULL FRACTURE (anterior/middle cranial fossa fracture). BILATERAL = more likely CSF than purulent infection. Confirm with: BETA-2 TRANSFERRIN TEST (gold standard, NOT glucose test). Also: Halo sign (ring sign on filter paper), \"target sign\". Management: most resolve spontaneously; antibiotics controversial; surgical repair if persists >7-10 days."
+    },
+    {
+     "label": "B",
+     "text": "Infected tympanostomy",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Perforated tympanic membrane",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ASOM",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Cholesteatoma",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemotympanum",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "OME",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Otitis Externa",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q52",
+   "type": "emq",
+   "reference": "Batch 37 — Page 28",
+   "topic": "Ear Discharge",
+   "optionsTitle": "Ear Discharge",
+   "stem": "42-year-old lady, para 3. On COMBINED ORAL CONTRACEPTIVE PILL for many years. Recently become FORGETFUL. Requests ALTERNATE NON-HORMONAL LONG-TERM method.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Copper IUD (Non-Hormonal, Long-Acting, Reversible Contraception)",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q53",
+   "type": "emq",
+   "reference": "Batch 37 — Page 28",
+   "topic": "Ear Discharge",
+   "optionsTitle": "Ear Discharge",
+   "stem": "26-year-old lady gave birth 1 MONTH AGO. BREASTFEEDING. Was on COMBINED PILL before. Has NEEDLE PHOBIA. Requests SHORT-TERM contraceptive.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Progesterone-Only Pill (Mini-Pill) — Safe in Breastfeeding, Oral, No Needles",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q54",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 29",
+   "topic": "Developmental Milestones + GCA (Neurology EMQ)",
+   "stem": "MILESTONES THEME: Options: A-3 years | B-4 years | C-5 years | D-2 years | E-18 months Scenario 1: Child can COPY A CIRCLE + USE 3-WORD SENTENCES + PLAY WITH OTHER CHILDREN. Scenario 2: Child can COUNT 1-10 + DRESS INDEPENDENTLY + KNOW TIME (morning/evening).",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Scenario 1: A. 3 Years | Scenario 2: B. 4 Years",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": null,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q55",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 29",
+   "topic": "EMQ: Giant Cell Arteritis (GCA) — Q91",
+   "stem": "Q91 — Mrs W, 70 years old. 2 WEEKS OF HEADACHE. SCALP TENDERNESS. TEMPORAL ARTERIES TENDER AND NON-PULSATILE.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Giant Cell Arteritis (GCA) / Temporal Arteritis — TREAT WITH STEROIDS",
+     "correct": true,
+     "explanation": null
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q56",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 31",
+   "topic": "Ophthalmology EMQ | Refractive Errors Theme",
+   "stem": "OPHTHALMOLOGY THEME: Options: A-Myopia | B-Hypermetropia | C-Astigmatism | D-Presbyopia | E-? Scenario 1: Refraction shows image in FRONT OF RETINA. Scenario 2: Needs glasses with DIFFERENT REFRACTION POWER IN DIFFERENT AXES. Scenario 3: Needs CONVEX LENSES in treatment. Scenario 4: 43-year-old with difficulty reading books.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "1: A-Myopia | 2: C-Astigmatism | 3: B-Hypermetropia | 4: D-Presbyopia",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": null,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q57_1",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 32",
+   "topic": "Haematology — Thrombocytopenia + Internal Medicine EMQ",
+   "stem": "HAEMATOLOGY CASE: 46-year-old female prepared for CHOLECYSTECTOMY. Pre-op blood: Hb=12, PLATELETS=49 (low), WBC=? (possibly reduced). — Q1: Condition to Exclude First",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Pregnancy",
+     "correct": false,
+     "explanation": "Always exclude pregnancy in women of reproductive age — valid. But at 46yo, less likely, and pseudothrombocytopenia is the FIRST exclusion in any incidental isolated thrombocytopenia."
+    },
+    {
+     "label": "B",
+     "text": "Malignancy",
+     "correct": false,
+     "explanation": "Malignancy (bone marrow infiltration) = cause of pancytopenia. Important to exclude, but pseudothrombocytopenia is excluded first (simple, non-invasive, immediate)."
+    },
+    {
+     "label": "C",
+     "text": "Pseudothrombocytopenia",
+     "correct": true,
+     "explanation": "PSEUDOTHROMBOCYTOPENIA = EDTA-induced platelet clumping in the test tube → analyser counts clumps as ONE platelet → falsely low count. FIRST STEP: repeat CBC in a CITRATE tube (or peripheral blood smear). Clumped platelets on smear = pseudothrombocytopenia confirmed. NO TREATMENT NEEDED. Avoid unnecessary bone marrow biopsy, platelet transfusion, or delay of surgery."
+    },
+    {
+     "label": "D",
+     "text": "Possible HIV",
+     "correct": false,
+     "explanation": "HIV can cause thrombocytopenia (ITP-like mechanism). Worth investigating but NOT the first exclusion. Pseudothrombocytopenia is easier and more immediately actionable to rule out first."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q57_2",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 32",
+   "topic": "Haematology — Thrombocytopenia + Internal Medicine EMQ",
+   "stem": "HAEMATOLOGY CASE: 46-year-old female prepared for CHOLECYSTECTOMY. Pre-op blood: Hb=12, PLATELETS=49 (low), WBC=? (possibly reduced). — Q2: Bone Marrow Shows No Abnormal Cells — Least Likely Diagnosis",
+   "choices": [
+    {
+     "label": "A",
+     "text": "TTP",
+     "correct": false,
+     "explanation": "TTP: peripheral platelet CONSUMPTION (microthrombi). BM = reactive megakaryocytes (increased production). NO abnormal cells. Consistent with normal bone marrow."
+    },
+    {
+     "label": "B",
+     "text": "ITP",
+     "correct": false,
+     "explanation": "ITP: peripheral platelet DESTRUCTION (autoantibodies). BM = increased megakaryocytes (reactive). NO abnormal cells. Consistent with normal BM."
+    },
+    {
+     "label": "C",
+     "text": "vWD",
+     "correct": true,
+     "explanation": "VON WILLEBRAND DISEASE: (1) PRIMARY PLATELET COUNT = NORMAL (except Type 2B where platelets may be reduced) (2) vWD is a QUALITATIVE platelet/vWF disorder, not quantitative (3) Does NOT explain THROMBOCYTOPENIA If bone marrow is normal AND platelets are low → vWD is the LEAST LIKELY explanation for the thrombocytopenia. vWD features: prolonged bleeding time, normal PT, normal/prolonged aPTT, mucocutaneous bleeding."
+    }
+   ],
+   "keyPoint": "",
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "optionsTitle": null,
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q58",
+   "type": "mcq",
+   "reference": "Batch 37 — Page 32",
+   "topic": "Internal Medicine EMQ: Hypercalcaemia/SIADH/SCC Theme",
+   "stem": "3-Calcitonin 1. Patient with CONSTIPATION 2. Patient with SODIUM 128 mmol/L (hyponatraemia) 3. Patient with METASTATIC CANCER + BACK PAIN + URINARY RETENTION",
+   "choices": [
+    {
+     "label": "A",
+     "text": "1→Calcitonin (hypercalcaemia) | 2→Demeclocycline (SIADH) |",
+     "correct": true,
+     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+    }
+   ],
+   "keyPoint": "",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "source": "Batch 37 guide"
+   },
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q59",
+   "type": "emq",
+   "reference": "Batch 37 — Page 33",
+   "topic": "HAEMATOLOGY TREATMENT EMQ",
+   "optionsTitle": "HAEMATOLOGY TREATMENT EMQ",
+   "stem": "Increased haematocrit + JAK2 mutation (Polycythaemia Vera)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Prednisolone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Vein suction+Aspirin",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Vein suction+Aspirin+Hydroxyurea",
+     "correct": true,
+     "explanation": "POLYCYTHAEMIA VERA (PV): JAK2 V617F mutation = diagnostic. Increased haematocrit (↑ RBC mass). TREATMENT GOALS: (1) Reduce thrombotic risk (2) Control haematocrit (1) VENESECTION (phlebotomy): first-line. Target Hct <45% (2) ASPIRIN 75mg: reduces thrombotic risk (PV = hypercoagulable) (3) HYDROXYUREA: cytoreductive agent for HIGH-RISK patients (age >60, prior thrombosis). Reduces thrombotic events. HIGH-RISK PV = venesection + aspirin + HYDROXYUREA"
+    },
+    {
+     "label": "E",
+     "text": "Frequent blood transfusion",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Flagyl+Ceftriaxone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Vancomycin+Meropenem",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "CT+ischaemia screen",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "ICU+fluid+rasburicase 1. Increased haematocrit + JAK2 mutation 2. 6yo child with frequent painful hand crises 3. 24h after Burkitt lymphoma chemo → drowsy + altered consciousness 4. CLL, 3 days after chemo → dyspnoea + productive cough + fever 5. Patient started ATRA treatment + developed a complication",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q60",
+   "type": "emq",
+   "reference": "Batch 37 — Page 33",
+   "topic": "HAEMATOLOGY TREATMENT EMQ",
+   "optionsTitle": "HAEMATOLOGY TREATMENT EMQ",
+   "stem": "6yo child with frequent painful hand crises (Sickle Cell Disease)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Hydroxyurea",
+     "correct": true,
+     "explanation": "SICKLE CELL DISEASE — PAINFUL CRISES: Mechanism: HbS polymerisation → sickling → vaso-occlusion → ischaemic pain. HYDROXYUREA = #1 disease-modifying treatment for SCD: (1) Increases HbF (fetal haemoglobin) production → inhibits HbS polymerisation (2) Reduces frequency of pain crises by 50% (3) Reduces ACS, stroke, hospitalisations (4) Approved in children ≥9 months (BABY HUG trial) Also: High-dose folic acid, penicillin prophylaxis, vaccinations."
+    },
+    {
+     "label": "B",
+     "text": "Prednisolone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Vein suction+Aspirin",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Vein suction+Aspirin+Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Frequent blood transfusion",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Flagyl+Ceftriaxone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Vancomycin+Meropenem",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "CT+ischaemia screen",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "ICU+fluid+rasburicase 1. Increased haematocrit + JAK2 mutation 2. 6yo child with frequent painful hand crises 3. 24h after Burkitt lymphoma chemo → drowsy + altered consciousness 4. CLL, 3 days after chemo → dyspnoea + productive cough + fever 5. Patient started ATRA treatment + developed a complication",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q61",
+   "type": "emq",
+   "reference": "Batch 37 — Page 33",
+   "topic": "HAEMATOLOGY TREATMENT EMQ",
+   "optionsTitle": "HAEMATOLOGY TREATMENT EMQ",
+   "stem": "24h after Burkitt lymphoma chemo → drowsy + altered consciousness (TLS)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Prednisolone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Vein suction+Aspirin",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Vein suction+Aspirin+Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Frequent blood transfusion",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Flagyl+Ceftriaxone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Vancomycin+Meropenem",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "CT+ischaemia screen",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "ICU+fluid+rasburicase 1. Increased haematocrit + JAK2 mutation 2. 6yo child with frequent painful hand crises 3. 24h after Burkitt lymphoma chemo → drowsy + altered consciousness 4. CLL, 3 days after chemo → dyspnoea + productive cough + fever 5. Patient started ATRA treatment + developed a complication",
+     "correct": true,
+     "explanation": "TUMOUR LYSIS SYNDROME (TLS): Occurs: 12-72h after chemotherapy for HIGHLY PROLIFERATIVE tumours (Burkitt lymphoma, ALL, high-grade NHL). Metabolic derangements: ↑ uric acid, ↑ K+, ↑ phosphate, ↓ Ca²+ → renal failure, arrhythmia, seizures, death. TREATMENT: (1) ICU monitoring (2) AGGRESSIVE IV FLUIDS (3L/m²/day) → force excretion (3) RASBURICASE (recombinant urate oxidase) → rapidly lowers uric acid (4) Treat hyperkalaemia (calcium gluconate, salbutamol, insulin+glucose) (5) Haemodialysis if renal failure Prevention: allopurinol + IV fluids BEFORE high-risk chemotherapy."
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q62",
+   "type": "emq",
+   "reference": "Batch 37 — Page 33",
+   "topic": "HAEMATOLOGY TREATMENT EMQ",
+   "optionsTitle": "HAEMATOLOGY TREATMENT EMQ",
+   "stem": "CLL, 3 days after chemo → dyspnoea + productive cough + fever (Febrile Neutropenia)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Prednisolone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "Vein suction+Aspirin",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Vein suction+Aspirin+Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Frequent blood transfusion",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Flagyl+Ceftriaxone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Vancomycin+Meropenem",
+     "correct": true,
+     "explanation": "FEBRILE NEUTROPENIA = oncological emergency. Definition: temperature >38°C + neutrophils <0.5 x10■/L (or expected to fall to this). IMMEDIATE broad-spectrum IV antibiotics within 1 hour: (1) MEROPENEM: broad Gram-negative cover including Pseudomonas (2) VANCOMYCIN: Gram-positive cover (MRSA, streptococcal) Blood cultures x2 (peripheral + line) BEFORE antibiotics. Respiratory symptoms → ALSO consider: PCP (trimethoprim-sulfamethoxazole), Aspergillus (voriconazole if chest CT shows halo sign)."
+    },
+    {
+     "label": "H",
+     "text": "CT+ischaemia screen",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "ICU+fluid+rasburicase 1. Increased haematocrit + JAK2 mutation 2. 6yo child with frequent painful hand crises 3. 24h after Burkitt lymphoma chemo → drowsy + altered consciousness 4. CLL, 3 days after chemo → dyspnoea + productive cough + fever 5. Patient started ATRA treatment + developed a complication",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q63",
+   "type": "emq",
+   "reference": "Batch 37 — Page 33",
+   "topic": "HAEMATOLOGY TREATMENT EMQ",
+   "optionsTitle": "HAEMATOLOGY TREATMENT EMQ",
+   "stem": "Patient started ATRA treatment → developed a complication (ATRA/Differentiation Syndrome)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "Prednisolone",
+     "correct": true,
+     "explanation": "ATRA (All-Trans Retinoic Acid) = treatment for APL (Acute Promyelocytic Leukaemia). DIFFERENTIATION SYNDROME (ATRA syndrome): Occurs within days-weeks of starting ATRA. Features: fever, weight gain, respiratory distress, pleural/pericardial effusion, renal failure, hypotension. Mechanism: rapid differentiation of leukaemic promyelocytes → cytokine release. TREATMENT: DEXAMETHASONE 10mg IV BD immediately. (Prednisolone = equivalent corticosteroid treatment) Continue ATRA in mild-moderate cases; hold in severe cases."
+    },
+    {
+     "label": "C",
+     "text": "Vein suction+Aspirin",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "Vein suction+Aspirin+Hydroxyurea",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Frequent blood transfusion",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Flagyl+Ceftriaxone",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Vancomycin+Meropenem",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "CT+ischaemia screen",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "ICU+fluid+rasburicase 1. Increased haematocrit + JAK2 mutation 2. 6yo child with frequent painful hand crises 3. 24h after Burkitt lymphoma chemo → drowsy + altered consciousness 4. CLL, 3 days after chemo → dyspnoea + productive cough + fever 5. Patient started ATRA treatment + developed a complication",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q64",
+   "type": "emq",
+   "reference": "Batch 37 — Page 34",
+   "topic": "DEFENCE MECHANISMS EMQ",
+   "optionsTitle": "DEFENCE MECHANISMS EMQ",
+   "stem": "\"You are the WORST doctor, unlike my PREVIOUS doctor who understood me.\"",
+   "choices": [
+    {
+     "label": "A",
+     "text": "denial",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "displacement",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "rationalization",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "splitting",
+     "correct": true,
+     "explanation": "SPLITTING: inability to integrate positive and negative qualities of self/others → view people as ALL GOOD or ALL BAD. \"Worst doctor\" (devaluation) vs \"previous doctor who understood me\" (idealisation) = classic splitting in BORDERLINE PERSONALITY DISORDER. The person oscillates between idealisation and devaluation of the same person depending on perceived slights."
+    },
+    {
+     "label": "E",
+     "text": "projection",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "reaction formation",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "humor (+ others) 1. \"You are the worst doctor, unlike my previous doctor who understood me.\" 2. Borderline patient did not attend 7 treatment sessions; doctor stopped treatment. 3. Patient diagnosed with cancer, believes it is just a fever. 4. Man told by wife she is having an affair; he tells her he loves her. 5. Someone slipped and fell; said \"In future I will become a skilled figure skier.\"",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q65",
+   "type": "emq",
+   "reference": "Batch 37 — Page 34",
+   "topic": "DEFENCE MECHANISMS EMQ",
+   "optionsTitle": "DEFENCE MECHANISMS EMQ",
+   "stem": "Borderline patient skipped 7 sessions; doctor STOPPED TREATMENT.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "denial",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "displacement",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "rationalization",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "splitting",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "projection",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "reaction formation",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "humor (+ others) 1. \"You are the worst doctor, unlike my previous doctor who understood me.\" 2. Borderline patient did not attend 7 treatment sessions; doctor stopped treatment. 3. Patient diagnosed with cancer, believes it is just a fever. 4. Man told by wife she is having an affair; he tells her he loves her. 5. Someone slipped and fell; said \"In future I will become a skilled figure skier.\"",
+     "correct": true,
+     "explanation": "ACTING OUT: expressing unconscious conflicts through ACTION instead of reflection. Borderline patient \"acting out\" by repeatedly missing sessions = unconscious avoidance/testing of abandonment fear. Doctor stopping treatment = potential countertransference reaction (frustration → withdrawal = mirrors patient's fear of abandonment)."
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q66",
+   "type": "emq",
+   "reference": "Batch 37 — Page 34",
+   "topic": "DEFENCE MECHANISMS EMQ",
+   "optionsTitle": "DEFENCE MECHANISMS EMQ",
+   "stem": "Patient diagnosed with CANCER but BELIEVES IT IS JUST A FEVER.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "denial",
+     "correct": true,
+     "explanation": "DENIAL: the most primitive defence. Refusing to acknowledge an anxiety-provoking reality. \"Just a fever\" = denial of cancer diagnosis. Patient psychologically cannot accept the threat to life. MATURE: acceptance, humour. IMMATURE: denial, splitting, acting out."
+    },
+    {
+     "label": "B",
+     "text": "displacement",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "rationalization",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "splitting",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "projection",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "reaction formation",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "humor (+ others) 1. \"You are the worst doctor, unlike my previous doctor who understood me.\" 2. Borderline patient did not attend 7 treatment sessions; doctor stopped treatment. 3. Patient diagnosed with cancer, believes it is just a fever. 4. Man told by wife she is having an affair; he tells her he loves her. 5. Someone slipped and fell; said \"In future I will become a skilled figure skier.\"",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q67",
+   "type": "emq",
+   "reference": "Batch 37 — Page 34",
+   "topic": "DEFENCE MECHANISMS EMQ",
+   "optionsTitle": "DEFENCE MECHANISMS EMQ",
+   "stem": "Man told by WIFE she is having an AFFAIR. He tells her HE LOVES HER.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "denial",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "displacement",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "rationalization",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "splitting",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "projection",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "reaction formation",
+     "correct": true,
+     "explanation": "REACTION FORMATION: transforming an unacceptable feeling/impulse into its OPPOSITE. Unacceptable feeling = RAGE/BETRAYAL. Expressed as = \"I love you\" (opposite emotion). The person genuinely does not experience the anger consciously — it is converted into the opposite affect."
+    },
+    {
+     "label": "G",
+     "text": "humor (+ others) 1. \"You are the worst doctor, unlike my previous doctor who understood me.\" 2. Borderline patient did not attend 7 treatment sessions; doctor stopped treatment. 3. Patient diagnosed with cancer, believes it is just a fever. 4. Man told by wife she is having an affair; he tells her he loves her. 5. Someone slipped and fell; said \"In future I will become a skilled figure skier.\"",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q68",
+   "type": "emq",
+   "reference": "Batch 37 — Page 34",
+   "topic": "DEFENCE MECHANISMS EMQ",
+   "optionsTitle": "DEFENCE MECHANISMS EMQ",
+   "stem": "Person SLIPPED AND FELL in front of everyone, said \"In the FUTURE I will become a SKILLED FIGURE SKIER.\"",
+   "choices": [
+    {
+     "label": "A",
+     "text": "denial",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "displacement",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "rationalization",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "splitting",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "projection",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "reaction formation",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "humor (+ others) 1. \"You are the worst doctor, unlike my previous doctor who understood me.\" 2. Borderline patient did not attend 7 treatment sessions; doctor stopped treatment. 3. Patient diagnosed with cancer, believes it is just a fever. 4. Man told by wife she is having an affair; he tells her he loves her. 5. Someone slipped and fell; said \"In future I will become a skilled figure skier.\"",
+     "correct": true,
+     "explanation": "HUMOR: using comedy to acknowledge and deal with an anxiety-provoking situation without being overwhelmed by it. The person acknowledges the fall (reality-testing intact) but reframes it humorously as future expertise. MATURE defence mechanism: allows expression of feeling without causing discomfort to others. Mature defences: humour, altruism, sublimation, suppression."
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q69",
+   "type": "emq",
+   "reference": "Batch 37 — Page 35",
+   "topic": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "optionsTitle": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "stem": "Elevated fetal haemoglobin (HbF)",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Thalassaemia major",
+     "correct": true,
+     "explanation": "THALASSAEMIA MAJOR: Beta-thalassaemia major: absent/reduced beta globin chains → excess alpha chains → ineffective erythropoiesis. HbF (alpha■ gamma■) = compensatory INCREASE (remains elevated, does not switch to HbA due to absent beta chains). Also elevated HbF: sickle cell disease (especially on hydroxyurea), HPFH (hereditary persistence of foetal haemoglobin). Primary diagnosis here = thalassaemia major."
+    },
+    {
+     "label": "B",
+     "text": "CML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "AML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ALL",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Megaloblastic anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemophilia A",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Sickle cell anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Graft vs Host Disease",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "G6PD deficiency 1. ELEVATED FETAL HAEMOGLOBIN (HbF) 2. Patient with GASTRECTOMY + NON-COMPLIANT with treatment 3. t(9;22) PHILADELPHIA CHROMOSOME 4. ELEVATED aPTT + FACTOR VIII was 1% 5. Child with PAIN IN LEG AND ARM + JAUNDICE + ANAEMIA 6. After ALLOGENEIC BONE MARROW TRANSPLANTATION",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q70",
+   "type": "emq",
+   "reference": "Batch 37 — Page 35",
+   "topic": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "optionsTitle": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "stem": "Patient with gastrectomy + non-compliant with treatment",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Thalassaemia major",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "CML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "AML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ALL",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Megaloblastic anaemia",
+     "correct": true,
+     "explanation": "GASTRECTOMY → removal of PARIETAL CELLS → NO INTRINSIC FACTOR → B12 CANNOT BE ABSORBED in ileum → B12 DEFICIENCY → MEGALOBLASTIC ANAEMIA. NON-COMPLIANT: not taking B12 injections (monthly IM cyanocobalamin required lifelong). Features: macrocytic anaemia, hypersegmented neutrophils, subacute combined degeneration of cord (B12 deficiency), glossitis, neurological symptoms."
+    },
+    {
+     "label": "F",
+     "text": "Haemophilia A",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Sickle cell anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Graft vs Host Disease",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "G6PD deficiency 1. ELEVATED FETAL HAEMOGLOBIN (HbF) 2. Patient with GASTRECTOMY + NON-COMPLIANT with treatment 3. t(9;22) PHILADELPHIA CHROMOSOME 4. ELEVATED aPTT + FACTOR VIII was 1% 5. Child with PAIN IN LEG AND ARM + JAUNDICE + ANAEMIA 6. After ALLOGENEIC BONE MARROW TRANSPLANTATION",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q71",
+   "type": "emq",
+   "reference": "Batch 37 — Page 35",
+   "topic": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "optionsTitle": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "stem": "t(9;22) Philadelphia chromosome",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Thalassaemia major",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "CML",
+     "correct": true,
+     "explanation": "t(9;22) = PHILADELPHIA CHROMOSOME = BCR-ABL1 FUSION GENE. BCR-ABL = constitutively active tyrosine kinase → uncontrolled myeloid proliferation. CML: elevated WBC (often >100), splenomegaly, basophilia, thrombocytosis. Phases: chronic → accelerated → blast crisis. TREATMENT: IMATINIB (tyrosine kinase inhibitor) = targeted therapy revolution. PEARL: Ph chromosome also found in some ALL (Ph+ ALL) — poorer prognosis."
+    },
+    {
+     "label": "C",
+     "text": "AML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ALL",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Megaloblastic anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemophilia A",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Sickle cell anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Graft vs Host Disease",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "G6PD deficiency 1. ELEVATED FETAL HAEMOGLOBIN (HbF) 2. Patient with GASTRECTOMY + NON-COMPLIANT with treatment 3. t(9;22) PHILADELPHIA CHROMOSOME 4. ELEVATED aPTT + FACTOR VIII was 1% 5. Child with PAIN IN LEG AND ARM + JAUNDICE + ANAEMIA 6. After ALLOGENEIC BONE MARROW TRANSPLANTATION",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q72",
+   "type": "emq",
+   "reference": "Batch 37 — Page 35",
+   "topic": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "optionsTitle": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "stem": "Elevated aPTT + Factor VIII was 1%",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Thalassaemia major",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "CML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "AML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ALL",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Megaloblastic anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemophilia A",
+     "correct": true,
+     "explanation": "HAEMOPHILIA A = X-LINKED RECESSIVE Factor VIII deficiency. FACTOR VIII 1% = SEVERE haemophilia A (normal: 50-150%). Coagulation profile: aPTT PROLONGED (intrinsic pathway affected) | PT NORMAL | Platelets NORMAL | Bleeding time NORMAL. Bleeding: DEEP haemarthroses (knee, elbow), muscle bleeds, intracranial. Treatment: Factor VIII concentrate (recombinant); prophylaxis for severe cases. DESMOPRESSIN for mild haemophilia A (releases stored factor VIII from endothelium)."
+    },
+    {
+     "label": "G",
+     "text": "Sickle cell anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Graft vs Host Disease",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "G6PD deficiency 1. ELEVATED FETAL HAEMOGLOBIN (HbF) 2. Patient with GASTRECTOMY + NON-COMPLIANT with treatment 3. t(9;22) PHILADELPHIA CHROMOSOME 4. ELEVATED aPTT + FACTOR VIII was 1% 5. Child with PAIN IN LEG AND ARM + JAUNDICE + ANAEMIA 6. After ALLOGENEIC BONE MARROW TRANSPLANTATION",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q73",
+   "type": "emq",
+   "reference": "Batch 37 — Page 35",
+   "topic": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "optionsTitle": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "stem": "Child with pain in leg and arm + jaundice + anaemia",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Thalassaemia major",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "CML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "AML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ALL",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Megaloblastic anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemophilia A",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Sickle cell anaemia",
+     "correct": true,
+     "explanation": "SICKLE CELL DISEASE: HbSS (homozygous): valine substituted for glutamic acid at position 6 of beta globin. VASO-OCCLUSIVE CRISIS: sickling → micro-occlusions → BONE PAIN (legs, arms). HAEMOLYTIC ANAEMIA: RBC lifespan reduced (10-20 days) → jaundice (unconjugated bilirubin). CHILD = appropriate age (presents in early childhood after HbF declines at 6 months). Management: analgesics, IV fluids, O2, blood transfusion if Hb critically low."
+    },
+    {
+     "label": "H",
+     "text": "Graft vs Host Disease",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "I",
+     "text": "G6PD deficiency 1. ELEVATED FETAL HAEMOGLOBIN (HbF) 2. Patient with GASTRECTOMY + NON-COMPLIANT with treatment 3. t(9;22) PHILADELPHIA CHROMOSOME 4. ELEVATED aPTT + FACTOR VIII was 1% 5. Child with PAIN IN LEG AND ARM + JAUNDICE + ANAEMIA 6. After ALLOGENEIC BONE MARROW TRANSPLANTATION",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  },
+  {
+   "id": "b37_q74",
+   "type": "emq",
+   "reference": "Batch 37 — Page 35",
+   "topic": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "optionsTitle": "HAEMATOLOGY DIAGNOSIS EMQ",
+   "stem": "After allogeneic bone marrow transplantation",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Thalassaemia major",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "B",
+     "text": "CML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "C",
+     "text": "AML",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "D",
+     "text": "ALL",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "E",
+     "text": "Megaloblastic anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "F",
+     "text": "Haemophilia A",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "G",
+     "text": "Sickle cell anaemia",
+     "correct": false,
+     "explanation": null
+    },
+    {
+     "label": "H",
+     "text": "Graft vs Host Disease",
+     "correct": true,
+     "explanation": "GvHD = COMPLICATION OF ALLOGENEIC (donor → recipient) BMT. Mechanism: donor T cells recognise recipient tissues as foreign → attack. ACUTE GvHD (<100 days): skin (maculopapular rash), liver (jaundice), GI (diarrhoea). CHRONIC GvHD (>100 days): multi-system, resembles autoimmune disease (scleroderma-like skin, dry eyes/mouth, bronchiolitis obliterans). Treatment: immunosuppression (steroids, tacrolimus, mycophenolate). GvL (Graft vs Leukaemia) effect = beneficial component of GvHD."
+    },
+    {
+     "label": "I",
+     "text": "G6PD deficiency 1. ELEVATED FETAL HAEMOGLOBIN (HbF) 2. Patient with GASTRECTOMY + NON-COMPLIANT with treatment 3. t(9;22) PHILADELPHIA CHROMOSOME 4. ELEVATED aPTT + FACTOR VIII was 1% 5. Child with PAIN IN LEG AND ARM + JAUNDICE + ANAEMIA 6. After ALLOGENEIC BONE MARROW TRANSPLANTATION",
+     "correct": false,
+     "explanation": null
+    }
+   ],
+   "keyPoint": null,
+   "flag": null,
+   "system": "Batch 37 Final",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": null,
+   "summaryTable": null,
+   "references": null
+  }
+ ]
+}

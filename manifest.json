@@ -1,13 +1,13 @@
 {
-  "manifestVersion": 3,
-  "updated": "2026-06-11",
-  "leaderboard": "https://script.google.com/macros/s/AKfycbyytvER5YDiLTarZFuUW3HweO8wIX36QUK772s3mpQZK0x7DMLvkE3Rme8piHVHi8sWuQ/exec",
+  "manifestVersion": 34,
+  "updated": "2026-07-09",
+  "leaderboard": "https://script.google.com/macros/s/AKfycbypC31uzfeM9kLgMYSakCdLuxuwfCfepjHVJOvZ8xdx-ND4dM57A-owXu7zySKU7fuMQg/exec",
   "packs": [
     {
       "packId": "surgical-special-senses",
       "title": "Surgical Special Senses",
       "color": "#5ec48f",
-      "version": 2,
+      "version": 3,
       "url": "surgical-special-senses.json",
       "questionCount": 622
     },
@@ -15,7 +15,7 @@
       "packId": "dermatology",
       "title": "Dermatology",
       "color": "#d99a6c",
-      "version": 2,
+      "version": 3,
       "url": "dermatology.json",
       "questionCount": 202
     },
@@ -23,7 +23,7 @@
       "packId": "haemato-onco",
       "title": "Haematology & Oncology",
       "color": "#c0738a",
-      "version": 3,
+      "version": 4,
       "url": "haemato-onco.json",
       "questionCount": 288
     },
@@ -31,15 +31,23 @@
       "packId": "neurology",
       "title": "Neurology",
       "color": "#b58fce",
-      "version": 2,
+      "version": 3,
       "url": "neurology.json",
       "questionCount": 185
+    },
+    {
+      "packId": "neurology-mcq",
+      "title": "Neurology",
+      "color": "#b58fce",
+      "version": 2,
+      "url": "neurology-mcq.json",
+      "questionCount": 265
     },
     {
       "packId": "psychiatry",
       "title": "Psychiatry",
       "color": "#7e9fd1",
-      "version": 2,
+      "version": 4,
       "url": "psychiatry.json",
       "questionCount": 402
     },
@@ -47,9 +55,65 @@
       "packId": "obgyn",
       "title": "Obstetrics & Gynaecology",
       "color": "#3fb6a8",
-      "version": 2,
+      "version": 3,
       "url": "obgyn.json",
       "questionCount": 553
+    },
+    {
+      "packId": "paediatrics",
+      "title": "Paediatrics",
+      "color": "#d8a25e",
+      "version": 1,
+      "url": "paediatrics.json",
+      "questionCount": 110
+    },
+    {
+      "packId": "paediatrics-emq",
+      "title": "Paediatrics",
+      "color": "#d8a25e",
+      "version": 1,
+      "url": "paediatrics-emq.json",
+      "questionCount": 330
+    },
+    {
+      "packId": "dermatology-mcq",
+      "title": "Dermatology",
+      "color": "#d99a6c",
+      "version": 2,
+      "url": "dermatology-mcq.json",
+      "questionCount": 108
+    },
+    {
+      "packId": "psychiatry-mcq",
+      "title": "Psychiatry",
+      "color": "#7e9fd1",
+      "version": 1,
+      "url": "psychiatry-mcq.json",
+      "questionCount": 49
+    },
+    {
+      "packId": "surgical-special-senses-mcq",
+      "title": "ENT & Ophthalmology",
+      "color": "#5ec48f",
+      "version": 1,
+      "url": "surgical-special-senses-mcq.json",
+      "questionCount": 319
+    },
+    {
+      "packId": "obgyn-mcq",
+      "title": "Obstetrics & Gynaecology",
+      "color": "#3fb6a8",
+      "version": 1,
+      "url": "obgyn-mcq.json",
+      "questionCount": 187
+    },
+    {
+      "packId": "batch37-mcq",
+      "title": "Batch 37 Final",
+      "color": "#cf9b6b",
+      "version": 3,
+      "url": "batch37-mcq.json",
+      "questionCount": 91
     }
   ]
 }
