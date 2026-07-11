@@ -887,6 +887,11 @@ export function render(){
   else if(App.screen==="qedit") a.innerHTML=viewQEditor();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
   if(App.screen==="leaderboard") startBoardPoll(); else stopBoardPoll();
+  // Leaving the exam runner by any route (sidebar/header nav, not just Quit)
+  // must stop the countdown — otherwise the orphaned interval keeps ticking,
+  // auto-submits the abandoned exam from another screen, and double-speeds
+  // the countdown of any exam started later.
+  if(App.screen!=="exam-runner" && App.exam && App.exam.timerId){ clearInterval(App.exam.timerId); App.exam.timerId=null; }
   const _DASH=new Set(["home","bank","banksys","progress","saved","fixes","system","type","reference","mistakes","disputed","redflag","checklist"]);
   document.body.classList.toggle("dash", _DASH.has(App.screen));
   document.body.classList.toggle("read", !_DASH.has(App.screen));
@@ -1604,8 +1609,11 @@ export function smartPool(){
   fresh.sort(()=>Math.random()-0.5);
   return [...due, ...fresh.slice(0, DB.settings.newPerDay)];
 }
-function gradeCurrent(g){
+export function gradeCurrent(g){
   const s=App.practice, q=QMAP[s.pool[s.i]];
+  // Back/strip navigation re-presents graded questions as unanswered; without
+  // this guard a re-grade double-counts seen/correct/daily and farms XP.
+  if(s.results && s.results[s.i]!==undefined){ toast("Already answered — moving on"); advancePractice(); return; }
   const single=(q.type!=="sa") && (q.choices||[]).length<2;
   const ok = (q.type==="sa"||single) ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
   recordAttempt(q,s.selected,g,q.type==="sa"?ok:undefined, s.confidence);
