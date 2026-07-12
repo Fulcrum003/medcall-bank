@@ -40,12 +40,21 @@ const block =
 
 let html = readFileSync(new URL('./index.html', import.meta.url), 'utf8');
 
+// Replacer FUNCTIONS, not strings: app.js content may legitimately contain
+// $$, $&, $` or $' which String.replace would expand as replacement patterns,
+// silently corrupting the generated script.
+let injected = false;
+const inject = () => { injected = true; return block; };
 if (html.includes(START) && html.includes(END)) {
   // Re-build: replace the existing generated block.
-  html = html.replace(new RegExp(`${START}[\\s\\S]*?${END}`), block);
+  html = html.replace(new RegExp(`${START}[\\s\\S]*?${END}`), inject);
 } else {
   // First build: replace the failing module loader with the inlined block.
-  html = html.replace(/<script type="module">[\s\S]*?<\/script>/, block);
+  html = html.replace(/<script type="module">[\s\S]*?<\/script>/, inject);
+}
+if (!injected) {
+  console.error('build.mjs: FAILED — no injection point found in index.html (missing APP markers and module loader).');
+  process.exit(1);
 }
 
 writeFileSync(new URL('./index.html', import.meta.url), html);

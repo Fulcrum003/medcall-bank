@@ -1,0 +1,41 @@
+name: Tests & build sync
+
+# Blocking checks for code changes:
+#   1. The Vitest suite must pass.
+#   2. The committed index.html must be in sync with app.js
+#      (i.e. someone edited app.js and forgot `npm run build`,
+#       or hand-edited the generated block in index.html).
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Check index.html is in sync with app.js
+        run: |
+          npm run build
+          if ! git diff --exit-code --stat index.html; then
+            echo ""
+            echo "::error::index.html is out of sync with app.js. Run 'npm run build' locally and commit the result."
+            exit 1
+          fi

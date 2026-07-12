@@ -19,8 +19,14 @@ export const STORE = (function(){
   try{
     const k="__mr_test"; localStorage.setItem(k,"1"); localStorage.removeItem(k);
     return { kind:"local",
-      async get(key){ const v=localStorage.getItem(key); return v?JSON.parse(v):null; },
-      async set(key,val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} } };
+      // A single corrupt value (WebKit truncation after a crash, another app on a
+      // shared origin) must degrade to defaults, not reject loadDB() and leave
+      // boot() dead before the first render.
+      async get(key){ const v=localStorage.getItem(key); if(!v) return null; try{ return JSON.parse(v); }catch(e){ return null; } },
+      async set(key,val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){
+        // Quota exceeded: warn once instead of silently dropping every save.
+        if(!STORE._quotaWarned){ STORE._quotaWarned=true; try{ toast("Device storage is full — progress may not be saved"); }catch(_){} }
+      } } };
   }catch(e){}
   if(typeof window!=="undefined" && window.storage && typeof window.storage.get==="function"){
     return { kind:"artifact",
@@ -32,6 +38,25 @@ export const STORE = (function(){
 })();
 export async function wsGet(k){ return STORE.get(k); }
 export async function wsSet(k,v){ return STORE.set(k,v); }
+
+/* Large-value store: the adapted bank (~7 MB stringified) exceeds the ~5 MiB
+   localStorage quota, so the offline/instant-start bank cache lives in
+   IndexedDB. Falls back to the regular STORE when IndexedDB is unavailable
+   (some private modes, very old browsers, test environments). */
+const IDB_OK = typeof indexedDB !== "undefined";
+function idbOpen(){ return new Promise((res,rej)=>{ const r=indexedDB.open("medrecall-blob",1); r.onupgradeneeded=()=>{ r.result.createObjectStore("kv"); }; r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); }
+export async function blobGet(key){
+  if(!IDB_OK) return wsGet(key);
+  try{ const db=await idbOpen(); return await new Promise((res,rej)=>{ const rq=db.transaction("kv","readonly").objectStore("kv").get(key); rq.onsuccess=()=>res(rq.result===undefined?null:rq.result); rq.onerror=()=>rej(rq.error); }); }
+  catch(e){ return wsGet(key); }
+}
+// Returns true when the value committed to IndexedDB, false when it fell back
+// to the regular STORE (callers use this to know the legacy slot is obsolete).
+export async function blobSet(key,val){
+  if(!IDB_OK){ await wsSet(key,val); return false; }
+  try{ const db=await idbOpen(); await new Promise((res,rej)=>{ const tx=db.transaction("kv","readwrite"); tx.objectStore("kv").put(val,key); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); tx.onabort=()=>rej(tx.error||new Error("idb abort")); }); return true; }
+  catch(e){ await wsSet(key,val); return false; }
+}
 export const SK = {progress:"medrecall:progress:v1", exams:"medrecall:exams:v1", settings:"medrecall:settings:v1", reports:"medrecall:reports:v1"};
 export let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
@@ -75,8 +100,13 @@ export function schedule(srs, grade){
 /* ============================================================
    DATE HELPERS
    ============================================================ */
-export function today(){ const d=new Date(); return d.toISOString().slice(0,10); }
-export function addDays(iso, n){ const d=new Date(iso+"T00:00:00"); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+// Local-date formatting, NOT toISOString(): the app's "day" must roll over at the
+// user's midnight. toISOString() (UTC) flipped the date mid-evening west of UTC and,
+// worse, made addDays() off by one east of UTC (local midnight converts to the
+// previous UTC day), shifting every SRS due date.
+function localISO(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+export function today(){ return localISO(new Date()); }
+export function addDays(iso, n){ const d=new Date(iso+"T00:00:00"); d.setDate(d.getDate()+n); return localISO(d); }
 export function yesterday(){ return addDays(today(),-1); }
 export function fmtTime(sec){ sec=Math.max(0,Math.round(sec)); const m=Math.floor(sec/60), s=sec%60; return m+":"+String(s).padStart(2,"0"); }
 
@@ -281,15 +311,34 @@ export async function syncBank(base){
   const mf=await mfRes.json();
   // leaderboard endpoint travels in the manifest → every device gets it automatically, no per-user setup
   if(mf.leaderboard !== undefined){ DB.settings.groupEndpoint = mf.leaderboard || ""; save.settings(); }
-  const packs=[];
+  const packs=[], failed=[];
   for(const entry of (mf.packs||[])){
     const u=/^https?:/.test(entry.url)? entry.url : base+"/"+entry.url;
-    const r=await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(entry.packId+" "+r.status);
-    packs.push(adaptPack(await r.json()));
+    // Skip a pack that fails (partial offline cache, mid-deploy 404) instead of
+    // aborting the whole sync and dropping the user to the tiny bundled sample.
+    try{
+      const r=await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(entry.packId+" "+r.status);
+      packs.push(adaptPack(await r.json()));
+    }catch(err){ failed.push(entry.packId); }
   }
   if(!packs.length) throw new Error("empty manifest");
-  BANK.length=0; packs.forEach(p=>BANK.push(p)); buildIndex();
-  wsSet("medrecall:bankcache:v1", packs);   // keep a copy for offline / instant start
+  // A partial sync must not SHRINK the bank: backfill packs that failed this
+  // round from the previous cache so their due/seen questions don't vanish.
+  if(failed.length){
+    try{
+      const prev=(await blobGet("medrecall:bankcache:v1"))||[];
+      const have=new Set(packs.map(p=>p.id));
+      prev.forEach(p=>{ if(failed.includes(p.id) && !have.has(p.id)) packs.push(p); });
+    }catch(e){}
+  }
+  // Swapping BANK/QMAP under an active session breaks the questions it's mid-way
+  // through (bundled/stale ids vanish from QMAP). Defer; render() applies it once
+  // the session ends.
+  if(App.practice||App.exam){ App._pendingBank=packs; }
+  else { BANK.length=0; packs.forEach(p=>BANK.push(p)); buildIndex(); }
+  // Cache for offline / instant start (IndexedDB — too big for localStorage).
+  // Once it lands in IDB, drop the legacy localStorage slot to free the quota.
+  blobSet("medrecall:bankcache:v1", packs).then(idb=>{ if(idb){ try{ localStorage.removeItem("medrecall:bankcache:v1"); }catch(e){} } });
   return packs.reduce((n,p)=>n+p.questions.length,0);
 }
 export function adaptPack(c){
@@ -798,7 +847,11 @@ export function bumpDaily(){
 export function recordAttempt(q, chosen, grade, okOverride, confidence){
   const ok = (typeof okOverride==="boolean") ? okOverride : (correctLabel(q)===chosen);
   const p = DB.progress.questions[q.id] || {seen:0,correct:0,history:[],marked:false,srs:null};
-  p.seen++; if(ok)p.correct++; p.lastResult=ok?"correct":"wrong"; p.lastSeen=today();
+  // Imported backups may carry partial entries ({seen:2} with no history/correct);
+  // normalize so grading them doesn't throw or produce NaN stats.
+  if(!Array.isArray(p.history)) p.history=[];
+  p.seen=(+p.seen||0)+1; if(ok)p.correct=(+p.correct||0)+1; else p.correct=(+p.correct||0);
+  p.lastResult=ok?"correct":"wrong"; p.lastSeen=today();
   p.history.push({date:today(),answer:chosen,correct:ok,grade,confidence:confidence||null});
   if(grade) p.srs = schedule(p.srs, grade);
   DB.progress.questions[q.id]=p;
@@ -853,6 +906,21 @@ function exportJSON(obj,name){
    RENDER ROUTER
    ============================================================ */
 export function render(){
+  // Leaving the exam runner by any route other than Submit/Quit (sidebar or
+  // header nav) abandons the exam — same semantics as Quit. The countdown dies
+  // with it, and App.exam MUST be cleared: the deferred-work gates below key on
+  // it, and a stale App.exam would jam bank syncs and app updates forever.
+  // (submitExam clears App.exam itself, so this never fires on a normal finish.)
+  if(App.screen!=="exam-runner" && App.exam){
+    if(App.exam.timerId) clearInterval(App.exam.timerId);
+    App.exam=null;
+    toast("Exam discarded");
+  }
+  // Apply work deferred while a session was active (see syncBank / controllerchange).
+  if(!App.practice && !App.exam){
+    if(App._pendingBank){ const pk=App._pendingBank; App._pendingBank=null; BANK.length=0; pk.forEach(p=>BANK.push(p)); buildIndex(); }
+    if(App._swPendingReload){ App._swPendingReload=false; try{ location.reload(); }catch(e){} }
+  }
   const a=$("app");
   let foot=$("foot"); if(foot) foot.remove();
   if(App.screen==="home") a.innerHTML=viewHome();
@@ -1245,7 +1313,7 @@ function viewTheme(){
       <div class="serif" style="font-size:15px;line-height:1.5">${rv?q.stem:stripBold(q.stem)}</div>
       <div class="wrapflex" style="margin-top:10px;gap:7px">`;
     q.choices.forEach(c=>{ let st=""; if(rv){ if(c.correct)st="ok"; else if(pick===c.l)st="bad"; } else if(pick===c.l)st="sel";
-      html+=`<button ${rv?"":`data-action="theme-pick" data-i="${ci}" data-label="${c.l}"`} style="${chipS(st)}">${c.l}</button>`; });
+      html+=`<button ${rv?"":`data-action="theme-pick" data-i="${ci}" data-label="${esc(c.l)}"`} style="${chipS(st)}">${esc(c.l)}</button>`; });
     html+=`</div>`;
     if(!rv){ html+=`<div style="margin-top:11px"><button class="btn-sm btn-primary" data-action="theme-reveal" data-i="${ci}">Reveal answer</button></div>`; }
     else {
@@ -1591,6 +1659,9 @@ function practiceRoute(){
   const s=App.practice;
   if(!s){ App.screen="home"; render(); return; }
   const q=QMAP[s.pool[s.i]];
+  // The bank can change between sessions (remote sync); a pool id that no longer
+  // exists must end the session gracefully, not crash the renderer.
+  if(!q){ App.practice=null; App.screen="home"; render(); toast("Question bank was updated — session ended"); return; }
   if(q && q.type==="emq"){ setupPracticeTheme(q); App.screen="theme"; }
   else App.screen="quiz";
   render(); window.scrollTo({top:0,behavior:"instant"});
@@ -1604,11 +1675,16 @@ export function smartPool(){
   fresh.sort(()=>Math.random()-0.5);
   return [...due, ...fresh.slice(0, DB.settings.newPerDay)];
 }
-function gradeCurrent(g){
+export function gradeCurrent(g){
   const s=App.practice, q=QMAP[s.pool[s.i]];
+  // Back/strip navigation re-presents graded questions as unanswered; without
+  // this guard a re-grade double-counts seen/correct/daily and farms XP.
+  if(s.results && s.results[s.i]!==undefined){ toast("Already answered — moving on"); advancePractice(); return; }
   const single=(q.type!=="sa") && (q.choices||[]).length<2;
   const ok = (q.type==="sa"||single) ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
-  recordAttempt(q,s.selected,g,q.type==="sa"?ok:undefined, s.confidence);
+  // Recalled single-choice questions are self-graded like short-answers: without
+  // okOverride they'd be scored correctLabel===null and stored as misses.
+  recordAttempt(q,s.selected,g,(q.type==="sa"||single)?ok:undefined, s.confidence);
   cue(ok?"correct":"wrong");
   s.results=s.results||{}; s.results[s.i]=ok?'ok':'no';
   s.answered++; if(ok)s.correct++; s.xp+=awardXP(ok?10:4);
@@ -1673,8 +1749,8 @@ function viewQuiz(){
         if(c.correct){ cls+=" correct"; vd=`<span class="vd">CORRECT</span>`; }
         else if(s.selected===c.l){ cls+=" wrong"; vd=`<span class="vd">YOUR PICK</span>`; }
       }
-      html+=`<button class="${cls}" ${s.revealed?'':`data-action="select-choice" data-label="${c.l}"`}>
-        <span class="lab">${c.l}</span><span>${esc(c.t)}</span>${vd}
+      html+=`<button class="${cls}" ${s.revealed?'':`data-action="select-choice" data-label="${esc(c.l)}"`}>
+        <span class="lab">${esc(c.l)}</span><span>${esc(c.t)}</span>${vd}
       </button>`;
     });
     html+=`</div>`; }
@@ -1743,8 +1819,8 @@ function renderReveal(q, chosen, opts={}){
   // flag
   if(q.flag){
     const f=q.flag;
-    html+=`<div class="flag ${f.severity}">
-      <div class="k"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> ${f.severity} · FILE ANSWER vs STANDARD TEACHING</div>
+    html+=`<div class="flag ${esc(f.severity)}">
+      <div class="k"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> ${esc(f.severity)} · FILE ANSWER vs STANDARD TEACHING</div>
       ${(f.app||f.correct)?`<div class="vs">${f.app?`<span class="tag" style="color:var(--red)">App: ${esc(f.app)}</span>`:''}${f.correct?`<span class="tag" style="color:var(--green)">Correct: ${esc(f.correct)}</span>`:''}${f.source?`<span class="tag">${esc(f.source)}</span>`:''}</div>`:(f.source?`<div class="vs"><span class="tag">${esc(f.source)}</span></div>`:'')}
       ${f.note?`<div class="note">${esc(f.note)}</div>`:''}
     </div>`;
@@ -2025,13 +2101,13 @@ function viewLeaderboard(){
       <div class="row" style="gap:13px">
         <div class="rank" ${medal?`style="background:${medal}22;color:${medal}"`:''}>${i+1}</div>
         <div style="flex:1">
-          <div class="row" style="gap:7px;align-items:center;flex-wrap:wrap"><span style="font-weight:700;font-size:14.5px">${esc(e.name||"Anon")}${you?' · you':''}</span>${onFire?`<span class="firebadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M12 12c2-3 0-7-1-8 0 3-1.8 4.7-3 6s-2 3.2-2 5a6 6 0 1 0 12 0c0-1.5-1-3.9-2-5-1.8 3-2.8 3-4 2z"/></svg> ${e.week}d this week</span>`:''}${e.studyingNow?`<span class="firebadge" style="color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg> studying${e.studyingSubject?" · "+esc(e.studyingSubject):""}</span>`:''}</div>
+          <div class="row" style="gap:7px;align-items:center;flex-wrap:wrap"><span style="font-weight:700;font-size:14.5px">${esc(e.name||"Anon")}${you?' · you':''}</span>${onFire?`<span class="firebadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M12 12c2-3 0-7-1-8 0 3-1.8 4.7-3 6s-2 3.2-2 5a6 6 0 1 0 12 0c0-1.5-1-3.9-2-5-1.8 3-2.8 3-4 2z"/></svg> ${+e.week||0}d this week</span>`:''}${e.studyingNow?`<span class="firebadge" style="color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg> studying${e.studyingSubject?" · "+esc(e.studyingSubject):""}</span>`:''}</div>
           <div class="row" style="gap:8px;margin-top:3px;flex-wrap:wrap">
-            <span class="faint" style="font-size:12px">Lv ${e.level||1} · ${e.streak||0}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M12 12c2-3 0-7-1-8 0 3-1.8 4.7-3 6s-2 3.2-2 5a6 6 0 1 0 12 0c0-1.5-1-3.9-2-5-1.8 3-2.8 3-4 2z"/></svg> streak</span>
+            <span class="faint" style="font-size:12px">Lv ${+e.level||1} · ${+e.streak||0}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M12 12c2-3 0-7-1-8 0 3-1.8 4.7-3 6s-2 3.2-2 5a6 6 0 1 0 12 0c0-1.5-1-3.9-2-5-1.8 3-2.8 3-4 2z"/></svg> streak</span>
             ${e.subject&&e.subject!=="—"?`<span class="subjtag">${esc(e.subject)}</span>`:''}
           </div>
         </div>
-        <div class="mono" style="font-weight:800;color:var(--teal);text-align:right">${view==="time"?fmtHM(val):val}<div class="faint" style="font-size:10px;font-weight:600">${view==="time"?"studied today":"XP "+label}</div></div>
+        <div class="mono" style="font-weight:800;color:var(--teal);text-align:right">${view==="time"?fmtHM(val):(+val||0)}<div class="faint" style="font-size:10px;font-weight:600">${view==="time"?"studied today":"XP "+label}</div></div>
       </div>
     </div>`;
   });
@@ -2191,8 +2267,8 @@ function viewExam(){
   <div class="stem">${stripBold(q.stem)}</div>
   <div class="choices">`;
   e.order[id].forEach(c=>{
-    html+=`<button class="choice ${chosen===c.l?'sel':''}" data-action="exam-select" data-label="${c.l}">
-      <span class="lab">${c.l}</span><span>${esc(c.t)}</span></button>`;
+    html+=`<button class="choice ${chosen===c.l?'sel':''}" data-action="exam-select" data-label="${esc(c.l)}">
+      <span class="lab">${esc(c.l)}</span><span>${esc(c.t)}</span></button>`;
   });
   html+=`</div></div>`;
 
@@ -2208,6 +2284,7 @@ function viewExam(){
 export function submitExam(auto){
   const e=App.exam;
   if(e.timerId) clearInterval(e.timerId);
+  App.exam=null;   // finished — everything below reads the local `e`; a stale App.exam would jam the deferred-work gates in render()
   let score=0; const answers=[], byTopic={};
   e.ids.forEach(id=>{
     const q=QMAP[id], chosen=e.answers[id]||null, cl=correctLabel(q), ok=chosen===cl;
@@ -2336,7 +2413,7 @@ function viewStats(){
   }
 
   // upcoming reviews forecast
-  const tdy=today(); const d7=new Date(); d7.setDate(d7.getDate()+7); const in7=d7.toISOString().slice(0,10);
+  const tdy=today(); const in7=addDays(tdy,7);
   let dueT=0, due7=0, sched=0, freshN=0;
   allQs().forEach(q=>{ const p=qs[q.id]; if(p&&p.srs&&p.srs.due){ sched++; if(p.srs.due<=tdy)dueT++; if(p.srs.due<=in7)due7++; } else if(!p){ freshN++; } });
   html+=`<div class="sectlabel">Upcoming reviews</div>
@@ -2706,7 +2783,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="qedit-correct"){ qeSyncDraft(); const i=+t.dataset.i, d=App.qedit.draft; d.choices.forEach((c,k)=>c.correct=(k===i)); render(); return; }
   if(a==="qedit-delchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.splice(+t.dataset.i,1); reLetter(d.choices); render(); return; }
   if(a==="qedit-addchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.push({l:String.fromCharCode(65+d.choices.length), t:"", correct:false, e:""}); render(); return; }
-  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=patch; save.settings(); buildIndex(); postEdit(App.qedit.qid, patch); { const _s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; if(!_s.includes(App.qedit.qid)){ _s.push(App.qedit.qid); DB.settings.fixSeen=_s; save.settings(); } } qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & announced to everyone ✓":"Fix saved on this device"); return; }
+  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); if(!Object.keys(patch).length){ toast("No changes to save"); return; } DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=Object.assign(DB.settings.qedits[App.qedit.qid]||{}, patch); save.settings(); buildIndex(); postEdit(App.qedit.qid, sharedEditFor(App.qedit.qid)); { const _s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; if(!_s.includes(App.qedit.qid)){ _s.push(App.qedit.qid); DB.settings.fixSeen=_s; save.settings(); } } qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & announced to everyone ✓":"Fix saved on this device"); return; }
   if(a==="qedit-copy"){ qeSyncDraft(); const d=App.qedit.draft, q=QMAP[App.qedit.qid]; reLetter(d.choices); const src={ id:App.qedit.qid, type:q.type, system:q.system, reference:q.reference, topic:q.topic, stem:d.stem, choices:d.choices.map(c=>({label:c.l,text:c.t,correct:!!c.correct,explanation:c.e||undefined})), keyPoint:d.keyPoint||undefined, flag:d.flagSev?{severity:d.flagSev,note:d.flagNote,source:"maintainer edit"}:undefined }; copyText(JSON.stringify(src,null,2), "Corrected JSON copied", src, App.qedit.qid+".json"); return; }
   if(a==="qedit-revert"){ if(DB.settings.qedits) delete DB.settings.qedits[App.qedit.qid]; save.settings(); buildIndex(); qeInit(App.qedit.qid); render(); toast("Your edit was reverted"); return; }
   if(a==="notif-reports"){ DB.settings.notifyReports=(DB.settings.notifyReports===false); save.settings(); if(DB.settings.notifyReports){ (async()=>{ if(notifSupported()&&notifPermission()==="default"){ try{ await Notification.requestPermission(); }catch(e){} } checkNewReports(); })(); } render(); return; }
@@ -3055,7 +3132,7 @@ async function enableNotifs(){
 async function disableNotifs(){ const N=notifCfg(); N.enabled=false; save.settings(); await cancelScheduledReminders(); render(); toast("Reminders off"); }
 
 async function cancelScheduledReminders(){
-  try{ const reg=await navigator.serviceWorker.ready; const ns=await reg.getNotifications({includeTriggered:false}); ns.forEach(n=>{ if((n.tag||"").indexOf("medcall-")===0) n.close(); }); }catch(e){}
+  try{ const reg=await navigator.serviceWorker.ready; const ns=await reg.getNotifications({includeTriggered:true}); ns.forEach(n=>{ if((n.tag||"").indexOf("medcall-")===0) n.close(); }); }catch(e){}
 }
 
 // (Re)arm scheduled reminders that fire even when the app is closed (Chromium/Android).
@@ -3064,7 +3141,7 @@ async function scheduleReminders(){
   if(!notifSupported() || !N.enabled || notifPermission()!=="granted") return;
   if(!triggersSupported()) return;              // no scheduled-while-closed here; inAppNotifyCheck() covers it
   let reg; try{ reg=await navigator.serviceWorker.ready; }catch(e){ return; }
-  try{ const ex=await reg.getNotifications({includeTriggered:false}); ex.forEach(n=>{ if((n.tag||"").indexOf("medcall-")===0) n.close(); }); }catch(e){}
+  try{ const ex=await reg.getNotifications({includeTriggered:true}); ex.forEach(n=>{ if((n.tag||"").indexOf("medcall-")===0) n.close(); }); }catch(e){}
   const now=Date.now(), hm=notifHour(), hh=hm[0], mm=hm[1];
   // Daily nudge (folds in due + exam), next 7 days
   for(let d=0; d<7; d++){
@@ -3135,8 +3212,20 @@ function patchQuestion(q, patch){
   q._edited=true;
 }
 // Apply remote + local field overrides onto the freshly built QMAP (local device wins).
+// The patch to SHARE for a question: everything this device knows changed
+// (remote fixes + local fixes merged per field). Old clients apply sheet rows
+// last-row-wins for the WHOLE question, so posting only the newest sparse diff
+// would silently revert earlier fixes on every not-yet-updated device —
+// the shared row must always carry the full cumulative patch.
+export function sharedEditFor(qid){
+  return Object.assign({}, (REMOTE_EDITS||{})[qid]||{}, ((DB.settings&&DB.settings.qedits)||{})[qid]||{});
+}
 function applyEdits(){
-  const merged=Object.assign({}, REMOTE_EDITS||{}, (DB.settings&&DB.settings.qedits)||{});
+  // Merge remote + local per FIELD (local wins) — patches are per-field diffs, so
+  // a local stem fix must not discard a remote choice fix for the same question.
+  const merged={};
+  for(const src of [REMOTE_EDITS||{}, (DB.settings&&DB.settings.qedits)||{}])
+    for(const qid in src) merged[qid]=Object.assign(merged[qid]||{}, src[qid]);
   for(const qid in merged){ const base=QMAP[qid]; if(!base) continue; const clone=Object.assign({}, base); patchQuestion(clone, merged[qid]); QMAP[qid]=clone; }  // clone -> BANK stays pristine so edits are reversible
 }
 
@@ -3151,7 +3240,7 @@ async function fetchEdits(){
       let qid, patch;
       if(Array.isArray(row)){ if(String(row[0]||"").toLowerCase().indexOf("when")>=0) continue; qid=row[1]; try{ patch=JSON.parse(row[2]); }catch(e){ patch=null; } }
       else if(row && typeof row==="object"){ qid=row.qid; patch=(typeof row.patch==="string")? (function(){try{return JSON.parse(row.patch);}catch(e){return null;}})() : row.patch; }
-      if(qid && patch) map[qid]=patch;   // later rows win (sheet append order)
+      if(qid && patch) map[qid]=Object.assign(map[qid]||{}, patch);   // later rows win PER FIELD (sheet append order); patches are per-field diffs
     }
     REMOTE_EDITS=map;
     // announce newly-shared fixes to everyone (first sync sets a silent baseline)
@@ -3200,13 +3289,16 @@ function reportsForQid(qid){
   (DB.reports||[]).forEach(r=>{ if(String(r.qid)===String(qid)) out.push({when:r.date, who:"you (local)", issue:r.type, note:r.note}); });
   return out;
 }
-function qeInit(qid){
+export function qeInit(qid){
   const q=QMAP[qid];
-  App.qedit={ qid, exists:!!q, draft: q ? {
+  const snap = q ? {
     stem:q.stem||"", keyPoint:q.keyPoint||"",
     choices:(q.choices||[]).map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||""})),
     flagSev:(q.flag&&q.flag.severity)||"", flagNote:(q.flag&&q.flag.note)||""
-  } : null };
+  } : null;
+  // orig = what the maintainer saw at open time; qeBuildPatch diffs against it so
+  // saves only carry the fields that actually changed (see LWW note there).
+  App.qedit={ qid, exists:!!q, draft: snap, orig: snap ? JSON.parse(JSON.stringify(snap)) : null };
 }
 function qeSyncDraft(){
   const d=App.qedit&&App.qedit.draft; if(!d) return;
@@ -3216,9 +3308,21 @@ function qeSyncDraft(){
   const fn=g("qe-flagnote"); if(fn) d.flagNote=fn.value;
   d.choices.forEach((c,i)=>{ const t=g("qe-ct-"+i); if(t) c.t=t.value; const e=g("qe-ce-"+i); if(e) c.e=e.value; });
 }
-function qeBuildPatch(){
-  const d=App.qedit.draft; reLetter(d.choices);
-  return { stem:d.stem, keyPoint:d.keyPoint, choices:d.choices.map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||undefined})), flag: d.flagSev? {severity:d.flagSev, note:d.flagNote, source:"maintainer in-app edit"} : null };
+export function qeBuildPatch(){
+  // Per-field diff against the open-time snapshot: whole-question patches meant
+  // two maintainers editing DIFFERENT fields concurrently clobbered each other
+  // (last writer won for the entire question). Now a stem fix and a choice fix
+  // merge cleanly; only same-field concurrent edits still last-write-win.
+  const d=App.qedit.draft, o=App.qedit.orig||{}; reLetter(d.choices);
+  const patch={};
+  if(d.stem!==o.stem) patch.stem=d.stem;
+  if(d.keyPoint!==o.keyPoint) patch.keyPoint=d.keyPoint;
+  const dc=d.choices.map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||undefined}));
+  const oc=(o.choices||[]).map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||undefined}));
+  if(JSON.stringify(dc)!==JSON.stringify(oc)) patch.choices=dc;
+  if(d.flagSev!==o.flagSev || d.flagNote!==o.flagNote)
+    patch.flag = d.flagSev? {severity:d.flagSev, note:d.flagNote, source:"maintainer in-app edit"} : null;
+  return patch;
 }
 function viewQEditor(){
   const Q=App.qedit;
@@ -3275,7 +3379,12 @@ function defaultBase(){
 // offline app shell
 if("serviceWorker" in navigator && (location.protocol==="https:"||location.protocol==="http:")){
   const _hadSW=!!navigator.serviceWorker.controller; let _swReloaded=false;
-  navigator.serviceWorker.addEventListener("controllerchange", ()=>{ if(_swReloaded||!_hadSW) return; _swReloaded=true; try{ location.reload(); }catch(e){} });
+  // Auto-update reload, but never mid-exam/mid-practice: session state lives only
+  // in memory, so an immediate reload would destroy it. Defer; render() fires the
+  // reload once the session is over.
+  navigator.serviceWorker.addEventListener("controllerchange", ()=>{ if(_swReloaded||!_hadSW) return;
+    if(App.exam||App.practice){ App._swPendingReload=true; return; }
+    _swReloaded=true; try{ location.reload(); }catch(e){} });
   window.addEventListener("load", ()=>{ navigator.serviceWorker.register("sw.js").then(reg=>{ try{ reg.update(); }catch(e){} }).catch(()=>{}); });
 }
 if(typeof navigator!=="undefined" && "serviceWorker" in navigator && navigator.serviceWorker.addEventListener){ navigator.serviceWorker.addEventListener("message", (e)=>{ if(e.data==="open-reports"){ App.screen="reportsinbox"; App.inboxState="loading"; render(); fetchReports(); } }); }
@@ -3289,8 +3398,9 @@ export async function boot(){
   try{ ghToken = await wsGet("medrecall:ghtoken:v1"); }catch(e){}
   try{ wallImg = await wsGet("medrecall:wallpaperimg:v1"); }catch(e){}
   applyWallpaper();
-  // instant + offline start from the cached bank
-  try{ const cached = await wsGet("medrecall:bankcache:v1"); if(cached && cached.length){ BANK.length=0; cached.forEach(p=>BANK.push(p)); } }catch(e){}
+  // instant + offline start from the cached bank (IndexedDB; falls back to the
+  // legacy localStorage slot for caches written by older versions)
+  try{ const cached = (await blobGet("medrecall:bankcache:v1")) || (await wsGet("medrecall:bankcache:v1")); if(cached && cached.length){ BANK.length=0; cached.forEach(p=>BANK.push(p)); } }catch(e){}
   try{ REMOTE_EDITS = (await wsGet("medrecall:remoteedits:v1"))||{}; }catch(e){}
   buildIndex();
   render();
