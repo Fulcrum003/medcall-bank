@@ -50,10 +50,12 @@ export async function blobGet(key){
   try{ const db=await idbOpen(); return await new Promise((res,rej)=>{ const rq=db.transaction("kv","readonly").objectStore("kv").get(key); rq.onsuccess=()=>res(rq.result===undefined?null:rq.result); rq.onerror=()=>rej(rq.error); }); }
   catch(e){ return wsGet(key); }
 }
+// Returns true when the value committed to IndexedDB, false when it fell back
+// to the regular STORE (callers use this to know the legacy slot is obsolete).
 export async function blobSet(key,val){
-  if(!IDB_OK) return wsSet(key,val);
-  try{ const db=await idbOpen(); await new Promise((res,rej)=>{ const tx=db.transaction("kv","readwrite"); tx.objectStore("kv").put(val,key); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
-  catch(e){ return wsSet(key,val); }
+  if(!IDB_OK){ await wsSet(key,val); return false; }
+  try{ const db=await idbOpen(); await new Promise((res,rej)=>{ const tx=db.transaction("kv","readwrite"); tx.objectStore("kv").put(val,key); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); tx.onabort=()=>rej(tx.error||new Error("idb abort")); }); return true; }
+  catch(e){ await wsSet(key,val); return false; }
 }
 export const SK = {progress:"medrecall:progress:v1", exams:"medrecall:exams:v1", settings:"medrecall:settings:v1", reports:"medrecall:reports:v1"};
 export let DB = {
@@ -309,7 +311,7 @@ export async function syncBank(base){
   const mf=await mfRes.json();
   // leaderboard endpoint travels in the manifest → every device gets it automatically, no per-user setup
   if(mf.leaderboard !== undefined){ DB.settings.groupEndpoint = mf.leaderboard || ""; save.settings(); }
-  const packs=[];
+  const packs=[], failed=[];
   for(const entry of (mf.packs||[])){
     const u=/^https?:/.test(entry.url)? entry.url : base+"/"+entry.url;
     // Skip a pack that fails (partial offline cache, mid-deploy 404) instead of
@@ -317,15 +319,26 @@ export async function syncBank(base){
     try{
       const r=await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(entry.packId+" "+r.status);
       packs.push(adaptPack(await r.json()));
-    }catch(err){}
+    }catch(err){ failed.push(entry.packId); }
   }
   if(!packs.length) throw new Error("empty manifest");
+  // A partial sync must not SHRINK the bank: backfill packs that failed this
+  // round from the previous cache so their due/seen questions don't vanish.
+  if(failed.length){
+    try{
+      const prev=(await blobGet("medrecall:bankcache:v1"))||[];
+      const have=new Set(packs.map(p=>p.id));
+      prev.forEach(p=>{ if(failed.includes(p.id) && !have.has(p.id)) packs.push(p); });
+    }catch(e){}
+  }
   // Swapping BANK/QMAP under an active session breaks the questions it's mid-way
   // through (bundled/stale ids vanish from QMAP). Defer; render() applies it once
   // the session ends.
   if(App.practice||App.exam){ App._pendingBank=packs; }
   else { BANK.length=0; packs.forEach(p=>BANK.push(p)); buildIndex(); }
-  blobSet("medrecall:bankcache:v1", packs);   // keep a copy for offline / instant start (IndexedDB — too big for localStorage)
+  // Cache for offline / instant start (IndexedDB — too big for localStorage).
+  // Once it lands in IDB, drop the legacy localStorage slot to free the quota.
+  blobSet("medrecall:bankcache:v1", packs).then(idb=>{ if(idb){ try{ localStorage.removeItem("medrecall:bankcache:v1"); }catch(e){} } });
   return packs.reduce((n,p)=>n+p.questions.length,0);
 }
 export function adaptPack(c){
@@ -893,6 +906,16 @@ function exportJSON(obj,name){
    RENDER ROUTER
    ============================================================ */
 export function render(){
+  // Leaving the exam runner by any route other than Submit/Quit (sidebar or
+  // header nav) abandons the exam — same semantics as Quit. The countdown dies
+  // with it, and App.exam MUST be cleared: the deferred-work gates below key on
+  // it, and a stale App.exam would jam bank syncs and app updates forever.
+  // (submitExam clears App.exam itself, so this never fires on a normal finish.)
+  if(App.screen!=="exam-runner" && App.exam){
+    if(App.exam.timerId) clearInterval(App.exam.timerId);
+    App.exam=null;
+    toast("Exam discarded");
+  }
   // Apply work deferred while a session was active (see syncBank / controllerchange).
   if(!App.practice && !App.exam){
     if(App._pendingBank){ const pk=App._pendingBank; App._pendingBank=null; BANK.length=0; pk.forEach(p=>BANK.push(p)); buildIndex(); }
@@ -932,11 +955,6 @@ export function render(){
   else if(App.screen==="qedit") a.innerHTML=viewQEditor();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
   if(App.screen==="leaderboard") startBoardPoll(); else stopBoardPoll();
-  // Leaving the exam runner by any route (sidebar/header nav, not just Quit)
-  // must stop the countdown — otherwise the orphaned interval keeps ticking,
-  // auto-submits the abandoned exam from another screen, and double-speeds
-  // the countdown of any exam started later.
-  if(App.screen!=="exam-runner" && App.exam && App.exam.timerId){ clearInterval(App.exam.timerId); App.exam.timerId=null; }
   const _DASH=new Set(["home","bank","banksys","progress","saved","fixes","system","type","reference","mistakes","disputed","redflag","checklist"]);
   document.body.classList.toggle("dash", _DASH.has(App.screen));
   document.body.classList.toggle("read", !_DASH.has(App.screen));
@@ -2266,6 +2284,7 @@ function viewExam(){
 export function submitExam(auto){
   const e=App.exam;
   if(e.timerId) clearInterval(e.timerId);
+  App.exam=null;   // finished — everything below reads the local `e`; a stale App.exam would jam the deferred-work gates in render()
   let score=0; const answers=[], byTopic={};
   e.ids.forEach(id=>{
     const q=QMAP[id], chosen=e.answers[id]||null, cl=correctLabel(q), ok=chosen===cl;
@@ -2764,7 +2783,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="qedit-correct"){ qeSyncDraft(); const i=+t.dataset.i, d=App.qedit.draft; d.choices.forEach((c,k)=>c.correct=(k===i)); render(); return; }
   if(a==="qedit-delchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.splice(+t.dataset.i,1); reLetter(d.choices); render(); return; }
   if(a==="qedit-addchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.push({l:String.fromCharCode(65+d.choices.length), t:"", correct:false, e:""}); render(); return; }
-  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); if(!Object.keys(patch).length){ toast("No changes to save"); return; } DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=Object.assign(DB.settings.qedits[App.qedit.qid]||{}, patch); save.settings(); buildIndex(); postEdit(App.qedit.qid, patch); { const _s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; if(!_s.includes(App.qedit.qid)){ _s.push(App.qedit.qid); DB.settings.fixSeen=_s; save.settings(); } } qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & announced to everyone ✓":"Fix saved on this device"); return; }
+  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); if(!Object.keys(patch).length){ toast("No changes to save"); return; } DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=Object.assign(DB.settings.qedits[App.qedit.qid]||{}, patch); save.settings(); buildIndex(); postEdit(App.qedit.qid, sharedEditFor(App.qedit.qid)); { const _s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; if(!_s.includes(App.qedit.qid)){ _s.push(App.qedit.qid); DB.settings.fixSeen=_s; save.settings(); } } qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & announced to everyone ✓":"Fix saved on this device"); return; }
   if(a==="qedit-copy"){ qeSyncDraft(); const d=App.qedit.draft, q=QMAP[App.qedit.qid]; reLetter(d.choices); const src={ id:App.qedit.qid, type:q.type, system:q.system, reference:q.reference, topic:q.topic, stem:d.stem, choices:d.choices.map(c=>({label:c.l,text:c.t,correct:!!c.correct,explanation:c.e||undefined})), keyPoint:d.keyPoint||undefined, flag:d.flagSev?{severity:d.flagSev,note:d.flagNote,source:"maintainer edit"}:undefined }; copyText(JSON.stringify(src,null,2), "Corrected JSON copied", src, App.qedit.qid+".json"); return; }
   if(a==="qedit-revert"){ if(DB.settings.qedits) delete DB.settings.qedits[App.qedit.qid]; save.settings(); buildIndex(); qeInit(App.qedit.qid); render(); toast("Your edit was reverted"); return; }
   if(a==="notif-reports"){ DB.settings.notifyReports=(DB.settings.notifyReports===false); save.settings(); if(DB.settings.notifyReports){ (async()=>{ if(notifSupported()&&notifPermission()==="default"){ try{ await Notification.requestPermission(); }catch(e){} } checkNewReports(); })(); } render(); return; }
@@ -3193,6 +3212,14 @@ function patchQuestion(q, patch){
   q._edited=true;
 }
 // Apply remote + local field overrides onto the freshly built QMAP (local device wins).
+// The patch to SHARE for a question: everything this device knows changed
+// (remote fixes + local fixes merged per field). Old clients apply sheet rows
+// last-row-wins for the WHOLE question, so posting only the newest sparse diff
+// would silently revert earlier fixes on every not-yet-updated device —
+// the shared row must always carry the full cumulative patch.
+export function sharedEditFor(qid){
+  return Object.assign({}, (REMOTE_EDITS||{})[qid]||{}, ((DB.settings&&DB.settings.qedits)||{})[qid]||{});
+}
 function applyEdits(){
   // Merge remote + local per FIELD (local wins) — patches are per-field diffs, so
   // a local stem fix must not discard a remote choice fix for the same question.

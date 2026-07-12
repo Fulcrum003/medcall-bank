@@ -21,8 +21,8 @@ beforeEach(() => {
   App.screen = 'home';
 });
 
-describe('exam timer is cleared when leaving the exam runner via nav (regression)', () => {
-  it('render() on a non-exam screen clears a live exam interval', () => {
+describe('leaving the exam runner via nav abandons the exam (regression)', () => {
+  it('render() on a non-exam screen stops the timer and discards the exam', () => {
     vi.useFakeTimers();
     try {
       const tick = vi.fn();
@@ -34,12 +34,42 @@ describe('exam timer is cleared when leaving the exam runner via nav (regression
       // Simulate the sidebar "Home" click: screen changes, render runs.
       App.screen = 'home';
       render();
-      expect(App.exam.timerId).toBeNull();
+      expect(App.exam).toBeNull(); // fully abandoned, not just paused — a stale App.exam jams the deferred-work gates
       vi.advanceTimersByTime(5000);
       expect(tick).not.toHaveBeenCalled();
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('an abandoned exam does not block a deferred bank swap', () => {
+    App.exam = {
+      ids: ['r1'], order: { r1: questions[0].choices }, i: 0, answers: {},
+      flags: new Set(), timerMode: 'off', timeLeft: 0, total: 0,
+      startedAt: Date.now(), timerId: null,
+    };
+    App._pendingBank = [{ id: 'NEW', title: 'New', color: '#000', questions: [
+      { id: 'n1', topic: 'T', stem: 'S?', choices: [{ l: 'A', t: 't', correct: true }] },
+    ]}];
+    App.screen = 'home';
+    render(); // abandons the exam, THEN applies the pending bank in the same pass
+    expect(App.exam).toBeNull();
+    expect(App._pendingBank).toBeNull();
+    expect(BANK.map(p => p.id)).toEqual(['NEW']);
+  });
+
+  it('submitExam clears App.exam so later syncs/updates are not deferred forever', async () => {
+    const { submitExam } = await import('../app.js');
+    App.exam = {
+      ids: ['r1'], order: { r1: questions[0].choices }, i: 0, answers: { r1: 'A' },
+      flags: new Set(), timerMode: 'off', timeLeft: 0, total: 0,
+      startedAt: Date.now(), timerId: null,
+    };
+    App.screen = 'exam-runner';
+    submitExam(false);
+    expect(App.exam).toBeNull();
+    expect(App.examResult).toBeTruthy(); // results still available for the results screen
+    expect(App.screen).toBe('exam-results');
   });
 
   it('render() while still on exam-runner keeps the interval alive', () => {
@@ -295,5 +325,42 @@ describe('blob store falls back to STORE without IndexedDB (regression)', () => 
   it('returns null for a missing key', async () => {
     const { blobGet } = await import('../app.js');
     await expect(blobGet('blob:missing')).resolves.toBeNull();
+  });
+});
+
+// ── Round 4: blockers found by the pre-merge adversarial review ──────────────
+
+describe('shared edit rows stay whole-question for old clients (regression)', () => {
+  it('sharedEditFor layers all locally-known fixes into one cumulative patch', async () => {
+    const { sharedEditFor } = await import('../app.js');
+    DB.settings.qedits = { q9: { stem: 'fixed stem' } };
+    // Second local fix to a different field merges in, mirroring qedit-save.
+    DB.settings.qedits.q9 = Object.assign(DB.settings.qedits.q9, { keyPoint: 'fixed KP' });
+    const shared = sharedEditFor('q9');
+    expect(shared).toEqual({ stem: 'fixed stem', keyPoint: 'fixed KP' });
+    expect(sharedEditFor('unknown')).toEqual({});
+  });
+});
+
+describe('partial sync backfills failed packs from the previous cache (regression)', () => {
+  it('a pack that 404s this round survives via the cached copy', async () => {
+    const { syncBank, blobSet } = await import('../app.js');
+    // Previous successful sync cached both packs.
+    await blobSet('medrecall:bankcache:v1', [
+      { id: 'p1', title: 'p1', color: '#000', questions: [{ id: 'p1_q1', stem: 'S', choices: [{ l: 'A', t: 't', correct: true }] }] },
+      { id: 'p2', title: 'p2', color: '#000', questions: [{ id: 'p2_q1', stem: 'S', choices: [{ l: 'A', t: 't', correct: true }] }] },
+    ]);
+    global.fetch = vi.fn(async (url) => {
+      const u = String(url);
+      if (u.includes('manifest.json')) return { ok: true, json: async () => ({
+        packs: [{ packId: 'p1', url: 'p1.json' }, { packId: 'p2', url: 'p2.json' }] }) };
+      if (u.includes('p1.json')) return { ok: true, json: async () => ({ packId: 'p1', title: 'p1',
+        questions: [{ id: 'p1_q1', stem: 'S?', choices: [{ label: 'A', text: 't', correct: true }] }] }) };
+      return { ok: false, status: 404 }; // p2 fails THIS round
+    });
+    const n = await syncBank('https://bank.test');
+    expect(BANK.map(p => p.id).sort()).toEqual(['p1', 'p2']); // p2 backfilled from cache
+    expect(n).toBe(2);
+    localStorage.removeItem('medrecall:bankcache:v1');
   });
 });
