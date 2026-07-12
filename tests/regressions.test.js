@@ -120,3 +120,118 @@ describe('re-grading an already-answered question is a no-op (regression)', () =
     expect(DB.progress.questions['r1'].seen).toBe(1);
   });
 });
+
+// ── Round 2 regressions (from the full audit) ────────────────────────────────
+
+describe('STORE survives corrupt localStorage values (regression)', () => {
+  it('wsGet returns null for a value that is not valid JSON', async () => {
+    const { wsGet } = await import('../app.js');
+    localStorage.setItem('corrupt:key', '{definitely not json');
+    await expect(wsGet('corrupt:key')).resolves.toBeNull();
+    localStorage.removeItem('corrupt:key');
+  });
+
+  it('loadDB does not throw when a stored section is corrupt', async () => {
+    const { loadDB, SK } = await import('../app.js');
+    localStorage.setItem(SK.progress, 'garbage{{{');
+    await expect(loadDB()).resolves.toBeUndefined();
+    expect(DB.progress.questions).toBeDefined(); // defaults kept
+    localStorage.removeItem(SK.progress);
+  });
+});
+
+describe('recordAttempt tolerates partial imported entries (regression)', () => {
+  it('grading an entry without history/correct does not throw or produce NaN', async () => {
+    const { recordAttempt } = await import('../app.js');
+    DB.progress.questions['r1'] = { seen: 2 }; // shape from an old/partial backup
+    expect(() => recordAttempt(QMAP['r1'], 'A', 'good')).not.toThrow();
+    const p = DB.progress.questions['r1'];
+    expect(p.seen).toBe(3);
+    expect(p.correct).toBe(1);
+    expect(Number.isNaN(p.correct)).toBe(false);
+    expect(p.history).toHaveLength(1);
+  });
+});
+
+describe('recalled single-choice questions are self-graded (regression)', () => {
+  beforeEach(() => {
+    BANK.length = 0;
+    BANK.push({ id: 'REG', title: 'Regression Pack', color: '#000', questions: [
+      { id: 's1', topic: 'T', stem: 'Recalled?', choices: [{ l: 'A', t: 'the answer', correct: true }] },
+      { id: 's2', topic: 'T', stem: 'Recalled2?', choices: [{ l: 'A', t: 'the answer', correct: true }] },
+    ]});
+    buildIndex();
+  });
+
+  it('grading Good records a correct attempt even with no selection', () => {
+    App.practice = { ctx: { smart: true }, label: 'T', pool: ['s1', 's2'], i: 0,
+      revealed: true, selected: null, answered: 0, correct: 0, xp: 0, results: {} };
+    App.screen = 'quiz';
+    gradeCurrent('good');
+    const p = DB.progress.questions['s1'];
+    expect(p.correct).toBe(1);
+    expect(p.lastResult).toBe('correct');
+  });
+
+  it('grading Again records a miss', () => {
+    App.practice = { ctx: { smart: true }, label: 'T', pool: ['s1', 's2'], i: 0,
+      revealed: true, selected: null, answered: 0, correct: 0, xp: 0, results: {} };
+    App.screen = 'quiz';
+    gradeCurrent('again');
+    const p = DB.progress.questions['s1'];
+    expect(p.correct).toBe(0);
+    expect(p.lastResult).toBe('wrong');
+  });
+});
+
+describe('dates are local-timezone consistent (regression)', () => {
+  it('addDays is exact regardless of host timezone', async () => {
+    const { addDays } = await import('../app.js');
+    expect(addDays('2024-06-15', 1)).toBe('2024-06-16');
+    expect(addDays('2024-12-31', 1)).toBe('2025-01-01');
+    expect(addDays('2024-03-01', -1)).toBe('2024-02-29');
+  });
+
+  it('today()+1 day is always strictly after today()', async () => {
+    const { today, addDays } = await import('../app.js');
+    expect(addDays(today(), 1) > today()).toBe(true);
+    expect(addDays(today(), 0)).toBe(today());
+  });
+});
+
+describe('syncBank resilience (regression)', () => {
+  const packJson = (id) => ({ packId: id, title: id, questions: [
+    { id: id + '_q1', stem: 'S?', choices: [{ label: 'A', text: 't', correct: true }] },
+  ]});
+
+  beforeEach(() => {
+    global.fetch = vi.fn(async (url) => {
+      const u = String(url);
+      if (u.includes('manifest.json')) return { ok: true, json: async () => ({
+        packs: [{ packId: 'p1', url: 'p1.json' }, { packId: 'p2', url: 'p2.json' }] }) };
+      if (u.includes('p1.json')) return { ok: true, json: async () => packJson('p1') };
+      return { ok: false, status: 404 }; // p2 is missing
+    });
+  });
+
+  it('a single missing pack is skipped instead of aborting the whole sync', async () => {
+    const { syncBank } = await import('../app.js');
+    const n = await syncBank('https://bank.test');
+    expect(n).toBe(1);
+    expect(BANK.map(p => p.id)).toEqual(['p1']);
+    expect(QMAP['p1_q1']).toBeDefined();
+  });
+
+  it('bank swap is deferred while a practice session is active, applied by render()', async () => {
+    const { syncBank } = await import('../app.js');
+    App.practice = { ctx: { smart: true }, label: 'T', pool: ['r1'], i: 0,
+      revealed: false, selected: null, answered: 0, correct: 0, xp: 0, results: {} };
+    await syncBank('https://bank.test');
+    expect(BANK.map(p => p.id)).toEqual(['REG']);   // untouched mid-session
+    expect(App._pendingBank).toBeTruthy();
+    App.practice = null; App.screen = 'home';
+    render();
+    expect(BANK.map(p => p.id)).toEqual(['p1']);    // applied after session end
+    expect(App._pendingBank).toBeNull();
+  });
+});

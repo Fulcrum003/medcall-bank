@@ -3,7 +3,7 @@
    so the full bank is available offline even right after a version bump or an
    iOS storage eviction. Same-origin = network-first (fresh when online, cached
    when offline); cross-origin (fonts) = cache-first. */
-const CACHE = "medrecall-v16";
+const CACHE = "medrecall-v17";
 const SHELL = ["./", "./index.html", "./manifest.json", "./sw.js"];
 
 self.addEventListener("install", (e) => {
@@ -40,6 +40,12 @@ self.addEventListener("notificationclick", (e) => {
   })());
 });
 
+// Cache-first is only safe for immutable assets; fonts are the only cross-origin
+// assets the shell needs. Custom bank sources and the group-Script polls must NOT
+// be cached: cache-first served stale banks forever, and the unique cb= poll URLs
+// accumulated in the cache indefinitely.
+const FONT_HOSTS = ["fonts.googleapis.com", "fonts.gstatic.com"];
+
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
@@ -47,12 +53,28 @@ self.addEventListener("fetch", (e) => {
   if (url.origin === location.origin) {
     e.respondWith(
       fetch(req)
-        .then((res) => { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); return res; })
-        .catch(() => caches.match(req).then((r) => r || caches.match("./index.html")))
+        .then((res) => {
+          // Only cache good responses: a transient 404/500 during a Pages deploy
+          // must not overwrite the known-good offline copy.
+          if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); }
+          return res;
+        })
+        .catch(() => caches.match(req).then((r) => {
+          if (r) return r;
+          // Fall back to the app shell only for page navigations. Serving HTML for
+          // a missing pack JSON made r.json() blow up and aborted the whole sync.
+          const wantsHTML = req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html");
+          return wantsHTML ? caches.match("./index.html") : Response.error();
+        }))
     );
-  } else {
+  } else if (FONT_HOSTS.includes(url.hostname)) {
     e.respondWith(
-      caches.match(req).then((r) => r || fetch(req).then((res) => { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); return res; }).catch(() => r))
+      caches.match(req).then((r) => r || fetch(req).then((res) => {
+        if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); }
+        return res;
+      }))
     );
   }
+  // Other cross-origin requests (custom bank sources, leaderboard Script) pass
+  // through to the network untouched.
 });
