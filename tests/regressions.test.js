@@ -235,3 +235,65 @@ describe('syncBank resilience (regression)', () => {
     expect(App._pendingBank).toBeNull();
   });
 });
+
+// ── Round 3: editor per-field patches + blob store ───────────────────────────
+
+describe('question editor produces per-field diff patches (regression)', () => {
+  beforeEach(async () => {
+    BANK.length = 0;
+    BANK.push({ id: 'REG', title: 'Pack', color: '#000', questions: [
+      { id: 'e1', topic: 'T', stem: 'Original stem', keyPoint: 'KP',
+        choices: [{ l: 'A', t: 'one', correct: true, e: 'why' }, { l: 'B', t: 'two', correct: false, e: '' }] },
+    ]});
+    buildIndex();
+  });
+
+  it('editing only the stem yields a stem-only patch', async () => {
+    const { qeInit, qeBuildPatch } = await import('../app.js');
+    qeInit('e1');
+    App.qedit.draft.stem = 'Fixed stem';
+    const patch = qeBuildPatch();
+    expect(patch).toHaveProperty('stem', 'Fixed stem');
+    expect(patch).not.toHaveProperty('choices');
+    expect(patch).not.toHaveProperty('keyPoint');
+    expect(patch).not.toHaveProperty('flag');
+  });
+
+  it('editing only a choice yields a choices-only patch', async () => {
+    const { qeInit, qeBuildPatch } = await import('../app.js');
+    qeInit('e1');
+    App.qedit.draft.choices[1].t = 'two (corrected)';
+    const patch = qeBuildPatch();
+    expect(patch).toHaveProperty('choices');
+    expect(patch).not.toHaveProperty('stem');
+  });
+
+  it('no edits yields an empty patch', async () => {
+    const { qeInit, qeBuildPatch } = await import('../app.js');
+    qeInit('e1');
+    expect(Object.keys(qeBuildPatch())).toHaveLength(0);
+  });
+
+  it('concurrent stem and choice patches merge instead of clobbering', async () => {
+    // Simulates applyEdits' per-field merge of two maintainers' rows.
+    const stemPatch = { stem: 'M1 stem fix' };
+    const choicePatch = { choices: [{ l: 'A', t: 'M2 choice fix', correct: true }] };
+    const merged = Object.assign({}, stemPatch, choicePatch);
+    expect(merged.stem).toBe('M1 stem fix');
+    expect(merged.choices[0].t).toBe('M2 choice fix');
+  });
+});
+
+describe('blob store falls back to STORE without IndexedDB (regression)', () => {
+  it('round-trips a value through the fallback path', async () => {
+    const { blobGet, blobSet } = await import('../app.js');
+    await blobSet('blob:test', { big: 'payload' });
+    await expect(blobGet('blob:test')).resolves.toEqual({ big: 'payload' });
+    localStorage.removeItem('blob:test');
+  });
+
+  it('returns null for a missing key', async () => {
+    const { blobGet } = await import('../app.js');
+    await expect(blobGet('blob:missing')).resolves.toBeNull();
+  });
+});

@@ -38,6 +38,23 @@ export const STORE = (function(){
 })();
 export async function wsGet(k){ return STORE.get(k); }
 export async function wsSet(k,v){ return STORE.set(k,v); }
+
+/* Large-value store: the adapted bank (~7 MB stringified) exceeds the ~5 MiB
+   localStorage quota, so the offline/instant-start bank cache lives in
+   IndexedDB. Falls back to the regular STORE when IndexedDB is unavailable
+   (some private modes, very old browsers, test environments). */
+const IDB_OK = typeof indexedDB !== "undefined";
+function idbOpen(){ return new Promise((res,rej)=>{ const r=indexedDB.open("medrecall-blob",1); r.onupgradeneeded=()=>{ r.result.createObjectStore("kv"); }; r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); }
+export async function blobGet(key){
+  if(!IDB_OK) return wsGet(key);
+  try{ const db=await idbOpen(); return await new Promise((res,rej)=>{ const rq=db.transaction("kv","readonly").objectStore("kv").get(key); rq.onsuccess=()=>res(rq.result===undefined?null:rq.result); rq.onerror=()=>rej(rq.error); }); }
+  catch(e){ return wsGet(key); }
+}
+export async function blobSet(key,val){
+  if(!IDB_OK) return wsSet(key,val);
+  try{ const db=await idbOpen(); await new Promise((res,rej)=>{ const tx=db.transaction("kv","readwrite"); tx.objectStore("kv").put(val,key); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
+  catch(e){ return wsSet(key,val); }
+}
 export const SK = {progress:"medrecall:progress:v1", exams:"medrecall:exams:v1", settings:"medrecall:settings:v1", reports:"medrecall:reports:v1"};
 export let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
@@ -308,7 +325,7 @@ export async function syncBank(base){
   // the session ends.
   if(App.practice||App.exam){ App._pendingBank=packs; }
   else { BANK.length=0; packs.forEach(p=>BANK.push(p)); buildIndex(); }
-  wsSet("medrecall:bankcache:v1", packs);   // keep a copy for offline / instant start
+  blobSet("medrecall:bankcache:v1", packs);   // keep a copy for offline / instant start (IndexedDB — too big for localStorage)
   return packs.reduce((n,p)=>n+p.questions.length,0);
 }
 export function adaptPack(c){
@@ -2747,7 +2764,7 @@ document.body.addEventListener("click", async e=>{
   if(a==="qedit-correct"){ qeSyncDraft(); const i=+t.dataset.i, d=App.qedit.draft; d.choices.forEach((c,k)=>c.correct=(k===i)); render(); return; }
   if(a==="qedit-delchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.splice(+t.dataset.i,1); reLetter(d.choices); render(); return; }
   if(a==="qedit-addchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.push({l:String.fromCharCode(65+d.choices.length), t:"", correct:false, e:""}); render(); return; }
-  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=patch; save.settings(); buildIndex(); postEdit(App.qedit.qid, patch); { const _s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; if(!_s.includes(App.qedit.qid)){ _s.push(App.qedit.qid); DB.settings.fixSeen=_s; save.settings(); } } qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & announced to everyone ✓":"Fix saved on this device"); return; }
+  if(a==="qedit-save"){ qeSyncDraft(); const d=App.qedit.draft, nc=d.choices.filter(c=>c.correct).length; if(d.choices.length && nc!==1){ toast("Mark exactly one correct answer"); return; } const patch=qeBuildPatch(); if(!Object.keys(patch).length){ toast("No changes to save"); return; } DB.settings.qedits=DB.settings.qedits||{}; DB.settings.qedits[App.qedit.qid]=Object.assign(DB.settings.qedits[App.qedit.qid]||{}, patch); save.settings(); buildIndex(); postEdit(App.qedit.qid, patch); { const _s=Array.isArray(DB.settings.fixSeen)?DB.settings.fixSeen:[]; if(!_s.includes(App.qedit.qid)){ _s.push(App.qedit.qid); DB.settings.fixSeen=_s; save.settings(); } } qeInit(App.qedit.qid); render(); toast(DB.settings.groupEndpoint?"Fix saved & announced to everyone ✓":"Fix saved on this device"); return; }
   if(a==="qedit-copy"){ qeSyncDraft(); const d=App.qedit.draft, q=QMAP[App.qedit.qid]; reLetter(d.choices); const src={ id:App.qedit.qid, type:q.type, system:q.system, reference:q.reference, topic:q.topic, stem:d.stem, choices:d.choices.map(c=>({label:c.l,text:c.t,correct:!!c.correct,explanation:c.e||undefined})), keyPoint:d.keyPoint||undefined, flag:d.flagSev?{severity:d.flagSev,note:d.flagNote,source:"maintainer edit"}:undefined }; copyText(JSON.stringify(src,null,2), "Corrected JSON copied", src, App.qedit.qid+".json"); return; }
   if(a==="qedit-revert"){ if(DB.settings.qedits) delete DB.settings.qedits[App.qedit.qid]; save.settings(); buildIndex(); qeInit(App.qedit.qid); render(); toast("Your edit was reverted"); return; }
   if(a==="notif-reports"){ DB.settings.notifyReports=(DB.settings.notifyReports===false); save.settings(); if(DB.settings.notifyReports){ (async()=>{ if(notifSupported()&&notifPermission()==="default"){ try{ await Notification.requestPermission(); }catch(e){} } checkNewReports(); })(); } render(); return; }
@@ -3177,7 +3194,11 @@ function patchQuestion(q, patch){
 }
 // Apply remote + local field overrides onto the freshly built QMAP (local device wins).
 function applyEdits(){
-  const merged=Object.assign({}, REMOTE_EDITS||{}, (DB.settings&&DB.settings.qedits)||{});
+  // Merge remote + local per FIELD (local wins) — patches are per-field diffs, so
+  // a local stem fix must not discard a remote choice fix for the same question.
+  const merged={};
+  for(const src of [REMOTE_EDITS||{}, (DB.settings&&DB.settings.qedits)||{}])
+    for(const qid in src) merged[qid]=Object.assign(merged[qid]||{}, src[qid]);
   for(const qid in merged){ const base=QMAP[qid]; if(!base) continue; const clone=Object.assign({}, base); patchQuestion(clone, merged[qid]); QMAP[qid]=clone; }  // clone -> BANK stays pristine so edits are reversible
 }
 
@@ -3192,7 +3213,7 @@ async function fetchEdits(){
       let qid, patch;
       if(Array.isArray(row)){ if(String(row[0]||"").toLowerCase().indexOf("when")>=0) continue; qid=row[1]; try{ patch=JSON.parse(row[2]); }catch(e){ patch=null; } }
       else if(row && typeof row==="object"){ qid=row.qid; patch=(typeof row.patch==="string")? (function(){try{return JSON.parse(row.patch);}catch(e){return null;}})() : row.patch; }
-      if(qid && patch) map[qid]=patch;   // later rows win (sheet append order)
+      if(qid && patch) map[qid]=Object.assign(map[qid]||{}, patch);   // later rows win PER FIELD (sheet append order); patches are per-field diffs
     }
     REMOTE_EDITS=map;
     // announce newly-shared fixes to everyone (first sync sets a silent baseline)
@@ -3241,13 +3262,16 @@ function reportsForQid(qid){
   (DB.reports||[]).forEach(r=>{ if(String(r.qid)===String(qid)) out.push({when:r.date, who:"you (local)", issue:r.type, note:r.note}); });
   return out;
 }
-function qeInit(qid){
+export function qeInit(qid){
   const q=QMAP[qid];
-  App.qedit={ qid, exists:!!q, draft: q ? {
+  const snap = q ? {
     stem:q.stem||"", keyPoint:q.keyPoint||"",
     choices:(q.choices||[]).map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||""})),
     flagSev:(q.flag&&q.flag.severity)||"", flagNote:(q.flag&&q.flag.note)||""
-  } : null };
+  } : null;
+  // orig = what the maintainer saw at open time; qeBuildPatch diffs against it so
+  // saves only carry the fields that actually changed (see LWW note there).
+  App.qedit={ qid, exists:!!q, draft: snap, orig: snap ? JSON.parse(JSON.stringify(snap)) : null };
 }
 function qeSyncDraft(){
   const d=App.qedit&&App.qedit.draft; if(!d) return;
@@ -3257,9 +3281,21 @@ function qeSyncDraft(){
   const fn=g("qe-flagnote"); if(fn) d.flagNote=fn.value;
   d.choices.forEach((c,i)=>{ const t=g("qe-ct-"+i); if(t) c.t=t.value; const e=g("qe-ce-"+i); if(e) c.e=e.value; });
 }
-function qeBuildPatch(){
-  const d=App.qedit.draft; reLetter(d.choices);
-  return { stem:d.stem, keyPoint:d.keyPoint, choices:d.choices.map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||undefined})), flag: d.flagSev? {severity:d.flagSev, note:d.flagNote, source:"maintainer in-app edit"} : null };
+export function qeBuildPatch(){
+  // Per-field diff against the open-time snapshot: whole-question patches meant
+  // two maintainers editing DIFFERENT fields concurrently clobbered each other
+  // (last writer won for the entire question). Now a stem fix and a choice fix
+  // merge cleanly; only same-field concurrent edits still last-write-win.
+  const d=App.qedit.draft, o=App.qedit.orig||{}; reLetter(d.choices);
+  const patch={};
+  if(d.stem!==o.stem) patch.stem=d.stem;
+  if(d.keyPoint!==o.keyPoint) patch.keyPoint=d.keyPoint;
+  const dc=d.choices.map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||undefined}));
+  const oc=(o.choices||[]).map(c=>({l:c.l, t:c.t, correct:!!c.correct, e:c.e||undefined}));
+  if(JSON.stringify(dc)!==JSON.stringify(oc)) patch.choices=dc;
+  if(d.flagSev!==o.flagSev || d.flagNote!==o.flagNote)
+    patch.flag = d.flagSev? {severity:d.flagSev, note:d.flagNote, source:"maintainer in-app edit"} : null;
+  return patch;
 }
 function viewQEditor(){
   const Q=App.qedit;
@@ -3335,8 +3371,9 @@ export async function boot(){
   try{ ghToken = await wsGet("medrecall:ghtoken:v1"); }catch(e){}
   try{ wallImg = await wsGet("medrecall:wallpaperimg:v1"); }catch(e){}
   applyWallpaper();
-  // instant + offline start from the cached bank
-  try{ const cached = await wsGet("medrecall:bankcache:v1"); if(cached && cached.length){ BANK.length=0; cached.forEach(p=>BANK.push(p)); } }catch(e){}
+  // instant + offline start from the cached bank (IndexedDB; falls back to the
+  // legacy localStorage slot for caches written by older versions)
+  try{ const cached = (await blobGet("medrecall:bankcache:v1")) || (await wsGet("medrecall:bankcache:v1")); if(cached && cached.length){ BANK.length=0; cached.forEach(p=>BANK.push(p)); } }catch(e){}
   try{ REMOTE_EDITS = (await wsGet("medrecall:remoteedits:v1"))||{}; }catch(e){}
   buildIndex();
   render();
