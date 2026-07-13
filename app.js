@@ -3425,4 +3425,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v1.9 */
+/* clinic-v2.0 */
