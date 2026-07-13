@@ -952,6 +952,7 @@ export function render(){
   else if(App.screen==="settings") a.innerHTML=viewSettings();
   else if(App.screen==="repair") a.innerHTML=viewRepair();
   else if(App.screen==="reportsinbox") a.innerHTML=viewReportsInbox();
+  else if(App.screen==="editedqs") a.innerHTML=viewEditedQs();
   else if(App.screen==="qedit") a.innerHTML=viewQEditor();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
   if(App.screen==="leaderboard") startBoardPoll(); else stopBoardPoll();
@@ -2042,7 +2043,7 @@ function viewReportsInbox(){
   else if(st==="error") html+=`<div class="card pad"><div style="font-size:13px;line-height:1.5">Couldn't reach the Script. Check it's deployed with access set to <b>Anyone</b>, and the URL is correct.</div></div>`;
   else if(st==="notupgraded") html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div style="font-size:13px;line-height:1.5">The Script returned leaderboard data, not reports. Add the <b>doGet <span class="mono">?reports=1</span></b> branch to your Apps Script (see setup) and redeploy a new version.</div></div>`;
   else {
-    const data=(App.inboxRows||[]).slice(); if(data.length && Array.isArray(data[0]) && String(data[0][0]).toLowerCase().indexOf("when")>=0) data.shift();
+    const data=reportRows().slice();
     if(!data.length){ html+=`<div class="empty">No reports yet. They'll appear here as your group submits them.</div>`; }
     else{
       html+=`<p class="muted" style="font-size:12.5px">${data.length} report${data.length>1?"s":""} · newest first</p>`;
@@ -2597,6 +2598,8 @@ function viewSettings(){
     </div>
     <div class="sectlabel">Reports inbox · maintainer</div>
     <button class="btn btn-ghost" data-action="open-reports-inbox"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v11H6l-2 3V5z"/></svg> Open reports inbox${unreadReports()>0?` · <span class="badge due">${unreadReports()} new</span>`:""}</button>
+    <div style="height:8px"></div>
+    <button class="btn btn-ghost" data-action="open-edited-qs"><svg class="i" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-2.7-.7-.7-2.7z"/></svg> Edited questions${editedIds().length?` · <span class="badge">${editedIds().length}</span>`:""}</button>
     <div class="row between card pad" style="margin-top:8px">
       <div><b>Notify me about new reports</b><div class="faint" style="font-size:12.5px">A notification when you open the app and new reports have arrived</div></div>
       <button class="switch ${DB.settings.notifyReports!==false?'on':''}" data-action="notif-reports" aria-label="Toggle report alerts"><span class="knob"></span></button>
@@ -2779,7 +2782,10 @@ document.body.addEventListener("click", async e=>{
   if(a==="trk-month"){ const d=+t.dataset.delta, b=(App.trkMonth||today().slice(0,7))+"-01", dt=new Date(b+"T00:00:00"); dt.setMonth(dt.getMonth()+d); App.trkMonth=ymd(dt).slice(0,7); render(); return; }
   if(a==="trk-view"){ App.trkView=t.dataset.v; render(); return; }
   if(a==="open-reports-inbox"){ App.screen="reportsinbox"; App.inboxState="loading"; App.inboxRows=[]; render(); fetchReports(); return; }
-  if(a==="open-reported-q"){ const qid=t.dataset.qid; if(!qid){ toast("This report has no question id"); return; } qeInit(qid); App.screen="qedit"; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
+  if(a==="open-edited-qs"){ App.screen="editedqs"; render(); window.scrollTo({top:0,behavior:"instant"}); fetchEdits(); return; }
+  if(a==="refresh-edited"){ toast("Refreshing…"); fetchEdits(); return; }
+  if(a==="open-edited-q"){ const qid=t.dataset.qid; App.qeditFrom="editedqs"; qeInit(qid); App.screen="qedit"; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
+  if(a==="open-reported-q"){ const qid=t.dataset.qid; if(!qid){ toast("This report has no question id"); return; } App.qeditFrom="reportsinbox"; qeInit(qid); App.screen="qedit"; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
   if(a==="qedit-correct"){ qeSyncDraft(); const i=+t.dataset.i, d=App.qedit.draft; d.choices.forEach((c,k)=>c.correct=(k===i)); render(); return; }
   if(a==="qedit-delchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.splice(+t.dataset.i,1); reLetter(d.choices); render(); return; }
   if(a==="qedit-addchoice"){ qeSyncDraft(); const d=App.qedit.draft; d.choices.push({l:String.fromCharCode(65+d.choices.length), t:"", correct:false, e:""}); render(); return; }
@@ -3194,6 +3200,7 @@ async function inAppNotifyCheck(){
    GitHub-synced bank, so a maintainer fix auto-reaches everyone.
    ============================================================ */
 let REMOTE_EDITS = {};   // qid -> patch, pulled from the group Script
+let REMOTE_EDITS_META = {};   // qid -> {when, by, editId} for the Edited-questions screen
 
 function reLetter(choices){ choices.forEach((c,i)=>{ c.l=String.fromCharCode(65+i); }); return choices; }
 function copyText(txt, okMsg, obj, fname){
@@ -3235,22 +3242,23 @@ async function fetchEdits(){
     const u=ep+(ep.indexOf("?")>=0?"&":"?")+"edits=1&cb="+Date.now();
     const r=await fetch(u,{cache:"no-store"}); if(!r.ok) return;
     const data=await r.json(); if(!Array.isArray(data)) return;   // script not upgraded yet
-    const map={};
+    const map={}, meta={};
     for(const row of data){
       let qid, patch;
       if(Array.isArray(row)){ if(String(row[0]||"").toLowerCase().indexOf("when")>=0) continue; qid=row[1]; try{ patch=JSON.parse(row[2]); }catch(e){ patch=null; } }
       else if(row && typeof row==="object"){ qid=row.qid; patch=(typeof row.patch==="string")? (function(){try{return JSON.parse(row.patch);}catch(e){return null;}})() : row.patch; }
-      if(qid && patch) map[qid]=Object.assign(map[qid]||{}, patch);   // later rows win PER FIELD (sheet append order); patches are per-field diffs
+      if(qid && patch){ map[qid]=Object.assign(map[qid]||{}, patch);   // later rows win PER FIELD (sheet append order); patches are per-field diffs
+        meta[qid]=Array.isArray(row)? {when:row[0]||"", by:row[3]||"", editId:row[5]||""} : {when:row.when||row.date||"", by:row.by||"", editId:row.editId||""}; }
     }
-    REMOTE_EDITS=map;
+    REMOTE_EDITS=map; REMOTE_EDITS_META=meta;
     // announce newly-shared fixes to everyone (first sync sets a silent baseline)
     { const _cur=Object.keys(map), _seen=DB.settings.fixSeen;
       if(!Array.isArray(_seen)){ DB.settings.fixSeen=_cur; save.settings(); }
       else { const _fresh=_cur.filter(id=>!_seen.includes(id) && QMAP[id]);
         if(_fresh.length){ App.fixAlert={ids:_fresh}; toast(""+_fresh.length+" reported question"+(_fresh.length>1?"s":"")+" just fixed"); } } }
-    try{ wsSet("medrecall:remoteedits:v1", REMOTE_EDITS); }catch(e){}
+    try{ wsSet("medrecall:remoteedits:v1", REMOTE_EDITS); wsSet("medrecall:remoteeditsmeta:v1", REMOTE_EDITS_META); }catch(e){}
     buildIndex();                        // rebuild + reapply (buildIndex calls applyEdits)
-    if(App.screen==="home"||App.screen==="qedit") render();
+    if(App.screen==="home"||App.screen==="qedit"||App.screen==="editedqs") render();
   }catch(e){}
 }
 function postEdit(qid, patch){
@@ -3260,7 +3268,16 @@ function postEdit(qid, patch){
 }
 
 // ---------- report alerts (maintainer) ----------
-function reportRows(){ const d=(App.inboxRows||[]).slice(); if(d.length && Array.isArray(d[0]) && String(d[0][0]).toLowerCase().indexOf("when")>=0) d.shift(); return d; }
+function isEditRow(r){
+  if(!r) return false;
+  if(Array.isArray(r)){
+    for(const c of r){ const s=String(c==null?"":c); if(s.indexOf('"patch"')>=0 || s.indexOf('"type":"edit"')>=0 || s.indexOf('"editId"')>=0) return true; }
+    return false;
+  }
+  if(typeof r==="object") return r.type==="edit" || !!r.patch || !!r.editId;
+  return false;
+}
+function reportRows(){ const d=(App.inboxRows||[]).slice(); if(d.length && Array.isArray(d[0]) && String(d[0][0]).toLowerCase().indexOf("when")>=0) d.shift(); return d.filter(r=>!isEditRow(r)); }
 function unreadReports(){ return Math.max(0, reportRows().length-(DB.settings.reportSeen||0)); }
 async function checkNewReports(){
   if(!DB.settings.maintainer || DB.settings.notifyReports===false) return;
@@ -3280,6 +3297,44 @@ async function checkNewReports(){
       if(App.screen==="home") render();
     }
   }catch(e){}
+}
+
+// ---------- edited questions (stored separately from reports) ----------
+function editedIds(){
+  const s=new Set(Object.keys(REMOTE_EDITS||{}));
+  Object.keys((DB.settings&&DB.settings.qedits)||{}).forEach(id=>s.add(id));
+  return Array.from(s);
+}
+const QE_FIELD_LABELS={stem:"Stem", keyPoint:"Key point", choices:"Choices", flagSev:"Flag", flagNote:"Flag note"};
+function viewEditedQs(){
+  const ids=editedIds();
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="nav" data-screen="settings" style="margin-bottom:12px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Settings</button>
+    <div class="row between"><h2 class="serif" style="font-size:24px;font-weight:600">Edited questions</h2>
+      <button class="iconbtn" data-action="refresh-edited" aria-label="Refresh"><svg class="i" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button></div>
+    <p class="muted" style="font-size:13px;margin-top:2px">Your question fixes — kept separate from the reports inbox.</p>`;
+  if(!ids.length){ html+=`<div class="empty">No edited questions yet. Open any question's editor (or tap a report) and save a fix — it will be listed here.</div></div>`; return html; }
+  const when=id=>{ const m=REMOTE_EDITS_META[id]; const t=m&&m.when? new Date(m.when).getTime() : NaN; return isNaN(t)? Infinity : t; };
+  ids.sort((a,b)=>when(b)-when(a));
+  html+=`<p class="muted" style="font-size:12.5px">${ids.length} edited question${ids.length>1?"s":""} · newest first</p>`;
+  ids.forEach(id=>{
+    const q=QMAP[id], patch=sharedEditFor(id)||{}, m=REMOTE_EDITS_META[id];
+    const shared=!!(REMOTE_EDITS&&REMOTE_EDITS[id]), local=!!(DB.settings.qedits&&DB.settings.qedits[id]);
+    const fields=Object.keys(patch).map(k=>QE_FIELD_LABELS[k]||k);
+    const subj=q? esc(q.packTitle||"") : "", topic=q&&q.topic? " · "+esc(q.topic):"";
+    const stem=q&&q.stem? esc(String(q.stem).slice(0,140))+(String(q.stem).length>140?"…":"") : "";
+    html+=`<div class="card pad" data-action="open-edited-q" data-qid="${esc(id)}" style="margin-bottom:8px;border-left:3px solid var(--teal);cursor:pointer">
+      <div class="row between" style="font-size:12px">
+        <span style="font-weight:700;color:var(--teal)">${fields.length? fields.map(f=>esc(f)).join(" · ") : "Edited"}</span>
+        <span class="mono faint">${m&&m.when? esc(fmtWhen(m.when)) : "this device"}</span></div>
+      ${(subj||topic)?`<div class="faint" style="font-size:12px;margin-top:2px">${subj}${topic}</div>`:""}
+      ${stem?`<div style="font-size:12.5px;margin-top:7px;font-style:italic;color:var(--muted)">${stem}</div>`:`<div class="faint" style="font-size:12.5px;margin-top:7px">QID <span class="mono">${esc(id)}</span> — not in the loaded bank</div>`}
+      <div class="row between" style="font-size:11.5px;margin-top:8px">
+        <span class="${shared?"":"faint"}" style="${shared?"color:var(--green);font-weight:600":""}">${shared? "shared to group ✓" : "this device only"}${local&&shared?" · also local":""}</span>
+        <span class="mono" style="color:var(--teal)">${esc(id)} · open &rarr;</span></div>
+    </div>`;
+  });
+  html+=`</div>`; return html;
 }
 
 // ---------- in-app question editor ----------
@@ -3326,7 +3381,8 @@ export function qeBuildPatch(){
 }
 function viewQEditor(){
   const Q=App.qedit;
-  const back=`<button class="btn-sm btn-ghost" data-action="open-reports-inbox" style="margin-bottom:12px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Reports</button>`;
+  const _fromEdits=App.qeditFrom==="editedqs";
+  const back=`<button class="btn-sm btn-ghost" data-action="${_fromEdits?"open-edited-qs":"open-reports-inbox"}" style="margin-bottom:12px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${_fromEdits?"Edited questions":"Reports"}</button>`;
   if(!Q) return `<div class="fade">${back}<div class="empty">No question selected.</div></div>`;
   if(!Q.exists) return `<div class="fade">${back}<div class="card pad" style="border-left:3px solid var(--amber)"><b>Question not in the loaded bank</b><div class="faint" style="font-size:13px;margin-top:6px;line-height:1.5">QID <span class="mono">${esc(Q.qid)}</span> wasn't found in your synced bank — it may be from a newer/older version. Sync your bank (Settings → Sync now) or fix it directly in the source pack.</div></div></div>`;
   const d=Q.draft, reps=reportsForQid(Q.qid), q=QMAP[Q.qid], edited=!!(DB.settings.qedits&&DB.settings.qedits[Q.qid]);
@@ -3402,6 +3458,7 @@ export async function boot(){
   // legacy localStorage slot for caches written by older versions)
   try{ const cached = (await blobGet("medrecall:bankcache:v1")) || (await wsGet("medrecall:bankcache:v1")); if(cached && cached.length){ BANK.length=0; cached.forEach(p=>BANK.push(p)); } }catch(e){}
   try{ REMOTE_EDITS = (await wsGet("medrecall:remoteedits:v1"))||{}; }catch(e){}
+  try{ REMOTE_EDITS_META = (await wsGet("medrecall:remoteeditsmeta:v1"))||{}; }catch(e){}
   buildIndex();
   render();
   // revalidate from the network when online
@@ -3425,4 +3482,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v2.0 */
+/* clinic-v2.1 */

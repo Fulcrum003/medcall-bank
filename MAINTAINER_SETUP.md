@@ -89,3 +89,27 @@ app change is needed.
 Only maintainer devices expose the editor. Edits are keyed by question id; the newest edit for a
 question wins. To roll one back, open the question and tap **Revert my edit** (local), and delete
 its row from the **Edits** sheet (for everyone).
+
+---
+
+## Troubleshooting — edits showing up in the Reports inbox?
+
+If your saved question fixes appear as rows in **Settings → Reports inbox**, your deployed
+Apps Script is missing the `data.type === 'edit'` branch (or it sits BELOW a generic
+"append everything" line), so `edit` posts fall through into the **Reports** sheet.
+
+**Fix (once):**
+1. Open your Apps Script and make sure the two `doPost` branches from section 1 are at the
+   **top** of `doPost(e)`, right after `JSON.parse` — the `edit` branch must run before any
+   other append.
+2. Redeploy: **Deploy → Manage deployments → ✏️ → Version: New version → Deploy.**
+3. Clean the sheet: delete any old edit rows from the **Reports** sheet (they contain a
+   `patch` JSON instead of an issue/note). Your real edits live in the **Edits** sheet.
+
+**The app now guards this too (v2.1):**
+- The Reports inbox **filters out** anything that looks like an edit row, so even a
+  misconfigured Script can't clutter it (and edit rows no longer count toward the
+  "new reports" badge or notifications).
+- Your fixes have their own screen: **Settings → maintainer → Edited questions** — every
+  edited question with what changed, when, and whether it's shared to the group or only on
+  this device. Tap one to reopen it in the editor.
