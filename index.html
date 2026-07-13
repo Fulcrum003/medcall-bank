@@ -441,7 +441,7 @@
       <div class="brand" data-action="nav" data-screen="home" style="cursor:pointer" title="Home">
         <span class="dot"></span>
         <h1>MedCall</h1>
-        <small>v2.1</small>
+        <small>v2.2</small>
       </div>
       <div class="iconrow">
         <button class="iconbtn" data-action="nav" data-screen="search" title="Search">
@@ -1392,6 +1392,7 @@ function render(){
   if(App.screen==="home") a.innerHTML=viewHome();
   else if(App.screen==="bank") a.innerHTML=viewBank();
   else if(App.screen==="banksys") a.innerHTML=viewBankSystem();
+  else if(App.screen==="banktype") a.innerHTML=viewBankType();
   else if(App.screen==="progress") a.innerHTML=viewProgress();
   else if(App.screen==="saved") a.innerHTML=viewSaved();
   else if(App.screen==="fixes") a.innerHTML=viewFixes();
@@ -1422,7 +1423,7 @@ function render(){
   else if(App.screen==="qedit") a.innerHTML=viewQEditor();
   if(App.screen==="timer" && DB.progress.timer && DB.progress.timer.running) startTimerTick(); else stopTimerTick();
   if(App.screen==="leaderboard") startBoardPoll(); else stopBoardPoll();
-  const _DASH=new Set(["home","bank","banksys","progress","saved","fixes","system","type","reference","mistakes","disputed","redflag","checklist"]);
+  const _DASH=new Set(["home","bank","banksys","banktype","progress","saved","fixes","system","type","reference","mistakes","disputed","redflag","checklist"]);
   document.body.classList.toggle("dash", _DASH.has(App.screen));
   document.body.classList.toggle("read", !_DASH.has(App.screen));
   document.body.dataset.screen=App.screen;
@@ -2003,17 +2004,52 @@ function viewBank(){
   html+=`</div></div>`;
   return html;
 }
-function bankPickSet(sys){ if(!App.bankPick||App.bankPick.system!==sys) App.bankPick={system:sys,refs:new Set()}; return App.bankPick.refs; }
+function bankPickSet(sys, ty){ const key=sys+"||"+ty; if(!App.bankPick||App.bankPick.key!==key) App.bankPick={key, system:sys, type:ty, refs:new Set()}; return App.bankPick.refs; }
 function viewBankSystem(){
   const sys=App.nav.system;
-  const refs=groupCounts(q=>qSys(q)===sys, qRef);
-  const sel=bankPickSet(sys);
   const col=(listSystems().find(s=>s.name===sys)||{}).color||"var(--coral)";
+  const types=listTypes(sys);
+  const get=n=>types.find(t=>t.name===n)||{name:n,total:0,seen:0,due:0};
+  const M=get("MCQs"), E=get("EMQs"), SA=types.find(t=>t.name==="Short Answer");
+  const card=(T,accent,icon,blurb)=>{
+    const pct=T.total?Math.round(T.seen/T.total*100):0, empty=!T.total;
+    return `<button class="card pad subj" data-action="${empty?'':'open-bank-type'}" data-type="${esc(T.name)}" style="width:100%;margin-bottom:11px;${empty?'opacity:.45;cursor:default':''};border-left:3px solid ${accent}">
+      <div class="row between" style="align-items:flex-start">
+        <div style="text-align:left;min-width:0;flex:1">
+          <div class="row" style="gap:8px;align-items:center">${icon}<span style="font-weight:800;font-size:17px">${esc(T.name)}</span>
+            ${T.due>0?`<span class="badge due">${T.due} due</span>`:""}</div>
+          <div class="faint" style="font-size:12.5px;margin-top:3px">${empty? "None for this subject yet" : `${T.total} question${T.total>1?"s":""} · ${T.seen} seen${blurb?" · "+blurb:""}`}</div>
+          ${empty?"":`<div class="progressbar" style="margin-top:9px"><i style="width:${pct}%"></i></div>`}
+        </div>
+        ${empty?"":'<span class="mono" style="font-size:12px;color:'+accent+';flex:none;margin-left:10px">open &rarr;</span>'}
+      </div>
+    </button>`;
+  };
+  const icoM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;flex:none;color:var(--coral)"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>';
+  const icoE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;flex:none;color:var(--teal)"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>';
   let html=`<div class="fade">
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="bank" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Question bank</button>
     <h2 class="serif" style="font-size:24px;font-weight:600;color:${col}">${esc(sys)}</h2>
-    <p class="muted" style="font-size:13.5px;margin-top:2px">${refs.length} source${refs.length!==1?'s':''} · tick the sessions you want, then start one combined quiz.</p>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">Two separate question banks — pick a format.</p>
+    <div style="height:10px"></div>`;
+  html+=card(M,"var(--coral)",icoM,"single-best-answer");
+  html+=card(E,"var(--teal)",icoE,"extended matching, by theme");
+  if(SA && SA.total) html+=card(SA,"var(--amber)","", "");
+  html+=`</div>`;
+  return html;
+}
+function viewBankType(){
+  const sys=App.nav.system, ty=App.nav.type;
+  const refs=listReferences(sys, ty);
+  const sel=bankPickSet(sys, ty);
+  const col=ty==="EMQs"?"var(--teal)":"var(--coral)";
+  let html=`<div class="fade">
+    <button class="btn-sm btn-ghost" data-action="open-bank-system" data-system="${esc(sys)}" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> ${esc(sys)}</button>
+    <div class="faint mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:${col}">${esc(sys)}</div>
+    <h2 class="serif" style="font-size:24px;font-weight:600">${esc(ty)}</h2>
+    <p class="muted" style="font-size:13.5px;margin-top:2px">${refs.length} source${refs.length!==1?"s":""} · tick the sessions you want, then start one ${ty==="EMQs"?"EMQ":"MCQ"} quiz.</p>
     <div style="height:8px"></div>`;
+  if(!refs.length) html+=`<div class="empty">No ${esc(ty)} for this subject yet.</div>`;
   refs.forEach(r=>{
     const pct=r.total?Math.round(r.seen/r.total*100):0, on=sel.has(r.name);
     const status=r.seen===0?"Not started":(r.seen>=r.total?"Completed":"In progress");
@@ -2021,7 +2057,7 @@ function viewBankSystem(){
       <div class="row between">
         <div style="text-align:left;min-width:0;flex:1">
           <div style="font-weight:700;font-size:14.5px">${esc(r.name)}</div>
-          <div class="faint" style="font-size:12px;margin-top:1px">${status} · ${r.total} Q${r.due>0?` · ${r.due} due`:''}</div>
+          <div class="faint" style="font-size:12px;margin-top:1px">${status} · ${r.total} Q${r.due>0?` · ${r.due} due`:""}</div>
           <div class="progressbar" style="margin-top:8px"><i style="width:${pct}%"></i></div>
         </div>
         <span class="tick">${on?'<svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none"><path d="M20 6 9 17l-5-5"/></svg>':''}</span>
@@ -2030,10 +2066,10 @@ function viewBankSystem(){
   });
   html+=`</div>`;
   if(sel.size){
-    let n=0; sel.forEach(r=>{ n+=poolFor({system:sys,reference:r}).length; });
+    let n=0; sel.forEach(r=>{ n+=poolFor({system:sys,type:ty,reference:r}).length; });
     html+=`<div class="selbar"><div class="selbar-in">
-      <div style="flex:1"><b>${sel.size}</b> session${sel.size>1?'s':''} · ${n} question${n!==1?'s':''} selected</div>
-      <button class="btn btn-primary" data-action="bank-start" style="width:auto">Select sessions to start</button>
+      <div style="flex:1"><b>${sel.size}</b> session${sel.size>1?"s":""} · ${n} ${ty==="EMQs"?"EMQ":"MCQ"} question${n!==1?"s":""}</div>
+      <button class="btn btn-primary" data-action="bank-start" style="width:auto">Start</button>
     </div></div>`;
   }
   return html;
@@ -3215,12 +3251,13 @@ document.body.addEventListener("click", async e=>{
   if(a==="start-smart"){ startPracticeCtx({smart:true}, "Smart Review"); return; }
   if(a==="open-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="system"; render(); return; }
   // question-bank grid → per-specialty multi-select session picker
-  if(a==="open-bank-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.bankPick={system:t.dataset.system, refs:new Set()}; App.screen="banksys"; render(); return; }
-  if(a==="bank-pick"){ const r=t.dataset.ref, refs=bankPickSet(App.nav.system); if(refs.has(r)) refs.delete(r); else refs.add(r); render(); return; }
+  if(a==="open-bank-system"){ App.nav={system:t.dataset.system, type:null, reference:null}; App.screen="banksys"; render(); return; }
+  if(a==="open-bank-type"){ App.nav.type=t.dataset.type; bankPickSet(App.nav.system, App.nav.type); App.screen="banktype"; render(); window.scrollTo({top:0,behavior:"instant"}); return; }
+  if(a==="bank-pick"){ const r=t.dataset.ref, refs=bankPickSet(App.nav.system, App.nav.type); if(refs.has(r)) refs.delete(r); else refs.add(r); render(); return; }
   if(a==="bank-start"){ const bp=App.bankPick; if(!bp||!bp.refs.size){ toast("Tick at least one session"); return; }
-    const ids=[]; bp.refs.forEach(r=>poolFor({system:bp.system,reference:r}).forEach(id=>ids.push(id)));
+    const ids=[]; bp.refs.forEach(r=>poolFor({system:bp.system,type:bp.type,reference:r}).forEach(id=>ids.push(id)));
     const uniq=[...new Set(ids)]; if(!uniq.length){ toast("No questions in the selected sessions"); return; }
-    startPracticeCtx({ids:uniq}, bp.system+" · "+bp.refs.size+" session"+(bp.refs.size>1?"s":"")); return; }
+    startPracticeCtx({ids:uniq}, bp.system+" · "+bp.type+" · "+bp.refs.size+" session"+(bp.refs.size>1?"s":"")); return; }
   if(a==="study-saved"){ const pool=Object.keys(DB.progress.questions).filter(id=>DB.progress.questions[id].marked && QMAP[id]); if(!pool.length){ toast("No saved questions"); return; } startPracticeCtx({ids:pool}, "Saved questions"); return; }
   if(a==="jump-q"){ const s=App.practice; if(!s) return; const ni=+t.dataset.i; if(ni<0||ni>=s.pool.length||ni===s.i) return; s.i=ni; s.revealed=false; s.selected=null; s.saText=""; s.optsCollapsed=false; s.confidence=null; saveSession(s); practiceRoute(); return; }
   if(a==="view-fixes"){ const ids=((App.fixAlert&&App.fixAlert.ids)||[]).slice(); markFixesSeen(); if(!ids.length){ render(); return; } App.fixReview=ids; App.screen="fixes"; render(); return; }
@@ -3948,7 +3985,7 @@ function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v2.1 */
+/* clinic-v2.2 */
 
 </script>
 <!-- APP:END -->
