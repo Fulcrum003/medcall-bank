@@ -197,6 +197,8 @@
   .foot{position:fixed;left:0;right:0;bottom:0;z-index:40;
     background:linear-gradient(to top,var(--ink) 72%,transparent);padding:14px 16px calc(16px + env(safe-area-inset-bottom))}
   .foot-in{max-width:620px;margin:0 auto;display:flex;gap:10px}
+  /* keep the last explanation clear of the fixed footer (grade bar is the tallest variant) */
+  body.read #app{padding-bottom:175px}
 
   /* Exam */
   .timer{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:18px;letter-spacing:1px;
@@ -449,7 +451,7 @@
       <div class="brand" data-action="nav" data-screen="home" style="cursor:pointer" title="Home">
         <span class="dot"></span>
         <h1>MedCall</h1>
-        <small>v2.3</small>
+        <small>v2.4</small>
       </div>
       <div class="iconrow">
         <button class="iconbtn" data-action="nav" data-screen="search" title="Search">
@@ -3967,7 +3969,7 @@ function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v2.3 */
+/* clinic-v2.4 */
 
 </script>
 <!-- APP:END -->
