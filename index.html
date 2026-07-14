@@ -451,7 +451,7 @@
       <div class="brand" data-action="nav" data-screen="home" style="cursor:pointer" title="Home">
         <span class="dot"></span>
         <h1>MedCall</h1>
-        <small>v2.4</small>
+        <small>v2.5</small>
       </div>
       <div class="iconrow">
         <button class="iconbtn" data-action="nav" data-screen="search" title="Search">
@@ -538,7 +538,7 @@ let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
   exams:[],
   reports:[],
-  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
+  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, srsGrading:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
 };
 async function loadDB(){
   const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
@@ -2168,6 +2168,7 @@ function gradeCurrent(g){
   // this guard a re-grade double-counts seen/correct/daily and farms XP.
   if(s.results && s.results[s.i]!==undefined){ toast("Already answered — moving on"); advancePractice(); return; }
   const single=(q.type!=="sa") && (q.choices||[]).length<2;
+  if(g==="auto") g=(correctLabel(q)===s.selected)?"good":"again";
   const ok = (q.type==="sa"||single) ? (g==="good"||g==="easy") : (correctLabel(q)===s.selected);
   // Recalled single-choice questions are self-graded like short-answers: without
   // okOverride they'd be scored correctLabel===null and stored as misses.
@@ -2274,6 +2275,10 @@ function viewQuiz(){
       <button class="btn btn-ghost btn-sm" data-action="toggle-mark" style="flex:none;width:auto;${marked?'color:var(--amber);border-color:#6b541f':''}">${marked?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M12 20l-7.5-7.5a4.5 4.5 0 0 1 6.4-6.3l1.1 1 1.1-1a4.5 4.5 0 0 1 6.4 6.3z"/></svg> Saved':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M12 20l-7.5-7.5a4.5 4.5 0 0 1 6.4-6.3l1.1 1 1.1-1a4.5 4.5 0 0 1 6.4 6.3z"/></svg> Save'}</button>
       <button class="btn btn-ghost btn-sm" ${s.i<s.pool.length-1?'':'disabled'} data-action="nav-q" data-dir="1" style="flex:none;width:auto">Skip</button>
       <button class="btn btn-primary" data-action="reveal" ${_cr?'':'disabled'} style="flex:1">${_cr?'Reveal answer':'Select an answer'}</button>`;
+  } else if(DB.settings.srsGrading===false){
+    foot=(q.type==="sa"||singleAnswer)
+      ? `<button class="btn btn-ghost" data-action="grade" data-grade="again" style="flex:1">Missed it</button><button class="btn btn-primary" data-action="grade" data-grade="good" style="flex:1">Got it</button>`
+      : `<button class="btn btn-primary" data-action="grade" data-grade="auto" style="flex:1">Next question</button>`;
   } else {
     foot=`<div style="width:100%">
       <div class="faint" style="font-size:11px;text-align:center;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">How well did you recall it?</div>
@@ -3002,6 +3007,10 @@ function viewSettings(){
       <div><b>Reveal on pick</b><div class="faint" style="font-size:12.5px">Show the answer the instant you choose (off = tap Reveal, and rate your confidence first)</div></div>
       <button class="switch ${DB.settings.revealOnPick!==false?'on':''}" data-action="set-revealonpick" aria-label="Toggle reveal on pick"><span class="knob"></span></button>
     </div>
+    <div class="row between card pad" style="margin-top:8px">
+      <div><b>Flashcard grading</b><div class="faint" style="font-size:12.5px">Rate yourself Again · Hard · Good · Easy after each answer (off = one Next button, graded automatically)</div></div>
+      <button class="switch ${DB.settings.srsGrading!==false?'on':''}" data-action="set-srsgrading" aria-label="Toggle flashcard grading"><span class="knob"></span></button>
+    </div>
 
     <div class="sectlabel">Study reminders</div>
     ${(function(){
@@ -3206,6 +3215,7 @@ document.body.addEventListener("click", async e=>{
   // sounds on/off
   if(a==="set-sound"){ DB.settings.sounds=!DB.settings.sounds; save.settings(); if(DB.settings.sounds) cue("correct"); render(); return; }
   if(a==="set-revealonpick"){ DB.settings.revealOnPick=(DB.settings.revealOnPick===false); save.settings(); render(); return; }
+  if(a==="set-srsgrading"){ DB.settings.srsGrading=(DB.settings.srsGrading===false); save.settings(); render(); return; }
   // leaderboard display name
   if(a==="set-name"){ const v=(prompt("Choose a nickname for the leaderboard — please DON'T use your real name. Leave blank for a random one:", "")||"").trim().slice(0,24); DB.settings.displayName = v || randomAlias(); save.settings(); render(); syncBoard(); return; }
   if(a==="lb-view"){ App.lbView=t.dataset.v; render(); return; }
@@ -3967,9 +3977,9 @@ function resetDB() {
   DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {}, timeLog: {}, timer: null };
   DB.exams = [];
   DB.reports = [];
-  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
+  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, srsGrading: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v2.4 */
+/* clinic-v2.5 */
 
 </script>
 <!-- APP:END -->
