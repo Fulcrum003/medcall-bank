@@ -1112,11 +1112,6 @@ function viewTimer(){
 function notifPromptDue(){ const N=notifCfg(); return notifSupported() && notifPermission()==="default" && !N.enabled && !N.prompted; }
 function ic(name){var P={"ti-flame":"<path d=\"M12 12c2-3 0-7-1-8 0 3-1.8 4.7-3 6s-2 3.2-2 5a6 6 0 1 0 12 0c0-1.5-1-3.9-2-5-1.8 3-2.8 3-4 2z\"/>","ti-scale":"<path d=\"M7 20h10M12 4v16M7 7l5-1 5 1\"/><path d=\"M3 11l4-5 4 5a4 4 0 0 1-8 0zM13 11l4-5 4 5a4 4 0 0 1-8 0z\"/>","ti-alert-triangle":"<path d=\"M12 9v4M12 17h.01M10.3 4l-8.4 14a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z\"/>","ti-checklist":"<path d=\"M9.5 6H20M9.5 12H20M9.5 18H20M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2\"/>","ti-swords":"<path d=\"M21 3v5l-9 9-3 3-2-2 3-3 9-9zM5 13l6 6M15 17l6 6M4 4l3 3\"/>","ti-clock":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 3\"/>"};return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:19px;height:19px;color:var(--muted);flex:none">${P[name]||""}</svg>`;}
 function viewHome(){
-  const totalQ=Object.keys(QMAP).length;
-  const totalSeen=Object.keys(DB.progress.questions).length;
-  const allDue=dueCount();
-  const streak=DB.progress.streak?.current||0;
-  const newAvail=totalQ-totalSeen;
   const greet=(function(){ const h=new Date().getHours(); return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; })();
   const chev=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:17px;color:var(--faint)"><path d="M9 6l6 6-6 6"/></svg>`;
   let html=`<div class="fade">`;
@@ -1131,85 +1126,44 @@ function viewHome(){
     html+=`<button class="rowlink" data-action="open-reports-inbox" style="margin-bottom:16px;border:1px solid var(--line);border-radius:12px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--amber)"><path d="M5 21V4M5 4h11l-2 3 2 3H5"/></svg><div class="grow"><div class="rn">${unreadReports()} new report${unreadReports()>1?'s':''}</div><div class="rs">tap to review and fix questions</div></div>${chev}</button>`;
   }
 
-  html+=`<div class="row between" style="margin-bottom:20px;align-items:center;gap:12px">
-    <div style="min-width:0"><div class="hgreet">${greet}</div><div class="hsub">${allDue>0?`You have <b style="color:var(--text);font-weight:600">${allDue}</b> card${allDue>1?'s':''} due today.`:"You're all caught up."}</div></div>
-    <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;white-space:nowrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:16px;color:var(--coral)"><path d="M12 12c2-3 0-7-1-8 0 3-1.8 4.7-3 6s-2 3.2-2 5a6 6 0 1 0 12 0c0-1.5-1-3.9-2-5-1.8 3-2.8 3-4 2z"/></svg><b style="color:var(--text);font-weight:600">${streak}</b> day streak</span>
-  </div>`;
-
-  html+=`<div class="mobonly" style="display:flex;gap:8px;margin-bottom:18px">
-    <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="bank" style="flex:1">Question bank</button>
-    <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="progress" style="flex:1">Progress</button>
-    <button class="btn btn-ghost btn-sm" data-action="nav" data-screen="saved" style="flex:1">Saved</button>
-  </div>`;
-
-  html+=`<div class="homegrid"><div class="hmain">`;
-
-  html+=`<button class="hero" data-action="start-smart">
-    <div style="display:flex;align-items:center;gap:14px">
-      <span style="width:42px;height:42px;border-radius:10px;background:var(--coral-tint);display:flex;align-items:center;justify-content:center;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:20px;color:var(--coral)"><path d="M7 4v16l13-8z"/></svg></span>
-      <div style="flex:1;min-width:0"><div style="font-size:12px;color:var(--faint)">Today's session</div><div style="font-size:17px;font-weight:600;margin-top:1px">Smart review</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${allDue} due, ${Math.min(DB.settings.newPerDay,newAvail)} new — interleaved for recall</div></div>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:20px;color:var(--faint)"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </div>
-  </button>`;
+  html+=`<h2 class="serif" style="font-size:24px;font-weight:600">${greet}</h2>
+    <p class="muted" style="font-size:13px;margin-top:2px">Pick up where you left off.</p>
+    <div style="height:14px"></div>`;
 
   { const _sv=Object.values((DB.progress.sessions||{})).filter(x=>x&&x.ctx&&!x.ctx.smart&&poolFor(x.ctx).length).sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
     if(_sv.length){
-      html+=`<div class="sectlabel">Continue studying</div><div class="rowlist">`;
-      _sv.forEach(x=>{ const _tot=x.total||poolFor(x.ctx).length, _k=esc(JSON.stringify(x.ctx));
-        html+=`<button class="rowlink" data-action="resume-session" data-key="${_k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:18px;color:var(--coral)"><path d="M7 4v16l13-8z"/></svg><div class="grow"><div class="rn">${esc(x.label||"Session")}</div><div class="rs">Question ${(x.i||0)+1} of ${_tot}${x.answered?` · ${x.correct}/${x.answered} right`:""}</div></div><span class="iconbtn" data-action="drop-session" data-key="${_k}" title="Remove" style="width:28px;height:28px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:14px"><path d="M18 6L6 18M6 6l12 12"/></svg></span></button>`;
+      html+=`<div class="rowlist" style="margin-bottom:14px">`;
+      _sv.slice(0,3).forEach(x=>{ const _tot=x.total||poolFor(x.ctx).length, _k=esc(JSON.stringify(x.ctx));
+        html+=`<button class="rowlink" data-action="resume-session" data-key="${_k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:18px;color:var(--coral)"><path d="M7 4v16l13-8z"/></svg><div class="grow"><div class="rn">Continue · ${esc(x.label||"Session")}</div><div class="rs">Question ${(x.i||0)+1} of ${_tot}</div></div><span class="iconbtn" data-action="drop-session" data-key="${_k}" title="Remove" style="width:28px;height:28px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:14px"><path d="M18 6L6 18M6 6l12 12"/></svg></span></button>`;
       });
       html+=`</div>`;
     }
   }
 
-  const sugg=computeSuggestions();
-  if(sugg.length){
-    html+=`<div class="sectlabel">What should I study?</div><div class="rowlist">`;
-    sugg.forEach(s=>{
-      const act = s.action==="topic" ? `data-action="study-topic" data-system="${esc(s.data.system)}" data-reference="${esc(s.data.reference)}" data-topic="${esc(s.data.topic)}"` : s.action==="none" ? '' : `data-action="${s.action}"`;
-      const tag = s.action==="none" ? "div" : "button";
-      html+=`<${tag} class="rowlink" ${act}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted);width:20px"><path d="M9 18h6M10 21h4M9.5 15a6 6 0 1 1 5 0c-.5.4-.9 1-.9 1.6h-3.2c0-.6-.4-1.2-.9-1.6z"/></svg><div class="grow"><div class="rn">${esc(s.title)}</div>${s.sub?`<div class="rs">${esc(s.sub)}</div>`:''}</div>${s.action!=="none"?chev:''}</${tag}>`;
-    });
-    html+=`</div>`;
-  }
-
-  const _mc=mistakeIds().length, _dc=disputedIds().length, _rf=redFlagIds().length;
-  const frow=(action,icon,label,count)=>`<button class="rowlink" data-action="${action}">${ic(icon)}<div class="grow"><div class="rn">${label}</div></div>${count!=null?`<span class="rs" style="margin:0">${count}</span>`:''}${chev}</button>`;
-  html+=`<div class="sectlabel">Focus</div><div class="rowlist">`;
-  if(_mc>0) html+=frow("open-mistakes","ti-flame","Fix my mistakes",_mc);
-  if(_dc>0) html+=frow("open-disputed","ti-scale","Disputed answers",_dc);
-  if(_rf>0) html+=frow("open-redflag","ti-alert-triangle","Red-flag drills",_rf);
-  html+=frow("open-checklist","ti-checklist","Before-exam checklist",null);
-  html+=frow("open-duelpick","ti-swords","Wrong-answer duel",DUELS.length);
-  html+=frow("start-cram","ti-clock","Cram mode",null);
+  const tsvg=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px">${p}</svg>`;
+  const tile=(attrs,icon,label,sub,wide)=>`<button class="tile${wide?' wide':''}" ${attrs}><span class="ti">${icon}</span><div><div class="tl">${label}</div>${sub?`<div class="faint" style="font-size:11.5px;margin-top:2px">${sub}</div>`:''}</div></button>`;
+  html+=`<div class="tilegrid">`;
+  html+=tile('data-action="start-smart"', tsvg('<path d="M7 4v16l13-8z"/>'), "Smart review", "Today's session — due &amp; new, interleaved", true);
+  html+=tile('data-action="nav" data-screen="bank"', tsvg('<path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z"/><path d="M19 17H6a2 2 0 0 0-2 2"/>'), "Question bank");
+  html+=tile('data-action="nav" data-screen="exam-builder"', tsvg('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1H9zM9 11h6M9 15h4"/>'), "Exam simulation");
+  html+=tile('data-action="nav" data-screen="progress"', tsvg('<path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/>'), "Progress");
+  html+=tile('data-action="open-timer"', tsvg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>'), "Study timer");
+  html+=tile('data-action="nav" data-screen="saved"', tsvg('<path d="M6 4h12v17l-6-4-6 4z"/>'), "Saved");
+  html+=tile('data-action="open-duelpick"', tsvg('<path d="M13 2L4 14h6l-1 8 9-12h-6z"/>'), "Wrong-answer duel");
+  html+=tile('data-action="start-cram"', tsvg('<path d="M12 3s5 4.5 5 9a5 5 0 0 1-10 0c0-4.5 5-9 5-9z"/>'), "Cram mode");
+  html+=tile('data-action="nav" data-screen="leaderboard"', tsvg('<path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM3 21v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1M16 3.5a4 4 0 0 1 0 7.7M21 21v-1a5 5 0 0 0-4-4.9"/>'), "Leaderboard");
   html+=`</div>`;
 
-  html+=`</div><div class="hrail">`;
+  const _mc=mistakeIds().length, _dc=disputedIds().length, _rf=redFlagIds().length;
+  const frow=(action,icon,label)=>`<button class="rowlink" data-action="${action}">${ic(icon)}<div class="grow"><div class="rn">${label}</div></div>${chev}</button>`;
+  let fr="";
+  if(_mc>0) fr+=frow("open-mistakes","ti-flame","Fix my mistakes");
+  if(_dc>0) fr+=frow("open-disputed","ti-scale","Disputed answers");
+  if(_rf>0) fr+=frow("open-redflag","ti-alert-triangle","Red-flag drills");
+  fr+=frow("open-checklist","ti-checklist","Before-exam checklist");
+  fr+=`<button class="rowlink" data-action="nav" data-screen="trophies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted);width:20px"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg><div class="grow"><div class="rn">Achievements</div></div>${chev}</button>`;
+  html+=`<div class="sectlabel">Focus</div><div class="rowlist">`+fr+`</div>`;
 
-  const xp=DB.progress.xp||0, lvl=levelOf(xp), inLvl=xpInLevel(xp);
-  html+=`<div class="railcard" style="margin-bottom:14px">
-    <div class="row" style="gap:11px"><div class="lvlbadge">${lvl}</div><div><div style="font-weight:600;font-size:14.5px">Level ${lvl}</div><div class="faint" style="font-size:12px">${inLvl} / 200 XP</div></div></div>
-    <div class="progressbar" style="margin-top:12px"><i style="width:${inLvl/200*100}%"></i></div>
-    <div class="row" style="margin-top:16px;text-align:center">
-      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:600;color:var(--coral)">${allDue}</div><div class="faint" style="font-size:11px">Due</div></div>
-      <div style="flex:1;border-left:1px solid var(--line);border-right:1px solid var(--line)"><div class="mono" style="font-size:20px;font-weight:600">${streak}</div><div class="faint" style="font-size:11px">Streak</div></div>
-      <div style="flex:1"><div class="mono" style="font-size:20px;font-weight:600;color:var(--green)">${totalSeen}</div><div class="faint" style="font-size:11px">Seen</div></div>
-    </div>
-  </div>`;
-
-  const dc=dailyCount(), goal=DB.settings.dailyGoal||20, dpct=goal?dc/goal:0, dgDone=dc>=goal;
-  html+=`<div class="railcard" style="margin-bottom:14px"><div class="row" style="gap:14px">${ringSVG(dpct, dgDone?'var(--green)':'var(--coral)')}<div style="flex:1"><div style="font-weight:600;font-size:14.5px">Daily goal</div><div class="faint" style="font-size:12.5px;margin-top:1px">${dc} / ${goal} today${dgDone?' · reached':''}</div></div></div></div>`;
-
-  { const _dd=dDay(), _st=studyToday();
-    html+=`<button class="railcard" data-action="open-timer" style="margin-bottom:14px;width:100%;text-align:left;cursor:pointer;color:inherit;display:block"><div class="row between"><div class="row" style="gap:11px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted)"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><div>${_dd!=null?`<div style="font-weight:600;font-size:14.5px">${_dd>0?"D-"+_dd:_dd===0?"Exam today":"exam "+(-_dd)+"d ago"}</div><div class="faint" style="font-size:12px">${_dd>0?"to your exam":_dd===0?"good luck":"set a new date"}</div>`:`<div style="font-weight:600;font-size:14.5px">Study timer</div><div class="faint" style="font-size:12px">track real study time</div>`}</div></div><div class="mono" style="color:var(--coral);text-align:right;font-weight:600">${_st>0?fmtHM(_st):"start"}</div></div></button>`; }
-
-  html+=`<div class="rowlist">
-    <button class="rowlink" data-action="nav" data-screen="exam-builder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted);width:20px"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1H9zM9 11h6M9 15h4"/></svg><div class="grow"><div class="rn">Exam simulation</div></div>${chev}</button>
-    <button class="rowlink" data-action="nav" data-screen="trophies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted);width:20px"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg><div class="grow"><div class="rn">Achievements</div></div>${chev}</button>
-    <button class="rowlink" data-action="nav" data-screen="leaderboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted);width:20px"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM3 21v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1M16 3.5a4 4 0 0 1 0 7.7M21 21v-1a5 5 0 0 0-4-4.9"/></svg><div class="grow"><div class="rn">Leaderboard</div></div>${chev}</button>
-  </div>`;
-
-  html+=`</div></div>`;
   html+=`</div>`;
   return html;
 }
@@ -1516,10 +1470,6 @@ function viewBank(){
     <h2 class="serif" style="font-size:26px;font-weight:600">Question bank</h2>
     <p class="muted" style="font-size:13.5px;margin-top:3px">Pick a specialty, then choose sessions to quiz. <b>${totalQ}</b> questions · <b>${totalSeen}</b> seen.</p>
     <div style="height:12px"></div>
-    <div class="modegrid">
-      <button class="modecard disp" data-action="open-disputed"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M7 20h10M12 4v16M7 7l5-1 5 1"/><path d="M3 11l4-5 4 5a4 4 0 0 1-8 0zM13 11l4-5 4 5a4 4 0 0 1-8 0z"/></svg></span><div><div class="n">${dc}</div><div class="l">Disputed answers</div></div></button>
-      <button class="modecard rf" data-action="open-redflag"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none"><path d="M12 9v4M12 17h.01M10.3 4l-8.4 14a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z"/></svg></span><div><div class="n">${rf}</div><div class="l">Red-flag drills</div></div></button>
-    </div>
     <div class="sectlabel">All specialties</div>
     <div class="qgrid">`;
   if(!sysList.length) html+=`</div><div class="empty">No questions loaded yet — pull to sync.</div>`;
@@ -1531,7 +1481,7 @@ function viewBank(){
         ${s.due>0?`<span class="badge due">${s.due} due</span>`:``}
       </div>
       <h3>${esc(s.name)}</h3>
-      <div class="meta"><span class="faint mono">${s.seen}/${s.total}</span><span style="font-weight:700;color:${pct?'var(--coral)':'var(--faint)'}">${pct}%</span></div>
+
       <div class="progressbar" style="margin-top:8px"><i style="width:${pct}%"></i></div>
     </button>`;
   });
@@ -1550,10 +1500,8 @@ function viewBankSystem(){
     return `<button class="card pad subj" data-action="${empty?'':'open-bank-type'}" data-type="${esc(T.name)}" style="width:100%;margin-bottom:11px;${empty?'opacity:.45;cursor:default':''};border-left:3px solid ${accent}">
       <div class="row between" style="align-items:flex-start">
         <div style="text-align:left;min-width:0;flex:1">
-          <div class="row" style="gap:8px;align-items:center">${icon}<span style="font-weight:800;font-size:17px">${esc(T.name)}</span>
-            ${T.due>0?`<span class="badge due">${T.due} due</span>`:""}</div>
-          <div class="faint" style="font-size:12.5px;margin-top:3px">${empty? "None for this subject yet" : `${T.total} question${T.total>1?"s":""} · ${T.seen} seen${blurb?" · "+blurb:""}`}</div>
-          ${empty?"":`<div class="progressbar" style="margin-top:9px"><i style="width:${pct}%"></i></div>`}
+          <div class="row" style="gap:8px;align-items:center">${icon}<span style="font-weight:800;font-size:17px">${esc(T.name)}</span></div>
+          <div class="faint" style="font-size:12.5px;margin-top:3px">${empty? "None for this subject yet" : `${T.total} question${T.total>1?"s":""}`}</div>
         </div>
         ${empty?"":'<span class="mono" style="font-size:12px;color:'+accent+';flex:none;margin-left:10px">open &rarr;</span>'}
       </div>
@@ -1585,14 +1533,12 @@ function viewBankType(){
     <div style="height:8px"></div>`;
   if(!refs.length) html+=`<div class="empty">No ${esc(ty)} for this subject yet.</div>`;
   refs.forEach(r=>{
-    const pct=r.total?Math.round(r.seen/r.total*100):0, on=sel.has(r.name);
-    const status=r.seen===0?"Not started":(r.seen>=r.total?"Completed":"In progress");
+    const on=sel.has(r.name);
     html+=`<button class="card pad subj${on?' picked':''}" data-action="bank-pick" data-ref="${esc(r.name)}" style="width:100%;margin-bottom:9px">
       <div class="row between">
         <div style="text-align:left;min-width:0;flex:1">
           <div style="font-weight:700;font-size:14.5px">${esc(r.name)}</div>
-          <div class="faint" style="font-size:12px;margin-top:1px">${status} · ${r.total} Q${r.due>0?` · ${r.due} due`:""}</div>
-          <div class="progressbar" style="margin-top:8px"><i style="width:${pct}%"></i></div>
+          <div class="faint" style="font-size:12px;margin-top:1px">${r.total} Q</div>
         </div>
         <span class="tick">${on?'<svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none"><path d="M20 6 9 17l-5-5"/></svg>':''}</span>
       </div>
@@ -1609,6 +1555,33 @@ function viewBankType(){
   return html;
 }
 /* ---------- PROGRESS ---------- */
+function progressStatsBlock(){
+  const allDue=dueCount(), streak=DB.progress.streak?.current||0, totalSeen=Object.keys(DB.progress.questions).length;
+  const xp=DB.progress.xp||0, lvl=levelOf(xp), inLvl=xpInLevel(xp);
+  const dc=dailyCount(), goal=DB.settings.dailyGoal||20, dpct=goal?dc/goal:0, dgDone=dc>=goal;
+  const chev=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:17px;color:var(--faint)"><path d="M9 6l6 6-6 6"/></svg>`;
+  let h=`<div class="card pad" style="margin-bottom:14px"><div class="row" style="text-align:center">
+      <div style="flex:1"><div class="mono" style="font-size:22px;font-weight:700;color:var(--coral)">${allDue}</div><div class="faint" style="font-size:11px">Due</div></div>
+      <div style="flex:1;border-left:1px solid var(--line);border-right:1px solid var(--line)"><div class="mono" style="font-size:22px;font-weight:700">${streak}</div><div class="faint" style="font-size:11px">Streak</div></div>
+      <div style="flex:1"><div class="mono" style="font-size:22px;font-weight:700;color:var(--green)">${totalSeen}</div><div class="faint" style="font-size:11px">Seen</div></div></div></div>`;
+  h+=`<div class="card pad" style="margin-bottom:14px"><div class="row between" style="gap:14px;flex-wrap:wrap">
+      <div class="row" style="gap:11px;flex:1;min-width:180px"><div class="lvlbadge">${lvl}</div><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px">Level ${lvl}</div><div class="faint" style="font-size:11.5px">${inLvl} / 200 XP</div><div class="progressbar" style="margin-top:7px"><i style="width:${inLvl/200*100}%"></i></div></div></div>
+      <div class="row" style="gap:10px;flex:none">${ringSVG(dpct, dgDone?'var(--green)':'var(--coral)')}<div><div style="font-weight:600;font-size:13.5px">Daily goal</div><div class="faint" style="font-size:11.5px">${dc} / ${goal}${dgDone?' · reached':''}</div></div></div>
+    </div></div>`;
+  { const _dd=dDay(), _st=studyToday();
+    h+=`<button class="card pad" data-action="open-timer" style="margin-bottom:14px;width:100%;text-align:left;cursor:pointer;color:inherit;display:block"><div class="row between"><div class="row" style="gap:11px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted)"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><div>${_dd!=null?`<div style="font-weight:600;font-size:14.5px">${_dd>0?"D-"+_dd:_dd===0?"Exam today":"exam "+(-_dd)+"d ago"}</div><div class="faint" style="font-size:12px">${_dd>0?"to your exam":_dd===0?"good luck":"set a new date"}</div>`:`<div style="font-weight:600;font-size:14.5px">Study timer</div><div class="faint" style="font-size:12px">track real study time</div>`}</div></div><div class="mono" style="color:var(--coral);text-align:right;font-weight:600">${_st>0?fmtHM(_st):"start"}</div></div></button>`; }
+  const sugg=computeSuggestions();
+  if(sugg.length){
+    h+=`<div class="sectlabel">What should I study?</div><div class="rowlist" style="margin-bottom:14px">`;
+    sugg.forEach(s=>{
+      const act = s.action==="topic" ? `data-action="study-topic" data-system="${esc(s.data.system)}" data-reference="${esc(s.data.reference)}" data-topic="${esc(s.data.topic)}"` : s.action==="none" ? '' : `data-action="${s.action}"`;
+      const tag = s.action==="none" ? "div" : "button";
+      h+=`<${tag} class="rowlink" ${act}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--muted);width:20px"><path d="M9 18h6M10 21h4M9.5 15a6 6 0 1 1 5 0c-.5.4-.9 1-.9 1.6h-3.2c0-.6-.4-1.2-.9-1.6z"/></svg><div class="grow"><div class="rn">${esc(s.title)}</div>${s.sub?`<div class="rs">${esc(s.sub)}</div>`:''}</div>${s.action!=="none"?chev:''}</${tag}>`;
+    });
+    h+=`</div>`;
+  }
+  return h;
+}
 function viewProgress(){
   const qs=DB.progress.questions, ids=Object.keys(qs);
   let att=0,corr=0; ids.forEach(id=>{att+=qs[id].seen;corr+=qs[id].correct;});
@@ -1619,8 +1592,9 @@ function viewProgress(){
   let html=`<div class="fade">
     <div class="mobonly" style="margin-bottom:10px"><button class="btn-sm btn-ghost" data-action="nav" data-screen="home"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Home</button></div>
     <h2 class="serif" style="font-size:26px;font-weight:600">Progress</h2>
-    <div style="height:14px"></div>
-    <div class="card pad">
+    <div style="height:14px"></div>`;
+  html+=progressStatsBlock();
+  html+=`<div class="card pad">
       <div class="row between" style="align-items:flex-start">
         <div><div class="mono" style="font-size:34px;font-weight:800;line-height:1">${wkSec?fmtHM(wkSec):"0m"}</div>
         <div class="faint" style="font-size:12px;margin-top:4px">this week · ${delta>=0?`<span style="color:var(--green);font-weight:700">▲ ${delta}%</span>`:`<span style="color:var(--red);font-weight:700">▼ ${-delta}%</span>`} vs last</div></div>
@@ -3519,4 +3493,4 @@ export function resetDB() {
   DB.reports = [];
   DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
-/* clinic-v2.2 */
+/* clinic-v2.3 */
