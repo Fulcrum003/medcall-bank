@@ -2,9 +2,9 @@
  "packId": "batch37-mcq",
  "title": "Batch 37 Final",
  "color": "#cf9b6b",
- "version": 4,
+ "version": 5,
  "updated": "2026-06-15",
- "questionCount": 91,
+ "questionCount": 112,
  "questions": [
   {
    "id": "b37_q1",
@@ -230,7 +230,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q5",
+   "seq": 1
   },
   {
    "id": "b37_q5_2",
@@ -280,7 +282,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q5",
+   "seq": 2
   },
   {
    "id": "b37_q5_3",
@@ -310,7 +314,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q5",
+   "seq": 3
   },
   {
    "id": "b37_q5_4",
@@ -340,7 +346,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q5",
+   "seq": 4
   },
   {
    "id": "b37_q5_5",
@@ -370,7 +378,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q5",
+   "seq": 5
   },
   {
    "id": "b37_q6",
@@ -422,91 +432,515 @@
    "references": null
   },
   {
-   "id": "b37_q7",
+   "id": "b37_q7_gdm",
    "type": "mcq",
-   "reference": "Batch 37 — Page 3",
-   "topic": "Q12 GDM Screening + Q13-16 VSD in Neonate",
-   "stem": "2-WEEK-OLD FEMALE: Poor feeding + sweating during feeds + tachypnea. FTT. PR 160, RR 60. PALPABLE THRILL at left sternal border. HARSH HOLOSYSTOLIC MURMUR at LEFT LOWER STERNAL BORDER.",
+   "system": "Obstetrics & Gynaecology",
+   "topic": "Q12 — GDM screening in a future pregnancy",
+   "stem": "On reviewing her mother's history, she was diagnosed with GESTATIONAL DIABETES in a previous pregnancy, managed with DIETARY MODIFICATION ONLY (no medication). She asks how she should be SCREENED FOR GESTATIONAL DIABETES IN FUTURE PREGNANCIES.",
    "choices": [
     {
      "label": "A",
-     "text": "VSD | Q14: B. Echocardiogram | Q15: A. Pulmonary HTN | Q16: C.",
+     "text": "Screen only if she develops symptoms of hyperglycaemia during pregnancy",
+     "correct": false,
+     "explanation": "WRONG — a prior history of GDM is itself a major risk factor; screening must be proactive, not symptom-driven (GDM is usually asymptomatic)."
+    },
+    {
+     "label": "B",
+     "text": "Fasting blood glucose at 24–28 weeks of gestation",
+     "correct": false,
+     "explanation": "WRONG — 24–28 weeks is the routine screening window for AVERAGE-risk women; a woman with PREVIOUS GDM is high-risk and needs EARLIER testing, not deferral to 24–28 weeks alone."
+    },
+    {
+     "label": "C",
+     "text": "Oral glucose tolerance test at the first prenatal visit; if normal, repeat at 24–28 weeks",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — with a HISTORY OF PRIOR GDM she is HIGH-RISK, so guidelines advise an OGTT EARLY (at booking / first prenatal visit); if that is normal, REPEAT the OGTT at 24–28 weeks. This catches early hyperglycaemia and later-onset GDM."
+    },
+    {
+     "label": "D",
+     "text": "HbA1c at the first prenatal visit only",
+     "correct": false,
+     "explanation": "WRONG — HbA1c is unreliable in pregnancy (altered red-cell turnover) and a single early test misses GDM that develops later; the OGTT is the diagnostic standard."
+    },
+    {
+     "label": "E",
+     "text": "No screening needed unless she develops risk factors",
+     "correct": false,
+     "explanation": "WRONG — she ALREADY has the strongest risk factor (previous GDM); screening is mandatory."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "PREVIOUS GDM = high risk → OGTT at the FIRST antenatal visit, and if normal REPEAT at 24–28 weeks. Average-risk women are screened once at 24–28 weeks.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "keyDifferentiator": "Risk stratifies the timing: high-risk (prior GDM, obesity, strong family history) → test early AND at 24–28 weeks; average-risk → 24–28 weeks only."
   },
   {
-   "id": "b37_q8",
+   "id": "b37_q7_vsd_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 4",
-   "topic": "Q101-103 | Ischaemic Stroke — Left MCA Territory",
-   "stem": "76-YEAR-OLD MALE | DM + HTN | Sudden RIGHT-SIDED WEAKNESS + DYSPHASIA starting 6 HOURS AGO. BP 160/90. No meningism. Mild headache.",
+   "system": "Paediatrics",
+   "topic": "Q13 — Diagnosis",
+   "cluster": "b37_q7_vsd",
+   "seq": 1,
+   "stem": "A 2-WEEK-OLD FEMALE presented with POOR FEEDING, SWEATING DURING FEEDS and TACHYPNOEA. Her parents report she TIRES EASILY and has NOT GAINED WEIGHT appropriately (failure to thrive). On examination PR 160 bpm, RR 60, a PALPABLE THRILL at the left sternal border, and a LOUD, HARSH HOLOSYSTOLIC (pansystolic) MURMUR at the LEFT LOWER STERNAL BORDER.\n\n[Part 1] What is the most likely diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "Ischaemic Stroke Left MCA | Q102: B. Mechanical Thrombectomy |",
+     "text": "Patent ductus arteriosus (PDA)",
+     "correct": false,
+     "explanation": "WRONG — PDA gives a CONTINUOUS 'machinery' murmur below the left clavicle, not a holosystolic murmur at the lower sternal border."
+    },
+    {
+     "label": "B",
+     "text": "Ventricular septal defect (VSD)",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "a LOUD, HARSH HOLOSYSTOLIC MURMUR at the LEFT LOWER STERNAL BORDER with a palpable THRILL is the classic sign of a VSD — the commonest congenital heart defect. A large left-to-right shunt causes heart failure at 2–8 weeks as pulmonary vascular resistance falls: poor feeding, sweating (a sympathetic response), tachypnoea and failure to thrive."
+    },
+    {
+     "label": "C",
+     "text": "Coarctation of aorta",
+     "correct": false,
+     "explanation": "WRONG — coarctation causes radio-femoral delay, weak femoral pulses and upper-limb hypertension, not a holosystolic LLSB murmur with a thrill."
+    },
+    {
+     "label": "D",
+     "text": "Tetralogy of Fallot",
+     "correct": false,
+     "explanation": "WRONG — Fallot causes CYANOTIC 'tet' spells and an ejection-systolic murmur (from pulmonary stenosis) at the upper left sternal edge, not an acyanotic holosystolic LLSB murmur."
+    },
+    {
+     "label": "E",
+     "text": "Transposition of the great arteries",
+     "correct": false,
+     "explanation": "WRONG — TGA presents with severe cyanosis in the first days of life and is often murmur-poor; it is a duct-dependent emergency, not this acyanotic failure-to-thrive picture."
     }
    ],
-   "keyPoint": null,
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "VSD = loud harsh HOLOSYSTOLIC murmur + THRILL at the LEFT LOWER STERNAL BORDER; commonest congenital heart defect. Large shunts present with heart failure (feeding difficulty, sweating, tachypnoea, FTT) at 2–8 weeks as PVR falls.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "keyDifferentiator": "Holosystolic at LLSB with a thrill = VSD. Continuous machinery murmur = PDA. Ejection systolic at ULSB with cyanosis = Fallot."
   },
   {
-   "id": "b37_q9",
+   "id": "b37_q7_vsd_2",
    "type": "mcq",
-   "reference": "Batch 37 — Page 5",
-   "topic": "Q9-10 ABO Incompatibility + Secondary Syphilis",
-   "stem": "3-DAY-OLD MALE NEONATE: Jaundice. Blood group A. Mother blood group O. Breastfeeding. Wet bedding + increased urine output.",
+   "system": "Paediatrics",
+   "topic": "Q14 — Confirmatory imaging",
+   "cluster": "b37_q7_vsd",
+   "seq": 2,
+   "stem": "A 2-WEEK-OLD FEMALE presented with POOR FEEDING, SWEATING DURING FEEDS and TACHYPNOEA. Her parents report she TIRES EASILY and has NOT GAINED WEIGHT appropriately (failure to thrive). On examination PR 160 bpm, RR 60, a PALPABLE THRILL at the left sternal border, and a LOUD, HARSH HOLOSYSTOLIC (pansystolic) MURMUR at the LEFT LOWER STERNAL BORDER.\n\n[Part 2] What is the most appropriate imaging study to confirm the diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "ABO Incompatibility | Q10: D. Coombs' Test Positive (Direct Antiglobulin",
+     "text": "ECG",
+     "correct": false,
+     "explanation": "WRONG — ECG may show ventricular hypertrophy but cannot visualise the defect or confirm the diagnosis."
+    },
+    {
+     "label": "B",
+     "text": "Echocardiogram",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "ECHOCARDIOGRAPHY is the GOLD-STANDARD, non-invasive confirmatory test — it defines the defect's site and size, quantifies the shunt (Qp:Qs), and estimates pulmonary pressures. It is the diagnostic investigation of choice for essentially all structural congenital heart disease."
+    },
+    {
+     "label": "C",
+     "text": "Cardiac MRI",
+     "correct": false,
+     "explanation": "WRONG — cardiac MRI is a second-line adjunct for complex anatomy or shunt quantification, not the first-line confirmatory test in a neonate."
+    },
+    {
+     "label": "D",
+     "text": "Chest x-ray",
+     "correct": false,
+     "explanation": "WRONG — CXR may show cardiomegaly and pulmonary plethora but is non-specific and does not confirm a VSD."
+    },
+    {
+     "label": "E",
+     "text": "CT angiography",
+     "correct": false,
+     "explanation": "WRONG — CT angiography involves radiation and contrast and is not the first-line test for a suspected VSD."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "ECHOCARDIOGRAPHY is the gold-standard confirmatory test for VSD (and structural congenital heart disease) — it shows the defect, shunt size and pulmonary pressures without radiation.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "keyDifferentiator": "ECG and CXR are supportive/non-specific; ECHO is confirmatory. Reach for echo in any suspected structural heart defect."
+  },
+  {
+   "id": "b37_q7_vsd_3",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "Q15 — Complication if untreated",
+   "cluster": "b37_q7_vsd",
+   "seq": 3,
+   "stem": "A 2-WEEK-OLD FEMALE presented with POOR FEEDING, SWEATING DURING FEEDS and TACHYPNOEA. Her parents report she TIRES EASILY and has NOT GAINED WEIGHT appropriately (failure to thrive). On examination PR 160 bpm, RR 60, a PALPABLE THRILL at the left sternal border, and a LOUD, HARSH HOLOSYSTOLIC (pansystolic) MURMUR at the LEFT LOWER STERNAL BORDER.\n\n[Part 3] What is the most expected complication of this condition if left untreated?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Pulmonary hypertension",
+     "correct": true,
+     "explanation": "a large uncorrected left-to-right shunt causes chronic pulmonary over-circulation, leading to PULMONARY HYPERTENSION and ultimately EISENMENGER SYNDROME — where pulmonary resistance exceeds systemic, the shunt REVERSES (right-to-left) and the child becomes cyanosed and inoperable. This is the most important and feared long-term complication of an unrepaired significant VSD."
+    },
+    {
+     "label": "B",
+     "text": "Infective endocarditis",
+     "correct": false,
+     "explanation": "WRONG — endocarditis is a recognised RISK of VSD but is far less common than the near-inevitable pulmonary vascular consequences of a large shunt; it is not the 'most expected' complication."
+    },
+    {
+     "label": "C",
+     "text": "Hypoplastic left heart syndrome",
+     "correct": false,
+     "explanation": "WRONG — HLHS is a distinct congenital malformation present from birth, not a complication that develops from a VSD."
+    },
+    {
+     "label": "D",
+     "text": "Pericardial effusion",
+     "correct": false,
+     "explanation": "WRONG — pericardial effusion is not a typical consequence of a VSD."
+    }
+   ],
+   "keyPoint": "Large unrepaired VSD → chronic pulmonary over-circulation → PULMONARY HYPERTENSION → EISENMENGER SYNDROME (shunt reversal, cyanosis, inoperable). This is the key reason to close significant defects early.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Eisenmenger physiology is the end-stage of an untreated large left-to-right shunt — once it develops, the defect can no longer be safely closed."
+  },
+  {
+   "id": "b37_q7_vsd_4",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "Q16 — Initial management",
+   "cluster": "b37_q7_vsd",
+   "seq": 4,
+   "stem": "A 2-WEEK-OLD FEMALE presented with POOR FEEDING, SWEATING DURING FEEDS and TACHYPNOEA. Her parents report she TIRES EASILY and has NOT GAINED WEIGHT appropriately (failure to thrive). On examination PR 160 bpm, RR 60, a PALPABLE THRILL at the left sternal border, and a LOUD, HARSH HOLOSYSTOLIC (pansystolic) MURMUR at the LEFT LOWER STERNAL BORDER.\n\n[Part 4] What is the most appropriate initial step in your management?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Surgical repair",
+     "correct": false,
+     "explanation": "WRONG — surgery is definitive but is not the INITIAL step; heart failure is first stabilised medically, and small defects may even close spontaneously. Surgery is reserved for large/symptomatic defects failing medical therapy or with rising pulmonary pressures."
+    },
+    {
+     "label": "B",
+     "text": "Beta blockers",
+     "correct": false,
+     "explanation": "WRONG — beta-blockers are not part of standard initial management of infant heart failure from a VSD."
+    },
+    {
+     "label": "C",
+     "text": "Diuretic and afterload reduction",
+     "correct": true,
+     "explanation": "the INITIAL management of the heart failure caused by a large VSD is MEDICAL: DIURETICS (e.g. furosemide) to relieve pulmonary congestion, plus AFTERLOAD REDUCTION (an ACE inhibitor) to lessen the left-to-right shunt, along with high-calorie feeds to support growth. This stabilises the infant while awaiting spontaneous closure or planned surgical repair."
+    },
+    {
+     "label": "D",
+     "text": "PGE1 infusion",
+     "correct": false,
+     "explanation": "WRONG — prostaglandin E1 maintains ductal patency in DUCT-DEPENDENT lesions (e.g. TGA, critical coarctation); a VSD is not duct-dependent, so PGE1 is inappropriate and would worsen pulmonary over-circulation."
+    },
+    {
+     "label": "E",
+     "text": "Observation",
+     "correct": false,
+     "explanation": "WRONG — a symptomatic infant in heart failure with failure to thrive needs active medical treatment, not observation alone (though small asymptomatic VSDs can be observed)."
+    }
+   ],
+   "keyPoint": "Initial management of VSD heart failure is MEDICAL: DIURETIC + AFTERLOAD REDUCTION (ACE inhibitor) + high-calorie feeds. Surgery is for large/refractory defects; PGE1 is for duct-dependent lesions, not VSD.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "PGE1 keeps the duct OPEN for duct-dependent lesions (TGA, critical coarctation) — giving it in a VSD would worsen the shunt. Match the drug to whether the lesion is duct-dependent."
+  },
+  {
+   "id": "b37_q8_1",
+   "type": "mcq",
+   "system": "Neurology",
+   "topic": "Q101 — Localisation",
+   "cluster": "b37_q8_stroke",
+   "seq": 1,
+   "stem": "A 76-year-old male with a history of DIABETES and HYPERTENSION was brought to the ER after SUDDEN-ONSET RIGHT-SIDED WEAKNESS and DIFFICULTY SPEAKING (dysphasia) that started 6 HOURS AGO. He complains of a mild headache. BP 160/90. NO signs of meningeal irritation.\n\n[Part 1] What is the most likely cause of his condition?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Hemorrhagic stroke",
+     "correct": false,
+     "explanation": "WRONG — although not excludable without imaging, the sudden focal deficit with only a mild headache and no meningism, on a background of vascular risk factors, is far more typical of ISCHAEMIC stroke; haemorrhage more often has severe headache, vomiting and depressed consciousness. (CT is still mandatory before thrombolysis.)"
+    },
+    {
+     "label": "B",
+     "text": "Ischemic stroke due to complete occlusion of the posterior cerebral artery",
+     "correct": false,
+     "explanation": "WRONG — PCA occlusion causes contralateral homonymous hemianopia ± visual/thalamic signs, not the arm/face weakness plus dysphasia seen here."
+    },
+    {
+     "label": "C",
+     "text": "Ischemic stroke in the right anterior cerebral artery",
+     "correct": false,
+     "explanation": "WRONG — a RIGHT-sided lesion would cause LEFT-sided weakness; and ACA territory affects the LEG more than the arm/face and does not cause aphasia."
+    },
+    {
+     "label": "D",
+     "text": "Ischemic stroke in the distribution of the basilar/vertebral artery",
+     "correct": false,
+     "explanation": "WRONG — posterior circulation strokes cause crossed signs, ataxia, diplopia, vertigo and bulbar dysfunction, not an isolated right hemiparesis with cortical dysphasia."
+    },
+    {
+     "label": "E",
+     "text": "Ischemic stroke in the left middle cerebral artery",
+     "correct": true,
+     "explanation": "RIGHT-sided weakness localises to the LEFT hemisphere, and DYSPHASIA localises to the dominant (usually left) hemisphere language areas supplied by the MCA. Left MCA territory infarction therefore fits precisely, typically causing right face/arm-predominant weakness, right sensory loss, aphasia and a gaze preference to the left."
+    }
+   ],
+   "keyPoint": "Localise before you treat: RIGHT hemiparesis + aphasia = LEFT MCA territory. Weakness is contralateral to the lesion; language is a dominant-hemisphere (left MCA) function.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Face/arm-predominant weakness + aphasia = MCA. Leg-predominant weakness = ACA. Hemianopia/visual = PCA. Crossed signs/ataxia = posterior circulation."
+  },
+  {
+   "id": "b37_q8_2",
+   "type": "mcq",
+   "system": "Neurology",
+   "topic": "Q102 — Immediate treatment",
+   "cluster": "b37_q8_stroke",
+   "seq": 2,
+   "stem": "A 76-year-old male with a history of DIABETES and HYPERTENSION was brought to the ER after SUDDEN-ONSET RIGHT-SIDED WEAKNESS and DIFFICULTY SPEAKING (dysphasia) that started 6 HOURS AGO. He complains of a mild headache. BP 160/90. NO signs of meningeal irritation.\n\n[Part 2] What is the most appropriate immediate treatment option?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Heparin infusion",
+     "correct": false,
+     "explanation": "WRONG — anticoagulation has no role in acute ischaemic stroke and increases haemorrhagic transformation risk."
+    },
+    {
+     "label": "B",
+     "text": "Mechanical thrombectomy",
+     "correct": true,
+     "explanation": "onset was 6 HOURS ago, which is OUTSIDE the 4.5-hour window for IV thrombolysis. For a large-vessel occlusion, MECHANICAL THROMBECTOMY is indicated up to 6 hours (and up to 24 hours with favourable perfusion imaging), making it the appropriate immediate reperfusion option here. A CT/CT-angiogram must first exclude haemorrhage and confirm a proximal occlusion."
+    },
+    {
+     "label": "C",
+     "text": "Aspirin 325 mg",
+     "correct": false,
+     "explanation": "WRONG — aspirin is given (300 mg) once haemorrhage is excluded, but only AFTER reperfusion therapy has been considered and, if thrombolysis is given, delayed 24 hours. It is not the best 'immediate' option when reperfusion is on the table."
+    },
+    {
+     "label": "D",
+     "text": "iv alteplase",
+     "correct": false,
+     "explanation": "WRONG — IV alteplase is limited to within 4.5 HOURS of onset. At 6 hours it is outside the licensed window and would be inappropriate/unsafe as the primary choice."
+    },
+    {
+     "label": "E",
+     "text": "Immediate carotid endarterectomy",
+     "correct": false,
+     "explanation": "WRONG — carotid endarterectomy is a secondary-prevention procedure for symptomatic carotid stenosis, done days-to-weeks later, not an acute treatment."
+    }
+   ],
+   "keyPoint": "Reperfusion by the CLOCK: IV alteplase only ≤4.5 h; MECHANICAL THROMBECTOMY for large-vessel occlusion ≤6 h (to 24 h with perfusion imaging). At 6 h → thrombectomy, not alteplase.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "The stem's '6 hours ago' is the discriminator — it deliberately puts the patient past the alteplase window, making thrombectomy the correct reperfusion choice. Always exclude haemorrhage on CT first.",
+   "flag": {
+    "severity": "MODERATE",
+    "note": "MODERATE — TIMING-DEPENDENT ANSWER. Onset is 6 h, which is OUTSIDE the 4.5 h IV-alteplase window, so the clinically correct immediate reperfusion is MECHANICAL THROMBECTOMY (large-vessel occlusion, ≤6 h; ≤24 h with perfusion imaging). If an answer key marks 'IV alteplase' it is WRONG for a 6-hour onset. Source: NICE NG128 Stroke; AHA/ASA 2019 acute stroke guidelines.",
+    "source": "Re-extracted from the Batch 37 source paper"
+   }
+  },
+  {
+   "id": "b37_q8_3",
+   "type": "mcq",
+   "system": "Neurology",
+   "topic": "Q103 — Risk-factor assessment",
+   "cluster": "b37_q8_stroke",
+   "seq": 3,
+   "stem": "A 76-year-old male with a history of DIABETES and HYPERTENSION was brought to the ER after SUDDEN-ONSET RIGHT-SIDED WEAKNESS and DIFFICULTY SPEAKING (dysphasia) that started 6 HOURS AGO. He complains of a mild headache. BP 160/90. NO signs of meningeal irritation.\n\n[Part 3] Which of the following is the most important in the assessment of stroke risk factors?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Vasculitis screen",
+     "correct": false,
+     "explanation": "WRONG — vasculitis is a rare cause, reserved for young patients or those with systemic features, not the priority in a 76-year-old with classic vascular risk factors."
+    },
+    {
+     "label": "B",
+     "text": "RFT (renal function)",
+     "correct": false,
+     "explanation": "WRONG — renal function is checked (e.g. before contrast) but is not the key to identifying the embolic SOURCE of the stroke."
+    },
+    {
+     "label": "C",
+     "text": "ESR",
+     "correct": false,
+     "explanation": "WRONG — ESR is non-specific; relevant mainly if giant cell arteritis or vasculitis is suspected."
+    },
+    {
+     "label": "D",
+     "text": "Cardiac assessment",
+     "correct": true,
+     "explanation": "in an elderly patient, ATRIAL FIBRILLATION is the leading modifiable embolic source, so CARDIAC ASSESSMENT — ECG (and prolonged monitoring) for AF, plus echocardiography for a cardiac source — is the most important risk-factor evaluation. Detecting AF changes secondary prevention to anticoagulation."
+    },
+    {
+     "label": "E",
+     "text": "Thrombophilia screen",
+     "correct": false,
+     "explanation": "WRONG — thrombophilia screening is for young patients with unprovoked venous or arterial thrombosis, not for an elderly patient with atherosclerotic/cardioembolic risk factors."
+    }
+   ],
+   "keyPoint": "In an older stroke patient the key risk-factor hunt is for a CARDIAC EMBOLIC SOURCE — ECG/monitoring for ATRIAL FIBRILLATION and echocardiography. AF detection mandates anticoagulation.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Vasculitis and thrombophilia screens are for YOUNG or cryptogenic strokes; in the elderly, think atrial fibrillation and carotid disease first."
+  },
+  {
+   "id": "b37_q9_1",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "Q9 — Diagnosis",
+   "cluster": "b37_q9_abo",
+   "seq": 1,
+   "stem": "A 3-DAY-OLD MALE, born at 38 weeks, presents with YELLOWISH SKIN DISCOLORATION (jaundice). He is BLOOD GROUP A and his MOTHER IS BLOOD GROUP O. He is breastfeeding, with wet nappies and good (increased) urine output.\n\n[Part 1] What is the diagnosis?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Physiological jaundice",
+     "correct": false,
+     "explanation": "WRONG — physiological jaundice appears after 24 h and peaks at day 3–5, but the group O mother / group A baby combination points to an immune haemolytic cause that must be identified; physiological jaundice is a diagnosis of exclusion."
+    },
+    {
+     "label": "B",
+     "text": "ABO incompatibility",
+     "correct": true,
+     "explanation": "a GROUP O MOTHER carries naturally occurring anti-A and anti-B IgG antibodies that cross the placenta and haemolyse the GROUP A baby's red cells — ABO HAEMOLYTIC DISEASE OF THE NEWBORN. It is the commonest cause of immune haemolysis in the neonate, characteristically in a group O mother with a group A or B infant, and unlike Rh disease it can affect the FIRST pregnancy."
+    },
+    {
+     "label": "C",
+     "text": "Breastfeeding jaundice",
+     "correct": false,
+     "explanation": "WRONG — breastfeeding (breast-non-feeding) jaundice is due to inadequate intake and dehydration in the first week; but this baby has GOOD urine output and the maternal/infant blood groups implicate ABO incompatibility."
+    },
+    {
+     "label": "D",
+     "text": "Crigler-Najjar syndrome",
+     "correct": false,
+     "explanation": "WRONG — Crigler-Najjar (UGT1A1 deficiency) is a rare cause of severe unconjugated hyperbilirubinaemia without haemolysis; the blood-group mismatch here makes ABO incompatibility far more likely."
+    }
+   ],
+   "keyPoint": "GROUP O MOTHER + GROUP A/B BABY with early jaundice = ABO HAEMOLYTIC DISEASE OF THE NEWBORN. Commonest immune neonatal haemolysis; can affect the FIRST baby (unlike Rh disease).",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "ABO incompatibility needs a group O mother and a group A/B baby; Rh disease needs an Rh-negative mother sensitised to an Rh-positive baby (usually not the first pregnancy)."
+  },
+  {
+   "id": "b37_q9_2",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "Q10 — Confirmatory test",
+   "cluster": "b37_q9_abo",
+   "seq": 2,
+   "stem": "A 3-DAY-OLD MALE, born at 38 weeks, presents with YELLOWISH SKIN DISCOLORATION (jaundice). He is BLOOD GROUP A and his MOTHER IS BLOOD GROUP O. He is breastfeeding, with wet nappies and good (increased) urine output.\n\n[Part 2] Which of the following confirms the diagnosis?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Direct bilirubin 2 mg",
+     "correct": false,
+     "explanation": "WRONG — a raised DIRECT (conjugated) bilirubin indicates cholestasis, not haemolysis; ABO disease causes UNCONJUGATED hyperbilirubinaemia."
+    },
+    {
+     "label": "B",
+     "text": "Indirect bilirubin 10 mg",
+     "correct": false,
+     "explanation": "WRONG — a raised indirect bilirubin confirms unconjugated hyperbilirubinaemia and is consistent with haemolysis, but it is not SPECIFIC — it does not prove an immune (antibody-mediated) cause."
+    },
+    {
+     "label": "C",
+     "text": "Hemoglobin",
+     "correct": false,
+     "explanation": "WRONG — the haemoglobin may be low from haemolysis but is non-specific and does not confirm the immune mechanism."
+    },
+    {
+     "label": "D",
+     "text": "Direct Coombs test (positive)",
+     "correct": true,
+     "explanation": "the DIRECT ANTIGLOBULIN (COOMBS) TEST detects maternal IgG antibody bound to the neonate's red cells, confirming an IMMUNE haemolytic process — the specific confirmatory test for ABO (and Rh) haemolytic disease of the newborn. (Note it is often only weakly positive in ABO disease.)"
+    },
+    {
+     "label": "E",
+     "text": "High liver enzymes",
+     "correct": false,
+     "explanation": "WRONG — transaminases reflect hepatocellular injury, not neonatal immune haemolysis."
+    }
+   ],
+   "keyPoint": "Immune neonatal haemolysis is confirmed by a POSITIVE DIRECT COOMBS TEST (antibody on the baby's cells). Bilirubin/Hb show the effect; Coombs shows the immune MECHANISM.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Coombs POSITIVE = immune haemolysis (ABO/Rh HDN). A rising unconjugated bilirubin alone is supportive but not specific."
+  },
+  {
+   "id": "b37_q9_syphilis",
+   "type": "mcq",
+   "system": "Dermatology / Infectious diseases",
+   "topic": "Secondary syphilis",
+   "stem": "An UNMARRIED MALE PATIENT, 25 years old, presents with a 3-WEEK history of a GENERALIZED PAPULOSQUAMOUS SKIN RASH. The rash is NON-PRURITIC and INVOLVES THE PALMS AND SOLES. He has GENERALIZED LYMPHADENOPATHY. The most probable diagnosis is:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Mycosis fungoides",
+     "correct": false,
+     "explanation": "WRONG — mycosis fungoides (cutaneous T-cell lymphoma) is a chronic, slowly evolving patch/plaque disease of older adults, not an acute 3-week palmoplantar eruption with lymphadenopathy."
+    },
+    {
+     "label": "B",
+     "text": "Psoriasis vulgaris",
+     "correct": false,
+     "explanation": "WRONG — psoriasis is chronic, itchy or asymptomatic, favours EXTENSOR surfaces and scalp with silvery scale, and does not present acutely with generalized lymphadenopathy; palmoplantar psoriasis exists but the overall picture here is infective."
+    },
+    {
+     "label": "C",
+     "text": "Secondary syphilis",
+     "correct": true,
+     "explanation": "CORRECT — a NON-ITCHY generalized PAPULOSQUAMOUS rash that INVOLVES THE PALMS AND SOLES, with GENERALIZED LYMPHADENOPATHY, in a sexually active young adult, is classic SECONDARY SYPHILIS (Treponema pallidum). Palmoplantar involvement is a key clue (shared mainly with a few conditions). Confirm with treponemal serology (VDRL/RPR + TPHA); treat with benzathine penicillin."
+    },
+    {
+     "label": "D",
+     "text": "Pityriasis rosea",
+     "correct": false,
+     "explanation": "WRONG — pityriasis rosea gives a herald patch then a 'Christmas-tree' truncal eruption, typically SPARES the palms and soles and is not associated with generalized lymphadenopathy. Notably, atypical PR is the classic mimic — which is exactly why palmoplantar involvement should prompt syphilis serology."
+    }
+   ],
+   "keyPoint": "NON-ITCHY palmoplantar papulosquamous rash + generalized lymphadenopathy in a young adult = SECONDARY SYPHILIS until proven otherwise. Confirm with VDRL/RPR + TPHA; treat with benzathine penicillin.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Rash INVOLVING THE PALMS AND SOLES has a short differential — secondary syphilis, and (in different contexts) Rocky Mountain spotted fever and hand-foot-and-mouth. Palmoplantar + lymphadenopathy = syphilis."
   },
   {
    "id": "b37_q10",
@@ -552,33 +986,90 @@
    "references": null
   },
   {
-   "id": "b37_q11",
+   "id": "b37_q11_pprom",
    "type": "mcq",
-   "reference": "Batch 37 — Page 6",
-   "topic": "Q21 PPROM at 33 Weeks + Q77 PE in Cancer Patient",
-   "stem": "28-YEAR-OLD G1P0 at 33 WEEKS: Watery vaginal leak. No contractions. Maternal temp 37.5°C. Pooling + FERN + NITRAZINE positive → PPROM confirmed.",
+   "system": "Obstetrics & Gynaecology",
+   "topic": "Q21 — PPROM at 33 weeks, next step",
+   "stem": "A 28-year-old female G1P0 presents with a WATERY VAGINAL LEAK at 33 WEEKS of gestation, WITHOUT uterine contractions or vaginal bleeding. Fetal HR 140. Maternal temperature 37.5°C. Speculum examination confirms POOLING of fluid in the posterior vagina; FERN and NITRAZINE tests POSITIVE — confirming PRETERM PRELABOUR RUPTURE OF MEMBRANES (PPROM). What is your next step?",
    "choices": [
     {
      "label": "A",
-     "text": "3. Give Antibiotics (erythromycin) AND Corticosteroids",
+     "text": "Give oxytocin to induce labour after confirming vertex presentation",
+     "correct": false,
+     "explanation": "WRONG — at 33 weeks without infection or fetal compromise, immediate induction is not indicated; expectant management prolongs gestation and reduces prematurity complications."
+    },
+    {
+     "label": "B",
+     "text": "Give tocolytic and steroids with monitoring",
+     "correct": false,
+     "explanation": "WRONG — TOCOLYSIS is generally NOT recommended in PPROM: it does not improve outcomes and may increase infection risk by prolonging exposure. Steroids yes, tocolysis no."
+    },
+    {
+     "label": "C",
+     "text": "Give antibiotics and steroids with monitoring",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — the standard management of PPROM at 33 weeks is EXPECTANT with: ANTENATAL CORTICOSTEROIDS (fetal lung maturation), prophylactic ANTIBIOTICS (erythromycin, which prolongs latency and reduces neonatal infection — per the ORACLE trial), and close MONITORING for chorioamnionitis and fetal wellbeing, aiming to reach ~34 weeks before delivery."
+    },
+    {
+     "label": "D",
+     "text": "Immediate caesarean section to prevent infection",
+     "correct": false,
+     "explanation": "WRONG — PPROM is not itself an indication for caesarean; delivery is reserved for infection, fetal compromise or advancing labour, and vaginal delivery is usually appropriate."
+    },
+    {
+     "label": "E",
+     "text": "Reassure the patient it is normal watery secretion and review in 2 weeks",
+     "correct": false,
+     "explanation": "WRONG — pooling with positive fern and nitrazine confirms ruptured membranes, a significant event needing admission and active management, not reassurance."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "PPROM at 33 weeks = EXPECTANT management: antenatal STEROIDS + prophylactic ANTIBIOTICS (erythromycin) + monitoring for chorioamnionitis, aiming for ~34 weeks. AVOID tocolysis.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "keyDifferentiator": "Steroids YES, antibiotics YES, tocolysis NO in PPROM. Deliver only for infection, fetal compromise, or labour — not for the rupture alone."
+  },
+  {
+   "id": "b37_q11_pe",
+   "type": "mcq",
+   "system": "Oncology / Respiratory",
+   "topic": "Q77 — Suspected PE in a cancer patient, next step",
+   "stem": "(This case continued from earlier questions.) A woman with PANCREATIC ADENOCARCINOMA, currently on her FOURTH CYCLE OF CHEMOTHERAPY and responding well, now presents with SUDDEN-ONSET SHORTNESS OF BREATH and a LOW OXYGEN SATURATION. What is the next step?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Chest X-ray",
+     "correct": false,
+     "explanation": "WRONG — a CXR is often normal in PE and cannot confirm it; it is useful to exclude alternatives but is not the definitive next step when PE is strongly suspected."
+    },
+    {
+     "label": "B",
+     "text": "CT pulmonary angiography (CT angiography)",
+     "correct": true,
+     "explanation": "CORRECT — sudden dyspnoea and hypoxia in a patient with an ADENOCARCINOMA (a strongly prothrombotic, especially pancreatic, malignancy — Trousseau syndrome) is PULMONARY EMBOLISM until proven otherwise. CT PULMONARY ANGIOGRAPHY is the definitive diagnostic test. Empirical anticoagulation (LMWH) is started while awaiting imaging if clinical probability is high."
+    },
+    {
+     "label": "C",
+     "text": "Blood culture",
+     "correct": false,
+     "explanation": "WRONG — blood cultures address sepsis, not the sudden hypoxic dyspnoea of a thrombotic event; not the priority here."
+    },
+    {
+     "label": "D",
+     "text": "Continue chemotherapy",
+     "correct": false,
+     "explanation": "WRONG — an acute hypoxic presentation must be investigated and treated, not ignored by simply continuing chemotherapy."
+    }
+   ],
+   "keyPoint": "Sudden dyspnoea + hypoxia in a cancer patient = PULMONARY EMBOLISM (cancer is prothrombotic; pancreatic adenocarcinoma is classic for Trousseau syndrome). Confirm with CTPA; treat cancer-associated VTE with LMWH.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Cancer-associated PE — CTPA to confirm, LMWH to treat (the CLOT-trial preference over warfarin). Adenocarcinomas, especially pancreatic, carry the highest VTE risk."
   },
   {
    "id": "b37_q12",
@@ -653,76 +1144,478 @@
    "references": null
   },
   {
-   "id": "b37_q14",
+   "id": "b37_q14_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 8",
-   "topic": "Q33-34 | Imperforate Hymen",
-   "stem": "15-YEAR-OLD GIRL: 6 months cyclic lower abdominal pain (CRYPTOMENORRHOEA). No menarche (PRIMARY AMENORRHOEA). Examination: BLUISH BULGING MEMBRANE at VAGINAL INTROITUS.",
+   "system": "Obstetrics & Gynaecology",
+   "topic": "Q33 — Diagnosis",
+   "cluster": "b37_q14_hymen",
+   "seq": 1,
+   "stem": "A 15-YEAR-OLD GIRL presents with a 6-MONTH history of CYCLIC LOWER ABDOMINAL PAIN. She has NOT YET ATTAINED MENARCHE (primary amenorrhoea). On examination there is a BULGING, BLUISH MEMBRANE at the VAGINAL INTROITUS.\n\n[Part 1] What is the most likely diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "Q33 Imperforate hymen",
+     "text": "Mayer-Rokitansky-Küster-Hauser syndrome",
      "correct": false,
-     "explanation": "pain and NO bluish membrane. HAEMATOCOLPOS: menstrual blood retained behind imperforate hymen → BLUISH"
+     "explanation": "WRONG — MRKH (Müllerian agenesis) causes primary amenorrhoea with a normal vulva but ABSENT uterus and upper vagina; there is NO bulging membrane and NO cyclic pain (no functioning uterus to accumulate blood)."
     },
     {
      "label": "B",
-     "text": "Q33 Müllerian agenesis",
+     "text": "Imperforate hymen",
      "correct": true,
-     "explanation": "BULGING MEMBRANE (distended with blood). Cyclic pain = cyclical menstruation with NO outlet. Primary amenorrhoea despite normal hormonal function. Treatment: CRUCIATE INCISION → drain haematocolpos. No uterus → no cyclic pain, no bulge. Similar to MRKH."
+     "explanation": "CYCLIC lower abdominal pain + primary amenorrhoea + a BULGING BLUISH MEMBRANE at the introitus is the classic triad of an IMPERFORATE HYMEN. Menstrual blood cannot escape and accumulates behind the intact hymen (HAEMATOCOLPOS), producing the bluish bulge and monthly pain in an otherwise normally developing girl. Treatment is a simple surgical hymenotomy/cruciate incision."
     },
     {
      "label": "C",
-     "text": "Q34 Failure of canalization of",
+     "text": "Müllerian agenesis",
      "correct": false,
-     "explanation": "Sinovaginal bulbs (endodermal outgrowths from urogenital sinus) form lower vagina and"
+     "explanation": "WRONG — Müllerian agenesis (part of the MRKH spectrum) means absent uterus/upper vagina, so there is no menstrual blood to obstruct and no bulging membrane."
     },
     {
      "label": "D",
-     "text": "sinovaginal bulbs",
+     "text": "Transverse vaginal septum",
      "correct": false,
-     "explanation": "hymen. Failure of central perforation → imperforate hymen. Müllerian duct fusion failure → uterine anomalies (not hymen)."
+     "explanation": "WRONG — a transverse vaginal septum also causes cryptomenorrhoea but the obstruction is HIGHER in the vagina, so there is typically NO bulging membrane visible at the introitus; imaging distinguishes it."
     }
    ],
-   "keyPoint": "",
-   "flag": null,
-   "system": "Batch 37 Final",
+   "keyPoint": "IMPERFORATE HYMEN = cyclic abdominal pain + primary amenorrhoea + bulging BLUISH membrane at the introitus (haematocolpos) in a normally developed girl. Treat with hymenotomy.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "keyDifferentiator": "Bulging membrane VISIBLE at the introitus = imperforate hymen. Primary amenorrhoea with a normal vulva but ABSENT uterus and NO bulge/pain = MRKH."
   },
   {
-   "id": "b37_q15",
+   "id": "b37_q14_2",
    "type": "mcq",
-   "reference": "Batch 37 — Page 9",
-   "topic": "Q71-75 Blowout Fracture + Nuclear Cataract + Q79-80 Hyphema/Keratoconus",
-   "stem": "26-YEAR-OLD RUGBY PLAYER: Left eye pain + blurring after knee injury. Eyelid ecchymosis, subconjunctival haemorrhage, proptosis, raised IOP, RAPD, VA 6/60. BLOWOUT FRACTURE suspected. No surgery within 24 hours.",
+   "system": "Obstetrics & Gynaecology",
+   "topic": "Q34 — Embryological origin",
+   "cluster": "b37_q14_hymen",
+   "seq": 2,
+   "stem": "A 15-YEAR-OLD GIRL presents with a 6-MONTH history of CYCLIC LOWER ABDOMINAL PAIN. She has NOT YET ATTAINED MENARCHE (primary amenorrhoea). On examination there is a BULGING, BLUISH MEMBRANE at the VAGINAL INTROITUS.\n\n[Part 2] What is the embryological origin of this condition?",
    "choices": [
     {
      "label": "A",
-     "text": "Orbital Floor | Q72: D. Inferior Rectus | Q73: B. CT Scan | Q74: C.",
+     "text": "Failure of canalization of the sinovaginal bulbs",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "the hymen forms at the junction of the SINOVAGINAL BULBS (urogenital sinus derivatives) and the vaginal plate. Normally this membrane canalises (perforates) before birth; FAILURE OF CANALIZATION leaves an imperforate hymen. This is the correct embryological basis."
+    },
+    {
+     "label": "B",
+     "text": "Failure of canalisation of the vaginal tube",
+     "correct": false,
+     "explanation": "WRONG — failure of canalisation of the vaginal plate/tube produces a transverse vaginal septum or vaginal atresia, higher up, not an imperforate hymen at the introitus."
+    },
+    {
+     "label": "C",
+     "text": "Failure of fusion of the Müllerian ducts",
+     "correct": false,
+     "explanation": "WRONG — failed Müllerian (paramesonephric) duct fusion causes uterine anomalies such as bicornuate or didelphys uterus, not hymenal obstruction."
+    },
+    {
+     "label": "D",
+     "text": "Persistent Wolffian (mesonephric) duct",
+     "correct": false,
+     "explanation": "WRONG — persistence of the Wolffian duct produces Gartner's duct cysts, unrelated to the hymen."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "The hymen is a urogenital-sinus/sinovaginal-bulb derivative; an imperforate hymen results from FAILURE OF ITS CANALIZATION before birth.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "keyDifferentiator": "Imperforate hymen = failed sinovaginal-bulb canalisation (low, at the introitus). Müllerian-duct fusion failure = uterine anomalies (high). Different embryology, different level."
+  },
+  {
+   "id": "b37_q15_1",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Q71 — Bone fractured",
+   "cluster": "b37_q15_blowout",
+   "seq": 1,
+   "stem": "A 26-YEAR-OLD RUGBY PLAYER presents with LEFT EYE PAIN and BLURRING after an injury. Examination reveals EYELID ECCHYMOSIS, SUBCONJUNCTIVAL HAEMORRHAGE, PROPTOSIS, INCREASED INTRAOCULAR PRESSURE and a RELATIVE AFFERENT PUPILLARY DEFECT, with VISUAL ACUITY 6/60 in the affected eye. An ORBITAL BLOWOUT FRACTURE is suspected.\n\n[Part 1] What bone is most likely fractured in a blowout fracture?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Zygomatic bone",
+     "correct": false,
+     "explanation": "WRONG — the zygoma forms the lateral orbital rim and is fractured in tripod (zygomaticomaxillary) fractures, not the classic blowout mechanism."
+    },
+    {
+     "label": "B",
+     "text": "Nasal bone",
+     "correct": false,
+     "explanation": "WRONG — nasal bone fractures result from direct nasal trauma and do not produce orbital blowout signs."
+    },
+    {
+     "label": "C",
+     "text": "Orbital floor",
+     "correct": true,
+     "explanation": "a blunt force to the globe raises intra-orbital pressure that fractures the WEAKEST wall — the ORBITAL FLOOR (the thin maxillary bone over the maxillary sinus). The medial wall (lamina papyracea) is the next commonest. Orbital contents can herniate into the maxillary sinus."
+    },
+    {
+     "label": "D",
+     "text": "Frontal bone",
+     "correct": false,
+     "explanation": "WRONG — the frontal bone forms the strong orbital roof and superior rim; it is not the site of a blowout fracture."
+    }
+   ],
+   "keyPoint": "ORBITAL BLOWOUT FRACTURE = fracture of the ORBITAL FLOOR (thin maxillary bone), the weakest wall, from a sudden rise in intra-orbital pressure. Contents may herniate into the maxillary sinus.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Blowout = FLOOR (or medial wall). Lateral rim/zygoma = tripod fracture. Roof = frontal bone. The floor is thinnest and blows out first."
+  },
+  {
+   "id": "b37_q15_2",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Q72 — Muscle affected",
+   "cluster": "b37_q15_blowout",
+   "seq": 2,
+   "stem": "A 26-YEAR-OLD RUGBY PLAYER presents with LEFT EYE PAIN and BLURRING after an injury. Examination reveals EYELID ECCHYMOSIS, SUBCONJUNCTIVAL HAEMORRHAGE, PROPTOSIS, INCREASED INTRAOCULAR PRESSURE and a RELATIVE AFFERENT PUPILLARY DEFECT, with VISUAL ACUITY 6/60 in the affected eye. An ORBITAL BLOWOUT FRACTURE is suspected.\n\n[Part 2] Which muscle is most likely affected in this case?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Superior rectus muscle",
+     "correct": false,
+     "explanation": "WRONG — the superior rectus lies along the roof and is not entrapped by a floor fracture."
+    },
+    {
+     "label": "B",
+     "text": "Lateral rectus muscle",
+     "correct": false,
+     "explanation": "WRONG — the lateral rectus runs along the lateral wall, away from the orbital floor."
+    },
+    {
+     "label": "C",
+     "text": "Medial rectus muscle",
+     "correct": false,
+     "explanation": "WRONG — the medial rectus can be caught in a MEDIAL WALL fracture, but the floor is the classic blowout site affecting a different muscle."
+    },
+    {
+     "label": "D",
+     "text": "Inferior rectus muscle",
+     "correct": true,
+     "explanation": "an ORBITAL FLOOR fracture characteristically ENTRAPS the INFERIOR RECTUS (± inferior oblique), restricting UPGAZE and causing VERTICAL DIPLOPIA. In children a 'trapdoor' fracture can tightly entrap it, producing the oculocardiac reflex (bradycardia, nausea) — a surgical emergency."
+    }
+   ],
+   "keyPoint": "Orbital FLOOR fracture entraps the INFERIOR RECTUS → restricted UPGAZE and VERTICAL DIPLOPIA. Suspect a trapdoor fracture with the oculocardiac reflex in children.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Floor fracture → inferior rectus (upgaze limited). Medial wall fracture → medial rectus (horizontal gaze). Match the wall to the muscle."
+  },
+  {
+   "id": "b37_q15_3",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Q73 — Imaging",
+   "cluster": "b37_q15_blowout",
+   "seq": 3,
+   "stem": "A 26-YEAR-OLD RUGBY PLAYER presents with LEFT EYE PAIN and BLURRING after an injury. Examination reveals EYELID ECCHYMOSIS, SUBCONJUNCTIVAL HAEMORRHAGE, PROPTOSIS, INCREASED INTRAOCULAR PRESSURE and a RELATIVE AFFERENT PUPILLARY DEFECT, with VISUAL ACUITY 6/60 in the affected eye. An ORBITAL BLOWOUT FRACTURE is suspected.\n\n[Part 3] What is the most appropriate imaging modality to confirm the diagnosis?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "X-ray",
+     "correct": false,
+     "explanation": "WRONG — plain films may show a 'teardrop' sign or an air-fluid level but are insensitive and cannot define soft-tissue herniation or entrapment."
+    },
+    {
+     "label": "B",
+     "text": "CT scan",
+     "correct": true,
+     "explanation": "NON-CONTRAST CT of the orbits (thin axial and coronal slices) is the GOLD STANDARD — it shows the bony defect, the 'teardrop' of herniated fat/muscle in the maxillary sinus, muscle entrapment and associated fractures. It is the imaging of choice for all facial/orbital trauma."
+    },
+    {
+     "label": "C",
+     "text": "MRI",
+     "correct": false,
+     "explanation": "WRONG — MRI has no role in acute bony trauma, is slow, and is contraindicated if a metallic foreign body is possible."
+    },
+    {
+     "label": "D",
+     "text": "Ultrasound",
+     "correct": false,
+     "explanation": "WRONG — ultrasound cannot assess bony orbital walls and risks pressure on a potentially ruptured globe."
+    }
+   ],
+   "keyPoint": "CT of the orbits (thin coronal cuts) is the gold-standard imaging for orbital blowout fracture — shows the floor defect, herniation ('teardrop' sign) and muscle entrapment.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "CT for bony orbital trauma, always. MRI/US have no role acutely."
+  },
+  {
+   "id": "b37_q15_4",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Q74 — Initial management",
+   "cluster": "b37_q15_blowout",
+   "seq": 4,
+   "stem": "A 26-YEAR-OLD RUGBY PLAYER presents with LEFT EYE PAIN and BLURRING after an injury. Examination reveals EYELID ECCHYMOSIS, SUBCONJUNCTIVAL HAEMORRHAGE, PROPTOSIS, INCREASED INTRAOCULAR PRESSURE and a RELATIVE AFFERENT PUPILLARY DEFECT, with VISUAL ACUITY 6/60 in the affected eye. An ORBITAL BLOWOUT FRACTURE is suspected.\n\n[Part 4] What is the initial management for this patient?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Immediate surgery",
+     "correct": false,
+     "explanation": "WRONG — most blowout fractures do NOT need immediate surgery; operating on acute oedema/haemorrhage is avoided unless there is an emergency indication (e.g. trapdoor entrapment with the oculocardiac reflex)."
+    },
+    {
+     "label": "B",
+     "text": "Observation only",
+     "correct": false,
+     "explanation": "WRONG — observation alone omits the important supportive measures (antibiotics, nasal precautions) that prevent complications."
+    },
+    {
+     "label": "C",
+     "text": "Cold compresses, pain relief, antibiotics, and eye drops if needed",
+     "correct": true,
+     "explanation": "initial management is CONSERVATIVE and supportive: cold compresses to reduce swelling, ANALGESIA, prophylactic ANTIBIOTICS (the fracture communicates with the sinus), and advice NOT TO BLOW THE NOSE (which can force sinus air into the orbit, causing orbital emphysema). Definitive repair, if needed, is planned after 1–2 weeks once swelling settles."
+    },
+    {
+     "label": "D",
+     "text": "Warm compresses and massage",
+     "correct": false,
+     "explanation": "WRONG — warm compresses and massage would worsen bleeding and swelling and risk further injury."
+    }
+   ],
+   "keyPoint": "Initial blowout management is CONSERVATIVE: cold compresses, analgesia, prophylactic antibiotics, and DO NOT BLOW THE NOSE (orbital emphysema risk). Reassess for surgery after swelling settles.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "The 'don't blow your nose' instruction is the classic teaching point — it prevents orbital surgical emphysema through the fractured sinus wall."
+  },
+  {
+   "id": "b37_q15_5",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Q75 — Surgical indication",
+   "cluster": "b37_q15_blowout",
+   "seq": 5,
+   "stem": "A 26-YEAR-OLD RUGBY PLAYER presents with LEFT EYE PAIN and BLURRING after an injury. Examination reveals EYELID ECCHYMOSIS, SUBCONJUNCTIVAL HAEMORRHAGE, PROPTOSIS, INCREASED INTRAOCULAR PRESSURE and a RELATIVE AFFERENT PUPILLARY DEFECT, with VISUAL ACUITY 6/60 in the affected eye. An ORBITAL BLOWOUT FRACTURE is suspected.\n\n[Part 5] When is surgery indicated?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "In all cases of blowout fracture",
+     "correct": false,
+     "explanation": "WRONG — most small fractures without entrapment or significant herniation heal with conservative management; surgery is not universal."
+    },
+    {
+     "label": "B",
+     "text": "If there is optic nerve compression, persistent diplopia, or a large/disfiguring defect (enophthalmos)",
+     "correct": true,
+     "explanation": "the recognised surgical indications are OPTIC NERVE COMPRESSION or retrobulbar haemorrhage threatening vision (emergency), PERSISTENT DIPLOPIA from muscle entrapment, and a LARGE FLOOR DEFECT causing significant ENOPHTHALMOS or cosmetic deformity. Paediatric trapdoor entrapment with the oculocardiac reflex needs urgent repair."
+    },
+    {
+     "label": "C",
+     "text": "Only for cosmetic reasons",
+     "correct": false,
+     "explanation": "WRONG — surgery is functional (vision, diplopia, entrapment) as well as sometimes cosmetic; restricting it to cosmesis is incorrect."
+    },
+    {
+     "label": "D",
+     "text": "If the patient requests it",
+     "correct": false,
+     "explanation": "WRONG — indications are clinical, not patient preference alone."
+    }
+   ],
+   "keyPoint": "Operate a blowout for: optic nerve compression / sight-threatening haemorrhage (emergency), persistent diplopia from entrapment, or a large defect causing enophthalmos. Trapdoor entrapment with oculocardiac reflex = urgent.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "No entrapment, no significant enophthalmos, vision intact → conservative. Entrapment/diplopia, large defect or threatened optic nerve → surgery."
+  },
+  {
+   "id": "b37_q15_cat_1",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Cataract — Most common cause",
+   "cluster": "b37_q15_cataract",
+   "seq": 1,
+   "stem": "An ELDERLY man complains of DECREASED NIGHT VISION but notices IMPROVEMENT IN HIS NEAR VISION — he can now read his favourite book more easily than before (so-called 'second sight').\n\n[Part 1] What is the most common cause of his disease?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Senile (age-related)",
+     "correct": true,
+     "explanation": "in the elderly the overwhelmingly commonest cause of cataract is SENILE / AGE-RELATED nuclear sclerosis — progressive hardening and yellowing of the lens nucleus with age."
+    },
+    {
+     "label": "B",
+     "text": "Idiopathic",
+     "correct": false,
+     "explanation": "WRONG — 'idiopathic' is a non-answer; age-related change is the established cause in the elderly."
+    },
+    {
+     "label": "C",
+     "text": "Congenital",
+     "correct": false,
+     "explanation": "WRONG — congenital cataract presents in infancy (leukocoria, absent red reflex), not in old age."
+    },
+    {
+     "label": "D",
+     "text": "Secondary",
+     "correct": false,
+     "explanation": "WRONG — secondary cataract (from steroids, diabetes, uveitis, trauma) is far less common than senile change in an elderly man with no such history."
+    },
+    {
+     "label": "E",
+     "text": "Metabolic",
+     "correct": false,
+     "explanation": "WRONG — metabolic cataract (e.g. galactosaemia, diabetes) is not the commonest cause overall in an elderly patient."
+    }
+   ],
+   "keyPoint": "The commonest cataract in the elderly is SENILE / AGE-RELATED (nuclear sclerotic).",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Age → senile cataract. Infancy → congenital. Steroids/diabetes/trauma → secondary."
+  },
+  {
+   "id": "b37_q15_cat_2",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Cataract — Cause of near-vision improvement",
+   "cluster": "b37_q15_cataract",
+   "seq": 2,
+   "stem": "An ELDERLY man complains of DECREASED NIGHT VISION but notices IMPROVEMENT IN HIS NEAR VISION — he can now read his favourite book more easily than before (so-called 'second sight').\n\n[Part 2] What is the cause of his near-vision improvement ('second sight')?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Myopic shift due to nuclear cataract",
+     "correct": true,
+     "explanation": "NUCLEAR SCLEROSIS increases the refractive index of the lens nucleus, adding converging (plus) power — a MYOPIC SHIFT. This shifts focus for near objects and lets a previously presbyopic patient read without glasses again — the classic 'SECOND SIGHT'."
+    },
+    {
+     "label": "B",
+     "text": "Hyperopic shift (subcapsular)",
+     "correct": false,
+     "explanation": "WRONG — nuclear cataract causes a MYOPIC (not hyperopic) shift; a hyperopic shift would worsen near vision."
+    },
+    {
+     "label": "C",
+     "text": "Presbyopia",
+     "correct": false,
+     "explanation": "WRONG — presbyopia is the age-related LOSS of accommodation that WORSENS near vision; it is the opposite of what is described."
+    },
+    {
+     "label": "D",
+     "text": "Astigmatism shift due to nuclear cataract",
+     "correct": false,
+     "explanation": "WRONG — nuclear cataract causes a spherical myopic shift, not primarily an astigmatic change."
+    }
+   ],
+   "keyPoint": "Nuclear cataract raises the lens refractive index → MYOPIC SHIFT → improved near vision ('second sight') in a previously presbyopic patient.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Second sight = myopic shift from nuclear sclerosis. Presbyopia and hyperopic shift both WORSEN near vision — the opposite."
+  },
+  {
+   "id": "b37_q15_cat_3",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Cataract — Medical treatment",
+   "cluster": "b37_q15_cataract",
+   "seq": 3,
+   "stem": "An ELDERLY man complains of DECREASED NIGHT VISION but notices IMPROVEMENT IN HIS NEAR VISION — he can now read his favourite book more easily than before (so-called 'second sight').\n\n[Part 3] Which treatment is useful for him?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "No medical treatment is available for his condition",
+     "correct": true,
+     "explanation": "there is NO effective MEDICAL (drug) treatment for cataract — no eye drop reverses lens opacification. The ONLY definitive treatment is SURGICAL removal (phacoemulsification with intraocular lens implant) when vision impairs daily life."
+    },
+    {
+     "label": "B",
+     "text": "Carbonic anhydrase inhibitor",
+     "correct": false,
+     "explanation": "WRONG — carbonic anhydrase inhibitors lower intraocular pressure in glaucoma; they do nothing for cataract."
+    },
+    {
+     "label": "C",
+     "text": "Alpha agonist",
+     "correct": false,
+     "explanation": "WRONG — alpha-2 agonists (e.g. brimonidine) are glaucoma medications, not cataract treatments."
+    },
+    {
+     "label": "D",
+     "text": "Beta blocker",
+     "correct": false,
+     "explanation": "WRONG — topical beta-blockers (e.g. timolol) treat glaucoma, not cataract."
+    }
+   ],
+   "keyPoint": "There is NO medical treatment for cataract — the only definitive treatment is SURGERY (phacoemulsification + IOL). The distractors are all glaucoma drugs.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "No drops treat cataract. If an option lists carbonic anhydrase inhibitors, alpha agonists or beta-blockers, those are glaucoma agents — distractors here."
+  },
+  {
+   "id": "b37_q15_cat_4",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "Cataract — Pre-op investigation",
+   "cluster": "b37_q15_cataract",
+   "seq": 4,
+   "stem": "An ELDERLY man complains of DECREASED NIGHT VISION but notices IMPROVEMENT IN HIS NEAR VISION — he can now read his favourite book more easily than before (so-called 'second sight').\n\n[Part 4] What investigation is required for his lens (IOL) choice?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Visual acuity (VA)",
+     "correct": false,
+     "explanation": "WRONG — visual acuity documents the deficit but does not determine the intraocular lens power."
+    },
+    {
+     "label": "B",
+     "text": "Biometry",
+     "correct": true,
+     "explanation": "BIOMETRY (ocular axial length by A-scan/optical biometry, plus keratometry) is required to calculate the power of the INTRAOCULAR LENS to be implanted at surgery. It is the essential pre-operative measurement for IOL selection."
+    },
+    {
+     "label": "C",
+     "text": "Perimetry",
+     "correct": false,
+     "explanation": "WRONG — perimetry maps the visual field (glaucoma/neuro-ophthalmology), not IOL power."
+    },
+    {
+     "label": "D",
+     "text": "Tonometry",
+     "correct": false,
+     "explanation": "WRONG — tonometry measures intraocular pressure (glaucoma), irrelevant to lens power selection."
+    },
+    {
+     "label": "E",
+     "text": "Topography",
+     "correct": false,
+     "explanation": "WRONG — corneal topography maps corneal shape (e.g. for refractive surgery/keratoconus); biometry is what determines IOL power."
+    }
+   ],
+   "keyPoint": "BIOMETRY (axial length + keratometry) calculates the INTRAOCULAR LENS power before cataract surgery. It is the essential pre-op measurement for IOL selection.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Biometry = IOL power. Perimetry = visual field. Tonometry = pressure. Topography = corneal shape. Only biometry sizes the lens implant."
   },
   {
    "id": "b37_q16",
@@ -812,33 +1705,190 @@
    "references": null
   },
   {
-   "id": "b37_q19",
+   "id": "b37_q19_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 12",
-   "topic": "Q54-57 | Peritonsillar Abscess (Quinsy)",
-   "stem": "37-YEAR-OLD MALE: Severe left ear pain 1 day. Odynophagia. TRISMUS (difficulty opening mouth). LEFT PALATE: swelling + erythema + bulging. UVULA DEVIATED TO THE RIGHT.",
+   "system": "ENT",
+   "topic": "Q54 — Diagnosis",
+   "cluster": "b37_q19_quinsy",
+   "seq": 1,
+   "stem": "A 37-year-old male presented with SEVERE LEFT EAR PAIN 1 day ago. NO hearing loss. The pain was associated with DIFFICULTY AND PAINFUL SWALLOWING (odynophagia). On examination it was DIFFICULT TO OPEN THE MOUTH (TRISMUS). There was swelling, erythema and BULGING OF THE LEFT PALATE, and the UVULA WAS DEVIATED TO THE RIGHT.\n\n[Part 1] Most appropriate diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "Peritonsillar Abscess (Quinsy) | Q55: D. Surgical Incision + IV",
+     "text": "Parapharyngeal abscess",
+     "correct": false,
+     "explanation": "WRONG — parapharyngeal abscess causes neck swelling, trismus and medial displacement of the lateral pharyngeal wall/tonsil, but not the classic uvular deviation with a bulging soft palate; it presents deeper in the neck."
+    },
+    {
+     "label": "B",
+     "text": "Retropharyngeal abscess",
+     "correct": false,
+     "explanation": "WRONG — retropharyngeal abscess (usually young children) gives neck stiffness, dysphagia and a bulge of the POSTERIOR pharyngeal wall, not palatal bulging with uvular deviation."
+    },
+    {
+     "label": "C",
+     "text": "Submandibular abscess",
+     "correct": false,
+     "explanation": "WRONG — a submandibular space infection (e.g. Ludwig's angina) causes floor-of-mouth swelling and tongue elevation, not soft-palate bulging."
+    },
+    {
+     "label": "D",
+     "text": "Postauricular abscess",
+     "correct": false,
+     "explanation": "WRONG — postauricular abscess (a complication of mastoiditis) pushes the pinna forward and down; it is an external ear/mastoid problem, unrelated to the palate."
+    },
+    {
+     "label": "E",
+     "text": "Peritonsillar abscess",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "quinsy — the triad of TRISMUS, UVULAR DEVIATION AWAY from the affected side and a BULGING SOFT PALATE with a muffled 'hot-potato' voice is diagnostic of a PERITONSILLAR ABSCESS. Pus collects between the tonsillar capsule and the superior constrictor. The referred otalgia (ear pain) is via cranial nerve IX. It is the commonest deep neck space infection, usually a complication of acute tonsillitis."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "PERITONSILLAR ABSCESS (quinsy) = TRISMUS + UVULA DEVIATED to the opposite side + bulging soft palate + hot-potato voice, with referred otalgia. Commonest deep neck space infection.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "keyDifferentiator": "Uvula deviated AWAY from a bulging soft palate = peritonsillar (quinsy). A posterior pharyngeal wall bulge = retropharyngeal; a deep neck/lateral bulge with the tonsil pushed medially = parapharyngeal."
+  },
+  {
+   "id": "b37_q19_2",
+   "type": "mcq",
+   "system": "ENT",
+   "topic": "Q55 — Treatment",
+   "cluster": "b37_q19_quinsy",
+   "seq": 2,
+   "stem": "A 37-year-old male presented with SEVERE LEFT EAR PAIN 1 day ago. NO hearing loss. The pain was associated with DIFFICULTY AND PAINFUL SWALLOWING (odynophagia). On examination it was DIFFICULT TO OPEN THE MOUTH (TRISMUS). There was swelling, erythema and BULGING OF THE LEFT PALATE, and the UVULA WAS DEVIATED TO THE RIGHT.\n\n[Part 2] Treatment?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Steroids",
+     "correct": false,
+     "explanation": "WRONG — steroids are only an adjunct (reduce oedema/pain); they do not evacuate pus and are not the definitive treatment."
+    },
+    {
+     "label": "B",
+     "text": "Antibiotics for at least 6 weeks",
+     "correct": false,
+     "explanation": "WRONG — an established abscess must be DRAINED; antibiotics alone will not resolve a collection, and a 6-week course is inappropriate. IV antibiotics are given AFTER drainage, for days not weeks."
+    },
+    {
+     "label": "C",
+     "text": "Analgesia",
+     "correct": false,
+     "explanation": "WRONG — analgesia is supportive only and does not treat the abscess."
+    },
+    {
+     "label": "D",
+     "text": "Surgical incision (needle aspiration / incision and drainage)",
+     "correct": true,
+     "explanation": "the definitive treatment of a peritonsillar abscess is DRAINAGE — needle aspiration or incision and drainage — combined with IV antibiotics (covering streptococci and anaerobes, e.g. co-amoxiclav) and analgesia. Drainage both confirms the diagnosis and relieves symptoms rapidly."
+    }
+   ],
+   "keyPoint": "Established peritonsillar abscess = DRAIN IT (needle aspiration or incision & drainage) + IV antibiotics + analgesia. Antibiotics alone do not treat a collection.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Cellulitis (peritonsillitis, no pus) responds to antibiotics alone; once an ABSCESS has formed it must be drained."
+  },
+  {
+   "id": "b37_q19_3",
+   "type": "mcq",
+   "system": "ENT",
+   "topic": "Q56 — Recurrence management",
+   "cluster": "b37_q19_quinsy",
+   "seq": 3,
+   "stem": "A 37-year-old male presented with SEVERE LEFT EAR PAIN 1 day ago. NO hearing loss. The pain was associated with DIFFICULTY AND PAINFUL SWALLOWING (odynophagia). On examination it was DIFFICULT TO OPEN THE MOUTH (TRISMUS). There was swelling, erythema and BULGING OF THE LEFT PALATE, and the UVULA WAS DEVIATED TO THE RIGHT.\n\n[Part 3] The condition resolved after treatment but RECURRED after six months with the same presentation. What is your management now?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Hot tonsillectomy",
+     "correct": false,
+     "explanation": "WRONG — 'hot' (acute) tonsillectomy performed during active infection carries a higher risk of haemorrhage and is generally avoided when the acute episode has settled."
+    },
+    {
+     "label": "B",
+     "text": "Interval tonsillectomy",
+     "correct": true,
+     "explanation": "after a RECURRENT peritonsillar abscess, INTERVAL (elective) TONSILLECTOMY is indicated — performed once the infection has fully resolved (typically after ~6 weeks), when tissues are least inflamed and bleeding risk is lowest. Recurrent quinsy is a recognised indication for tonsillectomy."
+    },
+    {
+     "label": "C",
+     "text": "Partial tonsillectomy",
+     "correct": false,
+     "explanation": "WRONG — partial/intracapsular tonsillectomy is used for obstructive tonsillar hypertrophy in children, not for recurrent quinsy, where complete removal is needed."
+    },
+    {
+     "label": "D",
+     "text": "Biopsy tonsillectomy",
+     "correct": false,
+     "explanation": "WRONG — biopsy is reserved for suspected malignancy (asymmetry, ulceration, persistent mass), not recurrent infection in a young adult."
+    },
+    {
+     "label": "E",
+     "text": "Tonsillectomy under local anesthesia",
+     "correct": false,
+     "explanation": "WRONG — tonsillectomy is performed under GENERAL anaesthesia; local anaesthesia is inadequate and unsafe for the procedure."
+    }
+   ],
+   "keyPoint": "RECURRENT peritonsillar abscess = INTERVAL TONSILLECTOMY (elective, after the acute infection settles). Recurrent quinsy is a classic indication for tonsillectomy.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Interval (cold) tonsillectomy after resolution is safer than hot tonsillectomy during acute infection because inflamed tissue bleeds more."
+  },
+  {
+   "id": "b37_q19_4",
+   "type": "mcq",
+   "system": "ENT",
+   "topic": "Q57 — Post-tonsillectomy bleeding",
+   "cluster": "b37_q19_quinsy",
+   "seq": 4,
+   "stem": "A 37-year-old male presented with SEVERE LEFT EAR PAIN 1 day ago. NO hearing loss. The pain was associated with DIFFICULTY AND PAINFUL SWALLOWING (odynophagia). On examination it was DIFFICULT TO OPEN THE MOUTH (TRISMUS). There was swelling, erythema and BULGING OF THE LEFT PALATE, and the UVULA WAS DEVIATED TO THE RIGHT.\n\n[Part 4] FIVE DAYS postoperatively the patient presents with BLOODY SPITTING, painful swallowing and HALITOSIS. Most likely diagnosis:",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Reactive bleeding",
+     "correct": false,
+     "explanation": "WRONG — reactive (primary) haemorrhage occurs within the first 24 hours, from inadequate intra-operative haemostasis, not at day 5."
+    },
+    {
+     "label": "B",
+     "text": "Tongue edema",
+     "correct": false,
+     "explanation": "WRONG — tongue oedema does not cause bleeding or halitosis and is not a typical day-5 complication."
+    },
+    {
+     "label": "C",
+     "text": "Secondary bleeding",
+     "correct": true,
+     "explanation": "SECONDARY post-tonsillectomy haemorrhage occurs 5–10 DAYS after surgery and is due to INFECTION/sloughing of the healing tonsillar bed — hence the accompanying halitosis and pain. It is the commonest cause of delayed post-tonsillectomy bleeding and is managed with admission, antibiotics and, if significant, examination and haemostasis."
+    },
+    {
+     "label": "D",
+     "text": "Uvular hematoma",
+     "correct": false,
+     "explanation": "WRONG — a uvular haematoma is not a recognised cause of delayed bleeding with halitosis after tonsillectomy."
+    },
+    {
+     "label": "E",
+     "text": "Primary bleeding",
+     "correct": false,
+     "explanation": "WRONG — 'primary' (reactive) bleeding is within 24 hours. Day-5 bleeding with halitosis is by definition secondary/infective."
+    }
+   ],
+   "keyPoint": "Post-tonsillectomy haemorrhage: PRIMARY/reactive <24 h (surgical haemostasis). SECONDARY 5–10 days, from INFECTION (halitosis, pain) — treat with antibiotics ± haemostasis.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "keyDifferentiator": "Timing splits them: <24 h = primary/reactive; 5–10 days with halitosis = secondary (infective)."
   },
   {
    "id": "b37_q20",
@@ -1276,7 +2326,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q30",
+   "seq": 1
   },
   {
    "id": "b37_q30_2",
@@ -1324,7 +2376,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q30",
+   "seq": 2
   },
   {
    "id": "b37_q30_3",
@@ -1378,7 +2432,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q30",
+   "seq": 3
   },
   {
    "id": "b37_q31_1",
@@ -1428,7 +2484,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q31",
+   "seq": 1
   },
   {
    "id": "b37_q31_2",
@@ -1472,7 +2530,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q31",
+   "seq": 2
   },
   {
    "id": "b37_q31_3",
@@ -1516,7 +2576,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q31",
+   "seq": 3
   },
   {
    "id": "b37_q31_4",
@@ -1566,7 +2628,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q31",
+   "seq": 4
   },
   {
    "id": "b37_q32_1",
@@ -1604,7 +2668,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q32",
+   "seq": 1
   },
   {
    "id": "b37_q32_2",
@@ -1654,7 +2720,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q32",
+   "seq": 2
   },
   {
    "id": "b37_q32_3",
@@ -1698,7 +2766,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q32",
+   "seq": 3
   },
   {
    "id": "b37_q32_4",
@@ -1742,7 +2812,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q32",
+   "seq": 4
   },
   {
    "id": "b37_q33_1",
@@ -1792,7 +2864,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q33",
+   "seq": 1
   },
   {
    "id": "b37_q33_2",
@@ -1830,7 +2904,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q33",
+   "seq": 2
   },
   {
    "id": "b37_q33_3",
@@ -1862,7 +2938,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q33",
+   "seq": 3
   },
   {
    "id": "b37_q34_1",
@@ -1900,7 +2978,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q34",
+   "seq": 1
   },
   {
    "id": "b37_q34_2",
@@ -1950,7 +3030,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q34",
+   "seq": 2
   },
   {
    "id": "b37_q34_3",
@@ -2000,7 +3082,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q34",
+   "seq": 3
   },
   {
    "id": "b37_q35",
@@ -3334,7 +4418,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q57",
+   "seq": 1
   },
   {
    "id": "b37_q57_2",
@@ -3372,7 +4458,9 @@
    "optionsTitle": null,
    "keyDifferentiator": null,
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "cluster": "b37_q57",
+   "seq": 2
   },
   {
    "id": "b37_q58",

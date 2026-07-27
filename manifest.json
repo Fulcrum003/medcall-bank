@@ -1,6 +1,6 @@
 {
-  "manifestVersion": 34,
-  "updated": "2026-07-09",
+  "manifestVersion": 35,
+  "updated": "2026-07-27",
   "leaderboard": "https://script.google.com/macros/s/AKfycbypC31uzfeM9kLgMYSakCdLuxuwfCfepjHVJOvZ8xdx-ND4dM57A-owXu7zySKU7fuMQg/exec",
   "packs": [
     {
@@ -111,9 +111,11 @@
       "packId": "batch37-mcq",
       "title": "Batch 37 Final",
       "color": "#cf9b6b",
-      "version": 3,
+      "version": 5,
       "url": "batch37-mcq.json",
-      "questionCount": 91
+      "questionCount": 112
     }
-  ]
+  ],
+  "firebase": null,
+  "_firebaseNote": "Paste your Firebase web config object here to switch on accounts + cross-device sync. Leave null for guest-only. See FIREBASE_SETUP.md."
 }

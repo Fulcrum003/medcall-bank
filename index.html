@@ -538,7 +538,7 @@ let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
   exams:[],
   reports:[],
-  settings:{ newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, srsGrading:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
+  settings:{ onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, srsGrading:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
 };
 async function loadDB(){
   const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
@@ -787,6 +787,8 @@ async function syncBank(base){
   const mf=await mfRes.json();
   // leaderboard endpoint travels in the manifest → every device gets it automatically, no per-user setup
   if(mf.leaderboard !== undefined){ DB.settings.groupEndpoint = mf.leaderboard || ""; save.settings(); }
+  // firebase config travels in the manifest too → accounts work on every device with no per-user setup
+  if(mf.firebase !== undefined){ DB.settings.firebaseConfig = mf.firebase || null; save.settings(); }
   const packs=[], failed=[];
   for(const entry of (mf.packs||[])){
     const u=/^https?:/.test(entry.url)? entry.url : base+"/"+entry.url;
@@ -1332,6 +1334,7 @@ function recordAttempt(q, chosen, grade, okOverride, confidence){
   if(grade) p.srs = schedule(p.srs, grade);
   DB.progress.questions[q.id]=p;
   bumpStreak(); bumpDaily(); save.progress();
+  try{ scheduleSync(); }catch(e){}
 }
 
 /* ============================================================
@@ -1427,6 +1430,8 @@ function render(){
   else if(App.screen==="leaderboard") a.innerHTML=viewLeaderboard();
   else if(App.screen==="stats") a.innerHTML=viewStats();
   else if(App.screen==="settings") a.innerHTML=viewSettings();
+  else if(App.screen==="welcome") a.innerHTML=viewWelcome();
+  else if(App.screen==="account") a.innerHTML=viewAccount();
   else if(App.screen==="repair") a.innerHTML=viewRepair();
   else if(App.screen==="reportsinbox") a.innerHTML=viewReportsInbox();
   else if(App.screen==="editedqs") a.innerHTML=viewEditedQs();
@@ -2969,6 +2974,8 @@ function viewSettings(){
     <button class="btn-sm btn-ghost" data-action="nav" data-screen="home" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Back</button>
     <h2 class="serif" style="font-size:24px;font-weight:600">Settings</h2>
 
+    ${accountSettingsCard()}
+
     <div class="sectlabel">Recall</div>
     <div class="row between card pad">
       <div><b>New cards / day</b><div class="faint" style="font-size:12.5px">Smart Review limit</div></div>
@@ -3175,6 +3182,351 @@ function setFoot(inner){
   document.body.appendChild(f);
 }
 
+
+/* ============================================================
+   ACCOUNTS & CROSS-DEVICE SYNC   (optional — Firebase)
+   ============================================================
+   Guests keep everything on-device exactly as before. Creating an
+   account additionally syncs progress across that user's devices.
+
+   The Firebase config travels in manifest.json (same trick as the
+   leaderboard endpoint) so every device picks it up automatically:
+       "firebase": { "apiKey":"…", "authDomain":"…", "projectId":"…", "appId":"…" }
+
+   The SDK is loaded lazily with dynamic import() the first time an
+   account is actually used, so guests never download it and the app
+   still starts offline and from file://.
+   ============================================================ */
+
+function acct(){
+  if(!DB.settings.account || typeof DB.settings.account!=="object"){
+    DB.settings.account = { mode:"", uid:"", email:"", lastSync:"", autoSync:true };
+  }
+  return DB.settings.account;
+}
+function isSignedIn(){ const a=acct(); return a.mode==="account" && !!a.uid; }
+function fbConfig(){ const c=DB.settings.firebaseConfig; return (c && c.apiKey && c.projectId) ? c : null; }
+
+/* ---------- pure merge helpers (unit-tested, no network) ---------- */
+
+function histSig(h){
+  return [h && h.date||"", (h&&h.answer!=null)?h.answer:"", (h&&h.correct)?1:0,
+          (h&&h.grade)||"", (h&&h.confidence!=null)?h.confidence:""].join("|");
+}
+
+// Two devices may each have answered the same question offline. History is the
+// source of truth: union it, then derive the counters from it. Never lose an attempt.
+function mergeQuestionProgress(a, b){
+  if(!a && !b) return null;
+  if(!a) return JSON.parse(JSON.stringify(b));
+  if(!b) return JSON.parse(JSON.stringify(a));
+  const ha = Array.isArray(a.history)? a.history : [];
+  const hb = Array.isArray(b.history)? b.history : [];
+  const seenSig = new Set(); const hist = [];
+  ha.concat(hb).forEach(h=>{
+    if(!h || typeof h!=="object") return;
+    const s = histSig(h); if(seenSig.has(s)) return;
+    seenSig.add(s); hist.push(h);
+  });
+  hist.sort((x,y)=> String(x.date||"").localeCompare(String(y.date||"")));
+  const aSeen = String(a.lastSeen||""), bSeen = String(b.lastSeen||"");
+  const newer = bSeen > aSeen ? b : a;
+  const older = newer===b ? a : b;
+  // Imported backups can carry {seen:2} with no history — max() so those never shrink.
+  const seen    = Math.max(hist.length, +a.seen||0, +b.seen||0);
+  const correct = Math.min(seen, Math.max(hist.filter(h=>h&&h.correct).length, +a.correct||0, +b.correct||0));
+  return {
+    seen, correct, history: hist,
+    marked: !!newer.marked,
+    lastResult: newer.lastResult || older.lastResult || null,
+    lastSeen: aSeen > bSeen ? a.lastSeen : b.lastSeen,
+    srs: newer.srs || older.srs || null
+  };
+}
+
+// Per-date counters (xp, study seconds) take the MAX for a given day rather than
+// summing, so re-syncing the same day repeatedly can never inflate totals.
+function mergeDateMap(a, b){
+  const out = Object.assign({}, a||{});
+  const r = b||{};
+  Object.keys(r).forEach(d=>{ out[d] = Math.max(+out[d]||0, +r[d]||0); });
+  return out;
+}
+
+function mergeProgress(local, remote){
+  const L = local||{}, R = remote||{};
+  const out = JSON.parse(JSON.stringify(L));
+  out.questions = out.questions || {};
+  const rq = R.questions || {};
+  Object.keys(rq).forEach(id=>{ out.questions[id] = mergeQuestionProgress(out.questions[id], rq[id]); });
+  out.xpLog   = mergeDateMap(L.xpLog,   R.xpLog);
+  out.timeLog = mergeDateMap(L.timeLog, R.timeLog);
+  out.xp      = Math.max(+L.xp||0, +R.xp||0);
+  const cl = Object.assign({}, L.checklist||{});
+  Object.keys(R.checklist||{}).forEach(k=>{ if(R.checklist[k]) cl[k]=R.checklist[k]; });
+  out.checklist = cl;
+  const ls = L.streak||{}, rs = R.streak||{};
+  const streakBase = String(rs.lastStudied||"") > String(ls.lastStudied||"") ? rs : ls;
+  out.streak = Object.assign({current:0,lastStudied:null}, streakBase);
+  out.streak.current = Math.max(+ls.current||0, +rs.current||0);
+  // resume marker: whichever device studied most recently
+  if(R.resume && (!L.resume || String(R.resume.date||"") > String(L.resume.date||""))) out.resume = R.resume;
+  return out;
+}
+
+// Arrays of records (exams, reports) — union, preferring local on id collision.
+function mergeRecords(localArr, remoteArr, idKey){
+  const out = Array.isArray(localArr) ? localArr.slice() : [];
+  const seen = new Set(out.map(x=> x && (x[idKey] || JSON.stringify(x))));
+  (Array.isArray(remoteArr)?remoteArr:[]).forEach(x=>{
+    if(!x) return;
+    const k = x[idKey] || JSON.stringify(x);
+    if(!seen.has(k)){ seen.add(k); out.push(x); }
+  });
+  return out;
+}
+
+// Device-specific preferences (theme, wallpaper, maintainer, tokens) deliberately
+// do NOT travel between devices. Only study preferences do.
+const SYNCED_SETTINGS = ["newPerDay","passMark","dailyGoal","examDate","revealOnPick","srsGrading","displayName"];
+
+// Firestore caps a document at 1 MiB. Full answer history for a few thousand
+// questions can approach that, so trim to the most recent N per question for the
+// uploaded copy — SRS state and counters are preserved, only old history rows drop.
+function buildSyncPayload(db, histCap){
+  const cap = histCap || 20;
+  const prog = JSON.parse(JSON.stringify(db.progress||{}));
+  Object.keys(prog.questions||{}).forEach(id=>{
+    const q = prog.questions[id];
+    if(q && Array.isArray(q.history) && q.history.length > cap) q.history = q.history.slice(-cap);
+  });
+  const st = {};
+  SYNCED_SETTINGS.forEach(k=>{ if(db.settings && db.settings[k]!==undefined) st[k]=db.settings[k]; });
+  return { progress: prog, exams: db.exams||[], settings: st, updatedAt: new Date().toISOString(), schema: 1 };
+}
+
+/* ---------- Firebase adapter (lazy) ---------- */
+
+const FB = { app:null, auth:null, db:null, mod:null };
+const FB_VER = "10.12.2";
+
+async function fbLoad(){
+  if(FB.mod) return FB.mod;
+  const cfg = fbConfig();
+  if(!cfg) throw new Error("Accounts are not configured for this app yet.");
+  const base = "https://www.gstatic.com/firebasejs/"+FB_VER+"/";
+  const [appM, authM, fsM] = await Promise.all([
+    import(base+"firebase-app.js"),
+    import(base+"firebase-auth.js"),
+    import(base+"firebase-firestore.js")
+  ]);
+  FB.app  = appM.getApps && appM.getApps().length ? appM.getApp() : appM.initializeApp(cfg);
+  FB.auth = authM.getAuth(FB.app);
+  FB.db   = fsM.getFirestore(FB.app);
+  FB.mod  = { appM, authM, fsM };
+  return FB.mod;
+}
+
+async function accountSignUp(email, password){
+  const { authM } = await fbLoad();
+  const cred = await authM.createUserWithEmailAndPassword(FB.auth, email, password);
+  const a = acct(); a.mode="account"; a.uid=cred.user.uid; a.email=cred.user.email||email;
+  DB.settings.onboarded = true; save.settings();
+  await syncNow(true);
+  return a;
+}
+async function accountSignIn(email, password){
+  const { authM } = await fbLoad();
+  const cred = await authM.signInWithEmailAndPassword(FB.auth, email, password);
+  const a = acct(); a.mode="account"; a.uid=cred.user.uid; a.email=cred.user.email||email;
+  DB.settings.onboarded = true; save.settings();
+  await syncNow(true);
+  return a;
+}
+async function accountReset(email){
+  const { authM } = await fbLoad();
+  await authM.sendPasswordResetEmail(FB.auth, email);
+}
+async function accountSignOut(){
+  try{ const { authM } = await fbLoad(); await authM.signOut(FB.auth); }catch(e){}
+  const a = acct(); a.mode="guest"; a.uid=""; a.email=""; a.lastSync="";
+  save.settings();
+}
+
+/* ---------- sync engine ---------- */
+
+let _syncT=null, _syncing=false;
+let syncState = { busy:false, error:"", last:"" };
+
+function scheduleSync(delay){
+  if(!isSignedIn() || acct().autoSync===false) return;
+  clearTimeout(_syncT);
+  _syncT = setTimeout(()=>{ syncNow(true); }, delay==null?6000:delay);
+}
+
+async function syncNow(quiet){
+  if(!isSignedIn()){ if(!quiet) toast("You're using a guest account"); return false; }
+  if(_syncing) return false;
+  if(typeof navigator!=="undefined" && navigator.onLine===false){
+    if(!quiet) toast("Offline — will sync when you're back online");
+    return false;
+  }
+  _syncing=true; syncState.busy=true; syncState.error="";
+  if(!quiet && typeof render==="function") try{ render(); }catch(e){}
+  try{
+    const { fsM } = await fbLoad();
+    const ref = fsM.doc(FB.db, "users", acct().uid);
+    const snap = await fsM.getDoc(ref);
+    if(snap.exists()){
+      const remote = snap.data()||{};
+      DB.progress = mergeProgress(DB.progress, remote.progress||{});
+      DB.exams    = mergeRecords(DB.exams, remote.exams, "id");
+      if(remote.settings) SYNCED_SETTINGS.forEach(k=>{
+        if(remote.settings[k]!==undefined && DB.settings[k]===undefined) DB.settings[k]=remote.settings[k];
+      });
+      save.progress(); save.exams();
+    }
+    let payload = buildSyncPayload(DB, 20);
+    if(JSON.stringify(payload).length > 800000) payload = buildSyncPayload(DB, 6);
+    await fsM.setDoc(ref, payload);
+    const a=acct(); a.lastSync=new Date().toISOString(); save.settings();
+    syncState.last=a.lastSync;
+    if(!quiet) toast("Synced ✓");
+    return true;
+  }catch(e){
+    syncState.error = (e && e.message) ? e.message : "Sync failed";
+    if(!quiet) toast("Sync failed — "+syncState.error);
+    return false;
+  }finally{
+    _syncing=false; syncState.busy=false;
+    if(typeof render==="function") try{ if(App.screen==="account"||App.screen==="settings") render(); }catch(e){}
+  }
+}
+
+
+function acctErrMsg(err){
+  const c=(err && (err.code||err.message)) ? String(err.code||err.message) : "";
+  if(c.indexOf("email-already-in-use")>=0) return "That email already has an account — switch to Sign in.";
+  if(c.indexOf("invalid-email")>=0)        return "That doesn't look like a valid email address.";
+  if(c.indexOf("weak-password")>=0)        return "Password is too weak — use at least 6 characters.";
+  if(c.indexOf("wrong-password")>=0 || c.indexOf("invalid-credential")>=0 || c.indexOf("user-not-found")>=0)
+                                           return "Email or password is incorrect.";
+  if(c.indexOf("too-many-requests")>=0)    return "Too many attempts — wait a minute and try again.";
+  if(c.indexOf("network")>=0)              return "No connection — check your internet and try again.";
+  if(c.indexOf("not configured")>=0)       return "Accounts aren't switched on for this build yet.";
+  return c || "Something went wrong — try again.";
+}
+
+/* ---------- views ---------- */
+
+function viewWelcome(){
+  const configured = !!fbConfig();
+  return `<div class="fade" style="max-width:520px;margin:0 auto;padding-top:6vh">
+    <div style="text-align:center;margin-bottom:26px">
+      <div class="serif" style="font-size:30px;font-weight:600;letter-spacing:-.4px">MedRecall</div>
+      <div class="faint" style="font-size:14px;margin-top:8px;line-height:1.55">
+        Your question bank, spaced repetition and exam simulator.
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-bottom:12px">
+      <div style="font-size:15px;font-weight:600;margin-bottom:4px">Create an account</div>
+      <div class="faint" style="font-size:13px;line-height:1.55;margin-bottom:12px">
+        Keeps your progress, streak and exam history backed up and ${configured?"synced automatically across your phone, tablet and laptop":"ready to sync across devices"}.
+      </div>
+      <button class="btn btn-primary" data-action="nav" data-screen="account" data-mode="signup">Create account</button>
+      <div style="height:8px"></div>
+      <button class="btn btn-ghost" data-action="nav" data-screen="account" data-mode="signin">I already have an account</button>
+    </div>
+
+    <div class="card pad">
+      <div style="font-size:15px;font-weight:600;margin-bottom:4px">Continue as guest</div>
+      <div class="faint" style="font-size:13px;line-height:1.55;margin-bottom:12px">
+        Everything works and stays on this device. Your progress won't sync — you can create an account later from Settings without losing anything.
+      </div>
+      <button class="btn btn-ghost" data-action="acct-guest">Continue as guest</button>
+    </div>
+
+    ${configured?"":`<div class="faint" style="font-size:12px;text-align:center;margin-top:16px;line-height:1.5">
+      Accounts aren't switched on for this build yet — guest mode has every study feature.</div>`}
+  </div>`;
+}
+
+function viewAccount(){
+  const a = acct();
+  const mode = App.acctMode || "signup";
+  const configured = !!fbConfig();
+  const back = `<button class="btn-sm btn-ghost" data-action="nav" data-screen="${DB.settings.onboarded?"settings":"welcome"}" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"/></svg> Back</button>`;
+
+  if(isSignedIn()){
+    const last = a.lastSync ? new Date(a.lastSync).toLocaleString() : "not yet";
+    return `<div class="fade">${back}
+      <h2 class="serif" style="font-size:24px;font-weight:600">Account</h2>
+      <div class="card pad" style="margin-top:12px">
+        <div class="row between"><div><b>${esc(a.email||"Signed in")}</b>
+          <div class="faint" style="font-size:12.5px">Progress syncs automatically</div></div>
+          <span class="pill" style="border-color:var(--green);color:var(--green)">Synced</span></div>
+      </div>
+      <div class="row between card pad" style="margin-top:8px">
+        <div><b>Automatic sync</b><div class="faint" style="font-size:12.5px">After each session and on reopening</div></div>
+        <button class="iconbtn" data-action="acct-autosync">${a.autoSync===false?"Off":"On"}</button>
+      </div>
+      <div class="card pad" style="margin-top:8px">
+        <div class="faint" style="font-size:12.5px;margin-bottom:10px">Last synced: ${esc(last)}</div>
+        <button class="btn btn-primary" data-action="acct-sync" ${syncState.busy?"disabled":""}>${syncState.busy?"Syncing…":"Sync now"}</button>
+        ${syncState.error?`<div style="color:var(--amber);font-size:12.5px;margin-top:10px;line-height:1.5">${esc(syncState.error)}</div>`:""}
+      </div>
+      <div style="height:14px"></div>
+      <button class="btn btn-ghost" data-action="acct-signout" style="border-color:#6b541f;color:var(--amber)">Sign out on this device</button>
+      <div class="faint" style="font-size:12px;margin-top:10px;line-height:1.5">Signing out leaves your progress on this device and stops syncing.</div>
+    </div>`;
+  }
+
+  if(!configured){
+    return `<div class="fade">${back}
+      <h2 class="serif" style="font-size:24px;font-weight:600">Account</h2>
+      <div class="card pad" style="margin-top:12px">
+        <div class="faint" style="font-size:13px;line-height:1.6">Accounts aren't switched on for this build yet. You're using guest mode — every study feature works and your progress is saved on this device.</div>
+      </div></div>`;
+  }
+
+  const tab = (id,label)=>`<button class="btn-sm ${mode===id?"btn-primary":"btn-ghost"}" data-action="acct-mode" data-mode="${id}" style="flex:1">${label}</button>`;
+  return `<div class="fade">${back}
+    <h2 class="serif" style="font-size:24px;font-weight:600">${mode==="signup"?"Create account":"Sign in"}</h2>
+    <div class="row" style="gap:8px;margin:14px 0">${tab("signup","Create account")}${tab("signin","Sign in")}</div>
+    <div class="card pad">
+      <label class="faint" style="font-size:12.5px">Email</label>
+      <input id="acctEmail" type="email" autocomplete="email" class="inp" style="width:100%;margin:6px 0 12px" placeholder="you@example.com">
+      <label class="faint" style="font-size:12.5px">Password</label>
+      <input id="acctPass" type="password" autocomplete="${mode==="signup"?"new-password":"current-password"}" class="inp" style="width:100%;margin:6px 0 4px" placeholder="At least 6 characters">
+      <div class="faint" style="font-size:12px;margin-bottom:12px">${mode==="signup"?"Use any email — it's only used to recover your account.":"&nbsp;"}</div>
+      <button class="btn btn-primary" data-action="acct-submit">${mode==="signup"?"Create account & sync":"Sign in & sync"}</button>
+      ${mode==="signin"?`<div style="height:8px"></div><button class="btn btn-ghost" data-action="acct-reset">Forgot password</button>`:""}
+      <div id="acctErr" style="color:var(--amber);font-size:12.5px;margin-top:10px;line-height:1.5"></div>
+    </div>
+    <div class="faint" style="font-size:12px;margin-top:12px;line-height:1.55">
+      Your existing progress on this device is kept and merged into the account — nothing is lost.
+    </div>
+  </div>`;
+}
+
+function accountSettingsCard(){
+  const a = acct();
+  if(isSignedIn()){
+    const last = a.lastSync ? new Date(a.lastSync).toLocaleDateString() : "not yet";
+    return `<div class="sectlabel">Account</div>
+    <div class="row between card pad" data-action="nav" data-screen="account" style="cursor:pointer">
+      <div><b>${esc(a.email||"Signed in")}</b><div class="faint" style="font-size:12.5px">Syncing · last ${esc(last)}</div></div>
+      <svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 6l6 6-6 6"/></svg>
+    </div>`;
+  }
+  return `<div class="sectlabel">Account</div>
+    <div class="row between card pad" data-action="nav" data-screen="account" style="cursor:pointer">
+      <div><b>Guest</b><div class="faint" style="font-size:12.5px">Progress stays on this device — tap to sync across devices</div></div>
+      <svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 6l6 6-6 6"/></svg>
+    </div>`;
+}
+
 /* ============================================================
    EVENT DELEGATION
    ============================================================ */
@@ -3205,7 +3557,47 @@ document.body.addEventListener("click", async e=>{
   if(a==="clear-token"){ ghToken=null; wsSet("medrecall:ghtoken:v1", null); render(); toast("Token removed"); return; }
   if(a==="push-score"){ if(!DB.settings.lbRepo){ toast("Save your repo first"); return; } if(!ghToken){ toast("Add a token to post"); return; } toast("Posting…"); const ok=await ghPushScore(); toast(ok?"Score posted ✓":"Couldn't post — check token/repo"); if(ok) syncBoard(); return; }
 
-  if(a==="nav"){ const sc=t.dataset.screen; if(sc==="exam-builder") App.builder=null; App.screen=sc; render(); if(sc==="leaderboard") syncBoard(); return; }
+  /* ---- accounts ---- */
+  if(a==="acct-guest"){
+    const ac=acct(); if(!ac.mode) ac.mode="guest";
+    DB.settings.onboarded=true; save.settings();
+    App.screen="home"; render(); toast("You're in — progress saves on this device");
+    return;
+  }
+  if(a==="acct-mode"){ App.acctMode=t.dataset.mode||"signup"; render(); return; }
+  if(a==="acct-autosync"){ const ac=acct(); ac.autoSync = ac.autoSync===false; save.settings(); render(); if(ac.autoSync) syncNow(true); return; }
+  if(a==="acct-sync"){ await syncNow(false); return; }
+  if(a==="acct-signout"){
+    if(!confirm("Sign out on this device? Your progress stays here and stops syncing.")) return;
+    await accountSignOut(); App.screen="settings"; render(); toast("Signed out");
+    return;
+  }
+  if(a==="acct-reset"){
+    const em=($("acctEmail")?.value||"").trim();
+    if(!em){ const el=$("acctErr"); if(el) el.textContent="Enter your email first, then tap Forgot password."; return; }
+    try{ await accountReset(em); toast("Password reset email sent"); }
+    catch(err){ const el=$("acctErr"); if(el) el.textContent=acctErrMsg(err); }
+    return;
+  }
+  if(a==="acct-submit"){
+    const em=($("acctEmail")?.value||"").trim();
+    const pw=($("acctPass")?.value||"");
+    const el=$("acctErr"); if(el) el.textContent="";
+    if(!em || em.indexOf("@")<0){ if(el) el.textContent="Enter a valid email address."; return; }
+    if(pw.length<6){ if(el) el.textContent="Password must be at least 6 characters."; return; }
+    t.disabled=true; const lbl=t.textContent; t.textContent="Working…";
+    try{
+      if((App.acctMode||"signup")==="signup") await accountSignUp(em,pw);
+      else await accountSignIn(em,pw);
+      App.screen="home"; render(); toast("Signed in — progress is syncing ✓");
+    }catch(err){
+      t.disabled=false; t.textContent=lbl;
+      const e2=$("acctErr"); if(e2) e2.textContent=acctErrMsg(err);
+    }
+    return;
+  }
+
+  if(a==="nav"){ const sc=t.dataset.screen; if(sc==="exam-builder") App.builder=null; if(sc==="account"&&t.dataset.mode) App.acctMode=t.dataset.mode; App.screen=sc; render(); if(sc==="leaderboard") syncBoard(); return; }
 
   // search → study one question
   if(a==="open-q"){ startPracticeCtx({ids:[t.dataset.qid]}, "Search result"); return; }
@@ -3957,7 +4349,10 @@ async function boot(){
   try{ REMOTE_EDITS = (await wsGet("medrecall:remoteedits:v1"))||{}; }catch(e){}
   try{ REMOTE_EDITS_META = (await wsGet("medrecall:remoteeditsmeta:v1"))||{}; }catch(e){}
   buildIndex();
+  // first launch: let the user choose an account or guest mode before anything else
+  if(!DB.settings.onboarded && App.screen==="home") App.screen="welcome";
   render();
+  if(isSignedIn()) syncNow(true);
   // revalidate from the network when online
   const base = DB.settings.bankUrl || defaultBase();
   if(base){ try{ await syncBank(base); if(App.screen==="home") render(); }catch(e){ /* offline → keep cached/bundled bank */ } }
@@ -3977,7 +4372,7 @@ function resetDB() {
   DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {}, timeLog: {}, timer: null };
   DB.exams = [];
   DB.reports = [];
-  DB.settings = { newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, srsGrading: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
+  DB.settings = { onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, srsGrading: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
 /* clinic-v2.5 */
 
