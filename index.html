@@ -844,6 +844,7 @@ function adaptPack(c){
    ============================================================ */
 const App = { screen:"home", nav:{system:null,type:null,reference:null}, collapsedStages:{}, practice:null, exam:null, examResult:null, builder:null, examReview:false };
 let ghToken=null; // fine-grained GitHub token, stored only on this device (for posting your own leaderboard score)
+let adminToken=null; // Apps Script ADMIN_TOKEN — unlocks the private reports feed. Device-local, never synced.
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const stripBold = s => String(s).replace(/<\/?b>/g,""); // remove emphasis cues while a question is being answered
@@ -2519,9 +2520,10 @@ async function fetchReports(){
   if(!ep){ App.inboxState="noendpoint"; render(); return; }
   App.inboxState="loading"; render();
   try{
-    const u=ep+(ep.indexOf("?")>=0?"&":"?")+"reports=1&cb="+Date.now();
+    const u=ep+(ep.indexOf("?")>=0?"&":"?")+"reports=1&cb="+Date.now()+(adminToken?"&token="+encodeURIComponent(adminToken):"");
     const r=await fetch(u,{cache:"no-store"}); if(!r.ok) throw new Error(r.status);
     const data=await r.json();
+    if(data && data.error==="unauthorized"){ App.inboxState="unauthorized"; if(App.screen==="reportsinbox") render(); return; }
     if(Array.isArray(data) && (data.length===0 || Array.isArray(data[0]))){ App.inboxRows=data; App.inboxState="ok"; if(DB.settings.maintainer){ DB.settings.reportSeen=reportRows().length; save.settings(); } }
     else { App.inboxState="notupgraded"; }
   }catch(e){ App.inboxState="error"; }
@@ -2537,6 +2539,7 @@ function viewReportsInbox(){
   if(st==="noendpoint") html+=`<div class="card pad"><div class="faint" style="font-size:13px;line-height:1.5">No group Script connected. Add your Apps Script URL via the manifest <span class="mono">leaderboard</span> field, then refresh.</div></div>`;
   else if(st==="loading") html+=`<div class="empty">Loading reports…</div>`;
   else if(st==="error") html+=`<div class="card pad"><div style="font-size:13px;line-height:1.5">Couldn't reach the Script. Check it's deployed with access set to <b>Anyone</b>, and the URL is correct.</div></div>`;
+  else if(st==="unauthorized") html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div style="font-size:13px;line-height:1.55">The Script refused the request. Reports are now private — set <span class="mono">ADMIN_TOKEN</span> in the Apps Script (Project Settings → Script Properties), then add the same value here via <b>Settings → Maintainer tools → reports token</b>.</div></div>`;
   else if(st==="notupgraded") html+=`<div class="card pad" style="border-left:3px solid var(--amber)"><div style="font-size:13px;line-height:1.5">The Script returned leaderboard data, not reports. Add the <b>doGet <span class="mono">?reports=1</span></b> branch to your Apps Script (see setup) and redeploy a new version.</div></div>`;
   else {
     const data=reportRows().slice();
@@ -3093,6 +3096,9 @@ function viewSettings(){
       <div style="height:8px"></div>
       <button class="btn btn-primary" data-action="save-lb">Save leaderboard repo</button>
       <div style="height:8px"></div>
+      <button class="btn btn-ghost" data-action="set-admintoken">${adminToken?"Replace":"Add"} reports token (this device)</button>
+      ${adminToken?`<div class="faint" style="font-size:12px;text-align:center;margin-top:8px">Reports token set · <button class="reportlink" data-action="clear-admintoken">remove</button></div>`:`<div class="faint" style="font-size:12px;text-align:center;margin-top:8px">Needed to read the reports inbox after hardening the Apps Script</div>`}
+      <div style="height:10px"></div>
       <button class="btn btn-ghost" data-action="set-token">${ghToken?"Replace":"Add"} GitHub token (this device)</button>
       ${ghToken?`<div class="faint" style="font-size:12px;text-align:center;margin-top:8px">Token set on this device · <button class="reportlink" data-action="clear-token">remove</button></div>`:""}
       <div style="height:8px"></div>
@@ -3555,6 +3561,8 @@ document.body.addEventListener("click", async e=>{
   if(a==="save-lb"){ DB.settings.lbRepo=($("lbrepo")?.value||"").trim(); save.settings(); render(); toast(DB.settings.lbRepo?"Leaderboard repo saved":"Cleared"); if(DB.settings.lbRepo) syncBoard(); return; }
   if(a==="set-token"){ const v=(prompt("Paste a GitHub fine-grained token (Contents: write on your repo). Stored on this device only:")||"").trim(); if(v){ ghToken=v; wsSet("medrecall:ghtoken:v1", v); render(); toast("Token saved on this device"); } return; }
   if(a==="clear-token"){ ghToken=null; wsSet("medrecall:ghtoken:v1", null); render(); toast("Token removed"); return; }
+  if(a==="set-admintoken"){ const v=(prompt("Paste the ADMIN_TOKEN you set in the Apps Script (Script Properties). Stored on this device only:")||"").trim(); if(v){ adminToken=v; wsSet("medrecall:admintoken:v1", v); render(); toast("Reports token saved"); if(App.screen==="reportsinbox") fetchReports(); } return; }
+  if(a==="clear-admintoken"){ adminToken=null; wsSet("medrecall:admintoken:v1", null); render(); toast("Reports token removed"); return; }
   if(a==="push-score"){ if(!DB.settings.lbRepo){ toast("Save your repo first"); return; } if(!ghToken){ toast("Add a token to post"); return; } toast("Posting…"); const ok=await ghPushScore(); toast(ok?"Score posted ✓":"Couldn't post — check token/repo"); if(ok) syncBoard(); return; }
 
   /* ---- accounts ---- */
@@ -4172,10 +4180,10 @@ async function checkNewReports(){
   if(!DB.settings.maintainer || DB.settings.notifyReports===false) return;
   const ep=DB.settings.groupEndpoint; if(!ep) return;
   try{
-    const u=ep+(ep.indexOf("?")>=0?"&":"?")+"reports=1&cb="+Date.now();
+    const u=ep+(ep.indexOf("?")>=0?"&":"?")+"reports=1&cb="+Date.now()+(adminToken?"&token="+encodeURIComponent(adminToken):"");
     const r=await fetch(u,{cache:"no-store"}); if(!r.ok) return;
     const data=await r.json();
-    if(!Array.isArray(data) || (data.length && !Array.isArray(data[0]))) return;   // not upgraded
+    if(!Array.isArray(data) || (data.length && !Array.isArray(data[0]))) return;   // not upgraded / unauthorized
     App.inboxRows=data;
     const n=reportRows().length, seen=DB.settings.reportSeen||0;
     if(n>seen){
@@ -4341,6 +4349,7 @@ async function boot(){
   if(DB.settings.soundDefaulted===undefined){ DB.settings.sounds=true; DB.settings.soundDefaulted=true; save.settings(); }
   applyTheme();
   try{ ghToken = await wsGet("medrecall:ghtoken:v1"); }catch(e){}
+  try{ adminToken = await wsGet("medrecall:admintoken:v1"); }catch(e){}
   try{ wallImg = await wsGet("medrecall:wallpaperimg:v1"); }catch(e){}
   applyWallpaper();
   // instant + offline start from the cached bank (IndexedDB; falls back to the
