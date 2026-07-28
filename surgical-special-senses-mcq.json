@@ -11780,9 +11780,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Chloroquine",
+     "text": "Chloroquine",
      "correct": true,
-     "explanation": "CHLOROQUINE/hydroxychloroquine → RETINAL TOXICITY (bull's eye maculopathy). Dose-dependent. Monitor: annual OCT + Humphrey visual field (10-2). Gentamicin → SNHL (ototoxic not vision). Bendroflumethiazide, metformin, atorvastatin → not primarily visual impairment. Distractor."
+     "explanation": "CORRECT — CHLOROQUINE/hydroxychloroquine → RETINAL TOXICITY (bull's eye maculopathy). Dose-dependent. Monitor: annual OCT + Humphrey visual field (10-2). Gentamicin → SNHL (ototoxic not vision). Bendroflumethiazide, metformin, atorvastatin → not primarily visual impairment. Distractor."
+    },
+    {
+     "label": "B",
+     "text": "Gentamicin",
+     "correct": false,
+     "explanation": "Aminoglycoside → OTOtoxicity (sensorineural hearing loss) and nephrotoxicity, not visual impairment."
+    },
+    {
+     "label": "C",
+     "text": "Bendroflumethiazide",
+     "correct": false,
+     "explanation": "Thiazide diuretic — hypokalaemia, hyponatraemia, gout, impaired glucose tolerance. No retinal toxicity."
+    },
+    {
+     "label": "D",
+     "text": "Metformin",
+     "correct": false,
+     "explanation": "Biguanide — GI upset, B12 malabsorption, lactic acidosis in renal failure. Not ocular."
+    },
+    {
+     "label": "E",
+     "text": "Atorvastatin",
+     "correct": false,
+     "explanation": "Statin — myopathy and deranged LFTs. The cataract association is historical and unproven."
     }
    ],
    "keyPoint": "Chloroquine: CHLOROQUINE/hydroxychloroquine → RETINAL TOXICITY (bull's eye maculopathy). Dose-dependent. Monitor: annual OCT + Humphrey visual field (10-2). Gentamicin → SNHL (ototoxic not vision). Bendroflumethiazide, metformin, atorvastatin → not primarily visual impairment.",
@@ -11790,10 +11814,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q244",
@@ -11809,9 +11834,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Superior",
+     "text": "Superior oblique — trochlear nerve (CN IV)",
      "correct": true,
-     "explanation": "EOM + CN: SR/IR/MR/IO = CN III; SO = CN IV (mnemonic: SO4 = superior oblique ="
+     "explanation": "CORRECT — EOM + CN: SR/IR/MR/IO = CN III; SO = CN IV (mnemonic: SO4 = superior oblique ="
+    },
+    {
+     "label": "B",
+     "text": "Superior rectus — trochlear nerve (CN IV)",
+     "correct": false,
+     "explanation": "WRONG PAIRING — superior rectus is CN III (oculomotor)."
+    },
+    {
+     "label": "C",
+     "text": "Lateral rectus — oculomotor nerve (CN III)",
+     "correct": false,
+     "explanation": "WRONG PAIRING — lateral rectus is CN VI (abducens). Mnemonic LR6."
+    },
+    {
+     "label": "D",
+     "text": "Medial rectus — abducens nerve (CN VI)",
+     "correct": false,
+     "explanation": "WRONG PAIRING — medial rectus is CN III."
+    },
+    {
+     "label": "E",
+     "text": "Inferior oblique — trochlear nerve (CN IV)",
+     "correct": false,
+     "explanation": "WRONG PAIRING — inferior oblique is CN III; only SUPERIOR oblique is CN IV."
     }
    ],
    "keyPoint": "Superior rectus — CN III: EOM + CN: SR/IR/MR/IO = CN III; SO = CN IV (mnemonic: SO4 = superior",
@@ -11819,10 +11868,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q245",
@@ -11838,9 +11888,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "e) Hypermetropia is a cause of childhood squint",
+     "text": "Myopia is corrected with convex (converging) lenses",
+     "correct": false,
+     "explanation": "WRONG — myopia focuses light IN FRONT of the retina and needs CONCAVE (diverging) lenses. Convex lenses correct hypermetropia."
+    },
+    {
+     "label": "B",
+     "text": "Astigmatism cannot be corrected with spectacles",
+     "correct": false,
+     "explanation": "WRONG — astigmatism IS correctable, with CYLINDRICAL lenses."
+    },
+    {
+     "label": "C",
+     "text": "Presbyopia is short-sightedness that develops with age",
+     "correct": false,
+     "explanation": "WRONG — presbyopia is progressive LOSS OF ACCOMMODATION with age, causing difficulty with NEAR vision, not short-sightedness."
+    },
+    {
+     "label": "D",
+     "text": "Hypermetropia is corrected with concave lenses",
+     "correct": false,
+     "explanation": "WRONG — hypermetropia focuses light BEHIND the retina and needs CONVEX (converging) lenses."
+    },
+    {
+     "label": "E",
+     "text": "Hypermetropia is a cause of childhood squint",
      "correct": true,
-     "explanation": "Hypermetropia → accommodative esotropia (most common childhood squint type). Myopia treated with CONCAVE (diverging) lenses. Astigmatism IS correctable with cylindrical lenses. Presbyopia = progressive LOSS of accommodation with age (not short-sightedness). Page 187 University of Kufa, College of Medicine istractor."
+     "explanation": "CORRECT — Hypermetropia → accommodative esotropia (most common childhood squint type). Myopia treated with CONCAVE (diverging) lenses. Astigmatism IS correctable with cylindrical lenses. Presbyopia = progressive LOSS of accommodation with age (not short-sightedness). Page 187 University of Kufa, College of Medicine istractor."
     }
    ],
    "keyPoint": "Hypermetropia is a cause of childhood squint: Hypermetropia → accommodative esotropia (most common childhood squint type). Myopia treated with CONCAVE (diverging) lenses. Astigmatism IS correctable with cylindrical lenses. Presbyopia = progressive LOSS of accommodation with age (not short-sightedness).",
@@ -11848,10 +11922,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q246",
@@ -11867,9 +11942,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "d) Diabetes mellitus",
+     "text": "Hypermetropia",
+     "correct": false,
+     "explanation": "WRONG — hypermetropia gives a shallow anterior chamber and is a risk for ANGLE-CLOSURE glaucoma. MYOPIA is the refractive risk for open-angle."
+    },
+    {
+     "label": "B",
+     "text": "Caucasian ethnicity",
+     "correct": false,
+     "explanation": "WRONG — AFRO-CARIBBEAN ethnicity carries the higher POAG risk, with earlier onset and more aggressive disease."
+    },
+    {
+     "label": "C",
+     "text": "Thick central cornea",
+     "correct": false,
+     "explanation": "WRONG — a THIN central cornea (<555 µm) is the risk factor; a thick cornea overestimates measured IOP."
+    },
+    {
+     "label": "D",
+     "text": "Diabetes mellitus",
      "correct": true,
-     "explanation": "POAG risk factors: RAISED IOP (most important modifiable), age >40, family history, Afro-Caribbean ethnicity, myopia, DIABETES MELLITUS, thin cornea (central corneal thickness <555 µm). Hypermetropia = risk for ANGLE-CLOSURE glaucoma (not POAG). Caucasian origin = lower risk. Distractor."
+     "explanation": "CORRECT — POAG risk factors: RAISED IOP (most important modifiable), age >40, family history, Afro-Caribbean ethnicity, myopia, DIABETES MELLITUS, thin cornea (central corneal thickness <555 µm). Hypermetropia = risk for ANGLE-CLOSURE glaucoma (not POAG). Caucasian origin = lower risk. Distractor."
+    },
+    {
+     "label": "E",
+     "text": "Female sex",
+     "correct": false,
+     "explanation": "WRONG — sex is not an established independent risk factor for POAG."
     }
    ],
    "keyPoint": "Diabetes mellitus: POAG risk factors: RAISED IOP (most important modifiable), age >40, family history, Afro-Caribbean ethnicity, myopia, DIABETES MELLITUS, thin cornea (central corneal thickness <555 µm). Hypermetropia = risk for ANGLE-CLOSURE glaucoma (not POAG). Caucasian origin = lower risk.",
@@ -11877,10 +11976,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q247",
@@ -11896,9 +11996,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "e) Macular degeneration",
+     "text": "Central retinal artery occlusion",
+     "correct": false,
+     "explanation": "WRONG — CRAO causes SUDDEN painless loss with a cherry-red spot. Acute, not gradual."
+    },
+    {
+     "label": "B",
+     "text": "Giant cell arteritis",
+     "correct": false,
+     "explanation": "WRONG — GCA causes amaurosis fugax then SUDDEN permanent loss. An emergency: start steroids before biopsy."
+    },
+    {
+     "label": "C",
+     "text": "Vitreous haemorrhage",
+     "correct": false,
+     "explanation": "WRONG — sudden floaters and loss of vision. Acute."
+    },
+    {
+     "label": "D",
+     "text": "Optic neuritis",
+     "correct": false,
+     "explanation": "WRONG — subacute loss over hours to days with pain on eye movement and a relative afferent pupillary defect."
+    },
+    {
+     "label": "E",
+     "text": "Macular degeneration",
      "correct": true,
-     "explanation": "Gradual visual loss: cataract, ARMD, glaucoma, diabetic maculopathy, chronic retinal detachment. ACUTE visual loss: CRAO, CRVO, optic neuritis, GCA, vitreous haemorrhage, acute retinal detachment. Retinal artery embolism/GCA = ACUTE not gradual. Distractor."
+     "explanation": "CORRECT — Gradual visual loss: cataract, ARMD, glaucoma, diabetic maculopathy, chronic retinal detachment. ACUTE visual loss: CRAO, CRVO, optic neuritis, GCA, vitreous haemorrhage, acute retinal detachment. Retinal artery embolism/GCA = ACUTE not gradual. Distractor."
     }
    ],
    "keyPoint": "Macular degeneration: Gradual visual loss: cataract, ARMD, glaucoma, diabetic maculopathy, chronic retinal detachment. ACUTE visual loss: CRAO, CRVO, optic neuritis, GCA, vitreous haemorrhage, acute retinal detachment. Retinal artery embolism/GCA = ACUTE not gradual.",
@@ -11906,10 +12030,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q248",
@@ -11925,9 +12050,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) β-blocker eye drops",
+     "text": "Topical corticosteroid drops",
+     "correct": false,
+     "explanation": "WRONG and dangerous — steroids RAISE intraocular pressure and can induce steroid-response glaucoma."
+    },
+    {
+     "label": "B",
+     "text": "Tropicamide drops",
+     "correct": false,
+     "explanation": "WRONG — a mydriatic/cycloplegic used for fundoscopy. Dilating the pupil can PRECIPITATE angle closure."
+    },
+    {
+     "label": "C",
+     "text": "β-blocker eye drops",
      "correct": true,
-     "explanation": "POAG treatment STEPLADDER: 1st: PROSTAGLANDIN ANALOGUES (latanoprost — most effective, once daily, no systemic effects). 2nd: BETA-BLOCKERS (timolol — reduces aqueous production). 3rd: CAI (dorzolamide, acetazolamide). Steroid drops → RAISE IOP (contraindicated). Tropicamide → mydriatic (contraindicated in AACG). Distractor."
+     "explanation": "CORRECT — POAG treatment STEPLADDER: 1st: PROSTAGLANDIN ANALOGUES (latanoprost — most effective, once daily, no systemic effects). 2nd: BETA-BLOCKERS (timolol — reduces aqueous production). 3rd: CAI (dorzolamide, acetazolamide). Steroid drops → RAISE IOP (contraindicated). Tropicamide → mydriatic (contraindicated in AACG). Distractor."
+    },
+    {
+     "label": "D",
+     "text": "Oral antibiotics",
+     "correct": false,
+     "explanation": "WRONG — glaucoma is a pressure disorder, not an infection."
+    },
+    {
+     "label": "E",
+     "text": "Pilocarpine is contraindicated in all glaucoma",
+     "correct": false,
+     "explanation": "WRONG — pilocarpine (a miotic) is used in ANGLE-CLOSURE glaucoma to pull the iris away from the drainage angle."
     }
    ],
    "keyPoint": "Beta-blocker eye drops (e.g., timolol): POAG treatment STEPLADDER: 1st: PROSTAGLANDIN ANALOGUES (latanoprost — most effective, once daily, no systemic effects). 2nd: BETA-BLOCKERS (timolol — reduces aqueous production). 3rd: CAI (dorzolamide, acetazolamide). Steroid drops → RAISE IOP (contraindicated). Tropicamide → mydriatic (contraindicated in AACG).",
@@ -11935,10 +12084,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q249",
@@ -11954,9 +12104,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) Macula — central scotoma",
+     "text": "Left optic nerve — bitemporal hemianopia",
+     "correct": false,
+     "explanation": "WRONG PAIRING — an optic NERVE lesion causes MONOCULAR blindness on that side. Bitemporal hemianopia is a CHIASMAL lesion."
+    },
+    {
+     "label": "B",
+     "text": "Optic chiasm — right homonymous hemianopia",
+     "correct": false,
+     "explanation": "WRONG PAIRING — the chiasm gives BITEMPORAL hemianopia (classically pituitary adenoma)."
+    },
+    {
+     "label": "C",
+     "text": "Macula — central scotoma",
      "correct": true,
-     "explanation": "Visual field defects: left optic nerve = LEFT monocular blindness; optic chiasm = BITEMPORAL hemianopia; left optic tract = RIGHT homonymous hemianopia; macula = CENTRAL SCOTOMA (e.g., ARMD, optic neuritis). Occipital cortex = homonymous hemianopia WITH macular sparing. Distractor."
+     "explanation": "CORRECT — Visual field defects: left optic nerve = LEFT monocular blindness; optic chiasm = BITEMPORAL hemianopia; left optic tract = RIGHT homonymous hemianopia; macula = CENTRAL SCOTOMA (e.g., ARMD, optic neuritis). Occipital cortex = homonymous hemianopia WITH macular sparing. Distractor."
+    },
+    {
+     "label": "D",
+     "text": "Left optic tract — left monocular blindness",
+     "correct": false,
+     "explanation": "WRONG PAIRING — a left optic TRACT lesion gives a RIGHT homonymous hemianopia."
+    },
+    {
+     "label": "E",
+     "text": "Occipital cortex — central scotoma",
+     "correct": false,
+     "explanation": "WRONG PAIRING — occipital lesions give homonymous hemianopia WITH MACULAR SPARING."
     }
    ],
    "keyPoint": "Macula — central scotoma: Visual field defects: left optic nerve = LEFT monocular blindness; optic chiasm = BITEMPORAL hemianopia; left optic tract = RIGHT homonymous hemianopia; macula = CENTRAL SCOTOMA (e.g., ARMD, optic neuritis). Occipital cortex = homonymous hemianopia WITH macular sparing.",
@@ -11964,10 +12138,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q250",
@@ -11983,9 +12158,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "d) Papilloedema",
+     "text": "Arteriolar narrowing",
+     "correct": false,
+     "explanation": "WRONG — that is GRADE 1."
+    },
+    {
+     "label": "B",
+     "text": "Arteriovenous nipping",
+     "correct": false,
+     "explanation": "WRONG — that is GRADE 2."
+    },
+    {
+     "label": "C",
+     "text": "Flame haemorrhages and cotton wool spots",
+     "correct": false,
+     "explanation": "WRONG — those are GRADE 3. Grade 4 adds papilloedema on top."
+    },
+    {
+     "label": "D",
+     "text": "Papilloedema",
      "correct": true,
-     "explanation": "HYPERTENSIVE RETINOPATHY GRADES: 1=arterial narrowing; 2=AV nipping; 3=flame haemorrhages + cotton wool spots + hard exudates; 4=PAPILLOEDEMA (swollen optic disc). Grade 4 = MALIGNANT HYPERTENSION (diastolic >120 + papilloedema). Medical emergency. Distractor."
+     "explanation": "CORRECT — HYPERTENSIVE RETINOPATHY GRADES: 1=arterial narrowing; 2=AV nipping; 3=flame haemorrhages + cotton wool spots + hard exudates; 4=PAPILLOEDEMA (swollen optic disc). Grade 4 = MALIGNANT HYPERTENSION (diastolic >120 + papilloedema). Medical emergency. Distractor."
+    },
+    {
+     "label": "E",
+     "text": "Drusen at the macula",
+     "correct": false,
+     "explanation": "WRONG — drusen are the hallmark of age-related macular degeneration, unrelated to hypertensive grading."
     }
    ],
    "keyPoint": "Papilloedema: HYPERTENSIVE RETINOPATHY GRADES: 1=arterial narrowing; 2=AV nipping; 3=flame haemorrhages + cotton wool spots + hard exudates; 4=PAPILLOEDEMA (swollen optic disc). Grade 4 = MALIGNANT HYPERTENSION (diastolic >120 + papilloedema). Medical emergency.",
@@ -11993,10 +12192,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q251",
@@ -12012,9 +12212,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Retinal detachment",
+     "text": "Retinal detachment",
      "correct": true,
-     "explanation": "Myopia (especially high myopia >-6D) → elongated globe → peripheral retinal thinning/lattice degeneration → retinal tears → RHEGMATOGENOUS RETINAL DETACHMENT. Also risk for: POAG (not AACG), early cataract. AACG risk = hypermetropia (shallow anterior chamber). Distractor."
+     "explanation": "CORRECT — Myopia (especially high myopia >-6D) → elongated globe → peripheral retinal thinning/lattice degeneration → retinal tears → RHEGMATOGENOUS RETINAL DETACHMENT. Also risk for: POAG (not AACG), early cataract. AACG risk = hypermetropia (shallow anterior chamber). Distractor."
+    },
+    {
+     "label": "B",
+     "text": "Acute angle-closure glaucoma",
+     "correct": false,
+     "explanation": "WRONG — AACG risk is HYPERMETROPIA (shallow anterior chamber). Myopic eyes have deep chambers."
+    },
+    {
+     "label": "C",
+     "text": "Hypermetropic shift with age",
+     "correct": false,
+     "explanation": "WRONG — the age-related lens change causes a MYOPIC shift ('second sight'), not hypermetropic."
+    },
+    {
+     "label": "D",
+     "text": "Optic neuritis",
+     "correct": false,
+     "explanation": "WRONG — a demyelinating/inflammatory condition, strongly linked to multiple sclerosis, not to refractive error."
+    },
+    {
+     "label": "E",
+     "text": "Retinitis pigmentosa",
+     "correct": false,
+     "explanation": "WRONG — an inherited rod-cone dystrophy causing night blindness and tunnel vision. Not caused by myopia."
     }
    ],
    "keyPoint": "Retinal detachment: Myopia (especially high myopia >-6D) → elongated globe → peripheral retinal thinning/lattice degeneration → retinal tears → RHEGMATOGENOUS RETINAL DETACHMENT. Also risk for: POAG (not AACG), early cataract. AACG risk = hypermetropia (shallow anterior chamber).",
@@ -12022,10 +12246,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q252",
@@ -12041,9 +12266,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Systemic corticosteroids",
+     "text": "Systemic corticosteroids",
      "correct": true,
-     "explanation": "Corticosteroids → POSTERIOR SUBCAPSULAR CATARACT (PSC). Also form PSC: topical steroid eye drops, Cushing's syndrome, radiation. Nuclear sclerotic cataract = age (most common). Cortical cataract = diabetes. Other cataract causes: trauma, uveitis, congenital (TORCH infections). Distractor."
+     "explanation": "CORRECT — Corticosteroids → POSTERIOR SUBCAPSULAR CATARACT (PSC). Also form PSC: topical steroid eye drops, Cushing's syndrome, radiation. Nuclear sclerotic cataract = age (most common). Cortical cataract = diabetes. Other cataract causes: trauma, uveitis, congenital (TORCH infections). Distractor."
+    },
+    {
+     "label": "B",
+     "text": "Hypertension",
+     "correct": false,
+     "explanation": "WRONG — hypertension causes hypertensive RETINOPATHY, not cataract."
+    },
+    {
+     "label": "C",
+     "text": "Myopia of recent onset",
+     "correct": false,
+     "explanation": "WRONG — this reverses cause and effect: nuclear cataract CAUSES a myopic shift, rather than myopia causing cataract."
+    },
+    {
+     "label": "D",
+     "text": "Glaucoma",
+     "correct": false,
+     "explanation": "WRONG — a separate optic neuropathy. (Note its steroid TREATMENT can cause cataract — the drug, not the disease.)"
+    },
+    {
+     "label": "E",
+     "text": "Hypercholesterolaemia",
+     "correct": false,
+     "explanation": "WRONG — associated with corneal arcus and retinal emboli, not lens opacity."
     }
    ],
    "keyPoint": "Systemic corticosteroids: Corticosteroids → POSTERIOR SUBCAPSULAR CATARACT (PSC). Also form PSC: topical steroid eye drops, Cushing's syndrome, radiation. Nuclear sclerotic cataract = age (most common). Cortical cataract = diabetes. Other cataract causes: trauma, uveitis, congenital (TORCH infections).",
@@ -12051,10 +12300,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q253",
@@ -12070,9 +12320,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Brain death",
+     "text": "Opioid overdose",
+     "correct": false,
+     "explanation": "WRONG — opioids cause PINPOINT pupils (miosis). Part of the triad with reduced consciousness and respiratory depression."
+    },
+    {
+     "label": "B",
+     "text": "Brain death",
      "correct": true,
-     "explanation": "Brain death → bilateral fixed DILATED pupils (loss of CN III function + sympathetic activity, no light reflex). Opioid overdose → MIOSIS (constricted). Horner syndrome → miosis. Pontine haemorrhage → pinpoint pupils. Pilocarpine → constricts (miotic drop). Distractor."
+     "explanation": "CORRECT — Brain death → bilateral fixed DILATED pupils (loss of CN III function + sympathetic activity, no light reflex). Opioid overdose → MIOSIS (constricted). Horner syndrome → miosis. Pontine haemorrhage → pinpoint pupils. Pilocarpine → constricts (miotic drop). Distractor."
+    },
+    {
+     "label": "C",
+     "text": "Horner syndrome",
+     "correct": false,
+     "explanation": "WRONG — Horner's gives MIOSIS with partial ptosis and anhidrosis."
+    },
+    {
+     "label": "D",
+     "text": "Pontine haemorrhage",
+     "correct": false,
+     "explanation": "WRONG — classically PINPOINT pupils."
+    },
+    {
+     "label": "E",
+     "text": "Pilocarpine drops",
+     "correct": false,
+     "explanation": "WRONG — pilocarpine is a MIOTIC; it constricts the pupil."
     }
    ],
    "keyPoint": "Brain death: Brain death → bilateral fixed DILATED pupils (loss of CN III function + sympathetic activity, no light reflex). Opioid overdose → MIOSIS (constricted). Horner syndrome → miosis. Pontine haemorrhage → pinpoint pupils. Pilocarpine → constricts (miotic drop).",
@@ -12080,10 +12354,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q254",
@@ -12099,9 +12374,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Retinal vein occlusion",
+     "text": "Cataract",
+     "correct": false,
+     "explanation": "WRONG — a gradual, progressive opacification over months to years."
+    },
+    {
+     "label": "B",
+     "text": "Retinal vein occlusion",
      "correct": true,
-     "explanation": "Acute visual loss: CRAO (painless, sudden, cherry-red spot), CRVO (sudden blurred vision, flame haemorrhages), optic neuritis, GCA (amaurosis fugax → sudden permanent loss), retinal detachment (curtain). Keratoconjunctivitis sicca, cataract, ARMD = GRADUAL visual loss. Page 192 University of Kufa, College of Medicine istractor."
+     "explanation": "CORRECT — Acute visual loss: CRAO (painless, sudden, cherry-red spot), CRVO (sudden blurred vision, flame haemorrhages), optic neuritis, GCA (amaurosis fugax → sudden permanent loss), retinal detachment (curtain). Keratoconjunctivitis sicca, cataract, ARMD = GRADUAL visual loss. Page 192 University of Kufa, College of Medicine istractor."
+    },
+    {
+     "label": "C",
+     "text": "Age-related macular degeneration",
+     "correct": false,
+     "explanation": "WRONG — gradual central visual loss (though WET ARMD can decline over days–weeks)."
+    },
+    {
+     "label": "D",
+     "text": "Keratoconjunctivitis sicca",
+     "correct": false,
+     "explanation": "WRONG — dry eye causes grittiness and fluctuating blur, not acute visual loss."
+    },
+    {
+     "label": "E",
+     "text": "Open-angle glaucoma",
+     "correct": false,
+     "explanation": "WRONG — insidious peripheral field loss; central vision is preserved until very late."
     }
    ],
    "keyPoint": "Retinal vein occlusion: Acute visual loss: CRAO (painless, sudden, cherry-red spot), CRVO (sudden blurred vision, flame haemorrhages), optic neuritis, GCA (amaurosis fugax → sudden permanent loss), retinal detachment (curtain). Keratoconjunctivitis sicca, cataract, ARMD = GRADUAL visual loss.",
@@ -12109,10 +12408,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q255",
@@ -12128,9 +12428,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Cranial nerve VI palsy",
+     "text": "Diabetic retinopathy",
+     "correct": false,
+     "explanation": "WRONG (it IS a complication) — the most important ocular complication and a leading cause of blindness of working age."
+    },
+    {
+     "label": "B",
+     "text": "Cranial nerve VI palsy",
      "correct": true,
-     "explanation": "Diabetic ocular complications: Retinopathy (most important), Cataract (earlier onset), CN III palsy (pupil-sparing — diabetic mononeuropathy), Rubeosis iridis (neovascularisation iris from PDR → AACG). CN VI palsy is NOT typically a diabetic ocular complication (CN III is the classic diabetic CN palsy). Distractor."
+     "explanation": "CORRECT — Diabetic ocular complications: Retinopathy (most important), Cataract (earlier onset), CN III palsy (pupil-sparing — diabetic mononeuropathy), Rubeosis iridis (neovascularisation iris from PDR → AACG). CN VI palsy is NOT typically a diabetic ocular complication (CN III is the classic diabetic CN palsy). Distractor."
+    },
+    {
+     "label": "C",
+     "text": "Cataract",
+     "correct": false,
+     "explanation": "WRONG (it IS a complication) — diabetics develop cataract earlier, classically the cortical 'snowflake' type."
+    },
+    {
+     "label": "D",
+     "text": "Cranial nerve III palsy",
+     "correct": false,
+     "explanation": "WRONG (it IS a complication) — the classic diabetic mononeuropathy, characteristically PUPIL-SPARING because ischaemia hits the central fibres."
+    },
+    {
+     "label": "E",
+     "text": "Rubeosis iridis",
+     "correct": false,
+     "explanation": "WRONG (it IS a complication) — iris neovascularisation from proliferative retinopathy, which can cause neovascular glaucoma."
     }
    ],
    "keyPoint": "Cranial nerve VI palsy (NOT a recognised DM ocular complication): Diabetic ocular complications: Retinopathy (most important), Cataract (earlier onset), CN III palsy (pupil-sparing — diabetic mononeuropathy), Rubeosis iridis (neovascularisation iris from PDR → AACG). CN VI palsy is NOT typically a diabetic ocular complication (CN III is the classic diabetic CN palsy).",
@@ -12138,10 +12462,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q256",
@@ -12157,9 +12482,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) Age-related macular degeneration",
+     "text": "Space-occupying lesion",
+     "correct": false,
+     "explanation": "WRONG (it DOES cause it) — raised intracranial pressure is the classic mechanism."
+    },
+    {
+     "label": "B",
+     "text": "Idiopathic intracranial hypertension",
+     "correct": false,
+     "explanation": "WRONG (it DOES cause it) — typically a young obese woman with headache and visual obscurations."
+    },
+    {
+     "label": "C",
+     "text": "Age-related macular degeneration",
      "correct": true,
-     "explanation": "Papilloedema causes: RAISED ICP (SOL, hydrocephalus, idiopathic IH, venous sinus thrombosis), ACCELERATED HYPERTENSION, optic neuritis (pseudo-papilloedema). ARMD = macular disease → central scotoma. Does NOT cause papilloedema. Cavernous sinus thrombosis can cause it via raised ICP. Distractor."
+     "explanation": "CORRECT — Papilloedema causes: RAISED ICP (SOL, hydrocephalus, idiopathic IH, venous sinus thrombosis), ACCELERATED HYPERTENSION, optic neuritis (pseudo-papilloedema). ARMD = macular disease → central scotoma. Does NOT cause papilloedema. Cavernous sinus thrombosis can cause it via raised ICP. Distractor."
+    },
+    {
+     "label": "D",
+     "text": "Accelerated hypertension",
+     "correct": false,
+     "explanation": "WRONG (it DOES cause it) — grade 4 hypertensive retinopathy, a medical emergency."
+    },
+    {
+     "label": "E",
+     "text": "Cerebral venous sinus thrombosis",
+     "correct": false,
+     "explanation": "WRONG (it DOES cause it) — impaired venous drainage raises intracranial pressure."
     }
    ],
    "keyPoint": "ARMD is NOT a cause of papilloedema: Papilloedema causes: RAISED ICP (SOL, hydrocephalus, idiopathic IH, venous sinus thrombosis), ACCELERATED HYPERTENSION, optic neuritis (pseudo-papilloedema). ARMD = macular disease → central scotoma. Does NOT cause papilloedema. Cavernous sinus thrombosis can cause it via raised ICP.",
@@ -12167,10 +12516,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q257",
@@ -12186,9 +12536,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "c) Closed-angle glaucoma",
+     "text": "Age-related macular degeneration",
+     "correct": false,
+     "explanation": "WRONG — a painless macular disorder with a WHITE eye."
+    },
+    {
+     "label": "B",
+     "text": "Astigmatism",
+     "correct": false,
+     "explanation": "WRONG — a refractive error; it blurs vision but never inflames the eye."
+    },
+    {
+     "label": "C",
+     "text": "Closed-angle glaucoma",
      "correct": true,
-     "explanation": "Acute red eye causes (UCAKIE): Uveitis, Conjunctivitis, Acute glaucoma (AACG), Keratitis, Iritis, Episcleritis. Macular degeneration and astigmatism do NOT cause red eye. Diabetic maculopathy = no red eye. Distractor."
+     "explanation": "CORRECT — Acute red eye causes (UCAKIE): Uveitis, Conjunctivitis, Acute glaucoma (AACG), Keratitis, Iritis, Episcleritis. Macular degeneration and astigmatism do NOT cause red eye. Diabetic maculopathy = no red eye. Distractor."
+    },
+    {
+     "label": "D",
+     "text": "Diabetic maculopathy",
+     "correct": false,
+     "explanation": "WRONG — causes central visual loss with a white, uninflamed eye."
+    },
+    {
+     "label": "E",
+     "text": "Open-angle glaucoma",
+     "correct": false,
+     "explanation": "WRONG — chronic, painless and white-eyed. It is ANGLE-CLOSURE that presents red, painful and acutely."
     }
    ],
    "keyPoint": "Closed-angle glaucoma: Acute red eye causes (UCAKIE): Uveitis, Conjunctivitis, Acute glaucoma (AACG), Keratitis, Iritis, Episcleritis. Macular degeneration and astigmatism do NOT cause red eye. Diabetic maculopathy = no red eye.",
@@ -12196,10 +12570,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q258",
@@ -12215,9 +12590,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "a) Botulism",
+     "text": "Botulism",
      "correct": true,
-     "explanation": "Ptosis causes: CN III palsy, Horner syndrome, myasthenia gravis, myotonic dystrophy, botulism (Clostridium botulinum blocks ACh release → all cholinergic function affected → ptosis + ophthalmoplegia). Facial nerve palsy = ECTROPION (not ptosis). Cataract = no ptosis. Presbyopia = no ptosis. Distractor."
+     "explanation": "CORRECT — Ptosis causes: CN III palsy, Horner syndrome, myasthenia gravis, myotonic dystrophy, botulism (Clostridium botulinum blocks ACh release → all cholinergic function affected → ptosis + ophthalmoplegia). Facial nerve palsy = ECTROPION (not ptosis). Cataract = no ptosis. Presbyopia = no ptosis. Distractor."
+    },
+    {
+     "label": "B",
+     "text": "Facial nerve palsy",
+     "correct": false,
+     "explanation": "WRONG — CN VII weakness prevents eye CLOSURE and causes ECTROPION and lagophthalmos, the opposite of ptosis."
+    },
+    {
+     "label": "C",
+     "text": "Cataract",
+     "correct": false,
+     "explanation": "WRONG — a lens opacity; the eyelid is unaffected."
+    },
+    {
+     "label": "D",
+     "text": "Presbyopia",
+     "correct": false,
+     "explanation": "WRONG — an age-related accommodation failure, nothing to do with the levator."
+    },
+    {
+     "label": "E",
+     "text": "Conjunctivitis",
+     "correct": false,
+     "explanation": "WRONG — lid swelling may mimic it, but conjunctivitis does not cause true ptosis."
     }
    ],
    "keyPoint": "Botulism: Ptosis causes: CN III palsy, Horner syndrome, myasthenia gravis, myotonic dystrophy, botulism (Clostridium botulinum blocks ACh release → all cholinergic function affected → ptosis + ophthalmoplegia). Facial nerve palsy = ECTROPION (not ptosis). Cataract = no ptosis. Presbyopia = no ptosis.",
@@ -12225,10 +12624,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q259",
@@ -12244,9 +12644,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "b) Blot haemorrhages",
+     "text": "Retinal neovascularisation",
+     "correct": false,
+     "explanation": "WRONG — new vessels define PROLIFERATIVE diabetic retinopathy, a later and more dangerous stage needing urgent laser."
+    },
+    {
+     "label": "B",
+     "text": "Blot haemorrhages",
      "correct": true,
-     "explanation": "Background DR: MICROANEURYSMS (earliest) + DOT/BLOT haemorrhages (intraretinal) + HARD EXUDATES (yellow, waxy lipoprotein deposits) + COTTON WOOL SPOTS (ischaemic nerve fibre layer). Vitreous haemorrhage + new vessel formation = PROLIFERATIVE DR (not background). Retinal neovascularisation = PDR. Distractor."
+     "explanation": "CORRECT — Background DR: MICROANEURYSMS (earliest) + DOT/BLOT haemorrhages (intraretinal) + HARD EXUDATES (yellow, waxy lipoprotein deposits) + COTTON WOOL SPOTS (ischaemic nerve fibre layer). Vitreous haemorrhage + new vessel formation = PROLIFERATIVE DR (not background). Retinal neovascularisation = PDR. Distractor."
+    },
+    {
+     "label": "C",
+     "text": "Vitreous haemorrhage",
+     "correct": false,
+     "explanation": "WRONG — a complication of PROLIFERATIVE disease when new vessels bleed."
+    },
+    {
+     "label": "D",
+     "text": "Tractional retinal detachment",
+     "correct": false,
+     "explanation": "WRONG — advanced proliferative disease, from fibrovascular membrane contraction."
+    },
+    {
+     "label": "E",
+     "text": "Rubeosis iridis",
+     "correct": false,
+     "explanation": "WRONG — iris neovascularisation, again a proliferative-stage finding."
     }
    ],
    "keyPoint": "Blot haemorrhages: Background DR: MICROANEURYSMS (earliest) + DOT/BLOT haemorrhages (intraretinal) + HARD EXUDATES (yellow, waxy lipoprotein deposits) + COTTON WOOL SPOTS (ischaemic nerve fibre layer). Vitreous haemorrhage + new vessel formation = PROLIFERATIVE DR (not background). Retinal neovascularisation = PDR.",
@@ -12254,10 +12678,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against Davidson's before relying on it.",
     "source": "ENT/Ophthalmology MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "sss_mcq_q260",

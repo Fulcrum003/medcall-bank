@@ -8356,9 +8356,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Lung maturity",
+     "text": "Fetal lung maturity",
      "correct": true,
-     "explanation": "ANTENATAL CORTICOSTEROIDS (betamethasone 12mg IM x2, 24h apart): Primary benefit = stimulates fetal surfactant production (type II pneumocytes) → reduces RDS by 40-50%. Additional: reduces IVH 50%, NEC 50%, perinatal mortality. Give at 24+0 to 34+6 weeks."
+     "explanation": "CORRECT — ANTENATAL CORTICOSTEROIDS (betamethasone 12mg IM x2, 24h apart): Primary benefit = stimulates fetal surfactant production (type II pneumocytes) → reduces RDS by 40-50%. Additional: reduces IVH 50%, NEC 50%, perinatal mortality. Give at 24+0 to 34+6 weeks."
+    },
+    {
+     "label": "B",
+     "text": "Prevention of preterm labour itself",
+     "correct": false,
+     "explanation": "Steroids do NOT stop labour — that is the (limited) role of tocolytics. Steroids buy fetal benefit within the delay tocolysis provides."
+    },
+    {
+     "label": "C",
+     "text": "Reduced maternal blood loss at delivery",
+     "correct": false,
+     "explanation": "No such effect. Postpartum haemorrhage is prevented by active third-stage management with oxytocin."
+    },
+    {
+     "label": "D",
+     "text": "Prevention of neonatal jaundice",
+     "correct": false,
+     "explanation": "Unrelated — neonatal jaundice reflects bilirubin handling, not surfactant."
+    },
+    {
+     "label": "E",
+     "text": "Reduced risk of maternal infection",
+     "correct": false,
+     "explanation": "If anything the opposite concern: steroids are immunosuppressive, which is why they are used cautiously in chorioamnionitis."
     }
    ],
    "keyPoint": "STEROIDS in PTL: PRIMARY BENEFIT = LUNG MATURITY (reduce RDS). Betamethasone 12mg IM x2",
@@ -8366,10 +8390,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer/options not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against a standard text before relying on it.",
     "source": "GYN & OBS MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "obgyn_mcq_q178",
@@ -8385,9 +8410,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Hyperemesis gravidarum C",
+     "text": "Physiological nausea and vomiting of pregnancy",
+     "correct": false,
+     "explanation": "Common 'morning sickness' is self-limiting WITHOUT weight loss, dehydration, ketonuria or electrolyte disturbance. Those metabolic consequences define hyperemesis."
+    },
+    {
+     "label": "B",
+     "text": "Gastroenteritis",
+     "correct": false,
+     "explanation": "Would give diarrhoea, fever and often a contact history, and is not specific to pregnancy."
+    },
+    {
+     "label": "C",
+     "text": "Hyperemesis gravidarum",
      "correct": true,
-     "explanation": "G: Severe intractable vomiting in pregnancy + >5% weight loss + dehydration + electrolyte mbalance (hypokalaemia, hyponatraemia) + ketonuria. Distinguished from normal nausea by everity and metabolic consequences. Treatment: IV fluids + antiemetics + THIAMINE before extrose."
+     "explanation": "CORRECT — G: Severe intractable vomiting in pregnancy + >5% weight loss + dehydration + electrolyte mbalance (hypokalaemia, hyponatraemia) + ketonuria. Distinguished from normal nausea by everity and metabolic consequences. Treatment: IV fluids + antiemetics + THIAMINE before extrose."
+    },
+    {
+     "label": "D",
+     "text": "Acute fatty liver of pregnancy",
+     "correct": false,
+     "explanation": "A THIRD-trimester emergency with jaundice, hypoglycaemia and coagulopathy — not first-trimester vomiting."
+    },
+    {
+     "label": "E",
+     "text": "Molar pregnancy",
+     "correct": false,
+     "explanation": "A CAUSE of severe hyperemesis rather than the diagnosis itself; it would show a snowstorm uterus and very high β-hCG."
     }
    ],
    "keyPoint": "HYPEREMESIS GRAVIDARUM: Severe vomiting + dehydration + electrolyte imbalance. Give THIAMINE",
@@ -8395,10 +8444,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer/options not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against a standard text before relying on it.",
     "source": "GYN & OBS MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "obgyn_mcq_q179",
@@ -8414,9 +8464,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Beta-HCG + USS",
+     "text": "Beta-hCG and ultrasound scan",
      "correct": true,
-     "explanation": "RULE OUT OTHER CAUSES: Beta-HCG -- very high levels suggest molar pregnancy or multiple gestation (both cause severe HG). USS -- exclude molar pregnancy (snowstorm appearance) + confirm IUP + detect twins. Also: TFTs (gestational hyperthyroidism from HCG cross-reactivity) + U&E."
+     "explanation": "CORRECT — RULE OUT OTHER CAUSES: Beta-HCG -- very high levels suggest molar pregnancy or multiple gestation (both cause severe HG). USS -- exclude molar pregnancy (snowstorm appearance) + confirm IUP + detect twins. Also: TFTs (gestational hyperthyroidism from HCG cross-reactivity) + U&E."
+    },
+    {
+     "label": "B",
+     "text": "Upper GI endoscopy",
+     "correct": false,
+     "explanation": "Invasive and not first-line; hyperemesis is a clinical diagnosis once obstetric causes are excluded."
+    },
+    {
+     "label": "C",
+     "text": "Abdominal X-ray",
+     "correct": false,
+     "explanation": "Contraindicated in pregnancy without strong indication, and would not identify the cause."
+    },
+    {
+     "label": "D",
+     "text": "Serum amylase alone",
+     "correct": false,
+     "explanation": "Pancreatitis is a rare differential; amylase alone excludes neither molar pregnancy nor twins."
+    },
+    {
+     "label": "E",
+     "text": "CT abdomen",
+     "correct": false,
+     "explanation": "Ionising radiation to the fetus, and ultrasound answers the question safely."
     }
    ],
    "keyPoint": "HYPEREMESIS INVESTIGATION: Beta-HCG (level) + USS (rule out mole/twins) + TFTs + U&E.",
@@ -8424,10 +8498,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer/options not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against a standard text before relying on it.",
     "source": "GYN & OBS MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "obgyn_mcq_q180",
@@ -8443,9 +8518,33 @@
    "choices": [
     {
      "label": "A",
-     "text": "Twins + molar pregnancy",
+     "text": "Multiple (twin) pregnancy and molar pregnancy",
      "correct": true,
-     "explanation": "BOTH cause markedly elevated HCG → most severe hyperemesis. Twins: 2x normal HCG. Molar pregnancy: HCG >100,000 (massively elevated). HCG directly stimulates vomiting centre and cross-reacts with TSH receptors."
+     "explanation": "CORRECT — BOTH cause markedly elevated HCG → most severe hyperemesis. Twins: 2x normal HCG. Molar pregnancy: HCG >100,000 (massively elevated). HCG directly stimulates vomiting centre and cross-reacts with TSH receptors."
+    },
+    {
+     "label": "B",
+     "text": "Oligohydramnios",
+     "correct": false,
+     "explanation": "Reduced liquor relates to placental insufficiency or renal anomalies; it does not raise hCG."
+    },
+    {
+     "label": "C",
+     "text": "Gestational diabetes",
+     "correct": false,
+     "explanation": "A third-trimester metabolic complication, unrelated to early hCG-driven vomiting."
+    },
+    {
+     "label": "D",
+     "text": "Placenta praevia",
+     "correct": false,
+     "explanation": "Presents as painless antepartum haemorrhage, not vomiting."
+    },
+    {
+     "label": "E",
+     "text": "Rhesus isoimmunisation",
+     "correct": false,
+     "explanation": "Causes fetal anaemia and hydrops, with no effect on maternal vomiting."
     }
    ],
    "keyPoint": "HG ASSOCIATIONS: Twins (2x HCG) + Molar pregnancy (massive HCG >100,000). Suspect mole if HG",
@@ -8453,10 +8552,11 @@
    "summaryTable": null,
    "flag": {
     "severity": "MODERATE",
-    "note": "Answer/options not cleanly captured from the source table — verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against a standard text before relying on it.",
     "source": "GYN & OBS MCQ guide"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "obgyn_mcq_q181",

@@ -360,6 +360,7 @@ export function adaptPack(c){
         optionsTitle:q.optionsTitle||null, modelAnswer:q.modelAnswer||null,
         keyPoint:q.keyPoint, keyDiff:q.keyDifferentiator||null, sum:q.summaryTable||null,
         flag:q.flag?{severity:q.flag.severity,app:q.flag.appAnswer,correct:q.flag.correctAnswer,source:q.flag.source,note:q.flag.note}:undefined,
+        aiChoices:!!q.aiChoices,
         refs:q.references||null
       };
     }) };
@@ -1846,7 +1847,7 @@ function renderReveal(q, chosen, opts={}){
   if(q.flag){
     const f=q.flag;
     html+=`<div class="flag ${esc(f.severity)}">
-      <div class="k"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> ${esc(f.severity)} · FILE ANSWER vs STANDARD TEACHING</div>
+      <div class="k"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> ${q.aiChoices?"OPTIONS REBUILT BY AI · answer is source-derived":esc(f.severity)+" · FILE ANSWER vs STANDARD TEACHING"}</div>
       ${(f.app||f.correct)?`<div class="vs">${f.app?`<span class="tag" style="color:var(--red)">App: ${esc(f.app)}</span>`:''}${f.correct?`<span class="tag" style="color:var(--green)">Correct: ${esc(f.correct)}</span>`:''}${f.source?`<span class="tag">${esc(f.source)}</span>`:''}</div>`:(f.source?`<div class="vs"><span class="tag">${esc(f.source)}</span></div>`:'')}
       ${f.note?`<div class="note">${esc(f.note)}</div>`:''}
     </div>`;

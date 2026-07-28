@@ -1958,7 +1958,31 @@
      "label": "A",
      "text": "Coronary artery thrombosis",
      "correct": true,
-     "explanation": "Kawasaki disease with large coronary aneurysms -> CORONARY ARTERY THROMBOSIS -> MYOCARDIAL INFARCTION. Leading cause of death in Kawasaki. Aneurysms from vasculitis of coronary vessels. Thrombus forms within dilated turbulent-flow aneurysm. Prevention: aspirin (antiplatelet) + warfarin/heparin for giant aneurysms (>8mm)."
+     "explanation": "CORRECT — Kawasaki disease with large coronary aneurysms -> CORONARY ARTERY THROMBOSIS -> MYOCARDIAL INFARCTION. Leading cause of death in Kawasaki. Aneurysms from vasculitis of coronary vessels. Thrombus forms within dilated turbulent-flow aneurysm. Prevention: aspirin (antiplatelet) + warfarin/heparin for giant aneurysms (>8mm)."
+    },
+    {
+     "label": "B",
+     "text": "Aortic dissection",
+     "correct": false,
+     "explanation": "Not a feature of Kawasaki. The vasculitis targets medium-sized arteries, above all the coronaries."
+    },
+    {
+     "label": "C",
+     "text": "Infective endocarditis",
+     "correct": false,
+     "explanation": "Kawasaki is an inflammatory vasculitis, not an infection of the endocardium; valves are not the target."
+    },
+    {
+     "label": "D",
+     "text": "Pulmonary embolism",
+     "correct": false,
+     "explanation": "Venous thromboembolism is not the Kawasaki complication — the risk is arterial, inside the coronary aneurysm."
+    },
+    {
+     "label": "E",
+     "text": "Rheumatic mitral stenosis",
+     "correct": false,
+     "explanation": "Follows group A streptococcal infection over years, an entirely different disease."
     }
    ],
    "keyPoint": "Kawasaki most critical complication = CORONARY ANEURYSM -> THROMBOSIS -> MI. Echo at diagnosis, 2 weeks, 6-8 weeks. Long-term aspirin mandatory for any aneurysm.",
@@ -1989,10 +2013,11 @@
    },
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source marks its options/answer as incomplete. Study the concept and verify the key.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors named inside the original explanation have been restored; any remaining options were written by AI to match exam difficulty. The correct answer is unchanged and source-derived. Verify against a standard text before relying on it.",
     "source": "Source study guide (End Block 2 Recalled)"
    },
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "paediatrics_q30",
