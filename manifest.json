@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 36,
+  "manifestVersion": 37,
   "updated": "2026-07-28",
   "leaderboard": "https://script.google.com/macros/s/AKfycbypC31uzfeM9kLgMYSakCdLuxuwfCfepjHVJOvZ8xdx-ND4dM57A-owXu7zySKU7fuMQg/exec",
   "packs": [
@@ -123,5 +123,17 @@
     "storageBucket": "medcall003.firebasestorage.app",
     "messagingSenderId": "1048684631428",
     "appId": "1:1048684631428:web:516813fa729c0e4e6f39d1"
-  }
+  },
+  "announcements": [
+    {
+      "id": "accounts-2026-07",
+      "date": "2026-07-28",
+      "title": "Your progress can now follow you between devices",
+      "body": "Create a free account and your progress, streak and exam history sync automatically between your phone, tablet and laptop. Staying a guest changes nothing — everything keeps working and stays on this device.",
+      "action": {
+        "label": "Create account",
+        "screen": "account"
+      }
+    }
+  ]
 }

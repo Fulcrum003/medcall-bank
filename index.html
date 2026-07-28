@@ -538,7 +538,7 @@ let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
   exams:[],
   reports:[],
-  settings:{ onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, srsGrading:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
+  settings:{ onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, announcements:[], seenAnnounce:[], newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, srsGrading:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
 };
 async function loadDB(){
   const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
@@ -789,6 +789,8 @@ async function syncBank(base){
   if(mf.leaderboard !== undefined){ DB.settings.groupEndpoint = mf.leaderboard || ""; save.settings(); }
   // firebase config travels in the manifest too → accounts work on every device with no per-user setup
   if(mf.firebase !== undefined){ DB.settings.firebaseConfig = mf.firebase || null; save.settings(); }
+  // "what's new" notices ride along too, so a release can announce itself with no app update
+  if(mf.announcements !== undefined){ DB.settings.announcements = Array.isArray(mf.announcements)? mf.announcements : []; save.settings(); }
   const packs=[], failed=[];
   for(const entry of (mf.packs||[])){
     const u=/^https?:/.test(entry.url)? entry.url : base+"/"+entry.url;
@@ -1597,6 +1599,8 @@ function viewHome(){
   const greet=(function(){ const h=new Date().getHours(); return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; })();
   const chev=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:17px;color:var(--faint)"><path d="M9 6l6 6-6 6"/></svg>`;
   let html=`<div class="fade">`;
+
+  html+=announceCard();
 
   if(App.fixAlert && App.fixAlert.ids && App.fixAlert.ids.length){ const _fn=App.fixAlert.ids.length;
     html+=`<div class="railcard" style="margin-bottom:16px;border-color:var(--green)"><div class="row" style="gap:12px;align-items:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--green)"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-2.7-.7-.7-2.7z"/></svg><div style="flex:1"><div style="font-weight:600;font-size:14.5px">${_fn} reported question${_fn>1?'s':''} just fixed</div><div class="faint" style="font-size:13px;margin-top:2px">The answer key was updated to match standard teaching.</div><div class="row" style="gap:8px;margin-top:11px"><button class="btn-sm btn-primary" data-action="view-fixes" style="width:auto">Review ${_fn>1?'them':'it'}</button><button class="btn-sm btn-ghost" data-action="dismiss-fixes" style="width:auto">Dismiss</button></div></div></div></div>`;
@@ -2979,6 +2983,8 @@ function viewSettings(){
 
     ${accountSettingsCard()}
 
+    ${announceHistory()}
+
     <div class="sectlabel">Recall</div>
     <div class="row between card pad">
       <div><b>New cards / day</b><div class="faint" style="font-size:12.5px">Smart Review limit</div></div>
@@ -3427,6 +3433,65 @@ function acctErrMsg(err){
   return c || "Something went wrong — try again.";
 }
 
+
+/* ============================================================
+   ANNOUNCEMENTS  ("what's new" notices)
+   ============================================================
+   Notices are authored in manifest.json, so shipping one needs no app
+   release. Each is shown once per device; dismissals are stored locally
+   and deliberately NOT synced — seeing it on your phone shouldn't hide it
+   on your laptop before you've read it there.
+   ============================================================ */
+
+function pendingAnnounce(){
+  const seen = DB.settings.seenAnnounce || [];
+  const all  = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
+  return all.filter(a => a && a.id && seen.indexOf(a.id) < 0)
+            .sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
+}
+function markAnnounceSeen(id){
+  if(!id) return;
+  const seen = DB.settings.seenAnnounce || [];
+  if(seen.indexOf(id) < 0){ seen.push(id); DB.settings.seenAnnounce = seen; save.settings(); }
+}
+// A brand-new user shouldn't be told "what's new" about an app they've never seen.
+function markAllAnnounceSeen(){
+  const all = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
+  DB.settings.seenAnnounce = all.map(a=>a && a.id).filter(Boolean);
+  save.settings();
+}
+
+function announceCard(){
+  const a = pendingAnnounce()[0];
+  if(!a) return "";
+  const act = a.action && a.action.label && a.action.screen
+    ? `<button class="btn-sm btn-primary" data-action="announce-act" data-screen="${esc(a.action.screen)}" data-id="${esc(a.id)}" style="width:auto">${esc(a.action.label)}</button>`
+    : "";
+  return `<div class="railcard" style="margin-bottom:16px;border-color:var(--teal)">
+    <div class="row" style="gap:12px;align-items:flex-start">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-.14em;flex:none;font-size:19px;color:var(--teal)"><path d="M3 11l18-8-8 18-2-7-8-3z"/></svg>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:14.5px">${esc(a.title||"What's new")}</div>
+        <div class="faint" style="font-size:13px;margin-top:3px;line-height:1.55">${esc(a.body||"")}</div>
+        <div class="row" style="gap:8px;margin-top:11px">${act}
+          <button class="btn-sm btn-ghost" data-action="announce-ok" data-id="${esc(a.id)}" style="width:auto">Got it</button>
+        </div>
+      </div>
+    </div></div>`;
+}
+
+// Settings → so a notice can be re-read after it's dismissed
+function announceHistory(){
+  const all = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
+  if(!all.length) return "";
+  const rows = all.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")))
+    .map(a=>`<div style="padding:11px 0;border-top:1px solid var(--line-soft)">
+      <div class="row between" style="font-size:13.5px"><b>${esc(a.title||"")}</b><span class="faint mono" style="font-size:11px">${esc(a.date||"")}</span></div>
+      <div class="faint" style="font-size:12.5px;margin-top:3px;line-height:1.5">${esc(a.body||"")}</div>
+    </div>`).join("");
+  return `<div class="sectlabel">What's new</div><div class="card pad" style="padding:4px 14px">${rows}</div>`;
+}
+
 /* ---------- views ---------- */
 
 function viewWelcome(){
@@ -3570,9 +3635,11 @@ document.body.addEventListener("click", async e=>{
   if(a==="push-score"){ if(!DB.settings.lbRepo){ toast("Save your repo first"); return; } if(!ghToken){ toast("Add a token to post"); return; } toast("Posting…"); const ok=await ghPushScore(); toast(ok?"Score posted ✓":"Couldn't post — check token/repo"); if(ok) syncBoard(); return; }
 
   /* ---- accounts ---- */
+  if(a==="announce-ok"){ markAnnounceSeen(t.dataset.id); render(); return; }
+  if(a==="announce-act"){ markAnnounceSeen(t.dataset.id); const sc=t.dataset.screen; if(sc==="account") App.acctMode="signup"; App.screen=sc; render(); return; }
   if(a==="acct-guest"){
     const ac=acct(); if(!ac.mode) ac.mode="guest";
-    DB.settings.onboarded=true; save.settings();
+    DB.settings.onboarded=true; markAllAnnounceSeen(); save.settings();
     App.screen="home"; render(); toast("You're in — progress saves on this device");
     return;
   }
@@ -4385,7 +4452,7 @@ function resetDB() {
   DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {}, timeLog: {}, timer: null };
   DB.exams = [];
   DB.reports = [];
-  DB.settings = { onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, srsGrading: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
+  DB.settings = { onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, announcements:[], seenAnnounce:[], newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, srsGrading: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
 /* clinic-v2.5 */
 
