@@ -538,7 +538,7 @@ let DB = {
   progress:{ questions:{}, resume:null, streak:{current:0,lastStudied:null}, checklist:{}, timeLog:{}, timer:null },
   exams:[],
   reports:[],
-  settings:{ onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, announcements:[], seenAnnounce:[], newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, srsGrading:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
+  settings:{ onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, announcements:[], remoteAnnounce:[], seenAnnounce:[], newPerDay:20, passMark:50, maintainer:false, wallpaper:"ink", theme:"dark", dailyGoal:20, sounds:true, examDate:"", revealOnPick:true, srsGrading:true, notif:{ enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } }
 };
 async function loadDB(){
   const p = await wsGet(SK.progress); if(p) DB.progress = Object.assign(DB.progress, p);
@@ -3102,6 +3102,8 @@ function viewSettings(){
       <div style="height:8px"></div>
       <button class="btn btn-primary" data-action="save-lb">Save leaderboard repo</button>
       <div style="height:8px"></div>
+      ${announceComposer()}
+      <div style="height:14px"></div>
       <button class="btn btn-ghost" data-action="set-admintoken">${adminToken?"Replace":"Add"} reports token (this device)</button>
       ${adminToken?`<div class="faint" style="font-size:12px;text-align:center;margin-top:8px">Reports token set · <button class="reportlink" data-action="clear-admintoken">remove</button></div>`:`<div class="faint" style="font-size:12px;text-align:center;margin-top:8px">Needed to read the reports inbox after hardening the Apps Script</div>`}
       <div style="height:10px"></div>
@@ -3445,7 +3447,11 @@ function acctErrMsg(err){
 
 function pendingAnnounce(){
   const seen = DB.settings.seenAnnounce || [];
-  const all  = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
+  const fromManifest = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
+  const fromScript   = Array.isArray(DB.settings.remoteAnnounce) ? DB.settings.remoteAnnounce : [];
+  const byId = {};
+  fromManifest.concat(fromScript).forEach(a=>{ if(a && a.id) byId[a.id] = a; });  // script wins on id clash
+  const all = Object.keys(byId).map(k=>byId[k]);
   return all.filter(a => a && a.id && seen.indexOf(a.id) < 0)
             .sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
 }
@@ -3456,7 +3462,8 @@ function markAnnounceSeen(id){
 }
 // A brand-new user shouldn't be told "what's new" about an app they've never seen.
 function markAllAnnounceSeen(){
-  const all = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
+  const all = (Array.isArray(DB.settings.announcements)?DB.settings.announcements:[])
+    .concat(Array.isArray(DB.settings.remoteAnnounce)?DB.settings.remoteAnnounce:[]);
   DB.settings.seenAnnounce = all.map(a=>a && a.id).filter(Boolean);
   save.settings();
 }
@@ -3482,7 +3489,8 @@ function announceCard(){
 
 // Settings → so a notice can be re-read after it's dismissed
 function announceHistory(){
-  const all = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
+  const all = (Array.isArray(DB.settings.announcements)?DB.settings.announcements:[])
+    .concat(Array.isArray(DB.settings.remoteAnnounce)?DB.settings.remoteAnnounce:[]);
   if(!all.length) return "";
   const rows = all.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")))
     .map(a=>`<div style="padding:11px 0;border-top:1px solid var(--line-soft)">
@@ -3490,6 +3498,78 @@ function announceHistory(){
       <div class="faint" style="font-size:12.5px;margin-top:3px;line-height:1.5">${esc(a.body||"")}</div>
     </div>`).join("");
   return `<div class="sectlabel">What's new</div><div class="card pad" style="padding:4px 14px">${rows}</div>`;
+}
+
+
+// Notices published from inside the app live in the Apps Script, so shipping one
+// needs neither a repo edit nor an app release. Read is public; writing needs the token.
+async function fetchAnnouncements(){
+  const ep = DB.settings.groupEndpoint; if(!ep) return;
+  try{
+    const u = ep + (ep.indexOf("?")>=0?"&":"?") + "announce=1&cb=" + Date.now();
+    const r = await fetch(u,{cache:"no-store"}); if(!r.ok) return;
+    const data = await r.json();
+    if(Array.isArray(data)){ DB.settings.remoteAnnounce = data; save.settings(); }
+  }catch(e){ /* offline — keep whatever we already have */ }
+}
+
+async function publishAnnouncement(a){
+  const ep = DB.settings.groupEndpoint;
+  if(!ep) throw new Error("No group Script connected");
+  if(!adminToken) throw new Error("Add your reports token first (Maintainer tools)");
+  if(!a || !a.title) throw new Error("Give the notice a title");
+  const payload = { type:"announce", token:adminToken,
+    annId: a.id || ("a"+Date.now()), date: a.date || today(),
+    title: a.title, body: a.body||"" };
+  if(a.actionLabel && a.actionScreen){ payload.actionLabel=a.actionLabel; payload.actionScreen=a.actionScreen; }
+  const r = await fetch(ep,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+  if(!r.ok) throw new Error("Script returned "+r.status);
+  const j = await r.json().catch(()=>({}));
+  if(j && j.ok===false) throw new Error(j.err||"rejected");
+  await fetchAnnouncements();
+  return true;
+}
+
+async function removeAnnouncement(id){
+  const ep = DB.settings.groupEndpoint;
+  if(!ep || !adminToken) throw new Error("Not configured");
+  const r = await fetch(ep,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify({type:"announce", token:adminToken, remove:id})});
+  if(!r.ok) throw new Error("Script returned "+r.status);
+  await fetchAnnouncements();
+  return true;
+}
+
+// Maintainer composer — lives in Settings under Maintainer tools.
+function announceComposer(){
+  const live = Array.isArray(DB.settings.remoteAnnounce) ? DB.settings.remoteAnnounce : [];
+  const rows = live.slice().reverse().map(a=>`<div class="row between" style="padding:9px 0;border-top:1px solid var(--line-soft)">
+      <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">${esc(a.title||"")}</div>
+      <div class="faint mono" style="font-size:11px">${esc(a.date||"")} · ${esc(a.id||"")}</div></div>
+      <button class="reportlink" data-action="announce-del" data-id="${esc(a.id)}">remove</button>
+    </div>`).join("");
+  return `<div class="sectlabel">Post an announcement</div>
+  <div class="card pad">
+    <div class="faint" style="font-size:12.5px;line-height:1.5;margin-bottom:10px">
+      Everyone sees this at the top of Home until they dismiss it. Published through the Script — no file editing.
+    </div>
+    <input id="annTitle" class="inp" placeholder="Title — e.g. New paediatrics questions added" style="margin-bottom:8px">
+    <textarea id="annBody" class="inp" rows="3" placeholder="A sentence or two explaining what changed." style="margin-bottom:8px"></textarea>
+    <div class="row" style="gap:8px;margin-bottom:8px">
+      <input id="annBtn" class="inp" placeholder="Button label (optional)" style="flex:1">
+      <select id="annScreen" class="inp" style="flex:1">
+        <option value="">No button</option>
+        <option value="account">Account</option>
+        <option value="bank">Question bank</option>
+        <option value="settings">Settings</option>
+        <option value="leaderboard">Leaderboard</option>
+        <option value="stats">Stats</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" data-action="announce-publish">Publish to everyone</button>
+    <div id="annErr" style="color:var(--amber);font-size:12.5px;margin-top:9px;line-height:1.5"></div>
+    ${live.length?`<div style="margin-top:12px"><div class="faint" style="font-size:12px;margin-bottom:2px">Live now (${live.length})</div>${rows}</div>`:""}
+  </div>`;
 }
 
 /* ---------- views ---------- */
@@ -3635,6 +3715,20 @@ document.body.addEventListener("click", async e=>{
   if(a==="push-score"){ if(!DB.settings.lbRepo){ toast("Save your repo first"); return; } if(!ghToken){ toast("Add a token to post"); return; } toast("Posting…"); const ok=await ghPushScore(); toast(ok?"Score posted ✓":"Couldn't post — check token/repo"); if(ok) syncBoard(); return; }
 
   /* ---- accounts ---- */
+  if(a==="announce-publish"){
+    const el=$("annErr"); if(el) el.textContent="";
+    const body={ title:($("annTitle")?.value||"").trim(), body:($("annBody")?.value||"").trim(),
+                 actionLabel:($("annBtn")?.value||"").trim(), actionScreen:($("annScreen")?.value||"") };
+    t.disabled=true; const lbl=t.textContent; t.textContent="Publishing…";
+    try{ await publishAnnouncement(body); toast("Announcement published ✓"); render(); }
+    catch(err){ t.disabled=false; t.textContent=lbl; const e2=$("annErr"); if(e2) e2.textContent=(err&&err.message)||"Couldn't publish"; }
+    return;
+  }
+  if(a==="announce-del"){
+    if(!confirm("Remove this announcement for everyone?")) return;
+    try{ await removeAnnouncement(t.dataset.id); toast("Removed"); render(); }catch(err){ toast("Couldn't remove"); }
+    return;
+  }
   if(a==="announce-ok"){ markAnnounceSeen(t.dataset.id); render(); return; }
   if(a==="announce-act"){ markAnnounceSeen(t.dataset.id); const sc=t.dataset.screen; if(sc==="account") App.acctMode="signup"; App.screen=sc; render(); return; }
   if(a==="acct-guest"){
@@ -4439,7 +4533,7 @@ async function boot(){
   // keep the group board fresh (posts your score + pulls others) once the endpoint is known
   if(DB.settings.groupEndpoint || DB.settings.lbRepo){ syncBoard(); }
   notifCfg(); scheduleReminders(); inAppNotifyCheck();
-  fetchEdits(); if(DB.settings.maintainer) checkNewReports();
+  fetchEdits(); fetchAnnouncements(); if(DB.settings.maintainer) checkNewReports();
   if((location.hash||"").indexOf("reports")>=0 && DB.settings.maintainer){ App.screen="reportsinbox"; App.inboxState="loading"; render(); fetchReports(); }
 }
 
@@ -4452,7 +4546,7 @@ function resetDB() {
   DB.progress = { questions: {}, resume: null, streak: { current: 0, lastStudied: null }, checklist: {}, timeLog: {}, timer: null };
   DB.exams = [];
   DB.reports = [];
-  DB.settings = { onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, announcements:[], seenAnnounce:[], newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, srsGrading: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
+  DB.settings = { onboarded:false, account:{mode:"",uid:"",email:"",lastSync:"",autoSync:true}, announcements:[], remoteAnnounce:[], seenAnnounce:[], newPerDay: 20, passMark: 50, maintainer: false, wallpaper: "ink", theme: "dark", dailyGoal: 20, sounds: true, examDate: "", revealOnPick: true, srsGrading: true, notif: { enabled:false, daily:true, due:true, streak:true, exam:true, time:"19:00", lastFired:{} } };
 }
 /* clinic-v2.5 */
 

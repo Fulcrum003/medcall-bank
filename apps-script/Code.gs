@@ -116,6 +116,35 @@ function doPost(e){
     return out_({ok:true});
   }
 
+  // Maintainer publishes / removes a "what's new" notice from inside the app.
+  if (data.type === 'announce') {
+    if (!data.token || data.token !== PropertiesService.getScriptProperties().getProperty('ADMIN_TOKEN'))
+      return out_({ok:false, err:'unauthorized'});
+    var pa = PropertiesService.getScriptProperties();
+    var list = [];
+    try { list = JSON.parse(pa.getProperty('announcements') || '[]') || []; } catch (err) { list = []; }
+    if (data.remove) {
+      var rid = String(data.remove);
+      list = list.filter(function(x){ return x && x.id !== rid; });
+    } else {
+      var item = {
+        id:    s_(data.annId || ('a' + Date.now()), 40),
+        date:  s_(data.date, 10),
+        title: s_(data.title, 120),
+        body:  s_(data.body, 600)
+      };
+      if (!item.title) return out_({ok:false, err:'title required'});
+      if (data.actionLabel && data.actionScreen) {
+        item.action = { label: s_(data.actionLabel, 40), screen: s_(data.actionScreen, 30) };
+      }
+      list = list.filter(function(x){ return x && x.id !== item.id; });
+      list.push(item);
+      if (list.length > 20) list = list.slice(-20);   // keep the store bounded
+    }
+    pa.setProperty('announcements', JSON.stringify(list));
+    return out_({ok:true, count:list.length});
+  }
+
   if (data.id) {
     if (!ID_RE.test(String(data.id))) return out_({ok:false, err:'bad id'});
     var p = PropertiesService.getScriptProperties();
@@ -132,6 +161,14 @@ function doGet(e){
   if (e && e.parameter && e.parameter.reports) {
     if (!adminOk_(e)) return out_({error:'unauthorized'});
     return out_(reportSheet_().getDataRange().getValues());
+  }
+
+  // Public: "what's new" notices are meant for every user.
+  if (e && e.parameter && e.parameter.announce) {
+    var pg = PropertiesService.getScriptProperties();
+    var al = [];
+    try { al = JSON.parse(pg.getProperty('announcements') || '[]') || []; } catch (err) { al = []; }
+    return out_(al);
   }
 
   // Public by design: every device pulls question corrections on boot.
