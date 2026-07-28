@@ -3319,6 +3319,18 @@ function buildSyncPayload(db, histCap){
   return { progress: prog, exams: db.exams||[], settings: st, updatedAt: new Date().toISOString(), schema: 1 };
 }
 
+function safeParse(str, fallback){ try{ const v=JSON.parse(str); return (v===null||v===undefined)?fallback:v; }catch(e){ return fallback; } }
+
+// Firestore refuses some nested shapes ("Property progress contains an invalid
+// nested entity"). Sending JSON strings sidesteps every one of those rules.
+function serializePayload(p){
+  return { progressJson: JSON.stringify(p.progress||{}),
+           examsJson:    JSON.stringify(p.exams||[]),
+           settingsJson: JSON.stringify(p.settings||{}),
+           updatedAt:    p.updatedAt || new Date().toISOString(),
+           schema:       2 };
+}
+
 /* ---------- Firebase adapter (lazy) ---------- */
 
 const FB = { app:null, auth:null, db:null, mod:null };
@@ -3393,15 +3405,18 @@ async function syncNow(quiet){
     const snap = await fsM.getDoc(ref);
     if(snap.exists()){
       const remote = snap.data()||{};
-      DB.progress = mergeProgress(DB.progress, remote.progress||{});
-      DB.exams    = mergeRecords(DB.exams, remote.exams, "id");
-      if(remote.settings) SYNCED_SETTINGS.forEach(k=>{
-        if(remote.settings[k]!==undefined && DB.settings[k]===undefined) DB.settings[k]=remote.settings[k];
+      const rProg  = remote.progressJson ? safeParse(remote.progressJson, {}) : (remote.progress||{});
+      const rExams = remote.examsJson    ? safeParse(remote.examsJson, [])    : (remote.exams||[]);
+      const rSet   = remote.settingsJson ? safeParse(remote.settingsJson, {}) : (remote.settings||{});
+      DB.progress = mergeProgress(DB.progress, rProg);
+      DB.exams    = mergeRecords(DB.exams, rExams, "id");
+      SYNCED_SETTINGS.forEach(k=>{
+        if(rSet && rSet[k]!==undefined && DB.settings[k]===undefined) DB.settings[k]=rSet[k];
       });
       save.progress(); save.exams();
     }
-    let payload = buildSyncPayload(DB, 20);
-    if(JSON.stringify(payload).length > 800000) payload = buildSyncPayload(DB, 6);
+    let payload = serializePayload(buildSyncPayload(DB, 20));
+    if(payload.progressJson.length > 700000) payload = serializePayload(buildSyncPayload(DB, 6));
     await fsM.setDoc(ref, payload);
     const a=acct(); a.lastSync=new Date().toISOString(); save.settings();
     syncState.last=a.lastSync;
@@ -3445,6 +3460,11 @@ function acctErrMsg(err){
    on your laptop before you've read it there.
    ============================================================ */
 
+function isAnnouncement(a){
+  return !!(a && typeof a==="object" && typeof a.id==="string" && a.id
+            && typeof a.title==="string" && a.title.trim());
+}
+
 function pendingAnnounce(){
   const seen = DB.settings.seenAnnounce || [];
   const fromManifest = Array.isArray(DB.settings.announcements) ? DB.settings.announcements : [];
@@ -3452,7 +3472,7 @@ function pendingAnnounce(){
   const byId = {};
   fromManifest.concat(fromScript).forEach(a=>{ if(a && a.id) byId[a.id] = a; });  // script wins on id clash
   const all = Object.keys(byId).map(k=>byId[k]);
-  return all.filter(a => a && a.id && seen.indexOf(a.id) < 0)
+  return all.filter(a => isAnnouncement(a) && seen.indexOf(a.id) < 0)
             .sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
 }
 function markAnnounceSeen(id){
@@ -3491,8 +3511,9 @@ function announceCard(){
 function announceHistory(){
   const all = (Array.isArray(DB.settings.announcements)?DB.settings.announcements:[])
     .concat(Array.isArray(DB.settings.remoteAnnounce)?DB.settings.remoteAnnounce:[]);
-  if(!all.length) return "";
-  const rows = all.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")))
+  const valid = all.filter(isAnnouncement);
+  if(!valid.length) return "";
+  const rows = valid.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")))
     .map(a=>`<div style="padding:11px 0;border-top:1px solid var(--line-soft)">
       <div class="row between" style="font-size:13.5px"><b>${esc(a.title||"")}</b><span class="faint mono" style="font-size:11px">${esc(a.date||"")}</span></div>
       <div class="faint" style="font-size:12.5px;margin-top:3px;line-height:1.5">${esc(a.body||"")}</div>
@@ -3509,7 +3530,13 @@ async function fetchAnnouncements(){
     const u = ep + (ep.indexOf("?")>=0?"&":"?") + "announce=1&cb=" + Date.now();
     const r = await fetch(u,{cache:"no-store"}); if(!r.ok) return;
     const data = await r.json();
-    if(Array.isArray(data)){ DB.settings.remoteAnnounce = data; save.settings(); }
+    // Guard: an older deployed Script ignores ?announce=1 and returns the
+    // leaderboard instead. Only keep things that actually look like notices.
+    if(Array.isArray(data)){
+      const clean = data.filter(isAnnouncement);
+      if(clean.length !== data.length && !clean.length) return;   // wrong endpoint — keep what we have
+      DB.settings.remoteAnnounce = clean; save.settings();
+    }
   }catch(e){ /* offline — keep whatever we already have */ }
 }
 
@@ -3543,7 +3570,7 @@ async function removeAnnouncement(id){
 // Maintainer composer — lives in Settings under Maintainer tools.
 function announceComposer(){
   const live = Array.isArray(DB.settings.remoteAnnounce) ? DB.settings.remoteAnnounce : [];
-  const rows = live.slice().reverse().map(a=>`<div class="row between" style="padding:9px 0;border-top:1px solid var(--line-soft)">
+  const rows = live.filter(isAnnouncement).slice().reverse().map(a=>`<div class="row between" style="padding:9px 0;border-top:1px solid var(--line-soft)">
       <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">${esc(a.title||"")}</div>
       <div class="faint mono" style="font-size:11px">${esc(a.date||"")} · ${esc(a.id||"")}</div></div>
       <button class="reportlink" data-action="announce-del" data-id="${esc(a.id)}">remove</button>
@@ -3568,7 +3595,7 @@ function announceComposer(){
     </div>
     <button class="btn btn-primary" data-action="announce-publish">Publish to everyone</button>
     <div id="annErr" style="color:var(--amber);font-size:12.5px;margin-top:9px;line-height:1.5"></div>
-    ${live.length?`<div style="margin-top:12px"><div class="faint" style="font-size:12px;margin-bottom:2px">Live now (${live.length})</div>${rows}</div>`:""}
+    ${rows?`<div style="margin-top:12px"><div class="faint" style="font-size:12px;margin-bottom:2px">Live now (${live.filter(isAnnouncement).length})</div>${rows}</div>`:""}
   </div>`;
 }
 
@@ -4515,6 +4542,11 @@ async function boot(){
   applyTheme();
   try{ ghToken = await wsGet("medrecall:ghtoken:v1"); }catch(e){}
   try{ adminToken = await wsGet("medrecall:admintoken:v1"); }catch(e){}
+  // heal devices that cached leaderboard rows as notices before the shape guard
+  if(Array.isArray(DB.settings.remoteAnnounce)){
+    const kept = DB.settings.remoteAnnounce.filter(isAnnouncement);
+    if(kept.length !== DB.settings.remoteAnnounce.length){ DB.settings.remoteAnnounce = kept; save.settings(); }
+  }
   try{ wallImg = await wsGet("medrecall:wallpaperimg:v1"); }catch(e){}
   applyWallpaper();
   // instant + offline start from the cached bank (IndexedDB; falls back to the
