@@ -3419,6 +3419,10 @@ function acctErrMsg(err){
                                            return "Email or password is incorrect.";
   if(c.indexOf("too-many-requests")>=0)    return "Too many attempts — wait a minute and try again.";
   if(c.indexOf("network")>=0)              return "No connection — check your internet and try again.";
+  if(c.indexOf("operation-not-allowed")>=0) return "Email sign-in isn't enabled in Firebase yet (Authentication \u2192 Sign-in method \u2192 Email/Password).";
+  if(c.indexOf("permission-denied")>=0 || c.indexOf("insufficient")>=0)
+                                           return "The database rules haven't been published yet, so syncing is blocked.";
+  if(c.indexOf("unavailable")>=0)          return "Can't reach the sync service \u2014 check your connection and try again.";
   if(c.indexOf("not configured")>=0)       return "Accounts aren't switched on for this build yet.";
   return c || "Something went wrong — try again.";
 }

@@ -1,6 +1,6 @@
 {
-  "manifestVersion": 35,
-  "updated": "2026-07-27",
+  "manifestVersion": 36,
+  "updated": "2026-07-28",
   "leaderboard": "https://script.google.com/macros/s/AKfycbypC31uzfeM9kLgMYSakCdLuxuwfCfepjHVJOvZ8xdx-ND4dM57A-owXu7zySKU7fuMQg/exec",
   "packs": [
     {
@@ -116,6 +116,12 @@
       "questionCount": 112
     }
   ],
-  "firebase": null,
-  "_firebaseNote": "Paste your Firebase web config object here to switch on accounts + cross-device sync. Leave null for guest-only. See FIREBASE_SETUP.md."
+  "firebase": {
+    "apiKey": "AIzaSyCHDCjoqBDxjnA0HOUUZXKmvmo9OpD1VKM",
+    "authDomain": "medcall003.firebaseapp.com",
+    "projectId": "medcall003",
+    "storageBucket": "medcall003.firebasestorage.app",
+    "messagingSenderId": "1048684631428",
+    "appId": "1:1048684631428:web:516813fa729c0e4e6f39d1"
+  }
 }
