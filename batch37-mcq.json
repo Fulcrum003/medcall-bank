@@ -2,9 +2,9 @@
  "packId": "batch37-mcq",
  "title": "Batch 37 Final",
  "color": "#cf9b6b",
- "version": 5,
+ "version": 8,
  "updated": "2026-06-15",
- "questionCount": 112,
+ "questionCount": 129,
  "questions": [
   {
    "id": "b37_q1",
@@ -154,33 +154,112 @@
    "references": null
   },
   {
-   "id": "b37_q4",
+   "id": "b37_q4_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 1",
-   "topic": "Cholinergic Urticaria",
-   "stem": "Q117: Young adult male with PRICKING SENSATION + ITCHING exacerbated by ANXIETY and EMOTIONAL STRESS. What is the diagnosis? Q118: Which mediator is responsible?",
+   "system": "Dermatology",
+   "topic": "Q117 — Cholinergic urticaria: diagnosis",
+   "stem": "A YOUNG ADULT MALE describes a PRICKING SENSATION with ITCHING, brought on by ANXIETY and EMOTIONAL STRESS.\n\n[Part 1] What is the most likely diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "Cholinergic Urticaria | Q118: Histamine (primary mast cell mediator)",
+     "text": "Cholinergic urticaria",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — CHOLINERGIC URTICARIA: tiny 1–3 mm punctate wheals with surrounding flare, triggered by a RISE IN CORE BODY TEMPERATURE — exercise, hot showers, spicy food, and emotional stress. Treat with a non-sedating antihistamine."
+    },
+    {
+     "label": "B",
+     "text": "Dermographism",
+     "correct": false,
+     "explanation": "WRONG — Wheals appear where the skin is STROKED or scratched, not in response to heat or emotion."
+    },
+    {
+     "label": "C",
+     "text": "Cold urticaria",
+     "correct": false,
+     "explanation": "WRONG — Triggered by cold exposure and confirmed by the ice-cube test — the opposite trigger."
+    },
+    {
+     "label": "D",
+     "text": "Chronic spontaneous urticaria",
+     "correct": false,
+     "explanation": "WRONG — Wheals arise without an identifiable trigger and last over 6 weeks; here the trigger is clear."
+    },
+    {
+     "label": "E",
+     "text": "Contact dermatitis",
+     "correct": false,
+     "explanation": "WRONG — An eczematous, delayed type-IV reaction at the site of contact, not transient itchy pricking."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "CHOLINERGIC URTICARIA: tiny 1–3 mm punctate wheals with surrounding flare, triggered by a RISE IN CORE BODY TEMPERATURE — exercise, hot showers, spicy food, and emotional stress. Treat with a non-sedating antihistamine.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q4_urticaria",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Trigger identifies the urticaria: heat/emotion = cholinergic; stroking = dermographism; cold = cold urticaria."
+  },
+  {
+   "id": "b37_q4_2",
+   "type": "mcq",
+   "system": "Dermatology",
+   "topic": "Q118 — Cholinergic urticaria: mediator",
+   "stem": "A YOUNG ADULT MALE describes a PRICKING SENSATION with ITCHING, brought on by ANXIETY and EMOTIONAL STRESS.\n\n[Part 2] Which mediator is responsible?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Histamine",
+     "correct": true,
+     "explanation": "CORRECT — HISTAMINE from mast cells is the primary mediator: acting on H1 receptors it causes vasodilatation (flare), increased permeability (wheal) and itch. This is why H1 ANTIHISTAMINES are first-line."
+    },
+    {
+     "label": "B",
+     "text": "Bradykinin",
+     "correct": false,
+     "explanation": "WRONG — Mediates ACE-inhibitor angio-oedema — which is NOT itchy and does NOT respond to antihistamines."
+    },
+    {
+     "label": "C",
+     "text": "Prostaglandin D2",
+     "correct": false,
+     "explanation": "WRONG — Contributes to flushing (notably in mastocytosis) but is not the principal wheal mediator."
+    },
+    {
+     "label": "D",
+     "text": "Leukotriene C4",
+     "correct": false,
+     "explanation": "WRONG — A secondary mast cell mediator, more relevant to bronchoconstriction in asthma."
+    },
+    {
+     "label": "E",
+     "text": "Interleukin-6",
+     "correct": false,
+     "explanation": "WRONG — An acute-phase cytokine with no direct role in producing a weal-and-flare."
+    }
+   ],
+   "keyPoint": "HISTAMINE from mast cells is the primary mediator: acting on H1 receptors it causes vasodilatation (flare), increased permeability (wheal) and itch. This is why H1 ANTIHISTAMINES are first-line.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q4_urticaria",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Itchy + antihistamine-responsive = histamine. Non-itchy angio-oedema on an ACE inhibitor = bradykinin, and antihistamines won't help."
   },
   {
    "id": "b37_q5_1",
@@ -295,15 +374,39 @@
    "choices": [
     {
      "label": "A",
-     "text": "Severe (Two Actual Attempts + Active Psychosis)",
+     "text": "Severe — two actual attempts plus active psychosis",
      "correct": true,
-     "explanation": null
+     "explanation": "CORRECT — Risk is SEVERE: TWO ACTUAL ATTEMPTS (the single strongest predictor), ACTIVE PSYCHOSIS, adolescence and impulsivity. A delusion of being able to fly is directly life-threatening."
+    },
+    {
+     "label": "B",
+     "text": "Low — adolescents rarely complete suicide",
+     "correct": false,
+     "explanation": "WRONG — DANGEROUS misconception. Suicide is a leading cause of death in adolescents, and previous attempts are the strongest predictor of completion."
+    },
+    {
+     "label": "C",
+     "text": "Moderate — no stated plan",
+     "correct": false,
+     "explanation": "WRONG — A stated plan is not required; he has already ACTED twice, and command hallucinations may drive further attempts."
+    },
+    {
+     "label": "D",
+     "text": "Nil — the delusion is grandiose, not depressive",
+     "correct": false,
+     "explanation": "WRONG — Believing he can fly is itself lethal — it led to a bridge attempt. Grandiose delusions can kill through recklessness."
+    },
+    {
+     "label": "E",
+     "text": "Cannot be assessed without a rating scale",
+     "correct": false,
+     "explanation": "WRONG — Scales support but never replace clinical judgement, and risk here is evident."
     }
    ],
-   "keyPoint": "",
+   "keyPoint": "Risk is SEVERE: TWO ACTUAL ATTEMPTS (the single strongest predictor), ACTIVE PSYCHOSIS, adolescence and impulsivity. A delusion of being able to fly is directly life-threatening.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -312,11 +415,12 @@
     "institution": "University of Kufa"
    },
    "optionsTitle": null,
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Past attempts outweigh every other risk factor. Never downgrade risk because the mood is elated rather than depressed.",
    "summaryTable": null,
    "references": null,
    "cluster": "b37_q5",
-   "seq": 3
+   "seq": 3,
+   "aiChoices": true
   },
   {
    "id": "b37_q5_4",
@@ -327,15 +431,39 @@
    "choices": [
     {
      "label": "A",
-     "text": "Lithium (Long-term Maintenance)",
+     "text": "Lithium",
      "correct": true,
-     "explanation": null
+     "explanation": "CORRECT — LITHIUM is the most effective long-term maintenance treatment in bipolar disorder and uniquely reduces SUICIDE RISK — particularly relevant here. It needs monitoring of levels, renal and thyroid function."
+    },
+    {
+     "label": "B",
+     "text": "Fluoxetine monotherapy",
+     "correct": false,
+     "explanation": "WRONG — DANGEROUS — an antidepressant alone in bipolar disorder can precipitate a manic switch or rapid cycling."
+    },
+    {
+     "label": "C",
+     "text": "Diazepam long term",
+     "correct": false,
+     "explanation": "WRONG — Sedates acutely but has no mood-stabilising or prophylactic effect, and risks dependence."
+    },
+    {
+     "label": "D",
+     "text": "Methylphenidate",
+     "correct": false,
+     "explanation": "WRONG — A stimulant used in ADHD; it would worsen mania."
+    },
+    {
+     "label": "E",
+     "text": "Procyclidine",
+     "correct": false,
+     "explanation": "WRONG — An anticholinergic for drug-induced extrapyramidal effects, not a mood stabiliser."
     }
    ],
-   "keyPoint": "",
+   "keyPoint": "LITHIUM is the most effective long-term maintenance treatment in bipolar disorder and uniquely reduces SUICIDE RISK — particularly relevant here. It needs monitoring of levels, renal and thyroid function.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -344,11 +472,12 @@
     "institution": "University of Kufa"
    },
    "optionsTitle": null,
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Lithium is the only mood stabiliser with a proven anti-suicidal effect — decisive in a patient with two attempts.",
    "summaryTable": null,
    "references": null,
    "cluster": "b37_q5",
-   "seq": 4
+   "seq": 4,
+   "aiChoices": true
   },
   {
    "id": "b37_q5_5",
@@ -359,15 +488,39 @@
    "choices": [
     {
      "label": "A",
-     "text": "Inpatient (Mandatory)",
+     "text": "Inpatient admission (mandatory)",
      "correct": true,
-     "explanation": null
+     "explanation": "CORRECT — ADMISSION IS MANDATORY: active psychosis, two suicide attempts and a delusion that directly endangers life. Admit informally if he agrees, or under mental health legislation if he refuses."
+    },
+    {
+     "label": "B",
+     "text": "Outpatient follow-up in one week",
+     "correct": false,
+     "explanation": "WRONG — UNSAFE — two recent attempts with active psychosis cannot be managed in the community."
+    },
+    {
+     "label": "C",
+     "text": "Home treatment team with daily visits",
+     "correct": false,
+     "explanation": "WRONG — Still leaves him unsupervised between visits, with a delusion that he can fly."
+    },
+    {
+     "label": "D",
+     "text": "Discharge with a crisis card",
+     "correct": false,
+     "explanation": "WRONG — Wholly inadequate for imminent, life-threatening risk."
+    },
+    {
+     "label": "E",
+     "text": "Referral to school counselling",
+     "correct": false,
+     "explanation": "WRONG — Appropriate later; irrelevant to acute safety."
     }
    ],
-   "keyPoint": "",
+   "keyPoint": "ADMISSION IS MANDATORY: active psychosis, two suicide attempts and a delusion that directly endangers life. Admit informally if he agrees, or under mental health legislation if he refuses.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled sub-question — the source gives the marked answer and reasoning but not a full option list.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -376,11 +529,12 @@
     "institution": "University of Kufa"
    },
    "optionsTitle": null,
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Match setting to risk: imminent risk to life means inpatient, using compulsory powers if consent is absent.",
    "summaryTable": null,
    "references": null,
    "cluster": "b37_q5",
-   "seq": 5
+   "seq": 5,
+   "aiChoices": true
   },
   {
    "id": "b37_q6",
@@ -1115,33 +1269,112 @@
    "references": null
   },
   {
-   "id": "b37_q13",
+   "id": "b37_q13_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 7",
-   "topic": "Psychology Case 1 | Schizoaffective Disorder",
-   "stem": "PSYCHOLOGY CASE 1: 30-YEAR-OLD FEMALE. 2 months auditory hallucinations + persecutory delusions → followed by MDD (resolved with treatment). Psychosis PERSISTS 1 MORE MONTH after depression resolved, then resolved.",
+   "system": "Psychiatry",
+   "topic": "Psychology Case 1 — diagnosis",
+   "stem": "A 30-YEAR-OLD FEMALE had 2 months of AUDITORY HALLUCINATIONS and PERSECUTORY DELUSIONS, followed by a MAJOR DEPRESSIVE EPISODE which resolved with treatment. The PSYCHOSIS PERSISTED FOR ONE FURTHER MONTH after the depression had resolved, and then also resolved.\n\n[Part 1] What is the most likely diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "Schizoaffective Disorder | Q2: E. PTSD Flashbacks (NOT psychotic) |",
+     "text": "Schizoaffective disorder",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — SCHIZOAFFECTIVE DISORDER requires psychotic symptoms for at least 2 WEEKS IN THE ABSENCE OF a major mood episode, alongside mood episodes for much of the illness. The month of psychosis after the depression lifted is the diagnostic feature."
+    },
+    {
+     "label": "B",
+     "text": "Major depressive disorder with psychotic features",
+     "correct": false,
+     "explanation": "WRONG — WRONG — in psychotic depression the psychosis occurs ONLY during the mood episode. Here it persisted a month AFTER the depression resolved."
+    },
+    {
+     "label": "C",
+     "text": "Schizophrenia",
+     "correct": false,
+     "explanation": "WRONG — WRONG — a full mood episode is prominent here; in schizophrenia mood symptoms are brief relative to the psychosis."
+    },
+    {
+     "label": "D",
+     "text": "Bipolar affective disorder",
+     "correct": false,
+     "explanation": "WRONG — WRONG — no manic or hypomanic episode is described."
+    },
+    {
+     "label": "E",
+     "text": "Brief psychotic disorder",
+     "correct": false,
+     "explanation": "WRONG — WRONG — that resolves fully within one month and lacks the major mood episode."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "SCHIZOAFFECTIVE DISORDER requires psychotic symptoms for at least 2 WEEKS IN THE ABSENCE OF a major mood episode, alongside mood episodes for much of the illness. The month of psychosis after the depression lifted is the diagnostic feature.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q13_schizoaff",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Psychosis ONLY during mood episode = psychotic depression. Psychosis PERSISTING without the mood episode = schizoaffective."
+  },
+  {
+   "id": "b37_q13_2",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "topic": "Psychology Case 1 — what is not psychotic",
+   "stem": "A 30-YEAR-OLD FEMALE had 2 months of AUDITORY HALLUCINATIONS and PERSECUTORY DELUSIONS, followed by a MAJOR DEPRESSIVE EPISODE which resolved with treatment. The PSYCHOSIS PERSISTED FOR ONE FURTHER MONTH after the depression had resolved, and then also resolved.\n\n[Part 2] Which of the following is NOT a psychotic symptom?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Auditory hallucinations",
+     "correct": false,
+     "explanation": "WRONG — WRONG (it IS psychotic) — a perception without a stimulus, the commonest hallucination in psychosis."
+    },
+    {
+     "label": "B",
+     "text": "Persecutory delusions",
+     "correct": false,
+     "explanation": "WRONG — WRONG (it IS psychotic) — a fixed false belief held despite contrary evidence."
+    },
+    {
+     "label": "C",
+     "text": "Thought insertion",
+     "correct": false,
+     "explanation": "WRONG — WRONG (it IS psychotic) — a passivity phenomenon and a Schneiderian first-rank symptom."
+    },
+    {
+     "label": "D",
+     "text": "Formal thought disorder",
+     "correct": false,
+     "explanation": "WRONG — WRONG (it IS psychotic) — disorganised thought form such as derailment or word salad."
+    },
+    {
+     "label": "E",
+     "text": "PTSD flashbacks",
+     "correct": true,
+     "explanation": "CORRECT — PTSD FLASHBACKS are DISSOCIATIVE re-experiencing, not psychosis: the person relives a real memory and insight is retained. Psychotic symptoms involve loss of contact with reality."
+    }
+   ],
+   "keyPoint": "PTSD FLASHBACKS are DISSOCIATIVE re-experiencing, not psychosis: the person relives a real memory and insight is retained. Psychotic symptoms involve loss of contact with reality.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q13_schizoaff",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Flashback = re-experiencing something that genuinely happened, insight intact. Hallucination = perceiving something that isn't there, insight usually lost."
   },
   {
    "id": "b37_q14_1",
@@ -1655,15 +1888,39 @@
    "choices": [
     {
      "label": "A",
-     "text": "Concurrent Infection (Primary DELIRIUM risk factor, not specifically MDD)",
+     "text": "Hearing impairment",
+     "correct": false,
+     "explanation": "WRONG — IS a risk factor — sensory impairment causes social isolation, a well-recognised contributor to depression, especially in older adults."
+    },
+    {
+     "label": "B",
+     "text": "Concurrent infection",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — CONCURRENT INFECTION is the classic precipitant of DELIRIUM, not specifically of major depressive disorder. The other options are all recognised contributors to depression."
+    },
+    {
+     "label": "C",
+     "text": "Dehydration",
+     "correct": false,
+     "explanation": "WRONG — IS associated — physical illness and metabolic disturbance contribute to low mood and are common in frail patients."
+    },
+    {
+     "label": "D",
+     "text": "Family history",
+     "correct": false,
+     "explanation": "WRONG — IS a risk factor — a strong genetic contribution, with roughly threefold risk in first-degree relatives."
+    },
+    {
+     "label": "E",
+     "text": "Hypoxia",
+     "correct": false,
+     "explanation": "WRONG — IS associated — chronic hypoxia (e.g. COPD) correlates with depression through both physiological and disability pathways."
     }
    ],
-   "keyPoint": "",
+   "keyPoint": "CONCURRENT INFECTION is the classic precipitant of DELIRIUM, not specifically of major depressive disorder. The other options are all recognised contributors to depression.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -1671,38 +1928,118 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Acute infection in a confused older patient points to delirium; screen for it before diagnosing depression.",
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
-   "id": "b37_q18",
+   "id": "b37_q18_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 11",
-   "topic": "Psychology Case 3 | Cotard & Capgras Syndrome",
-   "stem": "~40-YEAR-OLD MALE with schizophrenia: Nihilistic delusion — \"my heart and intestines aren't present.\" States: \"WHICH WORLD? THERE IS NO WORLD.\" Also states: \"ALIEN ROBOTS SEEM IDENTICAL TO HIS PARENTS.\"",
+   "system": "Psychiatry",
+   "topic": "Psychology Case 3 — nihilistic delusion",
+   "stem": "A ~40-YEAR-OLD MALE with schizophrenia says his HEART AND INTESTINES ARE NOT PRESENT and asks \"WHICH WORLD? THERE IS NO WORLD.\" He also states that ALIEN ROBOTS SEEM IDENTICAL TO HIS PARENTS.\n\n[Part 1] What best describes his belief that his organs are absent and there is no world?",
    "choices": [
     {
      "label": "A",
-     "text": "Cotard Syndrome (Nihilistic Delusion) | Q2: A. Capgras Syndrome",
+     "text": "Cotard syndrome",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — COTARD SYNDROME = NIHILISTIC DELUSION: the belief that one is dead, does not exist, or that organs or the world have ceased to exist. Associated with severe psychotic depression and schizophrenia. It is an emergency because patients may stop eating and drinking; ECT is highly effective."
+    },
+    {
+     "label": "B",
+     "text": "Capgras syndrome",
+     "correct": false,
+     "explanation": "WRONG — WRONG — that is the belief a familiar person has been replaced by an impostor; it is his SECOND delusion, not this one."
+    },
+    {
+     "label": "C",
+     "text": "Fregoli syndrome",
+     "correct": false,
+     "explanation": "WRONG — WRONG — the belief that a stranger is a familiar person in disguise."
+    },
+    {
+     "label": "D",
+     "text": "Somatic delusion",
+     "correct": false,
+     "explanation": "WRONG — WRONG — a belief that the body is diseased or infested; here he denies EXISTENCE altogether, which is nihilistic."
+    },
+    {
+     "label": "E",
+     "text": "Delusion of control",
+     "correct": false,
+     "explanation": "WRONG — WRONG — the belief that an outside force controls one's actions."
     }
    ],
-   "keyPoint": null,
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "COTARD SYNDROME = NIHILISTIC DELUSION: the belief that one is dead, does not exist, or that organs or the world have ceased to exist. Associated with severe psychotic depression and schizophrenia. It is an emergency because patients may stop eating and drinking; ECT is highly effective.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q18_delusions",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Nihilistic = 'I/my organs/the world do not exist'. Somatic = 'my body is diseased' — the patient still believes they exist."
+  },
+  {
+   "id": "b37_q18_2",
+   "type": "mcq",
+   "system": "Psychiatry",
+   "topic": "Psychology Case 3 — misidentification",
+   "stem": "A ~40-YEAR-OLD MALE with schizophrenia says his HEART AND INTESTINES ARE NOT PRESENT and asks \"WHICH WORLD? THERE IS NO WORLD.\" He also states that ALIEN ROBOTS SEEM IDENTICAL TO HIS PARENTS.\n\n[Part 2] What best describes his belief that alien robots are identical to his parents?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Capgras syndrome",
+     "correct": true,
+     "explanation": "CORRECT — CAPGRAS SYNDROME: the belief that a familiar person has been REPLACED BY AN IMPOSTOR. Attributed to intact face recognition with loss of the autonomic familiarity response. Occurs in schizophrenia and in organic disease, and carries a real risk of violence toward the 'impostor'."
+    },
+    {
+     "label": "B",
+     "text": "Cotard syndrome",
+     "correct": false,
+     "explanation": "WRONG — WRONG — nihilistic delusions of non-existence; that is his other delusion."
+    },
+    {
+     "label": "C",
+     "text": "Fregoli syndrome",
+     "correct": false,
+     "explanation": "WRONG — WRONG — the reverse: a STRANGER is believed to be a familiar person in disguise. Here a familiar person is believed replaced."
+    },
+    {
+     "label": "D",
+     "text": "Folie à deux",
+     "correct": false,
+     "explanation": "WRONG — WRONG — a shared delusion transmitted to a close contact."
+    },
+    {
+     "label": "E",
+     "text": "Erotomania",
+     "correct": false,
+     "explanation": "WRONG — WRONG — the delusion that another person is secretly in love with the patient."
+    }
+   ],
+   "keyPoint": "CAPGRAS SYNDROME: the belief that a familiar person has been REPLACED BY AN IMPOSTOR. Attributed to intact face recognition with loss of the autonomic familiarity response. Occurs in schizophrenia and in organic disease, and carries a real risk of violence toward the 'impostor'.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q18_delusions",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Capgras: a familiar person is an impostor (duplication). Fregoli: a stranger is really someone familiar in disguise (transformation)."
   },
   {
    "id": "b37_q19_1",
@@ -1891,33 +2228,112 @@
    "keyDifferentiator": "Timing splits them: <24 h = primary/reactive; 5–10 days with halitosis = secondary (infective)."
   },
   {
-   "id": "b37_q20",
+   "id": "b37_q20_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 13",
-   "topic": "Paediatric CAP Case + Deferasirox Monitoring (Haematology)",
-   "stem": "2-YEAR-OLD CHILD (CASE 1): 3 days fever + cough + difficulty breathing. Lethargic. Temp 38.5°C, RR 50/min, O2 sat 88%. Wheeze + crackles lower right lung. CXR: FOCAL CONSOLIDATION right lower lobe.",
+   "system": "Paediatrics",
+   "topic": "Paediatric CAP — organism",
+   "stem": "A 2-YEAR-OLD CHILD has 3 days of FEVER, COUGH and DIFFICULTY BREATHING and is LETHARGIC. Temperature 38.5°C, respiratory rate 50/min, OXYGEN SATURATION 88%. Wheeze and crackles at the right lower zone. CHEST X-RAY: FOCAL CONSOLIDATION of the right lower lobe.\n\n[Part 1] What is the most likely causative organism?",
    "choices": [
     {
      "label": "A",
-     "text": "Q1 Organism: Strep pneumoniae | Q2 Management: O2 + IV Antibiotics | Q3",
+     "text": "Streptococcus pneumoniae",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — STREPTOCOCCUS PNEUMONIAE is the commonest bacterial cause of community-acquired pneumonia in children beyond the neonatal period, and FOCAL LOBAR CONSOLIDATION is its signature."
+    },
+    {
+     "label": "B",
+     "text": "Respiratory syncytial virus",
+     "correct": false,
+     "explanation": "WRONG — Causes BRONCHIOLITIS in infants — diffuse wheeze with hyperinflation, not focal lobar consolidation."
+    },
+    {
+     "label": "C",
+     "text": "Mycoplasma pneumoniae",
+     "correct": false,
+     "explanation": "WRONG — Atypical pneumonia of older children and adolescents, with diffuse interstitial change and often extrapulmonary features."
+    },
+    {
+     "label": "D",
+     "text": "Staphylococcus aureus",
+     "correct": false,
+     "explanation": "WRONG — Causes severe necrotising pneumonia with pneumatocoeles or empyema, usually post-influenza or in the unwell neonate."
+    },
+    {
+     "label": "E",
+     "text": "Haemophilus influenzae type b",
+     "correct": false,
+     "explanation": "WRONG — Now rare where Hib vaccination is routine."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "STREPTOCOCCUS PNEUMONIAE is the commonest bacterial cause of community-acquired pneumonia in children beyond the neonatal period, and FOCAL LOBAR CONSOLIDATION is its signature.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q20_cap",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged. One later part of this case was TRUNCATED in the source and could not be recovered, so it is not included.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "FOCAL consolidation = typical bacterial (pneumococcus). DIFFUSE wheeze in an infant = viral bronchiolitis."
+  },
+  {
+   "id": "b37_q20_2",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "Paediatric CAP — management",
+   "stem": "A 2-YEAR-OLD CHILD has 3 days of FEVER, COUGH and DIFFICULTY BREATHING and is LETHARGIC. Temperature 38.5°C, respiratory rate 50/min, OXYGEN SATURATION 88%. Wheeze and crackles at the right lower zone. CHEST X-RAY: FOCAL CONSOLIDATION of the right lower lobe.\n\n[Part 2] What is the most appropriate immediate management?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Oxygen plus intravenous antibiotics",
+     "correct": true,
+     "explanation": "CORRECT — Saturations BELOW 92% define severe pneumonia: give OXYGEN and IV ANTIBIOTICS, with admission and fluid support. Correct hypoxia first — it is what kills."
+    },
+    {
+     "label": "B",
+     "text": "Oral antibiotics and discharge home",
+     "correct": false,
+     "explanation": "WRONG — UNSAFE — saturations of 88% and a respiratory rate of 50 indicate severe pneumonia needing admission."
+    },
+    {
+     "label": "C",
+     "text": "Nebulised salbutamol alone",
+     "correct": false,
+     "explanation": "WRONG — Treats bronchospasm but does nothing for bacterial infection or hypoxia."
+    },
+    {
+     "label": "D",
+     "text": "Oral corticosteroids",
+     "correct": false,
+     "explanation": "WRONG — No role in uncomplicated bacterial pneumonia."
+    },
+    {
+     "label": "E",
+     "text": "Chest physiotherapy",
+     "correct": false,
+     "explanation": "WRONG — Not indicated in acute paediatric pneumonia and may distress the child."
+    }
+   ],
+   "keyPoint": "Saturations BELOW 92% define severe pneumonia: give OXYGEN and IV ANTIBIOTICS, with admission and fluid support. Correct hypoxia first — it is what kills.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q20_cap",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged. One later part of this case was TRUNCATED in the source and could not be recovered, so it is not included.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Sats <92%, marked tachypnoea or inability to feed = severe → admit for oxygen and IV antibiotics."
   },
   {
    "id": "b37_q21",
@@ -1928,15 +2344,39 @@
    "choices": [
     {
      "label": "A",
-     "text": "2. LFT and RFT (Liver + Renal Function — Primary Monthly Monitoring)",
+     "text": "Full blood count only",
+     "correct": false,
+     "explanation": "WRONG — Insufficient — the important toxicities of deferasirox are hepatic and renal, not haematological."
+    },
+    {
+     "label": "B",
+     "text": "Liver and renal function",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — DEFERASIROX (oral iron chelator) requires MONTHLY LIVER AND RENAL FUNCTION monitoring — it can cause renal impairment, hepatic failure and GI haemorrhage. Also monitor annual audiometry and ophthalmology, as chelators cause ototoxicity and retinopathy."
+    },
+    {
+     "label": "C",
+     "text": "Serum calcium and phosphate",
+     "correct": false,
+     "explanation": "WRONG — Not a recognised monitoring requirement for deferasirox."
+    },
+    {
+     "label": "D",
+     "text": "Thyroid function",
+     "correct": false,
+     "explanation": "WRONG — Relevant to iron-overload complications generally, but not the drug's monitoring requirement."
+    },
+    {
+     "label": "E",
+     "text": "Clotting screen",
+     "correct": false,
+     "explanation": "WRONG — Not required unless liver failure supervenes."
     }
    ],
-   "keyPoint": "",
+   "keyPoint": "DEFERASIROX (oral iron chelator) requires MONTHLY LIVER AND RENAL FUNCTION monitoring — it can cause renal impairment, hepatic failure and GI haemorrhage. Also monitor annual audiometry and ophthalmology, as chelators cause ototoxicity and retinopathy.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -1944,38 +2384,172 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Desferrioxamine is parenteral and causes ototoxicity/retinopathy; deferasirox is oral and its headline risks are RENAL and HEPATIC.",
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
-   "id": "b37_q22",
+   "id": "b37_q22_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 14",
-   "topic": "Psychology Case 4 | Autism Spectrum Disorder",
-   "stem": "30-MONTH-OLD FEMALE: Poor eye contact, REPETITIVE MOVEMENTS, no peer communication, does not play with brother. STRICT ROUTINE — upset if disturbed. Focuses on coloured pens (restricted interest). Physically normal.",
+   "system": "Paediatrics",
+   "topic": "Autism — diagnosis",
+   "stem": "A 30-MONTH-OLD FEMALE has POOR EYE CONTACT, REPETITIVE MOVEMENTS, no communication with peers and does not play with her brother. She keeps a STRICT ROUTINE and becomes upset if it is disturbed, and focuses intently on coloured pens. Physical examination is normal.\n\n[Part 1] What is the most likely diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "Autism | Q2: A. Speech at Age 5 | Q3: A. Intellectual Disability | Q4: A.",
+     "text": "Autism spectrum disorder",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — AUTISM SPECTRUM DISORDER rests on two domains: persistent deficits in SOCIAL COMMUNICATION AND INTERACTION, plus RESTRICTED, REPETITIVE behaviours, interests or activities (routines, stereotypies, intense narrow interests), present from early development."
+    },
+    {
+     "label": "B",
+     "text": "Attention deficit hyperactivity disorder",
+     "correct": false,
+     "explanation": "WRONG — Core features are inattention, hyperactivity and impulsivity — not impaired social reciprocity with restricted, repetitive interests."
+    },
+    {
+     "label": "C",
+     "text": "Rett syndrome",
+     "correct": false,
+     "explanation": "WRONG — Almost exclusively girls, but with REGRESSION, deceleration of head growth and characteristic hand-wringing stereotypies."
+    },
+    {
+     "label": "D",
+     "text": "Selective mutism",
+     "correct": false,
+     "explanation": "WRONG — The child speaks normally in some settings; social reciprocity and imagination are intact."
+    },
+    {
+     "label": "E",
+     "text": "Global developmental delay alone",
+     "correct": false,
+     "explanation": "WRONG — Would delay all domains evenly, without the specific social-communication and restricted-interest pattern."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "AUTISM SPECTRUM DISORDER rests on two domains: persistent deficits in SOCIAL COMMUNICATION AND INTERACTION, plus RESTRICTED, REPETITIVE behaviours, interests or activities (routines, stereotypies, intense narrow interests), present from early development.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q22_autism",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged. One later part of this case was TRUNCATED in the source and could not be recovered, so it is not included.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Both domains are required. Social difficulty alone, or repetitive behaviour alone, is not autism."
+  },
+  {
+   "id": "b37_q22_2",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "Autism — prognostic indicator",
+   "stem": "A 30-MONTH-OLD FEMALE has POOR EYE CONTACT, REPETITIVE MOVEMENTS, no communication with peers and does not play with her brother. She keeps a STRICT ROUTINE and becomes upset if it is disturbed, and focuses intently on coloured pens. Physical examination is normal.\n\n[Part 2] Which factor best predicts a more favourable long-term outcome?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Useful speech developed by age 5",
+     "correct": true,
+     "explanation": "CORRECT — Development of USEFUL COMMUNICATIVE SPEECH BY ABOUT AGE 5, together with non-verbal IQ in the normal range, is the strongest predictor of better long-term functioning in autism."
+    },
+    {
+     "label": "B",
+     "text": "Presence of stereotyped hand movements",
+     "correct": false,
+     "explanation": "WRONG — A core feature, not a prognostic discriminator."
+    },
+    {
+     "label": "C",
+     "text": "Male sex",
+     "correct": false,
+     "explanation": "WRONG — Autism is commoner in boys, but sex does not itself predict outcome."
+    },
+    {
+     "label": "D",
+     "text": "Normal physical examination",
+     "correct": false,
+     "explanation": "WRONG — Expected in most autistic children and carries no prognostic weight."
+    },
+    {
+     "label": "E",
+     "text": "Early strict routines",
+     "correct": false,
+     "explanation": "WRONG — Part of the diagnosis rather than a marker of better outcome."
+    }
+   ],
+   "keyPoint": "Development of USEFUL COMMUNICATIVE SPEECH BY ABOUT AGE 5, together with non-verbal IQ in the normal range, is the strongest predictor of better long-term functioning in autism.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q22_autism",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged. One later part of this case was TRUNCATED in the source and could not be recovered, so it is not included.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Language and cognitive ability drive prognosis far more than the severity of repetitive behaviours."
+  },
+  {
+   "id": "b37_q22_3",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "Autism — commonest comorbidity",
+   "stem": "A 30-MONTH-OLD FEMALE has POOR EYE CONTACT, REPETITIVE MOVEMENTS, no communication with peers and does not play with her brother. She keeps a STRICT ROUTINE and becomes upset if it is disturbed, and focuses intently on coloured pens. Physical examination is normal.\n\n[Part 3] Which comorbidity is most commonly associated?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Intellectual disability",
+     "correct": true,
+     "explanation": "CORRECT — INTELLECTUAL DISABILITY is the commonest comorbidity in autism. EPILEPSY, ADHD, anxiety and sleep disorders are also frequent, so screen for them rather than attributing everything to the autism itself."
+    },
+    {
+     "label": "B",
+     "text": "Cerebral palsy",
+     "correct": false,
+     "explanation": "WRONG — A motor disorder from a non-progressive brain injury; not a typical autism comorbidity."
+    },
+    {
+     "label": "C",
+     "text": "Muscular dystrophy",
+     "correct": false,
+     "explanation": "WRONG — A primary muscle disease, unrelated."
+    },
+    {
+     "label": "D",
+     "text": "Congenital heart disease",
+     "correct": false,
+     "explanation": "WRONG — No established association with autism."
+    },
+    {
+     "label": "E",
+     "text": "Type 1 diabetes",
+     "correct": false,
+     "explanation": "WRONG — No established association."
+    }
+   ],
+   "keyPoint": "INTELLECTUAL DISABILITY is the commonest comorbidity in autism. EPILEPSY, ADHD, anxiety and sleep disorders are also frequent, so screen for them rather than attributing everything to the autism itself.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q22_autism",
+   "seq": 3,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged. One later part of this case was TRUNCATED in the source and could not be recovered, so it is not included.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Always assess cognition separately — autism and intellectual disability are distinct diagnoses that often coexist."
   },
   {
    "id": "b37_q23",
@@ -2100,91 +2674,436 @@
    "references": null
   },
   {
-   "id": "b37_q25",
+   "id": "b37_q25_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 16",
-   "topic": "Psychology Case 5 | Delirium in Elderly",
-   "stem": "70-YEAR-OLD MALE: Admitted for CAP + dehydration. Untidy, abnormal sleep, no food 2 days, angry. DROWSY, DISORIENTED (to person only). NO prior psychiatric history. NO family psychiatric history.",
+   "system": "Psychiatry",
+   "topic": "Delirium — diagnosis",
+   "stem": "A 70-YEAR-OLD MALE is admitted with community-acquired pneumonia and dehydration. He is untidy, sleeping abnormally, has not eaten for 2 days and is angry. He is DROWSY and DISORIENTED TO PERSON. There is NO prior personal or family psychiatric history.\n\n[Part 1] What is the most likely diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "Delirium | Q2: E. Treat Underlying Cause | Q3: C. Haloperidol (if",
+     "text": "Delirium",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — DELIRIUM: ACUTE onset, FLUCTUATING course, IMPAIRED ATTENTION and altered CONSCIOUSNESS, always secondary to an organic cause — here pneumonia and dehydration."
+    },
+    {
+     "label": "B",
+     "text": "Dementia",
+     "correct": false,
+     "explanation": "WRONG — Develops insidiously over months to years with CLEAR consciousness; here onset is acute with drowsiness."
+    },
+    {
+     "label": "C",
+     "text": "Late-onset schizophrenia",
+     "correct": false,
+     "explanation": "WRONG — Would not cause a fluctuating conscious level, and the absence of any psychiatric history makes it unlikely."
+    },
+    {
+     "label": "D",
+     "text": "Severe depression",
+     "correct": false,
+     "explanation": "WRONG — Can cause withdrawal and poor intake, but not disorientation with impaired consciousness."
+    },
+    {
+     "label": "E",
+     "text": "Wernicke's encephalopathy",
+     "correct": false,
+     "explanation": "WRONG — Needs the triad of confusion, ophthalmoplegia and ataxia in a thiamine-deficient patient — not described."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "DELIRIUM: ACUTE onset, FLUCTUATING course, IMPAIRED ATTENTION and altered CONSCIOUSNESS, always secondary to an organic cause — here pneumonia and dehydration.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q25_delirium",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Delirium clouds CONSCIOUSNESS and comes on over hours to days; dementia leaves consciousness CLEAR and evolves over years."
   },
   {
-   "id": "b37_q26",
+   "id": "b37_q25_2",
    "type": "mcq",
-   "reference": "Batch 37 — Page 17",
-   "topic": "OB-GYN: PCOS Treatment + Imperforate Hymen (Repeat)",
-   "stem": "PCOS CASE: Confirmed PCOS. HIRSUTISM + weight gain 8 kg. Q1: Best treatment combination? Q2: PCOS increases risk of which cancer?",
+   "system": "Psychiatry",
+   "topic": "Delirium — management priority",
+   "stem": "A 70-YEAR-OLD MALE is admitted with community-acquired pneumonia and dehydration. He is untidy, sleeping abnormally, has not eaten for 2 days and is angry. He is DROWSY and DISORIENTED TO PERSON. There is NO prior personal or family psychiatric history.\n\n[Part 2] What is the most important step in management?",
    "choices": [
     {
      "label": "A",
-     "text": "Laser + Anti-androgen + Metformin | Q2: A. Endometrial Cancer",
+     "text": "Start a long-acting benzodiazepine",
+     "correct": false,
+     "explanation": "WRONG — Sedation without treating the cause prolongs delirium; benzodiazepines often worsen it (except in alcohol withdrawal)."
+    },
+    {
+     "label": "B",
+     "text": "Start an antidepressant",
+     "correct": false,
+     "explanation": "WRONG — Treats neither the confusion nor its cause."
+    },
+    {
+     "label": "C",
+     "text": "Arrange urgent CT head",
+     "correct": false,
+     "explanation": "WRONG — Reserved for focal signs, head injury or an unexplained picture — not routine when pneumonia and dehydration already explain it."
+    },
+    {
+     "label": "D",
+     "text": "Physically restrain the patient",
+     "correct": false,
+     "explanation": "WRONG — Escalates distress and risks injury; a last resort only."
+    },
+    {
+     "label": "E",
+     "text": "Identify and treat the underlying cause",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — Delirium is a SYMPTOM, not a disease. TREAT THE CAUSE — antibiotics for the pneumonia, rehydration — alongside supportive measures: reorientation, familiar faces, good lighting, sleep hygiene, and avoiding catheters and restraints."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "Delirium is a SYMPTOM, not a disease. TREAT THE CAUSE — antibiotics for the pneumonia, rehydration — alongside supportive measures: reorientation, familiar faces, good lighting, sleep hygiene, and avoiding catheters and restraints.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q25_delirium",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Use the PINCH ME screen for causes: Pain, INfection, Constipation, Hydration, Medication, Environment."
   },
   {
-   "id": "b37_q27",
+   "id": "b37_q25_3",
    "type": "mcq",
-   "reference": "Batch 37 — Page 18",
-   "topic": "Neurology Case 2 | Guillain-Barré Syndrome (GBS)",
-   "stem": "YOUNG ADULT FEMALE: Sudden lower limb weakness preceded by FEBRILE INFECTION 2 WEEKS AGO. Examination: FLACCID + AREFLEXIA (LMN pattern) + reduced sensation + POSTURAL HYPOTENSION (autonomic dysfunction).",
+   "system": "Psychiatry",
+   "topic": "Delirium — if sedation is unavoidable",
+   "stem": "A 70-YEAR-OLD MALE is admitted with community-acquired pneumonia and dehydration. He is untidy, sleeping abnormally, has not eaten for 2 days and is angry. He is DROWSY and DISORIENTED TO PERSON. There is NO prior personal or family psychiatric history.\n\n[Part 3] If sedation becomes necessary for severe agitation, which drug is most appropriate?",
    "choices": [
     {
      "label": "A",
-     "text": "Diagnosis: A. GBS | Investigation: A. NCS/EMG (+LP) | Treatment: B. Plasma",
+     "text": "Diazepam",
+     "correct": false,
+     "explanation": "WRONG — Benzodiazepines generally worsen delirium; reserve them for ALCOHOL or benzodiazepine withdrawal."
+    },
+    {
+     "label": "B",
+     "text": "Fluoxetine",
+     "correct": false,
+     "explanation": "WRONG — An antidepressant with no role in acute agitation."
+    },
+    {
+     "label": "C",
+     "text": "Haloperidol",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — Where non-drug measures fail and the patient is a danger to themselves or others, LOW-DOSE HALOPERIDOL is first-line. AVOID antipsychotics entirely in LEWY BODY DEMENTIA and PARKINSON'S DISEASE — use a benzodiazepine there instead."
+    },
+    {
+     "label": "D",
+     "text": "Morphine",
+     "correct": false,
+     "explanation": "WRONG — Sedates but is an opioid that itself precipitates delirium unless pain is the cause."
+    },
+    {
+     "label": "E",
+     "text": "Zopiclone",
+     "correct": false,
+     "explanation": "WRONG — A hypnotic that clouds consciousness further and worsens confusion."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "Where non-drug measures fail and the patient is a danger to themselves or others, LOW-DOSE HALOPERIDOL is first-line. AVOID antipsychotics entirely in LEWY BODY DEMENTIA and PARKINSON'S DISEASE — use a benzodiazepine there instead.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q25_delirium",
+   "seq": 3,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Sedation is a last resort and treats the behaviour, not the delirium. The cause still has to be found and fixed."
+  },
+  {
+   "id": "b37_q26_1",
+   "type": "mcq",
+   "system": "Obstetrics & Gynaecology",
+   "topic": "PCOS — best treatment combination",
+   "stem": "A woman with CONFIRMED POLYCYSTIC OVARY SYNDROME presents with HIRSUTISM and 8 kg WEIGHT GAIN.\n\n[Part 1] What is the best treatment combination?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Laser hair removal + anti-androgen + metformin",
+     "correct": true,
+     "explanation": "CORRECT — PCOS with hirsutism and weight gain is treated on three fronts at once: MECHANICAL removal (laser) for existing hair, an ANTI-ANDROGEN to stop new growth, and METFORMIN plus lifestyle for the underlying insulin resistance."
+    },
+    {
+     "label": "B",
+     "text": "Metformin alone",
+     "correct": false,
+     "explanation": "WRONG — WRONG — metformin improves insulin resistance and helps weight and ovulation, but does little for established hirsutism."
+    },
+    {
+     "label": "C",
+     "text": "Anti-androgen alone",
+     "correct": false,
+     "explanation": "WRONG — WRONG — reduces new terminal hair growth but does not remove hair already present, nor address insulin resistance."
+    },
+    {
+     "label": "D",
+     "text": "Laser hair removal alone",
+     "correct": false,
+     "explanation": "WRONG — WRONG — cosmetic only; without an anti-androgen the drive to regrowth persists."
+    },
+    {
+     "label": "E",
+     "text": "Combined oral contraceptive alone",
+     "correct": false,
+     "explanation": "WRONG — WRONG — helpful for cycle control and androgen suppression, but a single agent is inferior to the combination here."
+    }
+   ],
+   "keyPoint": "PCOS with hirsutism and weight gain is treated on three fronts at once: MECHANICAL removal (laser) for existing hair, an ANTI-ANDROGEN to stop new growth, and METFORMIN plus lifestyle for the underlying insulin resistance.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q26_pcos",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Hirsutism needs both removal of existing hair AND suppression of new growth — one without the other underperforms."
+  },
+  {
+   "id": "b37_q26_2",
+   "type": "mcq",
+   "system": "Obstetrics & Gynaecology",
+   "topic": "PCOS — cancer risk",
+   "stem": "A woman with CONFIRMED POLYCYSTIC OVARY SYNDROME presents with HIRSUTISM and 8 kg WEIGHT GAIN.\n\n[Part 2] PCOS increases the risk of which cancer?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Endometrial carcinoma",
+     "correct": true,
+     "explanation": "CORRECT — PCOS causes chronic ANOVULATION, so the endometrium sees UNOPPOSED OESTROGEN without cyclical progesterone. That drives endometrial hyperplasia and ENDOMETRIAL CARCINOMA. Induce a withdrawal bleed at least every 3–4 months to protect the endometrium."
+    },
+    {
+     "label": "B",
+     "text": "Ovarian carcinoma",
+     "correct": false,
+     "explanation": "WRONG — WRONG — despite the name, PCOS does not clearly raise ovarian cancer risk."
+    },
+    {
+     "label": "C",
+     "text": "Cervical carcinoma",
+     "correct": false,
+     "explanation": "WRONG — WRONG — driven by persistent high-risk HPV infection, unrelated to PCOS."
+    },
+    {
+     "label": "D",
+     "text": "Breast carcinoma",
+     "correct": false,
+     "explanation": "WRONG — WRONG — not an established PCOS association."
+    },
+    {
+     "label": "E",
+     "text": "Vulval carcinoma",
+     "correct": false,
+     "explanation": "WRONG — WRONG — related to HPV and lichen sclerosus, not PCOS."
+    }
+   ],
+   "keyPoint": "PCOS causes chronic ANOVULATION, so the endometrium sees UNOPPOSED OESTROGEN without cyclical progesterone. That drives endometrial hyperplasia and ENDOMETRIAL CARCINOMA. Induce a withdrawal bleed at least every 3–4 months to protect the endometrium.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q26_pcos",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Any cause of unopposed oestrogen (PCOS, obesity, oestrogen-only HRT, tamoxifen) raises endometrial cancer risk."
+  },
+  {
+   "id": "b37_q27_1",
+   "type": "mcq",
+   "system": "Neurology",
+   "topic": "GBS — diagnosis",
+   "stem": "A YOUNG ADULT FEMALE has sudden LOWER LIMB WEAKNESS preceded by a FEBRILE INFECTION 2 WEEKS AGO. Examination: FLACCID weakness with AREFLEXIA (lower motor neurone pattern), reduced sensation and POSTURAL HYPOTENSION indicating autonomic involvement.\n\n[Part 1] What is the most likely diagnosis?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Guillain–Barré syndrome",
+     "correct": true,
+     "explanation": "CORRECT — GUILLAIN–BARRÉ SYNDROME: ASCENDING FLACCID paralysis with AREFLEXIA, typically 1–3 weeks after infection (classically Campylobacter jejuni). Autonomic instability is common and dangerous."
+    },
+    {
+     "label": "B",
+     "text": "Transverse myelitis",
+     "correct": false,
+     "explanation": "WRONG — Gives an UPPER motor neurone picture below a sensory level, with brisk reflexes and often sphincter involvement."
+    },
+    {
+     "label": "C",
+     "text": "Myasthenia gravis",
+     "correct": false,
+     "explanation": "WRONG — Causes FATIGABLE weakness with ocular and bulbar onset; reflexes are preserved and there is no sensory loss."
+    },
+    {
+     "label": "D",
+     "text": "Poliomyelitis",
+     "correct": false,
+     "explanation": "WRONG — Causes PURE MOTOR asymmetric paralysis with no sensory loss, and is rare where vaccination is routine."
+    },
+    {
+     "label": "E",
+     "text": "Multiple sclerosis",
+     "correct": false,
+     "explanation": "WRONG — A central demyelinating disease disseminated in time and space, with UMN signs — not global areflexia."
+    }
+   ],
+   "keyPoint": "GUILLAIN–BARRÉ SYNDROME: ASCENDING FLACCID paralysis with AREFLEXIA, typically 1–3 weeks after infection (classically Campylobacter jejuni). Autonomic instability is common and dangerous.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q27_gbs",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "AREFLEXIA plus a recent infection points to GBS. Brisk reflexes with a sensory level point to cord pathology instead."
+  },
+  {
+   "id": "b37_q27_2",
+   "type": "mcq",
+   "system": "Neurology",
+   "topic": "GBS — investigation",
+   "stem": "A YOUNG ADULT FEMALE has sudden LOWER LIMB WEAKNESS preceded by a FEBRILE INFECTION 2 WEEKS AGO. Examination: FLACCID weakness with AREFLEXIA (lower motor neurone pattern), reduced sensation and POSTURAL HYPOTENSION indicating autonomic involvement.\n\n[Part 2] Which investigation best supports the diagnosis?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Nerve conduction studies (with lumbar puncture)",
+     "correct": true,
+     "explanation": "CORRECT — NERVE CONDUCTION STUDIES show demyelination — slowed conduction, conduction block, prolonged F-waves. LUMBAR PUNCTURE shows ALBUMINOCYTOLOGICAL DISSOCIATION: raised protein with a NORMAL cell count, though it may be normal in the first week."
+    },
+    {
+     "label": "B",
+     "text": "MRI brain",
+     "correct": false,
+     "explanation": "WRONG — Normal in GBS; useful for central causes such as MS or stroke."
+    },
+    {
+     "label": "C",
+     "text": "Muscle biopsy",
+     "correct": false,
+     "explanation": "WRONG — Used for primary myopathies, not for an acute demyelinating neuropathy."
+    },
+    {
+     "label": "D",
+     "text": "Edrophonium (Tensilon) test",
+     "correct": false,
+     "explanation": "WRONG — A historical test for myasthenia gravis."
+    },
+    {
+     "label": "E",
+     "text": "CT head",
+     "correct": false,
+     "explanation": "WRONG — Does not assess peripheral nerves."
+    }
+   ],
+   "keyPoint": "NERVE CONDUCTION STUDIES show demyelination — slowed conduction, conduction block, prolonged F-waves. LUMBAR PUNCTURE shows ALBUMINOCYTOLOGICAL DISSOCIATION: raised protein with a NORMAL cell count, though it may be normal in the first week.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q27_gbs",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Raised CSF protein with normal cells is the classic GBS finding; raised protein WITH raised cells suggests infection instead."
+  },
+  {
+   "id": "b37_q27_3",
+   "type": "mcq",
+   "system": "Neurology",
+   "topic": "GBS — treatment",
+   "stem": "A YOUNG ADULT FEMALE has sudden LOWER LIMB WEAKNESS preceded by a FEBRILE INFECTION 2 WEEKS AGO. Examination: FLACCID weakness with AREFLEXIA (lower motor neurone pattern), reduced sensation and POSTURAL HYPOTENSION indicating autonomic involvement.\n\n[Part 3] What is the most appropriate treatment?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "High-dose corticosteroids",
+     "correct": false,
+     "explanation": "WRONG — Ineffective in GBS and may worsen outcome — a key exam point, since steroids help many other neuro-inflammatory conditions."
+    },
+    {
+     "label": "B",
+     "text": "Plasma exchange (or IV immunoglobulin)",
+     "correct": true,
+     "explanation": "CORRECT — PLASMA EXCHANGE or IV IMMUNOGLOBULIN are equally effective and are the mainstay. Just as important is MONITORING FORCED VITAL CAPACITY — respiratory failure is the main cause of death, and falling FVC means ITU and ventilation. STEROIDS DO NOT WORK."
+    },
+    {
+     "label": "C",
+     "text": "Oral pyridostigmine",
+     "correct": false,
+     "explanation": "WRONG — Treats myasthenia gravis, not GBS."
+    },
+    {
+     "label": "D",
+     "text": "Interferon beta",
+     "correct": false,
+     "explanation": "WRONG — A disease-modifying therapy for relapsing–remitting multiple sclerosis."
+    },
+    {
+     "label": "E",
+     "text": "Broad-spectrum antibiotics",
+     "correct": false,
+     "explanation": "WRONG — The preceding infection has resolved; the damage is now autoimmune."
+    }
+   ],
+   "keyPoint": "PLASMA EXCHANGE or IV IMMUNOGLOBULIN are equally effective and are the mainstay. Just as important is MONITORING FORCED VITAL CAPACITY — respiratory failure is the main cause of death, and falling FVC means ITU and ventilation. STEROIDS DO NOT WORK.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q27_gbs",
+   "seq": 3,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Monitor FVC, not oxygen saturation — saturations stay normal until the patient is close to respiratory arrest."
   },
   {
    "id": "b37_q28",
@@ -3087,33 +4006,112 @@
    "seq": 3
   },
   {
-   "id": "b37_q35",
+   "id": "b37_q35_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 25",
-   "topic": "Pemphigus Vulgaris (Repeat Case)",
-   "stem": "27-YEAR-OLD FEMALE: Generalised blisters STARTING FROM LIPS then distributing to neck, chest, back. Examination: CRUSTATION present. ■ CROSS-REFERENCE: This case mirrors Dermatology Case 4 from Page 15 (pemphigus vulgaris). See full discussion under Page 15. Brief answer below for completeness.",
+   "system": "Dermatology",
+   "topic": "Pemphigus vulgaris — diagnosis",
+   "stem": "A 27-YEAR-OLD FEMALE has GENERALISED BLISTERS that STARTED ON THE LIPS and then spread to the neck, chest and back. Examination shows CRUSTING.\n\n[Part 1] What is the most likely diagnosis?",
    "choices": [
     {
      "label": "A",
-     "text": "1. Pemphigus Vulgaris | Histology: 1. Acantholysis",
+     "text": "Pemphigus vulgaris",
      "correct": true,
-     "explanation": null
+     "explanation": "CORRECT — PEMPHIGUS VULGARIS: IgG autoantibodies against DESMOGLEIN 3 (± 1) break intraepidermal adhesion, producing FLACCID blisters that rupture easily. It characteristically STARTS IN THE MOUTH/LIPS, and Nikolsky's sign is POSITIVE."
+    },
+    {
+     "label": "B",
+     "text": "Bullous pemphigoid",
+     "correct": false,
+     "explanation": "WRONG — WRONG — affects the ELDERLY with TENSE subepidermal blisters, a NEGATIVE Nikolsky sign, and mucosal involvement is uncommon."
+    },
+    {
+     "label": "C",
+     "text": "Dermatitis herpetiformis",
+     "correct": false,
+     "explanation": "WRONG — WRONG — intensely itchy grouped vesicles on extensor surfaces, associated with coeliac disease."
+    },
+    {
+     "label": "D",
+     "text": "Stevens–Johnson syndrome",
+     "correct": false,
+     "explanation": "WRONG — WRONG — an acute drug reaction with widespread mucocutaneous necrosis and systemic upset, not a chronic blistering course."
+    },
+    {
+     "label": "E",
+     "text": "Impetigo",
+     "correct": false,
+     "explanation": "WRONG — WRONG — a superficial bacterial infection with golden crusts; it does not cause generalised flaccid blistering."
     }
    ],
-   "keyPoint": null,
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "PEMPHIGUS VULGARIS: IgG autoantibodies against DESMOGLEIN 3 (± 1) break intraepidermal adhesion, producing FLACCID blisters that rupture easily. It characteristically STARTS IN THE MOUTH/LIPS, and Nikolsky's sign is POSITIVE.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "cluster": "b37_q35_pemphigus",
+   "seq": 1,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "ORAL onset + FLACCID blisters + POSITIVE Nikolsky = pemphigus. Elderly + TENSE blisters + NEGATIVE Nikolsky = pemphigoid."
+  },
+  {
+   "id": "b37_q35_2",
+   "type": "mcq",
+   "system": "Dermatology",
+   "topic": "Pemphigus vulgaris — histology",
+   "stem": "A 27-YEAR-OLD FEMALE has GENERALISED BLISTERS that STARTED ON THE LIPS and then spread to the neck, chest and back. Examination shows CRUSTING.\n\n[Part 2] What is the characteristic histological finding?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Acantholysis",
+     "correct": true,
+     "explanation": "CORRECT — ACANTHOLYSIS — loss of adhesion between keratinocytes — produces the INTRAEPIDERMAL (suprabasal) split, leaving basal cells attached like a 'row of tombstones'. Direct immunofluorescence shows intercellular IgG in a fishnet pattern."
+    },
+    {
+     "label": "B",
+     "text": "Subepidermal blister with eosinophils",
+     "correct": false,
+     "explanation": "WRONG — WRONG — that is BULLOUS PEMPHIGOID, where the split is beneath the epidermis."
+    },
+    {
+     "label": "C",
+     "text": "Microabscesses at the dermal papillae",
+     "correct": false,
+     "explanation": "WRONG — WRONG — neutrophilic papillary microabscesses indicate DERMATITIS HERPETIFORMIS."
+    },
+    {
+     "label": "D",
+     "text": "Full-thickness epidermal necrosis",
+     "correct": false,
+     "explanation": "WRONG — WRONG — that is toxic epidermal necrolysis."
+    },
+    {
+     "label": "E",
+     "text": "Spongiosis",
+     "correct": false,
+     "explanation": "WRONG — WRONG — intercellular oedema, the hallmark of ECZEMA."
+    }
+   ],
+   "keyPoint": "ACANTHOLYSIS — loss of adhesion between keratinocytes — produces the INTRAEPIDERMAL (suprabasal) split, leaving basal cells attached like a 'row of tombstones'. Direct immunofluorescence shows intercellular IgG in a fishnet pattern.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "cluster": "b37_q35_pemphigus",
+   "seq": 2,
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this case as one entry holding several questions with only the marked answers. It has been split into its individual questions; distractors were written by AI to match exam difficulty. The correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "keyDifferentiator": "Split ABOVE the basement membrane (intraepidermal, acantholysis) = pemphigus. Split BELOW it (subepidermal) = pemphigoid."
   },
   {
    "id": "b37_q36",
@@ -3124,15 +4122,39 @@
    "choices": [
     {
      "label": "A",
-     "text": "1. Hypercoagulation (↑ Clotting Factors) + Decreased Protein C (Virchow's",
+     "text": "Hypercoagulability — increased clotting factors with reduced protein C activity",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — Pregnancy is a HYPERCOAGULABLE state on all three arms of VIRCHOW'S TRIAD: raised factors VII, VIII, X and fibrinogen with ACQUIRED ACTIVATED PROTEIN C RESISTANCE and reduced protein S (hypercoagulability); IVC compression (stasis); and vessel injury at delivery. Risk is highest POSTPARTUM."
+    },
+    {
+     "label": "B",
+     "text": "Increased venous return from the gravid uterus",
+     "correct": false,
+     "explanation": "WRONG — The opposite — the uterus COMPRESSES the IVC, causing venous STASIS."
+    },
+    {
+     "label": "C",
+     "text": "Reduced fibrinogen in pregnancy",
+     "correct": false,
+     "explanation": "WRONG — Wrong direction: fibrinogen RISES markedly in pregnancy."
+    },
+    {
+     "label": "D",
+     "text": "Thrombocytopenia of pregnancy",
+     "correct": false,
+     "explanation": "WRONG — Gestational thrombocytopenia is common but predisposes to BLEEDING, not clotting."
+    },
+    {
+     "label": "E",
+     "text": "Anaemia of pregnancy",
+     "correct": false,
+     "explanation": "WRONG — Physiological haemodilution does not cause thrombosis."
     }
    ],
-   "keyPoint": "",
+   "keyPoint": "Pregnancy is a HYPERCOAGULABLE state on all three arms of VIRCHOW'S TRIAD: raised factors VII, VIII, X and fibrinogen with ACQUIRED ACTIVATED PROTEIN C RESISTANCE and reduced protein S (hypercoagulability); IVC compression (stasis); and vessel injury at delivery. Risk is highest POSTPARTUM.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -3140,9 +4162,10 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Treat pregnancy-associated VTE with LMWH — warfarin is teratogenic and DOACs are not recommended.",
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "b37_q37",
@@ -4233,90 +5256,219 @@
    "id": "b37_q52",
    "type": "emq",
    "reference": "Batch 37 — Page 28",
-   "topic": "Ear Discharge",
+   "topic": "Contraception — choosing a method",
    "optionsTitle": "Ear Discharge",
    "stem": "42-year-old lady, para 3. On COMBINED ORAL CONTRACEPTIVE PILL for many years. Recently become FORGETFUL. Requests ALTERNATE NON-HORMONAL LONG-TERM method.",
    "choices": [
     {
      "label": "A",
-     "text": "Copper IUD (Non-Hormonal, Long-Acting, Reversible Contraception)",
+     "text": "Copper intrauterine device",
      "correct": true,
-     "explanation": null
+     "explanation": "CORRECT — The COPPER IUD is the LARC that is NON-HORMONAL, lasts 5–10 years and requires nothing to be remembered — matching all three of her requests. Its main drawback is heavier, more painful periods."
+    },
+    {
+     "label": "B",
+     "text": "Combined oral contraceptive pill",
+     "correct": false,
+     "explanation": "WRONG — She is asking to STOP hormonal contraception, and at 42 with new forgetfulness a further oestrogen-containing method is not what she wants."
+    },
+    {
+     "label": "C",
+     "text": "Progesterone-only pill",
+     "correct": false,
+     "explanation": "WRONG — Still hormonal, and daily pill-taking is exactly what a forgetful patient struggles with."
+    },
+    {
+     "label": "D",
+     "text": "Depot medroxyprogesterone injection",
+     "correct": false,
+     "explanation": "WRONG — Hormonal, and associated with reduced bone mineral density on long-term use."
+    },
+    {
+     "label": "E",
+     "text": "Levonorgestrel intrauterine system",
+     "correct": false,
+     "explanation": "WRONG — Long-acting and forgettable, but HORMONAL — she specifically asked for non-hormonal."
     }
    ],
-   "keyPoint": null,
+   "keyPoint": "The COPPER IUD is the LARC that is NON-HORMONAL, lasts 5–10 years and requires nothing to be remembered — matching all three of her requests. Its main drawback is heavier, more painful periods.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
-   "system": "Batch 37 Final",
+   "system": "Obstetrics & Gynaecology",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Copper IUD = non-hormonal LARC. Mirena (LNG-IUS) = hormonal LARC and lightens periods. Both are 'fit and forget'.",
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
    "id": "b37_q53",
    "type": "emq",
    "reference": "Batch 37 — Page 28",
-   "topic": "Ear Discharge",
+   "topic": "Contraception — choosing a method",
    "optionsTitle": "Ear Discharge",
    "stem": "26-year-old lady gave birth 1 MONTH AGO. BREASTFEEDING. Was on COMBINED PILL before. Has NEEDLE PHOBIA. Requests SHORT-TERM contraceptive.",
    "choices": [
     {
      "label": "A",
-     "text": "Progesterone-Only Pill (Mini-Pill) — Safe in Breastfeeding, Oral, No Needles",
+     "text": "Progestogen-only pill",
      "correct": true,
-     "explanation": null
+     "explanation": "CORRECT — The PROGESTOGEN-ONLY PILL is SAFE IN BREASTFEEDING (no effect on milk supply), is ORAL so avoids needles, and is easily stopped — meeting all three requirements. Lactational amenorrhoea alone is not reliable enough."
+    },
+    {
+     "label": "B",
+     "text": "Combined oral contraceptive pill",
+     "correct": false,
+     "explanation": "WRONG — CONTRAINDICATED while breastfeeding before 6 weeks postpartum — oestrogen reduces milk supply and adds VTE risk."
+    },
+    {
+     "label": "C",
+     "text": "Depot medroxyprogesterone injection",
+     "correct": false,
+     "explanation": "WRONG — Safe in breastfeeding, but she has a NEEDLE PHOBIA and wants something short-term."
+    },
+    {
+     "label": "D",
+     "text": "Copper intrauterine device",
+     "correct": false,
+     "explanation": "WRONG — Requires an instrumental procedure and is a long-acting method; she asked for short-term."
+    },
+    {
+     "label": "E",
+     "text": "Contraceptive implant",
+     "correct": false,
+     "explanation": "WRONG — Safe in breastfeeding but inserted with a needle and lasts 3 years — wrong on both counts."
     }
    ],
-   "keyPoint": null,
+   "keyPoint": "The PROGESTOGEN-ONLY PILL is SAFE IN BREASTFEEDING (no effect on milk supply), is ORAL so avoids needles, and is easily stopped — meeting all three requirements. Lactational amenorrhoea alone is not reliable enough.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
-   "system": "Batch 37 Final",
+   "system": "Obstetrics & Gynaecology",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Oestrogen is the problem in early breastfeeding, not progestogen. POP, implant and depot are all safe; the combined pill is not.",
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
-   "id": "b37_q54",
+   "id": "b37_q54_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 29",
-   "topic": "Developmental Milestones + GCA (Neurology EMQ)",
-   "stem": "MILESTONES THEME: Options: A-3 years | B-4 years | C-5 years | D-2 years | E-18 months Scenario 1: Child can COPY A CIRCLE + USE 3-WORD SENTENCES + PLAY WITH OTHER CHILDREN. Scenario 2: Child can COUNT 1-10 + DRESS INDEPENDENTLY + KNOW TIME (morning/evening).",
+   "system": "Paediatrics",
+   "topic": "EMQ — developmental milestones",
+   "stem": "DEVELOPMENTAL MILESTONES THEME. Options: A – 3 years | B – 4 years | C – 5 years | D – 2 years | E – 18 months\n\n[Scenario 1] A child can COPY A CIRCLE, USE 3-WORD SENTENCES and PLAY WITH OTHER CHILDREN. What age?",
    "choices": [
     {
      "label": "A",
-     "text": "Scenario 1: A. 3 Years | Scenario 2: B. 4 Years",
+     "text": "3 years",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — At 3 YEARS: copies a circle, speaks in 3-word sentences, and moves from parallel play to CO-OPERATIVE play with other children."
+    },
+    {
+     "label": "B",
+     "text": "4 years",
+     "correct": false,
+     "explanation": "WRONG — At 4 years a child counts to 10, dresses independently and grasps time of day."
+    },
+    {
+     "label": "C",
+     "text": "5 years",
+     "correct": false,
+     "explanation": "WRONG — At 5 years a child copies a triangle, writes their name and hops on one foot."
+    },
+    {
+     "label": "D",
+     "text": "2 years",
+     "correct": false,
+     "explanation": "WRONG — At 2 years a child runs, uses 2-word phrases and engages in PARALLEL play only."
+    },
+    {
+     "label": "E",
+     "text": "18 months",
+     "correct": false,
+     "explanation": "WRONG — At 18 months a child walks steadily, scribbles and has roughly 10 words."
     }
    ],
-   "keyPoint": null,
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "At 3 YEARS: copies a circle, speaks in 3-word sentences, and moves from parallel play to CO-OPERATIVE play with other children.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q54_milestones",
+   "seq": 1,
+   "keyDifferentiator": "Copies circle at 3, cross at 4, triangle at 5. Play: parallel at 2, co-operative at 3."
+  },
+  {
+   "id": "b37_q54_2",
+   "type": "mcq",
+   "system": "Paediatrics",
+   "topic": "EMQ — developmental milestones",
+   "stem": "DEVELOPMENTAL MILESTONES THEME. Options: A – 3 years | B – 4 years | C – 5 years | D – 2 years | E – 18 months\n\n[Scenario 2] A child can COUNT 1–10, DRESS INDEPENDENTLY and KNOW TIME (morning/evening). What age?",
+   "choices": [
+    {
+     "label": "A",
+     "text": "3 years",
+     "correct": false,
+     "explanation": "WRONG — At 3 years a child copies a circle, speaks in 3-word sentences and plays WITH other children."
+    },
+    {
+     "label": "B",
+     "text": "4 years",
+     "correct": true,
+     "explanation": "CORRECT — At 4 YEARS: counts to 10, dresses and undresses independently, and understands times of day."
+    },
+    {
+     "label": "C",
+     "text": "5 years",
+     "correct": false,
+     "explanation": "WRONG — At 5 years a child copies a triangle, writes their name and hops on one foot."
+    },
+    {
+     "label": "D",
+     "text": "2 years",
+     "correct": false,
+     "explanation": "WRONG — At 2 years a child runs, uses 2-word phrases and engages in PARALLEL play only."
+    },
+    {
+     "label": "E",
+     "text": "18 months",
+     "correct": false,
+     "explanation": "WRONG — At 18 months a child walks steadily, scribbles and has roughly 10 words."
+    }
+   ],
+   "keyPoint": "At 4 YEARS: counts to 10, dresses and undresses independently, and understands times of day.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q54_milestones",
+   "seq": 2,
+   "keyDifferentiator": "Dressing is the giveaway — helps at 3, independent at 4, including buttons."
   },
   {
    "id": "b37_q55",
@@ -4327,15 +5479,39 @@
    "choices": [
     {
      "label": "A",
-     "text": "Giant Cell Arteritis (GCA) / Temporal Arteritis — TREAT WITH STEROIDS",
+     "text": "Giant cell arteritis (temporal arteritis)",
      "correct": true,
-     "explanation": null
+     "explanation": "CORRECT — GIANT CELL ARTERITIS: age over 50, new headache, SCALP TENDERNESS, and TENDER, THICKENED, NON-PULSATILE temporal arteries, with a raised ESR/CRP. START HIGH-DOSE STEROIDS IMMEDIATELY — do not wait for the biopsy, which stays positive for up to 2 weeks. Delay risks irreversible blindness from anterior ischaemic optic neuropathy."
+    },
+    {
+     "label": "B",
+     "text": "Tension headache",
+     "correct": false,
+     "explanation": "WRONG — Does not cause scalp tenderness or abnormal temporal arteries, and is not a sight-threatening emergency."
+    },
+    {
+     "label": "C",
+     "text": "Migraine",
+     "correct": false,
+     "explanation": "WRONG — Episodic with aura, photophobia and nausea; onset at 70 with these signs would be atypical."
+    },
+    {
+     "label": "D",
+     "text": "Trigeminal neuralgia",
+     "correct": false,
+     "explanation": "WRONG — Brief electric-shock facial pain in a nerve distribution, not persistent headache with tender arteries."
+    },
+    {
+     "label": "E",
+     "text": "Cluster headache",
+     "correct": false,
+     "explanation": "WRONG — Severe unilateral periorbital pain with autonomic features, mostly in younger men."
     }
    ],
-   "keyPoint": "",
+   "keyPoint": "GIANT CELL ARTERITIS: age over 50, new headache, SCALP TENDERNESS, and TENDER, THICKENED, NON-PULSATILE temporal arteries, with a raised ESR/CRP. START HIGH-DOSE STEROIDS IMMEDIATELY — do not wait for the biopsy, which stays positive for up to 2 weeks. Delay risks irreversible blindness from anterior ischaemic optic neuropathy.",
    "flag": {
     "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
+    "note": "SOURCE INCOMPLETE — the source captured only the marked answer, not the option list. Distractors were written by AI to match exam difficulty; the correct answer is source-derived and unchanged.",
     "source": "Batch 37 guide"
    },
    "system": "Batch 37 Final",
@@ -4343,38 +5519,202 @@
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
+   "keyDifferentiator": "Jaw claudication and visual symptoms are the red flags. Treat first, biopsy after — sight lost is not recovered.",
    "summaryTable": null,
-   "references": null
+   "references": null,
+   "aiChoices": true
   },
   {
-   "id": "b37_q56",
+   "id": "b37_q56_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 31",
-   "topic": "Ophthalmology EMQ | Refractive Errors Theme",
-   "stem": "OPHTHALMOLOGY THEME: Options: A-Myopia | B-Hypermetropia | C-Astigmatism | D-Presbyopia | E-? Scenario 1: Refraction shows image in FRONT OF RETINA. Scenario 2: Needs glasses with DIFFERENT REFRACTION POWER IN DIFFERENT AXES. Scenario 3: Needs CONVEX LENSES in treatment. Scenario 4: 43-year-old with difficulty reading books.",
+   "system": "Ophthalmology",
+   "topic": "EMQ — refractive errors",
+   "stem": "REFRACTIVE ERROR THEME. Options: A – Myopia | B – Hypermetropia | C – Astigmatism | D – Presbyopia\n\n[Scenario 1] Refraction shows the image forming IN FRONT OF THE RETINA.",
    "choices": [
     {
      "label": "A",
-     "text": "1: A-Myopia | 2: C-Astigmatism | 3: B-Hypermetropia | 4: D-Presbyopia",
+     "text": "Myopia",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — MYOPIA (short sight): the eye is too long or too powerful, so light converges in FRONT of the retina. Corrected with CONCAVE lenses. High myopia raises the risk of retinal detachment."
+    },
+    {
+     "label": "B",
+     "text": "Hypermetropia",
+     "correct": false,
+     "explanation": "WRONG — Hypermetropia focuses light BEHIND the retina and is corrected with CONVEX (converging) lenses."
+    },
+    {
+     "label": "C",
+     "text": "Astigmatism",
+     "correct": false,
+     "explanation": "WRONG — Astigmatism has different refractive power in different axes and needs CYLINDRICAL lenses."
+    },
+    {
+     "label": "D",
+     "text": "Presbyopia",
+     "correct": false,
+     "explanation": "WRONG — Presbyopia is age-related loss of accommodation, giving difficulty with NEAR vision from the mid-40s."
     }
    ],
-   "keyPoint": null,
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "MYOPIA (short sight): the eye is too long or too powerful, so light converges in FRONT of the retina. Corrected with CONCAVE lenses. High myopia raises the risk of retinal detachment.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q56_refractive",
+   "seq": 1,
+   "keyDifferentiator": "In front of retina = myopia = concave/minus lens. Behind = hypermetropia = convex/plus lens."
+  },
+  {
+   "id": "b37_q56_2",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "EMQ — refractive errors",
+   "stem": "REFRACTIVE ERROR THEME. Options: A – Myopia | B – Hypermetropia | C – Astigmatism | D – Presbyopia\n\n[Scenario 2] The patient needs glasses with DIFFERENT REFRACTIVE POWER IN DIFFERENT AXES.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Myopia",
+     "correct": false,
+     "explanation": "WRONG — Myopia focuses light IN FRONT of the retina and is corrected with CONCAVE (diverging) lenses."
+    },
+    {
+     "label": "B",
+     "text": "Hypermetropia",
+     "correct": false,
+     "explanation": "WRONG — Hypermetropia focuses light BEHIND the retina and is corrected with CONVEX (converging) lenses."
+    },
+    {
+     "label": "C",
+     "text": "Astigmatism",
+     "correct": true,
+     "explanation": "CORRECT — ASTIGMATISM: the cornea or lens is not uniformly curved, so power differs between meridians. Corrected with CYLINDRICAL lenses."
+    },
+    {
+     "label": "D",
+     "text": "Presbyopia",
+     "correct": false,
+     "explanation": "WRONG — Presbyopia is age-related loss of accommodation, giving difficulty with NEAR vision from the mid-40s."
+    }
+   ],
+   "keyPoint": "ASTIGMATISM: the cornea or lens is not uniformly curved, so power differs between meridians. Corrected with CYLINDRICAL lenses.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q56_refractive",
+   "seq": 2,
+   "keyDifferentiator": "'Different power in different axes' is the definition of astigmatism — nothing else needs a cylindrical lens."
+  },
+  {
+   "id": "b37_q56_3",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "EMQ — refractive errors",
+   "stem": "REFRACTIVE ERROR THEME. Options: A – Myopia | B – Hypermetropia | C – Astigmatism | D – Presbyopia\n\n[Scenario 3] The patient needs CONVEX LENSES for correction.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Myopia",
+     "correct": false,
+     "explanation": "WRONG — Myopia focuses light IN FRONT of the retina and is corrected with CONCAVE (diverging) lenses."
+    },
+    {
+     "label": "B",
+     "text": "Hypermetropia",
+     "correct": true,
+     "explanation": "CORRECT — HYPERMETROPIA (long sight): the eye is too short or too weak, so light would focus BEHIND the retina. Corrected with CONVEX (plus) lenses. In children it is the commonest cause of accommodative squint."
+    },
+    {
+     "label": "C",
+     "text": "Astigmatism",
+     "correct": false,
+     "explanation": "WRONG — Astigmatism has different refractive power in different axes and needs CYLINDRICAL lenses."
+    },
+    {
+     "label": "D",
+     "text": "Presbyopia",
+     "correct": false,
+     "explanation": "WRONG — Presbyopia is age-related loss of accommodation, giving difficulty with NEAR vision from the mid-40s."
+    }
+   ],
+   "keyPoint": "HYPERMETROPIA (long sight): the eye is too short or too weak, so light would focus BEHIND the retina. Corrected with CONVEX (plus) lenses. In children it is the commonest cause of accommodative squint.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q56_refractive",
+   "seq": 3,
+   "keyDifferentiator": "Convex/plus corrects hypermetropia; concave/minus corrects myopia."
+  },
+  {
+   "id": "b37_q56_4",
+   "type": "mcq",
+   "system": "Ophthalmology",
+   "topic": "EMQ — refractive errors",
+   "stem": "REFRACTIVE ERROR THEME. Options: A – Myopia | B – Hypermetropia | C – Astigmatism | D – Presbyopia\n\n[Scenario 4] A 43-year-old has difficulty reading books.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Myopia",
+     "correct": false,
+     "explanation": "WRONG — Myopia focuses light IN FRONT of the retina and is corrected with CONCAVE (diverging) lenses."
+    },
+    {
+     "label": "B",
+     "text": "Hypermetropia",
+     "correct": false,
+     "explanation": "WRONG — Hypermetropia focuses light BEHIND the retina and is corrected with CONVEX (converging) lenses."
+    },
+    {
+     "label": "C",
+     "text": "Astigmatism",
+     "correct": false,
+     "explanation": "WRONG — Astigmatism has different refractive power in different axes and needs CYLINDRICAL lenses."
+    },
+    {
+     "label": "D",
+     "text": "Presbyopia",
+     "correct": true,
+     "explanation": "CORRECT — PRESBYOPIA: progressive loss of lens accommodation with age, typically noticed from the mid-40s as difficulty with NEAR work. Corrected with reading glasses (convex) or varifocals."
+    }
+   ],
+   "keyPoint": "PRESBYOPIA: progressive loss of lens accommodation with age, typically noticed from the mid-40s as difficulty with NEAR work. Corrected with reading glasses (convex) or varifocals.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q56_refractive",
+   "seq": 4,
+   "keyDifferentiator": "Age in the 40s plus a NEAR-vision complaint is presbyopia, whatever the distance refraction."
   },
   {
    "id": "b37_q57_1",
@@ -4463,33 +5803,88 @@
    "seq": 2
   },
   {
-   "id": "b37_q58",
+   "id": "b37_q58_1",
    "type": "mcq",
-   "reference": "Batch 37 — Page 32",
-   "topic": "Internal Medicine EMQ: Hypercalcaemia/SIADH/SCC Theme",
-   "stem": "3-Calcitonin 1. Patient with CONSTIPATION 2. Patient with SODIUM 128 mmol/L (hyponatraemia) 3. Patient with METASTATIC CANCER + BACK PAIN + URINARY RETENTION",
+   "system": "Oncology",
+   "topic": "EMQ — hypercalcaemia of malignancy",
+   "stem": "ONCOLOGY MANAGEMENT THEME. Options include: A – Calcitonin | B – Demeclocycline | C – Dexamethasone\n\n[Scenario 1] A patient with malignancy presents with CONSTIPATION (and features of hypercalcaemia).",
    "choices": [
     {
      "label": "A",
-     "text": "1→Calcitonin (hypercalcaemia) | 2→Demeclocycline (SIADH) |",
+     "text": "Calcitonin",
      "correct": true,
-     "explanation": "(Mechanism · Why Right/Wrong · Distinguishing Pearl)"
+     "explanation": "CORRECT — Hypercalcaemia of malignancy causes 'bones, stones, abdominal moans and psychic groans' — CONSTIPATION is a classic abdominal feature. Management is IV FLUIDS FIRST, then a BISPHOSPHONATE; CALCITONIN acts fastest (within hours) as a bridge while the bisphosphonate takes 2–4 days."
+    },
+    {
+     "label": "B",
+     "text": "Demeclocycline",
+     "correct": false,
+     "explanation": "WRONG — Used for SIADH — it induces a nephrogenic diabetes insipidus to offset water retention. It does not lower calcium."
+    },
+    {
+     "label": "C",
+     "text": "Dexamethasone",
+     "correct": false,
+     "explanation": "WRONG — Used for raised intracranial pressure and cord compression; in hypercalcaemia it helps only in myeloma and lymphoma."
     }
    ],
-   "keyPoint": "",
-   "flag": {
-    "severity": "MODERATE",
-    "note": "Recalled question — the source gives only the marked answer; full option list not available.",
-    "source": "Batch 37 guide"
-   },
-   "system": "Batch 37 Final",
+   "keyPoint": "Hypercalcaemia of malignancy causes 'bones, stones, abdominal moans and psychic groans' — CONSTIPATION is a classic abdominal feature. Management is IV FLUIDS FIRST, then a BISPHOSPHONATE; CALCITONIN acts fastest (within hours) as a bridge while the bisphosphonate takes 2–4 days.",
+   "reference": "Batch 37 Final — University of Kufa",
    "source": {
     "paper": "Batch 37 Final",
     "institution": "University of Kufa"
    },
-   "keyDifferentiator": null,
-   "summaryTable": null,
-   "references": null
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged. A third scenario in this theme was truncated in the source and is not included.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q58_onc",
+   "seq": 1,
+   "keyDifferentiator": "Calcitonin works fast but briefly; bisphosphonates work slowly but durably. Fluids come before both."
+  },
+  {
+   "id": "b37_q58_2",
+   "type": "mcq",
+   "system": "Oncology",
+   "topic": "EMQ — SIADH",
+   "stem": "ONCOLOGY MANAGEMENT THEME. Options include: A – Calcitonin | B – Demeclocycline | C – Dexamethasone\n\n[Scenario 2] A patient with malignancy has a SERUM SODIUM of 128 mmol/L.",
+   "choices": [
+    {
+     "label": "A",
+     "text": "Calcitonin",
+     "correct": false,
+     "explanation": "WRONG — Lowers calcium, not a treatment for hyponatraemia."
+    },
+    {
+     "label": "B",
+     "text": "Demeclocycline",
+     "correct": true,
+     "explanation": "CORRECT — SIADH causes EUVOLAEMIC hyponatraemia with inappropriately concentrated urine, classically from SMALL CELL LUNG CANCER. First-line is FLUID RESTRICTION; DEMECLOCYCLINE is used when that fails, by inducing a nephrogenic diabetes insipidus. Correct sodium SLOWLY (<8–10 mmol/L per 24 h) to avoid osmotic demyelination."
+    },
+    {
+     "label": "C",
+     "text": "Dexamethasone",
+     "correct": false,
+     "explanation": "WRONG — No role in SIADH; it would not correct the sodium."
+    }
+   ],
+   "keyPoint": "SIADH causes EUVOLAEMIC hyponatraemia with inappropriately concentrated urine, classically from SMALL CELL LUNG CANCER. First-line is FLUID RESTRICTION; DEMECLOCYCLINE is used when that fails, by inducing a nephrogenic diabetes insipidus. Correct sodium SLOWLY (<8–10 mmol/L per 24 h) to avoid osmotic demyelination.",
+   "reference": "Batch 37 Final — University of Kufa",
+   "source": {
+    "paper": "Batch 37 Final",
+    "institution": "University of Kufa"
+   },
+   "aiChoices": true,
+   "flag": {
+    "severity": "MODERATE",
+    "note": "SOURCE INCOMPLETE — the source stored this EMQ theme as ONE entry containing the option list and several scenarios. It has been split so each scenario is its own question, all sharing the original option list from the source. Correct answers are source-derived and unchanged. A third scenario in this theme was truncated in the source and is not included.",
+    "source": "Batch 37 guide"
+   },
+   "cluster": "b37_q58_onc",
+   "seq": 2,
+   "keyDifferentiator": "Fluid restriction first; demeclocycline (or a vaptan) only for refractory SIADH."
   },
   {
    "id": "b37_q59",
